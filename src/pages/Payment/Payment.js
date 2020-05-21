@@ -1,1 +1,131 @@
+import React from 'react'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faCreditCard} from '@fortawesome/free-regular-svg-icons'
+import './Payment.css'
+class Payment extends React.Component {
+    render() {
 
+
+        return (
+
+            <div className="payment">
+                <div className="card-body p-5">
+
+                    <ul className="nav bg-light nav-pills rounded nav-fill mb-3" role="tablist">
+                        <li className="nav-item">
+                            <a className="nav-link active show" data-toggle="pill" href="#nav-tab-card">
+                                <FontAwesomeIcon icon={faCreditCard}/>Credit Card</a>
+                                
+                                </li>
+                        <li className="nav-item">
+                            <a className="nav-link" data-toggle="pill" href="#nav-tab-paypal">
+                                <i className="fab fa-paypal"></i>  Paypal</a></li>
+                        <li className="nav-item">
+                            <a className="nav-link" data-toggle="pill" href="#nav-tab-bank">
+                                <i className="fa fa-university"></i>  Bank Transfer</a></li>
+                    </ul>
+
+                    <div className="tab-content">
+                        <div className="tab-pane fade active show" id="nav-tab-card">
+                            <p className="alert alert-success">Some text success or error</p>
+                            <form role="form">
+                                <div class="form-group">
+                                    <label for="username">Full name (on the card)</label>
+                                    <input type="text" className="form-control" name="username" placeholder="" required="" />
+                                </div>
+
+                                <div className="form-group">
+                                    <label for="cardNumber">Card number</label>
+                                    <div className="input-group">
+                                        <input type="text" class="form-control" name="cardNumber" placeholder="" />
+                                        <div className="input-group-append">
+                                            <span className="input-group-text text-muted">
+                                                <i className="fab fa-cc-visa"></i> &nbsp; <i className="fab fa-cc-amex"></i> &nbsp;
+					<i className="fab fa-cc-mastercard"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-sm-8">
+                                        <div className="form-group">
+                                            <label><span className="hidden-xs">Expiration</span> </label>
+                                            <div className="input-group">
+                                                <input type="number" className="form-control" placeholder="MM" name="" />
+                                                <input type="number" className="form-control" placeholder="YY" name="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-4">
+                                        <div className="form-group">
+                                            <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV <i class="fa fa-question-circle"></i></label>
+                                            <input type="number" className="form-control" required="" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <button className="subscribe btn btn-primary btn-block" type="button"> Confirm  </button>
+                            </form>
+                        </div>
+                        <div className="tab-pane fade" id="nav-tab-paypal">
+                            <p>Paypal is easiest way to pay online</p>
+                            <p>
+                                <button type="button" className="btn btn-primary">
+                                    <i className="fab fa-paypal"></i> Log in my Paypal </button>
+                            </p>
+                            <p><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. </p>
+                        </div>
+                        <div className="tab-pane fade" id="nav-tab-bank">
+                            <p>Bank accaunt details</p>
+                            <dl className="param">
+                                <dt>BANK: </dt>
+                                <dd> THE WORLD BANK</dd>
+                            </dl>
+                            <dl className="param">
+                                <dt>Accaunt number: </dt>
+                                <dd> 12345678912345</dd>
+                            </dl>
+                            <dl className="param">
+                                <dt>IBAN: </dt>
+                                <dd> 123456789</dd>
+                            </dl>
+                            <p><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. </p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+
+
+
+
+            </div>
+
+        )
+
+
+
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+}
+
+export default Payment
