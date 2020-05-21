@@ -1,0 +1,60 @@
+#green {
+    background: #1cc88a !important;
+    border-radius: 5px;
+    font-size: 14px;
+}
+#blue {
+    background: #36b9cc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+#darkblue {
+
+    background: #4e73df;
+    border-radius: 5px;
+font-size: 14px;
+}
+    #border .card.shadow.mb-4 {
+   background: #f7f7f7;
+}
+#denny {
+    background: #e5e5e5;
+    width: 20%;
+    font-size: 14px;
+}
+#border .card-header.py-3.d-flex.flex-row.align-items-center.justify-content-between {
+    background: #fff;
+}
+#content-wrapper {
+    background: #fff !important;
+}
+.card.shadow.mb-4 {
+    box-shadow: none !important;
+}
+.bg-gradient-primary {
+    background-color: #ffc809 !important;
+    background-image: none;
+}
+.d-none.d-sm-inline-block.btn.btn-sm.btn-primary.shadow-sm {
+    width: 30%;
+    font-size: 20px;
+    border-radius: 30px;
+}
+.m-0.font-weight-bold.text-primary {
+    color: #000 !important;
+    margin-bottom: 20px !important;
+}
+.nav-item a {
+    color: #fff !important;
+}
+.fas.fa-fw.fa-tachometer-alt {
+    color: #fff !important;
+}
+.btn.btn-primary {
+    background: #ffc809;
+    border: none;
+}
+#accept {
+    width: 20%;
+    font-size: 14px;
+}
