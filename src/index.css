@@ -12,6 +12,6 @@ code {
     monospace;
 }
 
-input, textarea, .form-control {
+input, textarea, .form-control, .custom-select {
   border-radius: 2rem;
 }
