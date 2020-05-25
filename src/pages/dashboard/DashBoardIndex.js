@@ -99,7 +99,7 @@ function DashBoardIndex() {
                 <h2 className={classes.weightBoldtext}>Dashboard datas</h2>
 
             </div>
-            <div>..</div>
+
             <div className="row">
 
                 <div id="border" className="col-xl-6 col-lg-7">
