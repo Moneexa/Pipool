@@ -1,8 +1,9 @@
 import React from 'react'
+
 //import './DashBoardIndex.css'
+
 import useStyles from 'react-styles-hook'
-class DashBoardIndex extends React.Component {
-    render = () => {
+function DashBoardIndex() {
 
         return (
 
@@ -107,5 +108,5 @@ class DashBoardIndex extends React.Component {
             </div>
         )
     }
-}
+
 export default DashBoardIndex;
