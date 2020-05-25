@@ -1,41 +1,19 @@
 import React from 'react'
-import './DashBoardIndex.css'
-
+//import './DashBoardIndex.css'
+import {} from 'react'
 class DashBoardIndex extends React.Component {
     render = () => {
 
         return (
 
             <div className="home">
-
-
                 <div className="d-sm-flex align-items-center justify-content-between mb-4">
-
                     <h2 className="m-0 font-weight-bold text-primary">Dashboard datas</h2>
-
-
-
                 </div>
-
-
-
-
-
-
-
-
                 <div className="row">
-
-
-
-
                     <div id="border" className="col-xl-6 col-lg-7">
 
                         <div className="card shadow mb-4">
-
-
-
-
 
                             <div className="card-body">
 
@@ -47,9 +25,6 @@ class DashBoardIndex extends React.Component {
                                         <canvas id="myAreaChart"></canvas>
                                     </div>
 
-
-
-
                                 </div>
 
                             </div>
@@ -57,9 +32,6 @@ class DashBoardIndex extends React.Component {
                         </div>
 
                     </div>
-
-
-
 
                     <div id="border" className="col-xl-6 col-lg-7">
 
@@ -88,20 +60,11 @@ class DashBoardIndex extends React.Component {
                         </div>
 
                     </div>
-
-
                 </div>
-
-
-
-
                 <div className="row">
-
-
                     <div id="border" className="col-xl-6 col-lg-7">
 
                         <div className="card shadow mb-4">
-
 
                             <div className="card-body">
 
@@ -129,33 +92,20 @@ class DashBoardIndex extends React.Component {
 
                         <div className="card shadow mb-4">
 
-
                             <div className="card-body">
 
                                 <div className="chart-pie pt-4 pb-2" style={{ padding: "0 !important" }}>
                                     <h2 className="m-0 font-weight-bold text-primary">Pending Requests</h2>
 
-
                                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown.</p>
-
-
 
                                 </div>
                             </div>
                         </div>
                     </div>
-                    </div>
-                    </div>
-
-
-
-)
-
-
-
-}
-
-
-
+                </div>
+            </div>
+        )
+    }
 }
 export default DashBoardIndex;
