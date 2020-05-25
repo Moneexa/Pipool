@@ -1,6 +1,6 @@
 import React from 'react'
 //import './DashBoardIndex.css'
-import {} from 'react'
+import useStyles from 'react-styles-hook'
 class DashBoardIndex extends React.Component {
     render = () => {
 
