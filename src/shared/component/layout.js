@@ -18,73 +18,26 @@ import { Provider } from "react-redux";
 import { Nav } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTachometerAlt } from '@fortawesome/free-solid-svg-icons'
-import { makeStyles } from '@material-ui/core/styles';
-import { StylesContext } from '@material-ui/styles';
+import './layout.css';
 
 //import store from "./shared/store/store"
-const useStyles = makeStyles({
-    topbar: {
-        height: '4.375 rem'
-      },
-      sidebar: {
-        minWidth: "14rem !important",
-        background: "#ffc809",
-        height: "100vh",
-        overflowY: "auto",
-        fontSize: "0.85rem",
-      },
-      sidebarContent :{
-        flex: "1",
-        height: "100vh",
-        overflowY: "auto"
-      },
-      
-      topbarDivider :{
-        width: "100%",
-        borderRight: "0 !important",
-        height: "auto !important",
-        margin: "auto 1rem",
-        textAlign: "right"
-      },
-      a: {
-        padding: "20px",
-        fontWeight: "bold",
-        color:"#ffc809"
-      },
-      
-      noIconSpace: {
-        width: "1.125em",
-        height: "1rem",
-        display: "inline-block",
-      },
-         sidebarToggle: {
-        width: "2.5rem",
-        height: "2.5rem",
-        textAlign: "center",
-        marginBottom: "1rem",
-        cursor: "pointer",
-        backgroundColor: "rgba(255,255,255,.2)",
-    
-    }
-})
 
-
-    function Layout() {
-        const classes = useStyles();
-
+class Layout extends React.Component {
+    render = () => {
         return (
-    
+
             <div className="layout">
 
                 <div id="wrapper">
                     <div className="d-flex">
                         <Router>
-                            <div className={classes.sidebar}>
+                            <div className="sidebar">
                                 <a className="sidebar-brand d-flex align-items-center justify-content-center" style={{ marginTop: "20px", marginBottom: "30px" }}>
-                                    <img src="/img/logo.jpg" />
+                                    <img src="../img/logo.jpg" />
                                     <div className="sidebar-brand-icon rotate-n-15">
                                     </div>
                                 </a>
+
                                 <Nav className="d-none d-md-block bg-yello"
                                     activeKey="/home">
                                     <div className="sidebar-sticky"></div>
@@ -97,18 +50,20 @@ const useStyles = makeStyles({
                                     </Nav.Item>
                                     <Nav.Item>
                                         <Nav.Link href="/campaigns">
-                                            <div className={classes.noIconSpace}></div>
+                                            <div className="no-icon-space"></div>
                                             &nbsp;
                                             <span>Campaigns</span>
                                         </Nav.Link>
                                         <Nav.Link href="/pending-requests">
-                                            <div className={classes.noIconSpace}></div>
+                                            <div className="no-icon-space"></div>
                                             &nbsp;
                                             <span>Pending Requests</span>
                                         </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                       <Nav.Link disabled>
+
+                                        <Nav.Link disabled>
+
                                             <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
                                                 &nbsp;
                                             <span>Brand Manager</span>
@@ -116,17 +71,19 @@ const useStyles = makeStyles({
                                     </Nav.Item>
                                     <Nav.Item>
                                         <Nav.Link href="/brands">
-                                            <div className={classes.noIconSpace}></div>
+                                            <div className="no-icon-space"></div>
                                             &nbsp;
                                             <span>Brand</span>
                                         </Nav.Link>
+
                                         <Nav.Link href="/add-brand">
-                                            <div className={classes.noIconSpace}></div>
+                                            <div className="no-icon-space"></div>
                                             &nbsp;
                                             <span>Add New Brand</span>
                                         </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
+
                                         <Nav.Link href="#">
                                             <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
                                             &nbsp;
@@ -135,47 +92,51 @@ const useStyles = makeStyles({
                                     </Nav.Item>
                                     <Nav.Item>
                                         <Nav.Link href="/new-campaign">
-                                            <div className={classes.noIconSpace}></div>
+                                            <div className="no-icon-space"></div>
                                             &nbsp;
                                             <span>Add New Campaign</span>
                                         </Nav.Link>
 
                                         <Nav.Link href="#">
-                                            <div className={classes.noIconSpace}></div>
+                                            <div className="no-icon-space"></div>
                                             &nbsp;
                                             <span>See Previous Campaings</span>
                                         </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
+
                                         <Nav.Link href="/calender">
+
                                             <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
+
                                             &nbsp;
+
                                             <span>Calender</span>
                                         </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                       <Nav.Link href="/payment">
+
+                                        <Nav.Link href="/payment">
                                             <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
                                             &nbsp;
                                             <span>Settings and Payments</span> </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
+
                                         <Nav.Link href="/help">
                                             <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
                                             &nbsp;
                                             <span>Help and FAQ</span> </Nav.Link>
                                     </Nav.Item>
-                                    <div className="d-flex align-items-center justify-content-center">
-                                        <button className={classes.sidebarToggle}></button>
-                                    </div>
                                 </Nav>
+
                             </div>
-                            <div className={classes.sidebarContent}>
+                            <div className="sidebar-content">
                                 <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                                    <div className={classes.topbar}>
-                                        <div className="d-flex flex-direction-row justify-content-flex-end align-items-center">
-                                            <a className={classes.a} href="http://rameshbhardwaj.com/piermatteo/dashboard/">HOME</a>
-                                            <a className={classes.a} href="http://rameshbhardwaj.com/piermatteo/dashboard/profile/">PROFILE</a></div>
+                                    <div className="topbar">
+                                        <div className="topbar-divider d-none d-sm-block"
+                                        ><a href="http://rameshbhardwaj.com/piermatteo/dashboard/">HOME</a>
+                                            <a href="http://rameshbhardwaj.com/piermatteo/dashboard/profile/">PROFILE</a></div>
                                     </div>
                                 </nav>
                                 <div className="container-fluid">
@@ -214,8 +175,9 @@ const useStyles = makeStyles({
                     </div>
                 </div >
             </div >
+
         )
     }
-
+}
 
 export default Layout;
