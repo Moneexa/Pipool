@@ -105,21 +105,21 @@ function DashBoardIndex() {
 
                 <div id="border" className="col-xl-6 col-lg-7">
 
-                    <div className="card shadow mb-4">
+                    <div style={_styles.cardShadow} className="card shadow mb-4">
 
                         <div className="card-body">
 
                             <div className="chart-area">
-                                <h2 className="m-0 font-weight-bold text-primary">Campaign (month)</h2>
+                                <h2 style={_styles.fontWeightBolText} className="m-0 font-weight-bold text-primary">Campaign (month)</h2>
 
                                 <p style={{ fontWeight: "bold" }}>Your feedbacks over this month </p>
                                 <div className="chart-pie pt-4 pb-2">
                                     <canvas id="myPieChart"></canvas>
                                 </div>
                                 <div id="btn-top" className="mt-4 text-center small" style={{ marginTop: "0 !important" }}>
-                                    <a href="#" id="green" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Referral 30</a>
-                                    <a href="#" id="blue" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Social 15</a>
-                                    <a href="#" id="darkblue" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Direct 55</a>
+                                    <a href="#" style={_styles.green} id="green" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Referral 30</a>
+                                    <a href="#" style={_styles.blue} id="blue" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Social 15</a>
+                                    <a href="#" style={_styles.darkblue} id="darkblue" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Direct 55</a>
 
                                 </div>
 
@@ -134,19 +134,19 @@ function DashBoardIndex() {
             <div className="row">
                 <div id="border" className="col-xl-6 col-lg-7">
 
-                    <div className="card shadow mb-4">
+                    <div style={_styles.cardShadow} className="card shadow mb-4">
 
                         <div className="card-body">
 
                             <div className="chart-area">
-                                <h2 className="m-0 font-weight-bold text-primary">Tasks</h2>
+                                <h2 style={_styles.fontWeightBolText} className="m-0 font-weight-bold text-primary">Tasks</h2>
 
                                 <p style={{ fontWeight: "bold" }}>
                                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
                                 <p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.</p><br></br>
                                 <div id="btn-top" className="mt-4 text-center small">
 
-                                    <a href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">See more</a>
+                                    <a style={_styles.btnPrimary} href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">See more</a>
 
                                 </div>
 
@@ -160,12 +160,12 @@ function DashBoardIndex() {
 
                 <div id="border" className="col-xl-6 col-lg-5">
 
-                    <div className="card shadow mb-4">
+                    <div style={_styles.cardShadow} className="card shadow mb-4">
 
                         <div className="card-body">
 
                             <div className="chart-pie pt-4 pb-2" style={{ padding: "0 !important" }}>
-                                <h2 className="m-0 font-weight-bold text-primary">Pending Requests</h2>
+                                <h2 style={_styles.fontWeightBolText} className="m-0 font-weight-bold text-primary">Pending Requests</h2>
 
                                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown.</p>
 
