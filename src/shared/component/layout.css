@@ -12,6 +12,7 @@
   flex: 1;
   height: 100vh;
   overflow-y: auto;
+  background-color: #f8f9fc;
 }
 
 .layout #wrapper nav .topbar .topbar-divider {
@@ -20,6 +21,9 @@
   height: auto !important;
   margin: auto 1rem;
   text-align: right;
+}
+.sidebar-content .navbar {
+  background-color: white;
 }
 .navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top.shadow a {
   padding: 20px;

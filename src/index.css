@@ -14,8 +14,9 @@ code {
 input,
 textarea,
 .form-control,
-.custom-select {
+.custom-select, .custom-file-label {
   border-radius: 2rem;
+  overflow: hidden;
 }
 
 .rounded-5 {

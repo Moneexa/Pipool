@@ -1,4 +1,5 @@
 import React from 'react'
+import { styles } from '../Calender/Calender.css'
 
 class AddBrand extends React.Component {
     render() {
@@ -6,28 +7,26 @@ class AddBrand extends React.Component {
         return (
 
             <div className="add-brand">
-
                 <div className="text-center">
-
                     <h1 className="h4 text-gray-900 mb-4">Add a New Brand</h1>
-
                 </div>
-
-                <form className="user" method="post" enctype="multipart/form-data">
-
-
+                <form style={styles.userForm} method="post" enctype="multipart/form-data">
 
                     <div className="form-group row">
 
-                        <div className="form-group col-sm-6 mb-3 mb-sm-0 files">
-                            <label>
-                                <strong> Upload your logo *</strong>
+                        <div className="form-group col-xs-12 col-lg-3">
+                            <label htmlFor="basic-url">
+                                <strong>Upload your logo *</strong>
                             </label>
-
-                            <input type="file" name="clogo" className="form-control form-control-user" multiple="" />
+                            <div className="input-group mb-3">
+                                <div className="custom-file">
+                                    <input type="file" className="custom-file-input" id="inputGroupFile01" />
+                                    <label className="custom-file-label" htmlFor="inputGroupFile01">Choose a file</label>
+                                </div>
+                            </div>
                         </div>
 
-                        <div className="form-group col-sm-6 mb-3 mb-sm-0">
+                        <div className="form-group col-xs-12 col-lg-9 mb-3 mb-sm-0">
                             <label><strong>Brand name *</strong></label>
 
                             <input type="text" name="brand_nm" className="form-control form-control-user" id="exampleInputEmail" placeholder="Enter the name of your brand" />
@@ -51,8 +50,6 @@ class AddBrand extends React.Component {
 
                             <label><strong>Hashtags *</strong></label>
                             <input type="text" name="contact_nm" className="form-control form-control-user" placeholder="Hashtags" value="" />
-
-
                             <label><strong>Phone number *</strong></label>
                             <input type="text" name="contact_no" className="form-control form-control-user" placeholder="Enter a phone number" />
                             <p style={{color: "red"}}></p>
@@ -60,8 +57,6 @@ class AddBrand extends React.Component {
                             <label><strong>Address *</strong></label>
                             <input type="text" name="address" className="form-control form-control-user" />
                             <p style={{color: "red"}}></p>
-
-
                             <label><strong>Postal code *</strong></label>
                             <input type="text" name="postal_code" className="form-control form-control-user" />
                             <p style={{color: "red"}}></p>
@@ -75,39 +70,12 @@ class AddBrand extends React.Component {
                             <p style={{color: "red"}}></p>
                         </div>
                     </div>
-                    <button name="brand_save" className="btn btn-primary btn-user btn-block">Save</button>
+                    <div className="w-100 px-4 mb-5">
+                        <button name="brand_save" className="btn btn-primary btn-user btn-block rounded-30 py-3">Save</button>
+                    </div>
                 </form>
-
-
-
-
-
-
-
-
-
-
             </div>
-
-
-
-
-
-
         )
-
-
-
-
-
-
-
-
-
     }
-
-
-
-
 }
 export default AddBrand

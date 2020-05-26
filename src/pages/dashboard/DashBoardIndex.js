@@ -78,7 +78,7 @@ function DashBoardIndex() {
 
         <div className="home">
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
-                <h2 style={_styles.fontWeightBolText} className="m-0 font-weight-bold text-primary">Dashboard datas</h2>
+                <h2 style={_styles.fontWeightBolText} className="m-0 font-weight-bold">Dashboard datas</h2>
             </div>
             <div className="row">
                 <div id="border" className="col-xl-6 col-lg-7">
@@ -88,7 +88,7 @@ function DashBoardIndex() {
                         <div className="card-body">
 
                             <div className="chart-area">
-                                <h2 style={_styles.fontWeightBolText} className="m-0 font-weight-bold text-primary">Campaign (annual)</h2>
+                                <h2 style={_styles.fontWeightBolText} className="m-0 font-weight-bold">Campaign (annual)</h2>
 
                                 <p style={{ fontWeight: "bold" }}>Your feedbacks over this year </p>
                                 <div className="chart-area">
@@ -110,7 +110,7 @@ function DashBoardIndex() {
                         <div className="card-body">
 
                             <div className="chart-area">
-                                <h2 style={_styles.fontWeightBolText} className="m-0 font-weight-bold text-primary">Campaign (month)</h2>
+                                <h2 style={_styles.fontWeightBolText} className="m-0 font-weight-bold">Campaign (month)</h2>
 
                                 <p style={{ fontWeight: "bold" }}>Your feedbacks over this month </p>
                                 <div className="chart-pie pt-4 pb-2">
@@ -139,7 +139,7 @@ function DashBoardIndex() {
                         <div className="card-body">
 
                             <div className="chart-area">
-                                <h2 style={_styles.fontWeightBolText} className="m-0 font-weight-bold text-primary">Tasks</h2>
+                                <h2 style={_styles.fontWeightBolText} className="m-0 font-weight-bold">Tasks</h2>
 
                                 <p style={{ fontWeight: "bold" }}>
                                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
@@ -165,7 +165,7 @@ function DashBoardIndex() {
                         <div className="card-body">
 
                             <div className="chart-pie pt-4 pb-2" style={{ padding: "0 !important" }}>
-                                <h2 style={_styles.fontWeightBolText} className="m-0 font-weight-bold text-primary">Pending Requests</h2>
+                                <h2 style={_styles.fontWeightBolText} className="m-0 font-weight-bold">Pending Requests</h2>
 
                                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown.</p>
 
