@@ -1,5 +1,5 @@
 import React from 'react'
-import './PendingRequests.css'
+// import './PendingRequests.css'
 
 class PendingRequests extends React.Component {
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faCreditCard} from '@fortawesome/free-regular-svg-icons'
-import './Payment.css'
+// import './Payment.css'
 class Payment extends React.Component {
     render() {
 
@@ -29,7 +29,7 @@ class Payment extends React.Component {
                         <div className="tab-pane fade active show" id="nav-tab-card">
                             <p className="alert alert-success">Some text success or error</p>
                             <form role="form">
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label for="username">Full name (on the card)</label>
                                     <input type="text" className="form-control" name="username" placeholder="" required="" />
                                 </div>
@@ -37,7 +37,7 @@ class Payment extends React.Component {
                                 <div className="form-group">
                                     <label for="cardNumber">Card number</label>
                                     <div className="input-group">
-                                        <input type="text" class="form-control" name="cardNumber" placeholder="" />
+                                        <input type="text" className="form-control" name="cardNumber" placeholder="" />
                                         <div className="input-group-append">
                                             <span className="input-group-text text-muted">
                                                 <i className="fab fa-cc-visa"></i> &nbsp; <i className="fab fa-cc-amex"></i> &nbsp;
@@ -59,7 +59,7 @@ class Payment extends React.Component {
                                     </div>
                                     <div className="col-sm-4">
                                         <div className="form-group">
-                                            <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV <i class="fa fa-question-circle"></i></label>
+                                            <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV <i className="fa fa-question-circle"></i></label>
                                             <input type="number" className="form-control" required="" />
                                         </div>
                                     </div>

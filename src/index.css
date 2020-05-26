@@ -1,17 +1,43 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: Nunito, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  /* -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; */
 }
+
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-input, textarea, .form-control, .custom-select {
+input,
+textarea,
+.form-control,
+.custom-select {
   border-radius: 2rem;
+}
+
+.round-5 {
+  border-radius: 5px;
+}
+
+.round-20 {
+  border-radius: 20px;
+}
+
+.round-30 {
+  border-radius: 30px;
+}
+
+.border-5 {
+  border: 5px solid;
+}
+
+.border-yellow {
+  border-color: #fce391;
+}
+
+.card.shadow.mb-4 {
+  box-shadow: none !important;
 }

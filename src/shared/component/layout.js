@@ -4,7 +4,7 @@ import React from 'react';
 //import CommitteeList from './shared/CommitteeList'
 //import { CommitteeAttendance } from './shared/CommitteeAttendance'
 import { Switch, BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Card, Form, Button, NavLink } from "react-bootstrap";
 import DashboardIndex from '../../pages/dashboard/DashBoardIndex'
 import Campaigns from '../../pages/dashboard/Campaigns'
 import PendingRequests from '../../pages/dashboard/PendingRequests';
@@ -42,19 +42,19 @@ class Layout extends React.Component {
                                     activeKey="/home">
                                     <div className="sidebar-sticky"></div>
                                     <Nav.Item>
-                                        <Nav.Link href="/home">
+                                        <Nav.Link as={Link} to="/home">
                                             <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
                                             &nbsp;
                                             <span>Dashboard</span>
                                         </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link href="/campaigns">
+                                        <Nav.Link as={Link} to="/campaigns">
                                             <div className="no-icon-space"></div>
                                             &nbsp;
                                             <span>Campaigns</span>
                                         </Nav.Link>
-                                        <Nav.Link href="/pending-requests">
+                                        <Nav.Link as={Link} to="/pending-requests">
                                             <div className="no-icon-space"></div>
                                             &nbsp;
                                             <span>Pending Requests</span>
@@ -70,13 +70,13 @@ class Layout extends React.Component {
                                         </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link href="/brands">
+                                        <Nav.Link as={Link} to="/brands">
                                             <div className="no-icon-space"></div>
                                             &nbsp;
                                             <span>Brand</span>
                                         </Nav.Link>
 
-                                        <Nav.Link href="/add-brand">
+                                        <Nav.Link as={Link} to="/add-brand">
                                             <div className="no-icon-space"></div>
                                             &nbsp;
                                             <span>Add New Brand</span>
@@ -91,7 +91,7 @@ class Layout extends React.Component {
                                         </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link href="/new-campaign">
+                                        <Nav.Link as={Link} to="/new-campaign">
                                             <div className="no-icon-space"></div>
                                             &nbsp;
                                             <span>Add New Campaign</span>
@@ -105,7 +105,7 @@ class Layout extends React.Component {
                                     </Nav.Item>
                                     <Nav.Item>
 
-                                        <Nav.Link href="/calender">
+                                        <Nav.Link as={Link} to="/calender">
 
                                             <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
 
@@ -116,14 +116,14 @@ class Layout extends React.Component {
                                     </Nav.Item>
                                     <Nav.Item>
 
-                                        <Nav.Link href="/payment">
+                                        <Nav.Link as={Link} to="/payment">
                                             <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
                                             &nbsp;
                                             <span>Settings and Payments</span> </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
 
-                                        <Nav.Link href="/help">
+                                        <Nav.Link as={Link} to="/help">
                                             <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
                                             &nbsp;
                                             <span>Help and FAQ</span> </Nav.Link>
@@ -132,11 +132,19 @@ class Layout extends React.Component {
 
                             </div>
                             <div className="sidebar-content">
-                                <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                                    <div className="topbar">
-                                        <div className="topbar-divider d-none d-sm-block"
-                                        ><a href="http://rameshbhardwaj.com/piermatteo/dashboard/">HOME</a>
-                                            <a href="http://rameshbhardwaj.com/piermatteo/dashboard/profile/">PROFILE</a></div>
+                                <nav className="navbar navbar-expand-lg navbar-light shadow-sm py-3 mb-4">
+
+                                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                                        <form className="form-inline my-2 my-lg-0 ml-auto">
+                                            <ul className="navbar-nav mr-sm-2">
+                                                <li className="nav-item mr-4">
+                                                    <Link className="nav-link font-weight-bold text-primary text-uppercase" to="/home">Home</Link>
+                                                </li>
+                                                <li className="nav-item mr-4">
+                                                    <Link className="nav-link font-weight-bold text-primary text-uppercase" to="/home">Profile</Link>
+                                                </li>
+                                            </ul>
+                                        </form>
                                     </div>
                                 </nav>
                                 <div className="container-fluid">

@@ -32,43 +32,6 @@
   display: inline-block;
 }
 
-/*
-.navbar-nav {
-    display: flex;
-    flex-direction: column;
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style: none;
-}*/
-/*.nav-item.dropdown.no-arrow.mx-1 {
-    display: none;
-  }
-
-  @media only screen and (max-width: 600px) {
-
-    #accordionSidebar .nav-link {
-      text-align: left !important;
-    }
-
-    #right {
-      padding-left: 17px !important;
-    }
-  }
-
-  .navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top.shadow a {
-    padding: 20px;
-    font-weight: bold;
-  }
-
-  .nav-item a {
-    padding-top: 0px !important;
-    padding-bottom: 10px !important;
-  }
-
-  .input-group {
-    display: none !important;
-  }
-
-  #right {
-    padding-left: 43px;
-  }*/
+.sidebar .nav-item a {
+  color: #fff !important;
+}

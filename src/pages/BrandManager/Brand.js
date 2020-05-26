@@ -1,6 +1,5 @@
 import React from 'react';
 
-import './Brands.css';
 class Brands extends React.Component {
 
     render() {
@@ -45,7 +44,7 @@ class Brands extends React.Component {
                             <div className="card-body">
 
 
-                                <img src="../../shared/img/dog-647528__340.webp" style={{ width: "100%" }} />
+                                <img alt="" src={process.env.PUBLIC_URL + "/img/dog-647528__340.webp"} style={{ width: "100%" }} />
 
 
                             </div>
@@ -64,7 +63,7 @@ class Brands extends React.Component {
                             <div className="card-body">
 
 
-                                <img src="../../shared/img/dog-647528__340.webp" style={{ width: "100%" }} />
+                                <img alt="" src={process.env.PUBLIC_URL + "/img/dog-647528__340.webp"} style={{ width: "100%" }} />
 
 
                             </div>

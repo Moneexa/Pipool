@@ -63,7 +63,7 @@ class Help extends React.Component {
 
             <div id="border" className="col-xl-12 col-lg-5">
 
-                <div class="card shadow mb-4">
+                <div className="card shadow mb-4">
 
                     <div className="card-body">
 
@@ -124,14 +124,14 @@ class Help extends React.Component {
             <form className="user">
 
                 <div className="form-group row">
-                    <div class="form-group col-sm-6 mb-3 mb-sm-0">
+                    <div className="form-group col-sm-6 mb-3 mb-sm-0">
                         <label>Your name *</label>
                         <input type="text" className="form-control form-control-user" name="service" id="service" placeholder="Enter your name" />
                     </div>
 
-                    <div class="form-group col-sm-6 mb-3 mb-sm-0">
+                    <div className="form-group col-sm-6 mb-3 mb-sm-0">
                         <label>Your Email *</label>
-                        <input type="text" class="form-control form-control-user" name="service" id="service" placeholder="Enter your email" />
+                        <input type="text" className="form-control form-control-user" name="service" id="service" placeholder="Enter your email" />
                     </div>
 
                     <div className="form-group col-sm-12 mb-3 mb-sm-0">
