@@ -1,5 +1,6 @@
 import React from 'react'
 import { useStyles } from 'react-styles-hook'
+import './Campaign.css';
 const styles = useStyles({
     bacImage: {
         backgroundImage: "url('../img/fQ3sE2ESryyBsVqTCOmHLOXeAAFvY6F2llcYtQEc.png')",
@@ -20,7 +21,8 @@ const styles = useStyles({
     backgroundBox: {
         background: "#252c34",
         padding: "20px",
-        boxSizing: "border-box"
+        boxSizing: "border-box",
+        fontStyle:"oblique",
     },
     callForAction: {
         margin: "10px 0px 4px 21px",
@@ -135,7 +137,7 @@ function NewCampaign() {
         <div className="new-campaign">
 
             <div className="text-center">
-                <h1 className="h4 text-gray-900 mb-4">CREATE A CAMPAIGN</h1>
+                <h1 style={{color:"#3a3b45!important"}}className="h4 text-gray-900 mb-4">CREATE A CAMPAIGN</h1>
                 <p>Describe your product or service to the influencers.</p>
             </div>
 
