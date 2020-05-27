@@ -2,7 +2,7 @@
   height: 4.375rem;
 }
 .sidebar {
-  min-width: 14rem !important;
+  width: 14rem !important;
   background: #ffc809;
   height: 100vh;
   overflow-y: auto;
@@ -38,4 +38,27 @@
 
 .sidebar .nav-item a {
   color: #fff !important;
+}
+
+.layout .collapse-button {
+  cursor: pointer;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: rgba(255,255,255,.2);
+  color: rgba(255,255,255,.5);
+  font-weight: 900;
+  font-family: 'Font Awesome 5 Free';
+  margin-right: .1rem;
+}
+
+.layout .collapse-button:hover {
+  background-color: rgba(255,255,255,.25);
+}
+
+.layout .sidebar.collapsed {
+  width: 6.5rem!important;
+}
+
+.layout .sidebar.collapsed .nav-item {
+  text-align: center;
 }
