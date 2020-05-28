@@ -1,20 +1,20 @@
-h2, h2, h4, h5, h6, p,form{
+.add-brand .text-center h2,form{
     color:rgb(133, 135, 150);
 }
-.form-control{
+.add-brand  .form-control{
     font-size: .8rem;
     border-radius: 10rem;
     padding: 1.5rem 1rem;
 }
-.form-group label {
+.add-brand .form-group label strong {
     margin: 1px 0px 4px 21px;
 }
-form.user .btn-user {
+.add-brand .form-group form.user .btn-user {
     font-size: .8rem;
     border-radius: 10rem;
     padding: .75rem 1rem;
 }
-.btn-primary {
+.add-brand  .btn-primary {
     color: #fff;
     background-color: #4e73df;
     border-color: #4e73df;

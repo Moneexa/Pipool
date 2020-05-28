@@ -1,6 +1,6 @@
 import React from 'react'
 
-//import './DashBoardIndex.css'
+import './Dashboardindex.css'
 
 import { useStyles } from 'react-styles-hook'
 
@@ -45,7 +45,7 @@ const styles = useStyles({
         backgroundImage: "none",
     },
     smButtonPrimaryShadow: {
-        width: "30 %",
+        width: "30%",
         fontSize: "20px",
         borderRadius: "30px",
     },

@@ -37,7 +37,7 @@ function PendingRequests() {
 
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
 
-                <h2 className="m-0 font-weight-bold">Pending Requests</h2>
+                <h2  className="m-0 font-weight-bold">Pending Requests</h2>
 
             </div>
 

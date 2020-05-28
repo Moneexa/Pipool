@@ -1,19 +1,19 @@
-.nav.bg-light.nav-pills.rounded.nav-fill.mb-3 .nav-link {
+.payment .nav.bg-light.nav-pills.rounded.nav-fill.mb-3 .nav-link {
     color: #000 !important;
     padding-top: 10px !important;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+.payment .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     background-color: #ffc809 !important;
 }
 
-.svg-inline--fa {
+.payment .svg-inline--fa {
     font-weight:900;
     padding-right: 0px;
     margin-right: 4px;
 }
 
-.form-control {
+.payment .form-control {
     display: block;
     width: 100%;
     height: calc(1.5em + .75rem + 2px);

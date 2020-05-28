@@ -145,7 +145,7 @@ class Help extends React.Component {
                 </div>
 
                 <div id="btn-top" className="mt-4 text-center small" style={{ marginBottom: "50px" }}>
-                    <h3 className="m-0 font-weight-bold text-primary">Choise to Talk</h3>
+                    <h3 className="m-0 font-weight-bold text-primary">Choose to Talk</h3>
                     <a href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Live Chat</a>
                     <a href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Submit a Ticket</a>
 
