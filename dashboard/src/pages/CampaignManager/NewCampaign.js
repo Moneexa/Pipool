@@ -165,12 +165,22 @@ function NewCampaign() {
                     </div>
 
                     <div className="form-group col-sm-6 mb-3 mb-sm-0">
-                        <label style={_styles.firstFormLabels}>Set your campaign Cover Image *</label>
+                        <label htmlFor="basic-url">
+                            <strong>Set your campaign Cover Image *</strong>
+                        </label>
+                        <div className="input-group mb-3">
+                            <div className="custom-file">
+                                <input type="file" className="custom-file-input" id="inputGroupFile01" />
+                                <label className="custom-file-label" htmlFor="inputGroupFile01">Choose a file</label>
+                            </div>
+                        </div>
+                        {/* <label style={_styles.firstFormLabels}>Set your campaign Cover Image *</label>
                         <input style={{ border: "none", padding: "5px 21px" }} type="file" placeholder="Enter the name" className="form-control form-control-user" />
+                        */}
                         <div id="bac_img" style={_styles.bacImage}>
                             <img src="../img/logo-ip.png" style={{ borderRadius: "80px", padding: "10px" }} />
-
                         </div>
+
                     </div>
                     <button style={_styles.nextButton} className="btn btn-primary btn-user btn-block"> Next</button>
                 </div>
@@ -213,39 +223,38 @@ function NewCampaign() {
                         </div>
                         <div id="upload_btn" style={_styles.chooseFileForm} className="form-group row" >
                             <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
-                                <input style={_styles.chooseFileButton} type="file" placeholder="Enter the name" className="form-control form-control-user" />
+                                <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
+                            </div>
+                            <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
+                                <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
 
                             </div>
                             <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
-                                <input style={_styles.chooseFileButton} type="file" placeholder="Enter the name" className="form-control form-control-user" />
+                                <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
 
                             </div>
                             <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
-                                <input style={_styles.chooseFileButton} type="file" placeholder="Enter the name" className="form-control form-control-user" />
+                                <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
 
                             </div>
                             <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
-                                <input style={_styles.chooseFileButton} type="file" placeholder="Enter the name" className="form-control form-control-user" />
+                                <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
 
                             </div>
                             <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
-                                <input style={_styles.chooseFileButton} type="file" placeholder="Enter the name" className="form-control form-control-user" />
+                                <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
 
                             </div>
                             <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
-                                <input style={_styles.chooseFileButton} type="file" placeholder="Enter the name" className="form-control form-control-user" />
+                                <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
 
                             </div>
                             <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
-                                <input style={_styles.chooseFileButton} type="file" placeholder="Enter the name" className="form-control form-control-user" />
+                                <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
 
                             </div>
                             <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
-                                <input style={_styles.chooseFileButton} type="file" placeholder="Enter the name" className="form-control form-control-user" />
-
-                            </div>
-                            <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
-                                <input style={_styles.chooseFileButton} type="file" placeholder="Enter the name" className="form-control form-control-user" />
+                                <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
 
                             </div>
                         </div>
@@ -328,7 +337,7 @@ function NewCampaign() {
                 <div className="form-group row" >
                     <div id="img_row" className="form-group col-sm-12 mb-3 mb-sm-0">
                         <div className="clearfix">
-                            <button className="select" style={_styles.selectButton}> </button>
+                            <button className="select" style={_styles.selectButton}>SELECT ALL</button>
 
                             <button style={_styles.checkMark} className="send " data-counter="0">✔</button>
                         </div>
