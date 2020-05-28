@@ -1,4 +1,5 @@
 import React from 'react'
+import './calender.css'
 
 import { styles } from './Calender.css.js';
 
