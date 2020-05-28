@@ -1,6 +1,6 @@
 import React from 'react'
 
-
+import './Help.css'
 
 class Help extends React.Component {
     render() {

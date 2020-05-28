@@ -1,7 +1,9 @@
 import React from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faCreditCard} from '@fortawesome/free-regular-svg-icons'
-// import './Payment.css'
+import {faUniversity} from '@fortawesome/free-solid-svg-icons';
+import {faPaypal, faCcVisa, faCcMastercard, faCcAmex} from '@fortawesome/free-brands-svg-icons'
+ import './Payment.css'
 class Payment extends React.Component {
     render() {
 
@@ -14,15 +16,15 @@ class Payment extends React.Component {
                     <ul className="nav bg-light nav-pills rounded nav-fill mb-3" role="tablist">
                         <li className="nav-item">
                             <a className="nav-link active show" data-toggle="pill" href="#nav-tab-card">
-                                <FontAwesomeIcon icon={faCreditCard}/>Credit Card</a>
+                                <FontAwesomeIcon  icon={faCreditCard}/>Credit Card</a>
                                 
                                 </li>
                         <li className="nav-item">
                             <a className="nav-link" data-toggle="pill" href="#nav-tab-paypal">
-                                <i className="fab fa-paypal"></i>  Paypal</a></li>
+                                <FontAwesomeIcon icon={faPaypal} />  Paypal</a></li>
                         <li className="nav-item">
                             <a className="nav-link" data-toggle="pill" href="#nav-tab-bank">
-                                <i className="fa fa-university"></i>  Bank Transfer</a></li>
+                            <FontAwesomeIcon icon={faUniversity}/>  Bank Transfer</a></li>
                     </ul>
 
                     <div className="tab-content">
@@ -30,18 +32,22 @@ class Payment extends React.Component {
                             <p className="alert alert-success">Some text success or error</p>
                             <form role="form">
                                 <div className="form-group">
-                                    <label for="username">Full name (on the card)</label>
+                                    <label htmlFor="username">Full name (on the card)</label>
                                     <input type="text" className="form-control" name="username" placeholder="" required="" />
                                 </div>
 
                                 <div className="form-group">
-                                    <label for="cardNumber">Card number</label>
+                                    <label htmlFor="cardNumber">Card number</label>
                                     <div className="input-group">
                                         <input type="text" className="form-control" name="cardNumber" placeholder="" />
                                         <div className="input-group-append">
                                             <span className="input-group-text text-muted">
-                                                <i className="fab fa-cc-visa"></i> &nbsp; <i className="fab fa-cc-amex"></i> &nbsp;
-					<i className="fab fa-cc-mastercard"></i>
+                                                
+                                                <FontAwesomeIcon icon={faCcVisa} />
+                                                 &nbsp;
+                                                 <FontAwesomeIcon icon={faCcAmex} />
+                                                  &nbsp;
+                                                <FontAwesomeIcon icon={faCcMastercard} />
                                             </span>
                                         </div>
                                     </div>
