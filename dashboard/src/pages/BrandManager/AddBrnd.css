@@ -1,0 +1,21 @@
+h2, h2, h4, h5, h6, p,form{
+    color:rgb(133, 135, 150);
+}
+.form-control{
+    font-size: .8rem;
+    border-radius: 10rem;
+    padding: 1.5rem 1rem;
+}
+.form-group label {
+    margin: 1px 0px 4px 21px;
+}
+form.user .btn-user {
+    font-size: .8rem;
+    border-radius: 10rem;
+    padding: .75rem 1rem;
+}
+.btn-primary {
+    color: #fff;
+    background-color: #4e73df;
+    border-color: #4e73df;
+}
