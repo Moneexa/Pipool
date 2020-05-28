@@ -1,6 +1,9 @@
 .layout #wrapper nav .topbar {
   height: 4.375rem;
 }
+.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top.shadow a {
+  color: #ffc809;
+}
 .sidebar {
   width: 14rem !important;
   background: #ffc809;
