@@ -14,7 +14,7 @@ class Calender extends React.Component {
 
                 <div className="card shadow mb-4">
                     <div className="card-body">
-                        <div className="pt-4 pb-2" style={{ padding: "0 !important" }}>
+                        <div className="pt-4 pb-2" style={{ padding: "0 ! important" }}>
                         </div>
                     </div>
                 </div>
