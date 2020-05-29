@@ -1,5 +1,5 @@
 import React from 'react'
-import './Calender.css'
+import './calender.css'
 
 
 class Calender extends React.Component {
