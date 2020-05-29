@@ -43,3 +43,16 @@ textarea,
 .card.shadow.mb-4 {
   box-shadow: none !important;
 }
+
+.green {
+  background: #1cc88a !important;
+  color: white;
+}
+.blue {
+  background: #36b9cc;
+  color: white;
+}
+.dark-blue {
+  background: #4e73df;
+  color: white;
+}

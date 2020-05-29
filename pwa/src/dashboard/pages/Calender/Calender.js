@@ -1,7 +1,6 @@
 import React from 'react'
-import './calender.css'
+import './Calender.css'
 
-import { styles } from './Calender.css.js';
 
 class Calender extends React.Component {
     render() {

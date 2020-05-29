@@ -87,4 +87,3 @@ export function Login({ match }) {
         </div>
     );
 }
-
