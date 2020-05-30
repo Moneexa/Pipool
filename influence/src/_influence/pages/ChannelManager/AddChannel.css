@@ -1,0 +1,27 @@
+.add-channel form{
+    color:rgb(133, 135, 150);
+}
+.add-channel .m-0.font-weight-bold.text-primary {
+    color: #000 !important;
+    margin-bottom: 20px !important;
+}
+.add-channel  .form-control{
+    font-size: .8rem;
+    border-radius: 10rem;
+    padding: 1.5rem 1rem;
+}
+.add-channel form.user label{
+    display: inline-block;
+    /*margin-bottom: .5rem;*/
+    margin-top: .5rem;
+}
+
+.add-channel form.user .btn.btn-primary.btn-user.btn-block {
+    width: 30%;
+    margin-top: 20px;
+    margin-left:20px;
+    color:white;
+    font-size: .8rem;
+    border-radius: 10rem;
+    padding: .75rem 1rem;
+}
