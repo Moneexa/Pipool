@@ -1,9 +1,11 @@
 import React from 'react'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faCreditCard} from '@fortawesome/free-regular-svg-icons'
-import {faUniversity} from '@fortawesome/free-solid-svg-icons';
-import {faPaypal, faCcVisa, faCcMastercard, faCcAmex} from '@fortawesome/free-brands-svg-icons'
- import './Payment.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCreditCard, faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
+import { faUniversity } from '@fortawesome/free-solid-svg-icons';
+import { faPaypal, faCcVisa, faCcMastercard, faCcAmex } from '@fortawesome/free-brands-svg-icons'
+import { Nav, InputGroup, FormControl, Button, Form, Row } from 'react-bootstrap';
+
+import './Payment.css'
 class Payment extends React.Component {
     render() {
 
@@ -12,72 +14,98 @@ class Payment extends React.Component {
 
             <div className="payment">
                 <div className="card-body p-5">
+                    <Nav variant="pills" defaultActiveKey="#nav-tab-card" className="nav bg-light nav-pills rounded nav-fill mb-3" role="tablist">
+                        <Nav.Item className="nav-item">
+                            <Nav.Link href="#nav-tab-card" data-toggle="pill">
 
-                    <ul className="nav bg-light nav-pills rounded nav-fill mb-3" role="tablist">
-                        <li className="nav-item">
-                            <a className="nav-link active show" data-toggle="pill" href="#nav-tab-card">
-                                <FontAwesomeIcon  icon={faCreditCard}/>Credit Card</a>
-                                
-                                </li>
-                        <li className="nav-item">
-                            <a className="nav-link" data-toggle="pill" href="#nav-tab-paypal">
-                                <FontAwesomeIcon icon={faPaypal} />  Paypal</a></li>
-                        <li className="nav-item">
-                            <a className="nav-link" data-toggle="pill" href="#nav-tab-bank">
-                            <FontAwesomeIcon icon={faUniversity}/>  Bank Transfer</a></li>
-                    </ul>
+                                <FontAwesomeIcon icon={faCreditCard} />
+                                  Credit Card
+
+                            </Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item className="nav-item">
+                            <Nav.Link data-toggle="pill" href="#nav-tab-paypal" >
+                                <FontAwesomeIcon icon={faPaypal} />
+                                    Paypal
+
+                            </Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item className="nav-item">
+                            <Nav.Link data-toggle="pill" href="#nav-tab-bank">
+                                <FontAwesomeIcon icon={faUniversity} />
+                                      Bank Transfer
+
+                                </Nav.Link>
+                        </Nav.Item>
+
+
+                    </Nav>
 
                     <div className="tab-content">
                         <div className="tab-pane fade active show" id="nav-tab-card">
                             <p className="alert alert-success">Some text success or error</p>
-                            <form role="form">
-                                <div className="form-group">
-                                    <label htmlFor="username">Full name (on the card)</label>
-                                    <input type="text" className="form-control" name="username" placeholder="" required="" />
-                                </div>
 
-                                <div className="form-group">
-                                    <label htmlFor="cardNumber">Card number</label>
-                                    <div className="input-group">
-                                        <input type="text" className="form-control" name="cardNumber" placeholder="" />
-                                        <div className="input-group-append">
+                            <Form>
+                                <Form.Group controlId="cardUserName">
+                                    <Form.Label>Full name (on the card)</Form.Label>
+                                    <Form.Control type="text" placeholder="" required="" />
+
+                                </Form.Group>
+                                <Form.Group controlId="cardNumber">
+                                    <Form.Label>Card Number</Form.Label>
+                                    <InputGroup className="mb-3">
+                                        <FormControl
+                                            placeholder=""
+                                            name="cardNumber"
+                                            type="number"
+                                        />
+                                        <InputGroup.Append>
                                             <span className="input-group-text text-muted">
-                                                
+
                                                 <FontAwesomeIcon icon={faCcVisa} />
                                                  &nbsp;
                                                  <FontAwesomeIcon icon={faCcAmex} />
                                                   &nbsp;
                                                 <FontAwesomeIcon icon={faCcMastercard} />
                                             </span>
-                                        </div>
-                                    </div>
-                                </div>
+                                        </InputGroup.Append>
+                                    </InputGroup>
+                                </Form.Group>
+                                <Row>
+                                <Form.Group controlId="expiration" className="col-md-8">
+                                    <Form.Label>Expiration</Form.Label>
+                                    <InputGroup className="mb-3">
+                                        <Form.Control placeholder="MM" name="" type="number" />
+                                        <Form.Control placeholder="YY" name="" type="number" />
 
-                                <div className="row">
-                                    <div className="col-sm-8">
-                                        <div className="form-group">
-                                            <label><span className="hidden-xs">Expiration</span> </label>
-                                            <div className="input-group">
-                                                <input type="number" className="form-control" placeholder="MM" name="" />
-                                                <input type="number" className="form-control" placeholder="YY" name="" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-4">
-                                        <div className="form-group">
-                                            <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV <i className="fa fa-question-circle"></i></label>
-                                            <input type="number" className="form-control" required="" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <button className="subscribe btn btn-primary btn-block" type="button"> Confirm  </button>
-                            </form>
+                                    </InputGroup>
+
+                                </Form.Group>
+                                <Form.Group controlId="cVV" className="col-md-4">
+                                    <Form.Label>CVV</Form.Label>
+                                    <FontAwesomeIcon icon={faQuestionCircle} />
+                                    <Form.Control type="number" placeholder="" required="" />
+
+                                </Form.Group>
+                                </Row>
+                                <Button className="subscribe btn btn-primary btn-block" type="submit" value="submit"> Confirm  </Button>
+
+
+                            </Form>
+
+
+
                         </div>
                         <div className="tab-pane fade" id="nav-tab-paypal">
                             <p>Paypal is easiest way to pay online</p>
                             <p>
                                 <button type="button" className="btn btn-primary">
-                                    <i className="fab fa-paypal"></i> Log in my Paypal </button>
+                                    <FontAwesomeIcon icon={faPaypal} />
+
+
+                                        Log in my Paypal
+
+                                         </button>
                             </p>
                             <p><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua. </p>

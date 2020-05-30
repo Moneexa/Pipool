@@ -1,15 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
-import 'bootstrap/dist/css/bootstrap.min.css';
+//import 'bootstrap/dist/css/bootstrap.min.css'
+import './lib/bootstrap.min.css';
 import './index.css';
 import { Provider } from "react-redux";
 import store from "./store/store";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { Dashboard } from './dashboard/Dashboard';
 import { Auth } from './auth/Auth';
-
-
 function Index_() {
   return (
     <Provider store={store}>
