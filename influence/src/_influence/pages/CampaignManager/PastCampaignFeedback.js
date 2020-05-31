@@ -1,4 +1,5 @@
 import React from 'react'
+import './PastCampaignFeedback.css'
 export default class PastCampaignFeedback extends React.Component {
 
     render() {

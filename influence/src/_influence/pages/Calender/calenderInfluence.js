@@ -4,7 +4,7 @@ import './calenderInfluence.css'
 
 class calenderInfluence extends React.Component {
     render() {
-        return (<div className="calender">
+        return (<div className="calender-influence">
 
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
                 <h2 className="m-0 font-weight-bold text-primary">Calender</h2>
