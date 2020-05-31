@@ -90,17 +90,65 @@ function DashBoardInfluenceIndex() {
                                 <h2 className="m-0 font-weight-bold">Pending Requests</h2>
 
                                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown.</p>
-                                <Link to="#" id="accept" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Accept</Link>
-                                <Link to="#" id="denny" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Deny</Link><br />
+                                <Link to="#" style={{
 
-                                
+                                    background: "#ffc809",
+                                    color: "white",
+                                    borderRadius: "30px",
+                                    width:"20%",
+                                    fontSize: "14px",
+                                    boxShadow: "0 .125rem .25rem 0 rgba(58,59,69,.2)!important",
+                                    border: "none"
+
+                                }}
+
+
+
+
+                                    id="accept" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Accept</Link>
+                                <Link to="#"
+
+                                    style={{
+
+                                        background: "#e5e5e5",
+                                        width: "20%",
+                                        fontSize: "14px",
+                                        borderRadius: "30px",
+                                        border: "none",color:"white"
+                                    }}
+
+
+
+
+                                    id="denny" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Deny</Link><br />
+
+
 
                             </div>
                             <br></br>
 
                             <div id="btn-top" className="mt-4 text-center small">
 
-                                <Link to="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">See more</Link>
+                                <Link to="#"
+
+                                style={{
+
+                                    width:  "30%",
+                                    fontSize:  "20px",
+                                    borderRadius:  "30px",
+                                
+                                    background:  "#ffc809",
+                                    color:"white",
+                                    border:  "none" ,
+                                
+                                    boxShadow:  "0 .125rem .25rem 0 rgba(58,59,69,.2)!important"
+
+
+
+                                }}
+
+
+                                    class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">See more</Link>
 
                             </div>
                         </div>
@@ -127,7 +175,7 @@ function DashBoardInfluenceIndex() {
 
                 </div>
             </div>
-        </div>
+        </div >
 
     )
 }
