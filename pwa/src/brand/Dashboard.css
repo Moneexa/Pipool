@@ -1,0 +1,67 @@
+.dashboard #wrapper nav .topbar {
+  height: 4.375rem;
+}
+.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top.shadow a {
+  color: #ffc809;
+}
+.sidebar {
+  width: 14rem !important;
+  background: #ffc809;
+  height: 100vh;
+  overflow-y: auto;
+  font-size: 0.85rem;
+}
+.sidebar-content {
+  flex: 1;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: #fff;
+}
+
+.dashboard #wrapper nav .topbar .topbar-divider {
+  width: 100% !important;
+  border-right: 0 !important;
+  height: auto !important;
+  margin: auto 1rem;
+  text-align: right;
+}
+.sidebar-content .navbar {
+  background-color: white;
+}
+.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top.shadow a {
+  padding: 20px;
+  font-weight: bold;
+}
+
+.no-icon-space {
+  width: 1.125em;
+  height: 1rem;
+  display: inline-block;
+}
+
+.sidebar .nav-item a {
+  color: #fff !important;
+}
+
+.dashboard .collapse-button {
+  cursor: pointer;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: rgba(255,255,255,.2);
+  color: rgba(255,255,255,.5);
+  font-weight: 900;
+  font-family: 'Font Awesome 5 Free';
+  margin-right: .1rem;
+}
+
+.dashboard .collapse-button:hover {
+  background-color: rgba(255,255,255,.25);
+}
+
+.dashboard .sidebar.collapsed {
+  width: 6.5rem!important;
+}
+
+.dashboard .sidebar.collapsed .nav-item {
+  text-align: center;
+}
