@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './Brand.css'
 class Brands extends React.Component {
 
     render() {
@@ -10,7 +10,7 @@ class Brands extends React.Component {
 
                 <div className="d-sm-flex align-items-center justify-content-between mb-4">
 
-                    <h2 style={{color:"black"}} className="m-0 font-weight-bold text-primary">Brands</h2>
+                    <h2  className="m-0 font-weight-bold text-primary">Brands</h2>
 
 
 
