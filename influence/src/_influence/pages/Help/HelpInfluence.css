@@ -39,6 +39,10 @@
     width: 30%;
     margin-top: 20px;
     margin-left:20px;
+    color:white;
+}
+.help-influence form.user #btn-top .d-none.d-sm-inline-block.btn.btn-sm.btn-primary.shadow-sm{
+    color:white;
 }
 .help-influence #btn-top  .d-none.d-sm-inline-block.btn.btn-sm.btn-primary.shadow-sm {
     width: 30%;
