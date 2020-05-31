@@ -8,12 +8,14 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { Dashboard } from './dashboard/Dashboard';
+import { influenceDashboard } from './influence/InfluenceDashboard';
 import { Auth } from './auth/Auth';
 function Index_() {
   return (
     <Provider store={store}>
       <Router>
-        <Route  path="/dashboard" component={Dashboard} />
+        <Route  path="/brand" component={Dashboard} />
+        <Route  path="/influencer" component={influenceDashboard} />
         <Route  path="/auth" component={Auth} />
       </Router>
     </Provider>
