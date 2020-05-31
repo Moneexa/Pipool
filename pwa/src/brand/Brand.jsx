@@ -14,11 +14,11 @@ import { Provider } from "react-redux";
 import { Nav } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTachometerAlt, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import './Dashboard.css';
+import './_Brand.css';
 
 //import store from "./shared/store/store"
 
-export class Dashboard extends React.Component {
+export class Brand extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
