@@ -1,26 +1,18 @@
-.login .container .card .card-body .row form.user .btn-user {
+.login .btn-user {
     font-size: .8rem;
     border-radius: 10rem;
     padding: .75rem 1rem;
     background-color:rgb(78, 115, 223);
 }
-.signin .container .card .card-body .row form.user .btn-user {
-    font-size: .8rem;
-    border-radius: 10rem;
-    padding: .75rem 1rem;
-    background-color:rgb(78, 115, 223);
-}
-.login  .bg-gradient-primary {
+
+.login .bg-gradient-primary {
     background-color: #4e73df;
     background-image: linear-gradient(180deg,#4e73df 10%,#224abe 100%);
     background-size: cover;
+    height: 100vh;
 }
-.signin .bg-gradient-primary {
-    background-color: #4e73df;
-    background-image: linear-gradient(180deg,#4e73df 10%,#224abe 100%);
-    background-size: cover;
-}
-.login .container .card .card-body .row  .btn-google {
+
+.login .btn-google {
     font-size: .8rem;
     border-radius: 10rem;
     padding: .75rem 1rem;
@@ -28,23 +20,8 @@
     background-color: #ea4335;
     border-color: #fff;
 }
-.signin .container .card .card-body .row  form.user .btn-google {
-    font-size: .8rem;
-    border-radius: 10rem;
-    padding: .75rem 1rem;
-    color: #fff;
-    background-color: #ea4335;
-    border-color: #fff;
-}
-.login  .container .card .card-body .row .btn-facebook {
-    font-size: .8rem;
-    border-radius: 10rem;
-    padding: .75rem 1rem;
-    color: #fff;
-    background-color: #30497c;
-    border-color: #fff;
-}
-.signin  .container .card .card-body .row  form.user .btn-facebook {
+
+.login .btn-facebook {
     font-size: .8rem;
     border-radius: 10rem;
     padding: .75rem 1rem;
@@ -53,13 +30,28 @@
     border-color: #fff;
 }
 
-.login .svg-inline--fa.fa-w-16 {
+.login input {
+    font-size: .8rem;
+}
+
+.login .social-icon {
     width: 1em;
     margin-right: 7px;
     color:white;
 }
-.signin .svg-inline--fa.fa-w-16 {
-    width: 1em;
-    margin-right: 7px;
-    color:white;
+
+.login .remember-me {
+    line-height: 1.5rem;
 }
+
+/* Since our bootstrap have customized primary color so we needed to override those styles */
+.login .remember-me .custom-control-input:checked~.custom-control-label::before {
+    color: #fff !important;
+    border-color: #007bff !important;
+    background-color: #007bff !important;
+}
+
+.login .remember-me .custom-control-input:focus~.custom-control-label::before {
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+/*------------------------------------------------------------------------------------------*/

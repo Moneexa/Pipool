@@ -8,6 +8,10 @@ body {
   background-color: #fff;
 }
 
+#root {
+  min-height: 100vh;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
@@ -55,4 +59,13 @@ textarea,
 .dark-blue {
   background: #4e73df;
   color: white;
+}
+
+.text-dark-blue {
+  color: #4e73df;
+}
+
+.no-focus-effects {
+  box-shadow: none !important;
+  border: none !important;
 }
