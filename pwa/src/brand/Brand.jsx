@@ -30,11 +30,11 @@ export class Brand extends React.Component {
                     <div className="d-flex">
                         <Router>
                             <div className={"sidebar " + (this.state.sidebarOpened ? "" : "collapsed")}>
-                                <button className="sidebar-brand d-flex align-items-center justify-content-center" style={{ marginTop: "20px", marginBottom: "30px" }}>
+                                <Link to={this.props.match.path} className="sidebar-brand d-flex align-items-center justify-content-center" style={{ marginTop: "20px", marginBottom: "30px" }}>
                                     <img alt="" src="../img/logo.jpg" />
                                     <div className="sidebar-brand-icon rotate-n-15">
                                     </div>
-                                </button>
+                                </Link>
 
                                 <Nav className="d-md-block bg-yello"
                                     activeKey="/home">
