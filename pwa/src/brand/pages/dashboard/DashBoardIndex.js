@@ -45,10 +45,9 @@ function DashBoardIndex() {
                                     <canvas id="myPieChart"></canvas>
                                 </div>
                                 <div id="btn-top" className="mt-4 text-center small" style={{ marginTop: "0 !important" }}>
-                                    <a href="#" className="d-none d-sm-inline-block btn btn-sm shadow-sm mx-1 py-1 px-4 green">Referral 30</a>
-                                    <a href="#" className="d-none d-sm-inline-block btn btn-sm shadow-sm mx-1 py-1 px-4 blue">Social 15</a>
-                                    <a href="#" className="d-none d-sm-inline-block btn btn-sm shadow-sm mx-1 py-1 px-4 dark-blue">Direct 55</a>
-
+                                    <button className="d-none d-sm-inline-block btn btn-sm shadow-sm mx-1 py-1 px-4 green">Referral 30</button>
+                                    <button className="d-none d-sm-inline-block btn btn-sm shadow-sm mx-1 py-1 px-4 blue">Social 15</button>
+                                    <button className="d-none d-sm-inline-block btn btn-sm shadow-sm mx-1 py-1 px-4 dark-blue">Direct 55</button>
                                 </div>
 
                             </div>
@@ -74,7 +73,7 @@ function DashBoardIndex() {
                                 <p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.</p><br></br>
                                 <div id="btn-top" className="mt-4 text-center small">
 
-                                    <a href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">See more</a>
+                                    <button className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">See more</button>
 
                                 </div>
 

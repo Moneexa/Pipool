@@ -1,21 +1,19 @@
+import { faChevronLeft, faChevronRight, faTachometerAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { Switch, BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
-import { Container, Row, Col, Card, Form, Button, NavLink } from "react-bootstrap";
-import DashboardInfluenceIndex from './pages/dashboard/DashBoardInfluenceIndex'
-import CampaignInfluence from './pages/dashboard/CampaignInfluence'
-import PendingRequestsInfluence from './pages/dashboard/PendingRequestsInfluence';
-import Channel from './pages/ChannelManager/Channel'
-import AddChannel from './pages/ChannelManager/AddChannel'
-import newCampaignIfluence from './pages/CampaignManager/newCampaignInfluence'
-import PastCampaignFeedback from './pages/CampaignManager/PastCampaignFeedback'
-import calenderInfluence from './pages/Calender/calenderInfluence'
-import PaymentInfluence from './pages/Payment/PaymentInfluence'
-import HelpInfluence from './pages/Help/HelpInfluence'
-import { Provider } from "react-redux";
 import { Nav } from "react-bootstrap";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTachometerAlt, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import { BrowserRouter as Router, Link, Redirect, Route, Switch } from "react-router-dom";
 import './influenceDashboard.css';
+import calenderInfluence from './pages/Calender/calenderInfluence';
+import newCampaignIfluence from './pages/CampaignManager/newCampaignInfluence';
+import PastCampaignFeedback from './pages/CampaignManager/PastCampaignFeedback';
+import AddChannel from './pages/ChannelManager/AddChannel';
+import Channel from './pages/ChannelManager/Channel';
+import CampaignInfluence from './pages/dashboard/CampaignInfluence';
+import DashboardInfluenceIndex from './pages/dashboard/DashBoardInfluenceIndex';
+import PendingRequestsInfluence from './pages/dashboard/PendingRequestsInfluence';
+import HelpInfluence from './pages/Help/HelpInfluence';
+import PaymentInfluence from './pages/Payment/PaymentInfluence';
 
 //import store from "./shared/store/store"
 
@@ -33,11 +31,11 @@ export class influenceDashboard extends React.Component {
                     <div className="d-flex">
                         <Router>
                             <div className={"sidebar " + (this.state.sidebarOpened ? "" : "collapsed")}>
-                                <a className="sidebar-brand d-flex align-items-center justify-content-center" style={{ marginTop: "20px", marginBottom: "30px" }}>
-                                    <img src="../img/logo.jpg" />
+                                <button className="sidebar-brand d-flex align-items-center justify-content-center" style={{ marginTop: "20px", marginBottom: "30px" }}>
+                                    <img alt="" src="../img/logo.jpg" />
                                     <div className="sidebar-brand-icon rotate-n-15">
                                     </div>
-                                </a>
+                                </button>
 
                                 <Nav className="d-md-block bg-yello"
                                     activeKey="/influence-home">
@@ -159,16 +157,19 @@ export class influenceDashboard extends React.Component {
                                     </div>
                                 </nav>
                                 <div className="container-fluid">
-                                    <Route path={`${this.props.match.path}/influence-home`} component={DashboardInfluenceIndex} />
-                                    <Route path={`${this.props.match.path}/campaigns-influence`} component={CampaignInfluence} />
-                                    <Route path={`${this.props.match.path}/pending-requests-influence`} component={PendingRequestsInfluence} />
-                                    <Route path={`${this.props.match.path}/channels`} component={Channel} />
-                                    <Route path={`${this.props.match.path}/add-channels`} component={AddChannel} />
-                                    <Route path={`${this.props.match.path}/campaign-feedbacks`} component={PastCampaignFeedback} />
-                                    <Route path={`${this.props.match.path}/new-campaign-influencer`} component={newCampaignIfluence} />
-                                    <Route path={`${this.props.match.path}/calender-influence`} component={calenderInfluence} />
-                                    <Route path={`${this.props.match.path}/payment-influence`} component={PaymentInfluence} />
-                                    <Route path={`${this.props.match.path}/help-influence`} component={HelpInfluence} />
+                                    <Switch>
+                                        <Redirect from={`${this.props.match.path}/`} exact to={`${this.props.match.path}/influence-home`} />
+                                        <Route path={`${this.props.match.path}/influence-home`} component={DashboardInfluenceIndex} />
+                                        <Route path={`${this.props.match.path}/campaigns-influence`} component={CampaignInfluence} />
+                                        <Route path={`${this.props.match.path}/pending-requests-influence`} component={PendingRequestsInfluence} />
+                                        <Route path={`${this.props.match.path}/channels`} component={Channel} />
+                                        <Route path={`${this.props.match.path}/add-channels`} component={AddChannel} />
+                                        <Route path={`${this.props.match.path}/campaign-feedbacks`} component={PastCampaignFeedback} />
+                                        <Route path={`${this.props.match.path}/new-campaign-influencer`} component={newCampaignIfluence} />
+                                        <Route path={`${this.props.match.path}/calender-influence`} component={calenderInfluence} />
+                                        <Route path={`${this.props.match.path}/payment-influence`} component={PaymentInfluence} />
+                                        <Route path={`${this.props.match.path}/help-influence`} component={HelpInfluence} />
+                                    </Switch>
 
                                 </div>
                             </div>

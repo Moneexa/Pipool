@@ -88,7 +88,6 @@ const styles = useStyles({
     checkMark: {
         float: "right",
         background: "#aaa",
-        padding: "0px 15px",
         height: "45px",
         width: "45px",
         margin: "0 7px",
@@ -178,7 +177,7 @@ function newCampaignInfluence() {
                         <input style={{ border: "none", padding: "5px 21px" }} type="file" placeholder="Enter the name" className="form-control form-control-user" />
                         */}
                         <div id="bac_img" style={_styles.bacImage}>
-                            <img src="../img/logo-ip.png" style={{ borderRadius: "80px", padding: "10px" }} />
+                            <img alt="" src="../img/logo-ip.png" style={{ borderRadius: "80px", padding: "10px" }} />
                         </div>
 
                     </div>
@@ -342,18 +341,18 @@ function newCampaignInfluence() {
                             <button style={_styles.checkMark} className="send " data-counter="0">✔</button>
                         </div>
                         <ul style={_styles.ul}>
-                            <li style={_styles.li}><img src="https://farm8.staticflickr.com/7326/11287113923_57d37ed9d3_q.jpg" /></li>
-                            <li style={_styles.li}><img src="https://farm9.staticflickr.com/8184/8095683964_9e27753908_q.jpg" /></li>
-                            <li style={_styles.li}><img src="https://farm9.staticflickr.com/8171/8018956825_67bf62c098_q.jpg" /></li>
-                            <li style={_styles.li}><img src="https://farm9.staticflickr.com/8425/7587724752_cdb9f0c444_q.jpg" /></li>
-                            <li style={_styles.li}><img src="https://farm8.staticflickr.com/7248/7587738254_707a32f27b_q.jpg" /></li>
-                            <li style={_styles.li}> <img src="https://farm9.staticflickr.com/8191/8095680852_893f685cbd_q.jpg" /></li>
-                            <li style={_styles.li}><img src="https://farm9.staticflickr.com/8460/8018953043_c6ef9e3b29_q.jpg" /></li>
-                            <li style={_styles.li}><img src="https://farm9.staticflickr.com/8026/7445019824_914dea4ac3_q.jpg" /></li>
-                            <li style={_styles.li}><img src="https://farm8.staticflickr.com/7088/7332137562_14956827a7_q.jpg" /></li>
-                            <li style={_styles.li}><img src="https://farm8.staticflickr.com/7108/7151306497_9cfb1a367b_q.jpg" /></li>
-                            <li style={_styles.li}><img src="https://farm6.staticflickr.com/5198/7005209880_432389ef25_q.jpg" /></li>
-                            <li style={_styles.li}><img src="https://farm8.staticflickr.com/7280/7151302883_e6ef32f04d_q.jpg" /></li>
+                            <li style={_styles.li}><img alt="" src="https://farm8.staticflickr.com/7326/11287113923_57d37ed9d3_q.jpg" /></li>
+                            <li style={_styles.li}><img alt="" src="https://farm9.staticflickr.com/8184/8095683964_9e27753908_q.jpg" /></li>
+                            <li style={_styles.li}><img alt="" src="https://farm9.staticflickr.com/8171/8018956825_67bf62c098_q.jpg" /></li>
+                            <li style={_styles.li}><img alt="" src="https://farm9.staticflickr.com/8425/7587724752_cdb9f0c444_q.jpg" /></li>
+                            <li style={_styles.li}><img alt="" src="https://farm8.staticflickr.com/7248/7587738254_707a32f27b_q.jpg" /></li>
+                            <li style={_styles.li}> <img alt="" src="https://farm9.staticflickr.com/8191/8095680852_893f685cbd_q.jpg" /></li>
+                            <li style={_styles.li}><img alt="" src="https://farm9.staticflickr.com/8460/8018953043_c6ef9e3b29_q.jpg" /></li>
+                            <li style={_styles.li}><img alt="" src="https://farm9.staticflickr.com/8026/7445019824_914dea4ac3_q.jpg" /></li>
+                            <li style={_styles.li}><img alt="" src="https://farm8.staticflickr.com/7088/7332137562_14956827a7_q.jpg" /></li>
+                            <li style={_styles.li}><img alt="" src="https://farm8.staticflickr.com/7108/7151306497_9cfb1a367b_q.jpg" /></li>
+                            <li style={_styles.li}><img alt="" src="https://farm6.staticflickr.com/5198/7005209880_432389ef25_q.jpg" /></li>
+                            <li style={_styles.li}><img alt="" src="https://farm8.staticflickr.com/7280/7151302883_e6ef32f04d_q.jpg" /></li>
                         </ul>
                     </div>
                 </div>

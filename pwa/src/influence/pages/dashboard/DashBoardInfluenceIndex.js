@@ -67,9 +67,9 @@ function DashBoardInfluenceIndex() {
                                     <canvas id="myPieChart"></canvas>
                                 </div>
                                 <div id="btn-top" className="mt-4 text-center small" style={{ marginTop: "0 !important" }}>
-                                    <a href="#" className="d-none d-sm-inline-block btn btn-sm shadow-sm mx-1 py-1 px-4 green">Referral 30</a>
-                                    <a href="#" className="d-none d-sm-inline-block btn btn-sm shadow-sm mx-1 py-1 px-4 blue">Social 15</a>
-                                    <a href="#" className="d-none d-sm-inline-block btn btn-sm shadow-sm mx-1 py-1 px-4 dark-blue">Direct 55</a>
+                                    <button className="d-none d-sm-inline-block btn btn-sm shadow-sm mx-1 py-1 px-4 green">Referral 30</button>
+                                    <button className="d-none d-sm-inline-block btn btn-sm shadow-sm mx-1 py-1 px-4 blue">Social 15</button>
+                                    <button className="d-none d-sm-inline-block btn btn-sm shadow-sm mx-1 py-1 px-4 dark-blue">Direct 55</button>
 
                                 </div>
 

@@ -1,19 +1,17 @@
+import { faChevronLeft, faChevronRight, faTachometerAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { Switch, BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
-import { Container, Row, Col, Card, Form, Button, NavLink } from "react-bootstrap";
-import DashboardIndex from './pages/dashboard/DashBoardIndex'
-import Campaigns from './pages/dashboard/Campaigns'
-import PendingRequests from './pages/dashboard/PendingRequests';
-import Brands from './pages/BrandManager/Brand'
-import AddBrand from './pages/BrandManager/AddBrand'
-import NewCampaign from './pages/CampaignManager/NewCampaign'
-import Calender from './pages/Calender/Calender'
-import Payment from './pages/Payment/Payment'
-import Help from './pages/Help/Help'
-import { Provider } from "react-redux";
 import { Nav } from "react-bootstrap";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTachometerAlt, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import { BrowserRouter as Router, Link, Redirect, Route, Switch } from "react-router-dom";
+import AddBrand from './pages/BrandManager/AddBrand';
+import Brands from './pages/BrandManager/Brand';
+import Calender from './pages/Calender/Calender';
+import NewCampaign from './pages/CampaignManager/NewCampaign';
+import Campaigns from './pages/dashboard/Campaigns';
+import DashboardIndex from './pages/dashboard/DashBoardIndex';
+import PendingRequests from './pages/dashboard/PendingRequests';
+import Help from './pages/Help/Help';
+import Payment from './pages/Payment/Payment';
 import './_Brand.css';
 
 //import store from "./shared/store/store"
@@ -32,11 +30,11 @@ export class Brand extends React.Component {
                     <div className="d-flex">
                         <Router>
                             <div className={"sidebar " + (this.state.sidebarOpened ? "" : "collapsed")}>
-                                <a className="sidebar-brand d-flex align-items-center justify-content-center" style={{ marginTop: "20px", marginBottom: "30px" }}>
-                                    <img src="../img/logo.jpg" />
+                                <button className="sidebar-brand d-flex align-items-center justify-content-center" style={{ marginTop: "20px", marginBottom: "30px" }}>
+                                    <img alt="" src="../img/logo.jpg" />
                                     <div className="sidebar-brand-icon rotate-n-15">
                                     </div>
-                                </a>
+                                </button>
 
                                 <Nav className="d-md-block bg-yello"
                                     activeKey="/home">
@@ -158,15 +156,18 @@ export class Brand extends React.Component {
                                     </div>
                                 </nav>
                                 <div className="container-fluid">
-                                    <Route path={`${this.props.match.path}/overview`} component={DashboardIndex} />
-                                    <Route path={`${this.props.match.path}/campaigns`} component={Campaigns} />
-                                    <Route path={`${this.props.match.path}/pending-requests`} component={PendingRequests} />
-                                    <Route path={`${this.props.match.path}/brands`} component={Brands} />
-                                    <Route path={`${this.props.match.path}/add-brand`} component={AddBrand} />
-                                    <Route path={`${this.props.match.path}/new-campaign`} component={NewCampaign} />
-                                    <Route path={`${this.props.match.path}/calender`} component={Calender} />
-                                    <Route path={`${this.props.match.path}/payment`} component={Payment} />
-                                    <Route path={`${this.props.match.path}/help`} component={Help} />
+                                    <Switch>
+                                        <Redirect from={`${this.props.match.path}/`} exact to={`${this.props.match.path}/overview`} />
+                                        <Route path={`${this.props.match.path}/overview`} component={DashboardIndex} />
+                                        <Route path={`${this.props.match.path}/campaigns`} component={Campaigns} />
+                                        <Route path={`${this.props.match.path}/pending-requests`} component={PendingRequests} />
+                                        <Route path={`${this.props.match.path}/brands`} component={Brands} />
+                                        <Route path={`${this.props.match.path}/add-brand`} component={AddBrand} />
+                                        <Route path={`${this.props.match.path}/new-campaign`} component={NewCampaign} />
+                                        <Route path={`${this.props.match.path}/calender`} component={Calender} />
+                                        <Route path={`${this.props.match.path}/payment`} component={Payment} />
+                                        <Route path={`${this.props.match.path}/help`} component={Help} />
+                                    </Switch>
                                 </div>
                             </div>
                         </Router>

@@ -23,23 +23,23 @@ class Channel extends React.Component {
                         <div className="card shadow mb-4">
                             <div className="card-body">
 
-                                <img src="../img/users_profile.jpg" />
+                                <img alt="" src="../img/users_profile.jpg" />
                                 <h4>TIMOTHY</h4>
                                 <p><b>Project Manager</b></p>
                                 <p style={{ marginBottom: "50px" }}>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
                                 <div className="text-center d-none d-md-inline">
-                                    <a className="btn-floating btn-lg btn-fb" type="button" role="button">
+                                    <button className="btn-floating btn-lg btn-fb" type="button">
                                         <FontAwesomeIcon icon={faFacebookF} />
-                                    </a>
-                                    <a className="btn-floating btn-lg btn-tw" type="button" role="button">
+                                    </button>
+                                    <button className="btn-floating btn-lg btn-tw" type="button">
                                         <FontAwesomeIcon icon={faTwitter} />
-                                    </a>
-                                    <a className="btn-floating btn-lg btn-li" type="button" role="button">
+                                    </button>
+                                    <button className="btn-floating btn-lg btn-li" type="button">
                                         <FontAwesomeIcon icon={faLinkedinIn} />
-                                    </a>
-                                    <a className="btn-floating btn-lg btn-ins" type="button" role="button">
+                                    </button>
+                                    <button className="btn-floating btn-lg btn-ins" type="button">
                                         < FontAwesomeIcon icon={faInstagram} />
-                                    </a>
+                                    </button>
 
                                 </div>
 
@@ -54,23 +54,23 @@ class Channel extends React.Component {
                         <div className="card shadow mb-4">
                             <div className="card-body">
 
-                                <img src="../img/users_profile.jpg" />
+                                <img alt="" src="../img/users_profile.jpg" />
                                 <h4>TIMOTHY</h4>
                                 <p><b>Project Manager</b></p>
                                 <p style={{ marginBottom: "50px" }}>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
                                 <div className="text-center d-none d-md-inline">
-                                    <a className="btn-floating btn-lg btn-fb" type="button" role="button">
+                                    <button className="btn-floating btn-lg btn-fb" type="button">
                                         <FontAwesomeIcon icon={faFacebookF} />
-                                    </a>
-                                    <a className="btn-floating btn-lg btn-tw" type="button" role="button">
+                                    </button>
+                                    <button className="btn-floating btn-lg btn-tw" type="button">
                                         <FontAwesomeIcon icon={faTwitter} />
-                                    </a>
-                                    <a className="btn-floating btn-lg btn-li" type="button" role="button">
+                                    </button>
+                                    <button className="btn-floating btn-lg btn-li" type="button">
                                         <FontAwesomeIcon icon={faLinkedinIn} />
-                                    </a>
-                                    <a className="btn-floating btn-lg btn-ins" type="button" role="button">
+                                    </button>
+                                    <button className="btn-floating btn-lg btn-ins" type="button">
                                         < FontAwesomeIcon icon={faInstagram} />
-                                    </a>
+                                    </button>
                                 </div>
 
                             </div>
@@ -85,23 +85,23 @@ class Channel extends React.Component {
 
                             <div className="card-body">
 
-                                <img src="../img/users_profile.jpg" />
+                                <img alt="" src="../img/users_profile.jpg" />
                                 <h4>TIMOTHY</h4>
                                 <p><b>Project Manager</b></p>
                                 <p style={{ marginBottom: "50px" }}>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
                                 <div className="text-center d-none d-md-inline">
-                                    <a className="btn-floating btn-lg btn-fb" type="button" role="button">
+                                    <button className="btn-floating btn-lg btn-fb" type="button">
                                         <FontAwesomeIcon icon={faFacebookF} />
-                                    </a>
-                                    <a className="btn-floating btn-lg btn-tw" type="button" role="button">
+                                    </button>
+                                    <button className="btn-floating btn-lg btn-tw" type="button">
                                         <FontAwesomeIcon icon={faTwitter} />
-                                    </a>
-                                    <a className="btn-floating btn-lg btn-li" type="button" role="button">
+                                    </button>
+                                    <button className="btn-floating btn-lg btn-li" type="button">
                                         <FontAwesomeIcon icon={faLinkedinIn} />
-                                    </a>
-                                    <a className="btn-floating btn-lg btn-ins" type="button" role="button">
+                                    </button>
+                                    <button className="btn-floating btn-lg btn-ins" type="button">
                                         < FontAwesomeIcon icon={faInstagram} />
-                                    </a>
+                                    </button>
                                 </div>
 
                             </div>
@@ -119,23 +119,23 @@ class Channel extends React.Component {
 
                             <div className="card-body">
 
-                                <img src="../img/users_profile.jpg" />
+                                <img alt="" src="../img/users_profile.jpg" />
                                 <h4>TIMOTHY</h4>
                                 <p><b>Project Manager</b></p>
                                 <p style={{ marginBottom: "50px" }}>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
                                 <div className="text-center d-none d-md-inline">
-                                    <a className="btn-floating btn-lg btn-fb" type="button" role="button">
+                                    <button className="btn-floating btn-lg btn-fb" type="button">
                                         <FontAwesomeIcon icon={faFacebookF} />
-                                    </a>
-                                    <a className="btn-floating btn-lg btn-tw" type="button" role="button">
+                                    </button>
+                                    <button className="btn-floating btn-lg btn-tw" type="button">
                                         <FontAwesomeIcon icon={faTwitter} />
-                                    </a>
-                                    <a className="btn-floating btn-lg btn-li" type="button" role="button">
+                                    </button>
+                                    <button className="btn-floating btn-lg btn-li" type="button">
                                         <FontAwesomeIcon icon={faLinkedinIn} />
-                                    </a>
-                                    <a className="btn-floating btn-lg btn-ins" type="button" role="button">
+                                    </button>
+                                    <button className="btn-floating btn-lg btn-ins" type="button">
                                         < FontAwesomeIcon icon={faInstagram} />
-                                    </a>
+                                    </button>
 
                                 </div>
 
@@ -146,23 +146,23 @@ class Channel extends React.Component {
                     <div id="border" className="col-xl-4   col-lg-7">
                         <div className="card shadow mb-4">
                            <div className="card-body">
-                                <img src="../img/users_profile.jpg" />
+                                <img alt="" src="../img/users_profile.jpg" />
                                 <h4>TIMOTHY</h4>
                                 <p><b>Project Manager</b></p>
                                 <p style={{ marginBottom: "50px" }}>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
                                 <div className="text-center d-none d-md-inline">
-                                    <a className="btn-floating btn-lg btn-fb" type="button" role="button">
+                                    <button className="btn-floating btn-lg btn-fb" type="button">
                                         <FontAwesomeIcon icon={faFacebookF} />
-                                    </a>
-                                    <a className="btn-floating btn-lg btn-tw" type="button" role="button">
+                                    </button>
+                                    <button className="btn-floating btn-lg btn-tw" type="button">
                                         <FontAwesomeIcon icon={faTwitter} />
-                                    </a>
-                                    <a className="btn-floating btn-lg btn-li" type="button" role="button">
+                                    </button>
+                                    <button className="btn-floating btn-lg btn-li" type="button">
                                         <FontAwesomeIcon icon={faLinkedinIn} />
-                                    </a>
-                                    <a className="btn-floating btn-lg btn-ins" type="button" role="button">
+                                    </button>
+                                    <button className="btn-floating btn-lg btn-ins" type="button">
                                         < FontAwesomeIcon icon={faInstagram} />
-                                    </a>
+                                    </button>
                                 </div>
 
                             </div>
@@ -175,23 +175,23 @@ class Channel extends React.Component {
                         <div className="card shadow mb-4">
                             <div className="card-body">
 
-                                <img src="../img/users_profile.jpg" />
+                                <img alt="" src="../img/users_profile.jpg" />
                                 <h4>TIMOTHY</h4>
                                 <p><b>Project Manager</b></p>
                                 <p style={{ marginBottom: "50px" }}>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
                                 <div className="text-center d-none d-md-inline">
-                                    <a className="btn-floating btn-lg btn-fb" type="button" role="button">
+                                    <button className="btn-floating btn-lg btn-fb" type="button">
                                         <FontAwesomeIcon icon={faFacebookF} />
-                                    </a>
-                                    <a className="btn-floating btn-lg btn-tw" type="button" role="button">
+                                    </button>
+                                    <button className="btn-floating btn-lg btn-tw" type="button">
                                         <FontAwesomeIcon icon={faTwitter} />
-                                    </a>
-                                    <a className="btn-floating btn-lg btn-li" type="button" role="button">
+                                    </button>
+                                    <button className="btn-floating btn-lg btn-li" type="button">
                                         <FontAwesomeIcon icon={faLinkedinIn} />
-                                    </a>
-                                    <a className="btn-floating btn-lg btn-ins" type="button" role="button">
+                                    </button>
+                                    <button className="btn-floating btn-lg btn-ins" type="button">
                                         < FontAwesomeIcon icon={faInstagram} />
-                                    </a>
+                                    </button>
                                 </div>
 
                             </div>

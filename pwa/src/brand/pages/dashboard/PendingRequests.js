@@ -97,7 +97,7 @@ function PendingRequests() {
             </div>
             <div id="btn-top" className="mt-4 text-center small" style={{ marginBottom: "50px" }}>
 
-                <button style={_styles.seeMore} href="#" className="rounded-30 px-5 text-white d-sm-inline-block btn btn-sm btn-primary shadow-sm">See more</button>
+                <button style={_styles.seeMore} className="rounded-30 px-5 text-white d-sm-inline-block btn btn-sm btn-primary shadow-sm">See more</button>
 
             </div>
         </div>

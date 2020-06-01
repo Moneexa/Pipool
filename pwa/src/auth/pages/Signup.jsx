@@ -16,7 +16,7 @@ export function Signup({ match }) {
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="p-5">
-                                        <img src="/img/logo.jpg" />
+                                        <img src="/img/logo.jpg" alt="" />
                                         <div className="text-center">
                                             <h1 className="h4 text-gray-900 mb-4">Create an Account!</h1>
                                         </div>

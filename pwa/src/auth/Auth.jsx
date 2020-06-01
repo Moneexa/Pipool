@@ -1,15 +1,17 @@
 import React from 'react';
-import { Route, Redirect, BrowserRouter as Router } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { Login } from './pages/Login';
 import { Signup } from './pages/Signup';
 
 export function Auth({ match }) {
     return (
         <>
-            <Router>
-                <Route path={`${match.path}/login`}  component={Login} />
+            <Switch>
+                <Redirect from={`${match.path}/`} exact to={`${match.path}/signup`} />
+                <Route path={`${match.path}/login`} component={Login} />
                 <Route path={`${match.path}/signup`} component={Signup} />
-            </Router>
+            </Switch>
+            {/* </Router> */}
         </>
     );
 }
