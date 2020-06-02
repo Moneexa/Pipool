@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useStyles } from 'react-styles-hook'
 import './Campaign.css';
+import { Tab, Nav, Row, Col } from 'react-bootstrap';
 const styles = useStyles({
+    bottomSpacer: {
+        marginBottom: '5rem'
+    },
     bacImage: {
         backgroundImage: "url('../img/fQ3sE2ESryyBsVqTCOmHLOXeAAFvY6F2llcYtQEc.png')",
         backgroundSize: "cover",
@@ -9,20 +13,18 @@ const styles = useStyles({
         backgroundPosition: "bottom"
     },
     nextButton: {
-        background: "#ffc400",
         border: "0",
-
         fontSize: ".8rem",
         borderRadius: "10rem",
-        padding: ".75rem 1rem",
+        padding: ".5rem 0rem",
         margin: "10px",
-
+        width: '10rem'
     },
     backgroundBox: {
         background: "#252c34",
         padding: "20px",
         boxSizing: "border-box",
-        fontStyle:"oblique",
+        fontStyle: "oblique",
     },
     callForAction: {
         margin: "10px 0px 4px 21px",
@@ -34,11 +36,9 @@ const styles = useStyles({
     },
     simpleSentenceInput: {
         fontSize: ".8rem",
-        borderRadius: "10rem",
         padding: "1.5rem 1rem",
         display: "block",
         width: "100%",
-        height: "calc(1.5em + .75rem + 2px)",
         fontWeight: "400",
         lineHeight: "1.5",
         color: "#6e707e",
@@ -64,7 +64,6 @@ const styles = useStyles({
     chooseFileButton: {
         padding: "5px !important",
         fontSize: ".8rem",
-        borderRadius: "10rem",
         border: "transparent"
     },
     selectButton: {
@@ -117,7 +116,6 @@ const styles = useStyles({
     },
     firstForm: {
         fontSize: ".8rem",
-        borderRadius: "10rem",
         padding: "1.5rem 1rem"
     },
     firstFormLabels: {
@@ -129,235 +127,258 @@ const styles = useStyles({
 
 
 })
+
+
 function NewCampaign() {
+
+    const formSteps = ["one", "two", "three"]
+    const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
     const _styles = styles;
     return (
-        <div className="new-campaign">
-
+        <div className="new-campaign px-lg-2 px-xl-5" style={_styles.bottomSpacer}>
             <div className="text-center">
-                <h1 style={{color:"#3a3b45!important"}}className="h4 text-gray-900 mb-4">CREATE A CAMPAIGN</h1>
+                <h1 style={{ color: "#3a3b45!important" }} className="h4 text-gray-900 mb-4">CREATE A CAMPAIGN</h1>
                 <p>Describe your product or service to the influencers.</p>
             </div>
-
-
             <form className="user">
-
-                <div className="form-group row">
-                    <div className="form-group col-sm-6 mb-3 mb-sm-0">
-                        <label style={_styles.firstFormLabels}>Product or service name *</label>
-                        <input style={_styles.firstForm} type="text" className="form-control form-control-user" name="service" id="service" placeholder="Enter the name of your product or service" />
-
-
-
-                        <label style={_styles.firstFormLabels}>Product or service description *</label>
-                        <textarea style={_styles.firstForm} className="form-control form-control-user" name="S_service" id="S_service" placeholder="Describe your product or service as if your audience is new to it. On the next steps, you'll be able to describe the content you'd like from our influencers. "></textarea>
+                <Tab.Container id="left-tabs-example" defaultActiveKey={formSteps[currentStepIndex]}>
+                    <Tab.Content>
+                        <Tab.Pane eventKey={formSteps[0]} className="mb-5">
+                            <div className="row">
+                                <div className="col-12 col-lg-6 mb-3 mb-sm-0">
+                                    <label style={_styles.firstFormLabels}>Product or service name *</label>
+                                    <input style={_styles.firstForm} type="text" className="form-control form-control-user" name="service" id="service" placeholder="Enter the name of your product or service" />
 
 
-                        <label style={_styles.firstFormLabels}>Category *</label>
-                        <select style={_styles.firstForm} className="browser-default custom-select" id="category" name="category">
-                            <option defaultValue="Open this select menu">Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
 
-                    <div className="form-group col-sm-6 mb-3 mb-sm-0">
-                        <label htmlFor="basic-url">
-                            <strong>Set your campaign Cover Image *</strong>
-                        </label>
-                        <div className="input-group mb-3">
-                            <div className="custom-file">
-                                <input type="file" className="custom-file-input" id="inputGroupFile01" />
-                                <label className="custom-file-label" htmlFor="inputGroupFile01">Choose a file</label>
+                                    <label style={_styles.firstFormLabels}>Product or service description *</label>
+                                    <textarea style={_styles.firstForm} className="form-control form-control-user" name="S_service" id="S_service" placeholder="Describe your product or service as if your audience is new to it. On the next steps, you'll be able to describe the content you'd like from our influencers. "></textarea>
+
+
+                                    <label style={_styles.firstFormLabels}>Category *</label>
+                                    <select style={_styles.firstForm} className="browser-default custom-select" id="category" name="category">
+                                        <option defaultValue="Open this select menu">Open this select menu</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+
+                                <div className="col-12 col-lg-6 mb-3 mb-sm-0">
+                                    <label htmlFor="basic-url">
+                                        <strong>Set your campaign Cover Image *</strong>
+                                    </label>
+                                    <div className="input-group mb-3">
+                                        <div className="custom-file">
+                                            <input type="file" className="custom-file-input" id="inputGroupFile01" />
+                                            <label className="custom-file-label" htmlFor="inputGroupFile01">Choose a file</label>
+                                        </div>
+                                    </div>
+                                    <div id="bac_img" style={_styles.bacImage}>
+                                        <img alt="" src="../img/logo-ip.png" style={{ borderRadius: "80px", padding: "10px" }} />
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        {/* <label style={_styles.firstFormLabels}>Set your campaign Cover Image *</label>
-                        <input style={{ border: "none", padding: "5px 21px" }} type="file" placeholder="Enter the name" className="form-control form-control-user" />
-                        */}
-                        <div id="bac_img" style={_styles.bacImage}>
-                            <img alt="" src="../img/logo-ip.png" style={{ borderRadius: "80px", padding: "10px" }} />
-                        </div>
-
-                    </div>
-                    <button style={_styles.nextButton} className="btn btn-primary btn-user btn-block"> Next</button>
-                </div>
-
-                <div className="form-group row" >
-                    <div className="form-group col-sm-6 mb-3 mb-sm-0">
-                        <label style={_styles.callForAction} >Call for action *</label>
-                        <input style={_styles.simpleSentenceInput} type="text" className="form-control form-control-user" id="exampleInputEmail" placeholder="Describe in a simple sentence what you request from the influencers" />
+                        </Tab.Pane>
+                        <Tab.Pane eventKey={formSteps[1]}>
+                            <div className="row">
+                                <div className="col-12 col-lg-6 mb-3 mb-sm-0">
+                                    <label style={_styles.callForAction} >Call for action *</label>
+                                    <input style={_styles.simpleSentenceInput} type="text" className="form-control form-control-user" id="exampleInputEmail" placeholder="Describe in a simple sentence what you request from the influencers" />
 
 
 
-                        <label style={_styles.callForAction}>Brief the influencers *</label>
-                        <textarea style={_styles.simpleSentenceInput} className="form-control form-control-user" id="exampleInputEmail" placeholder="Describe the content you'd like from our influencers. Try to be as clear as possible to avoid out of context content from the influencers"></textarea>
+                                    <label style={_styles.callForAction}>Brief the influencers *</label>
+                                    <textarea style={_styles.simpleSentenceInput} className="form-control form-control-user" id="exampleInputEmail" placeholder="Describe the content you'd like from our influencers. Try to be as clear as possible to avoid out of context content from the influencers"></textarea>
 
 
 
 
-                        <label style={_styles.callForAction}>Do </label>
-                        <input style={_styles.simpleSentenceInput} type="text" className="form-control form-control-user" id="exampleInputEmail" placeholder="Add a rule - press enter to confirm" />
+                                    <label style={_styles.callForAction}>Do </label>
+                                    <input style={_styles.simpleSentenceInput} type="text" className="form-control form-control-user" id="exampleInputEmail" placeholder="Add a rule - press enter to confirm" />
 
 
 
-                        <label style={_styles.callForAction}>Don't </label>
-                        <input style={_styles.simpleSentenceInput} type="text" className="form-control form-control-user" id="exampleInputEmail" placeholder="Add a rule - press enter to confirm" />
+                                    <label style={_styles.callForAction}>Don't </label>
+                                    <input style={_styles.simpleSentenceInput} type="text" className="form-control form-control-user" id="exampleInputEmail" placeholder="Add a rule - press enter to confirm" />
 
 
 
-                        <label style={_styles.callForAction} >Caption example (Optional)  </label>
-                        <input style={_styles.simpleSentenceInput} type="text" className="form-control form-control-user" id="exampleInputEmail" placeholder="Describe in a simple sentence what you request from the influencers" />
-                    </div>
+                                    <label style={_styles.callForAction} >Caption example (Optional)  </label>
+                                    <input style={_styles.simpleSentenceInput} type="text" className="form-control form-control-user" id="exampleInputEmail" placeholder="Describe in a simple sentence what you request from the influencers" />
+                                </div>
 
-                    <div className="form-group col-sm-6 mb-3 mb-sm-0">
-                        <div style={_styles.backgroundBox} id="bacground_box">
-                            <p>Does the influencer need the product ?</p>
-                            <label><input type="radio" name="optradio" checked /> No, the influencers don’t need to physically have the product. </label><br />
-                            <label><input type="radio" name="optradio" checked /> Yes, the influencers and the product must appear on the post </label><br />
-                            <label><input type="radio" name="optradio" checked />  You will send the product sample to the influencers </label><br />
-                            <label><input type="checkbox" value="" /> The influencers will need to return the product (high value or prototype) </label>
-                            <label><input type="radio" name="optradio" checked />  The influencers should purchase or already own the product  </label>
-                        </div>
-                        <div id="upload_btn" style={_styles.chooseFileForm} className="form-group row" >
-                            <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
-                                <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
+                                <div className="col-12 col-lg-6 mb-3 mb-sm-0">
+                                    <div style={_styles.backgroundBox} id="bacground_box">
+                                        <p>Does the influencer need the product ?</p>
+                                        <label><input type="radio" name="optradio" /> No, the influencers don’t need to physically have the product. </label><br />
+                                        <label><input type="radio" name="optradio" /> Yes, the influencers and the product must appear on the post </label><br />
+                                        <label><input type="radio" name="optradio" />  You will send the product sample to the influencers </label><br />
+                                        <label><input type="checkbox" value="" /> The influencers will need to return the product (high value or prototype) </label>
+                                        <label><input type="radio" name="optradio" />  The influencers should purchase or already own the product  </label>
+                                    </div>
+                                    <div id="upload_btn" style={_styles.chooseFileForm} className="form-group row" >
+                                        <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
+                                            <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
+                                        </div>
+                                        <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
+                                            <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
+
+                                        </div>
+                                        <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
+                                            <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
+
+                                        </div>
+                                        <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
+                                            <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
+
+                                        </div>
+                                        <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
+                                            <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
+
+                                        </div>
+                                        <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
+                                            <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
+
+                                        </div>
+                                        <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
+                                            <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
+
+                                        </div>
+                                        <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
+                                            <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
+
+                                        </div>
+                                        <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
+                                            <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
-                                <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
+                        </Tab.Pane>
+                        <Tab.Pane eventKey={formSteps[2]}>
+                            <div className="form-group row" >
+                                <div className="form-group col-sm-2 mb-3 mb-sm-0">
+                                </div>
+                                <div className="form-group col-sm-8 mb-3 mb-sm-0">
+                                    <p style={{ fontSize: "22px", textAlign: "center" }}> Here you can set the criteria that will define the selection of influencers to whom your campaign will be visible to. Interested influencers will then send you post proposals for approval. </p>                    </div>
+                                <div className="form-group col-sm-2 mb-3 mb-sm-0">
+                                </div>
+
 
                             </div>
-                            <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
-                                <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
+                            <div className="form-group row" >
+                                <div className="form-group col-sm-6 mb-3 mb-sm-0">
+                                    <label>Gender</label>
+                                    <select className="browser-default custom-select" id="gender" name="gender">
+                                        <option value="1">Any</option>
+                                        <option value="2">Male</option>
+                                        <option value="3">Female</option>
+                                    </select>
+                                </div>
+                                <div className="form-group col-sm-6 mb-3 mb-sm-0">
+                                    <label>Location</label>
+                                    <select className="browser-default custom-select" id="location" name="location">
+                                        <option value="1">Region</option>
+                                        <option value="2">Northern America</option>
+                                        <option value="3">Western Europe</option>
+                                        <option value="3">Eastern Europe</option>
+                                        <option value="3">Australia and New Zealand</option>
+                                        <option value="3">Asia</option>
+                                    </select>
 
+
+                                </div>
                             </div>
-                            <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
-                                <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
 
+                            <div className="form-group row" >
+                                <div className="form-group col-sm-6 mb-3 mb-sm-0">
+                                    <label>Age</label><br />
+                                    <input type="range" min="1" max="100" value="50" className="slider" id="myRange" />
+                                </div>
+                                <div className="form-group col-sm-6 mb-3 mb-sm-0">
+                                    <label>Posting languages</label>
+                                    <select className="browser-default custom-select" id="location" name="location">
+                                        <option value="1">English</option>
+                                        <option value="2">French</option>
+                                        <option value="3">Spanish</option>
+                                        <option value="3">Italian</option>
+                                        <option value="3">Chinese</option>
+                                        <option value="3">Portuguese</option>
+                                        <option value="3">Russian</option>
+                                        <option value="3">German</option>
+                                    </select>
+
+
+                                </div>
                             </div>
-                            <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
-                                <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
-
+                            <div className="form-group row" >
+                                <div className="form-group col-sm-6 mb-3 mb-sm-0">
+                                    <label>Minimum number of followers </label><br />
+                                    <input type="range" min="1" max="100" value="50" className="slider" id="myRange" />
+                                </div>
                             </div>
-                            <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
-                                <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
 
+                            <div className="form-group row" >
+                                <hr style={{ border: "1px solid #f0f0f0 !important", width: "100%" }} />
                             </div>
-                            <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
-                                <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
 
+                            <div className="form-group row" >
+                                <div className="form-group col-sm-12 mb-3 mb-sm-0">
+                                    Include influencers with interests in :
+                                </div>
                             </div>
-                            <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
-                                <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
+                            <div className="form-group row" >
+                                <div id="img_row" className="form-group col-sm-12 mb-3 mb-sm-0">
+                                    <div className="clearfix">
+                                        <button className="select" style={_styles.selectButton}>SELECT ALL</button>
 
+                                        <button style={_styles.checkMark} className="send " data-counter="0">✔</button>
+                                    </div>
+                                    <ul className="pl-0" style={_styles.ul}>
+                                        <li style={_styles.li}><img alt="" src="https://farm8.staticflickr.com/7326/11287113923_57d37ed9d3_q.jpg" /></li>
+                                        <li style={_styles.li}><img alt="" src="https://farm9.staticflickr.com/8184/8095683964_9e27753908_q.jpg" /></li>
+                                        <li style={_styles.li}><img alt="" src="https://farm9.staticflickr.com/8171/8018956825_67bf62c098_q.jpg" /></li>
+                                        <li style={_styles.li}><img alt="" src="https://farm9.staticflickr.com/8425/7587724752_cdb9f0c444_q.jpg" /></li>
+                                        <li style={_styles.li}><img alt="" src="https://farm8.staticflickr.com/7248/7587738254_707a32f27b_q.jpg" /></li>
+                                        <li style={_styles.li}> <img alt="" src="https://farm9.staticflickr.com/8191/8095680852_893f685cbd_q.jpg" /></li>
+                                        <li style={_styles.li}><img alt="" src="https://farm9.staticflickr.com/8460/8018953043_c6ef9e3b29_q.jpg" /></li>
+                                        <li style={_styles.li}><img alt="" src="https://farm9.staticflickr.com/8026/7445019824_914dea4ac3_q.jpg" /></li>
+                                        <li style={_styles.li}><img alt="" src="https://farm8.staticflickr.com/7088/7332137562_14956827a7_q.jpg" /></li>
+                                        <li style={_styles.li}><img alt="" src="https://farm8.staticflickr.com/7108/7151306497_9cfb1a367b_q.jpg" /></li>
+                                        <li style={_styles.li}><img alt="" src="https://farm6.staticflickr.com/5198/7005209880_432389ef25_q.jpg" /></li>
+                                        <li style={_styles.li}><img alt="" src="https://farm8.staticflickr.com/7280/7151302883_e6ef32f04d_q.jpg" /></li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div style={_styles.chooseFileDiv} className="form-group col-sm-4 mb-3 mb-sm-0">
-                                <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
 
-                            </div>
-                        </div>
+                        </Tab.Pane>
+                    </Tab.Content>
+                    <div className="navigation-buttons d-flex justify-content-center">
+                        {
+                            (currentStepIndex > 0) ?
+                                <Nav.Link 
+                                eventKey={formSteps[currentStepIndex - 1]} 
+                                style={_styles.nextButton} 
+                                onClick={() => setCurrentStepIndex(currentStepIndex - 1)} 
+                                className="btn btn-secondary btn-user text-white">
+                                    Previous
+                                </Nav.Link> : null
+                        }
+                        {
+                            (currentStepIndex < (formSteps.length - 1)) ?
+                                <Nav.Link 
+                                eventKey={formSteps[currentStepIndex + 1]} 
+                                style={_styles.nextButton} 
+                                onClick={() => setCurrentStepIndex(currentStepIndex + 1)} 
+                                className="btn btn-primary btn-user text-white">
+                                    Next
+                                </Nav.Link> : null
+                        }
                     </div>
-                    <button style={_styles.nextButton} className="btn btn-primary btn-user btn-block"> Next</button>
-                </div>
-
-
-                <div className="form-group row" >
-                    <div className="form-group col-sm-2 mb-3 mb-sm-0">
-                    </div>
-                    <div className="form-group col-sm-8 mb-3 mb-sm-0">
-                        <p style={{ fontSize: "22px", textAlign: "center" }}> Here you can set the criteria that will define the selection of influencers to whom your campaign will be visible to. Interested influencers will then send you post proposals for approval. </p>                    </div>
-                    <div className="form-group col-sm-2 mb-3 mb-sm-0">
-                    </div>
-
-
-                </div>
-                <div className="form-group row" >
-                    <div className="form-group col-sm-6 mb-3 mb-sm-0">
-                        <label>Gender</label>
-                        <select className="browser-default custom-select" id="gender" name="gender">
-                            <option value="1">Any</option>
-                            <option value="2">Male</option>
-                            <option value="3">Female</option>
-                        </select>
-                    </div>
-                    <div className="form-group col-sm-6 mb-3 mb-sm-0">
-                        <label>Location</label>
-                        <select className="browser-default custom-select" id="location" name="location">
-                            <option value="1">Region</option>
-                            <option value="2">Northern America</option>
-                            <option value="3">Western Europe</option>
-                            <option value="3">Eastern Europe</option>
-                            <option value="3">Australia and New Zealand</option>
-                            <option value="3">Asia</option>
-                        </select>
-
-
-                    </div>
-                </div>
-
-                <div className="form-group row" >
-                    <div className="form-group col-sm-6 mb-3 mb-sm-0">
-                        <label>Age</label><br />
-                        <input type="range" min="1" max="100" value="50" className="slider" id="myRange" />
-                    </div>
-                    <div className="form-group col-sm-6 mb-3 mb-sm-0">
-                        <label>Posting languages</label>
-                        <select className="browser-default custom-select" id="location" name="location">
-                            <option value="1">English</option>
-                            <option value="2">French</option>
-                            <option value="3">Spanish</option>
-                            <option value="3">Italian</option>
-                            <option value="3">Chinese</option>
-                            <option value="3">Portuguese</option>
-                            <option value="3">Russian</option>
-                            <option value="3">German</option>
-                        </select>
-
-
-                    </div>
-                </div>
-                <div className="form-group row" >
-                    <div className="form-group col-sm-6 mb-3 mb-sm-0">
-                        <label>Minimum number of followers </label><br />
-                        <input type="range" min="1" max="100" value="50" className="slider" id="myRange" />
-                    </div>
-                </div>
-
-                <div className="form-group row" >
-                    <hr style={{ border: "1px solid #f0f0f0 !important", width: "100%" }} />
-                </div>
-
-                <div className="form-group row" >
-                    <div className="form-group col-sm-12 mb-3 mb-sm-0">
-                        Include influencers with interests in :
-         </div>
-                </div>
-                <div className="form-group row" >
-                    <div id="img_row" className="form-group col-sm-12 mb-3 mb-sm-0">
-                        <div className="clearfix">
-                            <button className="select" style={_styles.selectButton}>SELECT ALL</button>
-
-                            <button style={_styles.checkMark} className="send " data-counter="0">✔</button>
-                        </div>
-                        <ul style={_styles.ul}>
-                            <li style={_styles.li}><img alt="" src="https://farm8.staticflickr.com/7326/11287113923_57d37ed9d3_q.jpg" /></li>
-                            <li style={_styles.li}><img alt="" src="https://farm9.staticflickr.com/8184/8095683964_9e27753908_q.jpg" /></li>
-                            <li style={_styles.li}><img alt="" src="https://farm9.staticflickr.com/8171/8018956825_67bf62c098_q.jpg" /></li>
-                            <li style={_styles.li}><img alt="" src="https://farm9.staticflickr.com/8425/7587724752_cdb9f0c444_q.jpg" /></li>
-                            <li style={_styles.li}><img alt="" src="https://farm8.staticflickr.com/7248/7587738254_707a32f27b_q.jpg" /></li>
-                            <li style={_styles.li}> <img alt="" src="https://farm9.staticflickr.com/8191/8095680852_893f685cbd_q.jpg" /></li>
-                            <li style={_styles.li}><img alt="" src="https://farm9.staticflickr.com/8460/8018953043_c6ef9e3b29_q.jpg" /></li>
-                            <li style={_styles.li}><img alt="" src="https://farm9.staticflickr.com/8026/7445019824_914dea4ac3_q.jpg" /></li>
-                            <li style={_styles.li}><img alt="" src="https://farm8.staticflickr.com/7088/7332137562_14956827a7_q.jpg" /></li>
-                            <li style={_styles.li}><img alt="" src="https://farm8.staticflickr.com/7108/7151306497_9cfb1a367b_q.jpg" /></li>
-                            <li style={_styles.li}><img alt="" src="https://farm6.staticflickr.com/5198/7005209880_432389ef25_q.jpg" /></li>
-                            <li style={_styles.li}><img alt="" src="https://farm8.staticflickr.com/7280/7151302883_e6ef32f04d_q.jpg" /></li>
-                        </ul>
-                    </div>
-                </div>
-
-
+                </Tab.Container>
             </form>
         </div>
 
