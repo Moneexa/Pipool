@@ -1,4 +1,4 @@
-import { faChevronLeft, faChevronRight, faTachometerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faChevronRight, faTachometerAlt, faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Nav } from "react-bootstrap";
@@ -20,16 +20,23 @@ export class Brand extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            sidebarOpened: true
+            sidebarExpanded: true,
+            sidebarOpened: false
         }
+    }
+    toggleSidebar() {
+        this.setState({ sidebarOpened: !this.state.sidebarOpened })
     }
     render = () => {
         return (
             <div className="dashboard">
+                {
+                    this.state.sidebarOpened ? <div className="sidebar-overlay" onClick={() => this.toggleSidebar()}></div> : null
+                }
                 <div id="wrapper">
                     <div className="d-flex">
                         <Router>
-                            <div className={"sidebar " + (this.state.sidebarOpened ? "" : "collapsed")}>
+                            <div className={"sidebar " + (this.state.sidebarExpanded ? "" : "collapsed") + (this.state.sidebarOpened ? "opened" : "")}>
                                 <Link to={this.props.match.path} className="sidebar-brand d-flex align-items-center justify-content-center" style={{ marginTop: "20px", marginBottom: "30px" }}>
                                     <img alt="" src="../img/logo.jpg" />
                                     <div className="sidebar-brand-icon rotate-n-15">
@@ -40,119 +47,117 @@ export class Brand extends React.Component {
                                     activeKey="/home">
                                     <div className="sidebar-sticky"></div>
                                     <Nav.Item>
-                                        <Nav.Link as={Link} to={`${this.props.match.path}/overview`} className={!this.state.sidebarOpened ? 'd-flex flex-column align-items-center' : ''}>
+                                        <Nav.Link as={Link} to={`${this.props.match.path}/overview`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
                                             <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
-                                            {this.state.sidebarOpened ? <span>&nbsp;</span> : null}
+                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
                                             <span>Dashboard</span>
                                         </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link as={Link} to={`${this.props.match.path}/campaigns`} className={!this.state.sidebarOpened ? 'd-flex flex-column align-items-center' : ''}>
-                                            {this.state.sidebarOpened ? <div className="no-icon-space"></div> : null}
-                                            {this.state.sidebarOpened ? <span>&nbsp;</span> : null}
+                                        <Nav.Link as={Link} to={`${this.props.match.path}/campaigns`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+                                            {this.state.sidebarExpanded ? <div className="no-icon-space"></div> : null}
+                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
                                             <span>Campaigns</span>
                                         </Nav.Link>
-                                        <Nav.Link as={Link} to={`${this.props.match.path}/pending-requests`} className={!this.state.sidebarOpened ? 'd-flex flex-column align-items-center' : ''}>
-                                            {this.state.sidebarOpened ? <div className="no-icon-space"></div> : null}
-                                            {this.state.sidebarOpened ? <span>&nbsp;</span> : null}
+                                        <Nav.Link as={Link} to={`${this.props.match.path}/pending-requests`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+                                            {this.state.sidebarExpanded ? <div className="no-icon-space"></div> : null}
+                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
                                             <span>Pending Requests</span>
                                         </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
 
-                                        <Nav.Link disabled className={!this.state.sidebarOpened ? 'd-flex flex-column align-items-center' : ''}>
+                                        <Nav.Link disabled className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
 
                                             <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
-                                            {this.state.sidebarOpened ? <span>&nbsp;</span> : null}
+                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
                                             <span>Brand Manager</span>
                                         </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link as={Link} to={`${this.props.match.path}/brands`} className={!this.state.sidebarOpened ? 'd-flex flex-column align-items-center' : ''}>
-                                            {this.state.sidebarOpened ? <div className="no-icon-space"></div> : null}
-                                            {this.state.sidebarOpened ? <span>&nbsp;</span> : null}
+                                        <Nav.Link as={Link} to={`${this.props.match.path}/brands`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+                                            {this.state.sidebarExpanded ? <div className="no-icon-space"></div> : null}
+                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
                                             <span>Brand</span>
                                         </Nav.Link>
 
-                                        <Nav.Link as={Link} to={`${this.props.match.path}/add-brand`} className={!this.state.sidebarOpened ? 'd-flex flex-column align-items-center' : ''}>
-                                            {this.state.sidebarOpened ? <div className="no-icon-space"></div> : null}
-                                            {this.state.sidebarOpened ? <span>&nbsp;</span> : null}
+                                        <Nav.Link as={Link} to={`${this.props.match.path}/add-brand`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+                                            {this.state.sidebarExpanded ? <div className="no-icon-space"></div> : null}
+                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
                                             <span>Add New Brand</span>
                                         </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
 
-                                        <Nav.Link disabled className={!this.state.sidebarOpened ? 'd-flex flex-column align-items-center' : ''}>
+                                        <Nav.Link disabled className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
                                             <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
-                                            {this.state.sidebarOpened ? <span>&nbsp;</span> : null}
+                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
                                             <span>Campaings</span>
                                         </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link as={Link} to={`${this.props.match.path}/new-campaign`} className={!this.state.sidebarOpened ? 'd-flex flex-column align-items-center' : ''}>
-                                            {this.state.sidebarOpened ? <div className="no-icon-space"></div> : null}
-                                            {this.state.sidebarOpened ? <span>&nbsp;</span> : null}
+                                        <Nav.Link as={Link} to={`${this.props.match.path}/new-campaign`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+                                            {this.state.sidebarExpanded ? <div className="no-icon-space"></div> : null}
+                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
                                             <span>Add New Campaign</span>
                                         </Nav.Link>
 
-                                        <Nav.Link className={!this.state.sidebarOpened ? 'd-flex flex-column align-items-center' : ''}>
-                                            {this.state.sidebarOpened ? <div className="no-icon-space"></div> : null}
-                                            {this.state.sidebarOpened ? <span>&nbsp;</span> : null}
+                                        <Nav.Link className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+                                            {this.state.sidebarExpanded ? <div className="no-icon-space"></div> : null}
+                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
                                             <span>See Previous Campaings</span>
                                         </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
 
-                                        <Nav.Link as={Link} to={`${this.props.match.path}/calender`} className={!this.state.sidebarOpened ? 'd-flex flex-column align-items-center' : ''}>
+                                        <Nav.Link as={Link} to={`${this.props.match.path}/calender`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
 
                                             <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
 
-                                            {this.state.sidebarOpened ? <span>&nbsp;</span> : null}
+                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
 
                                             <span>Calender</span>
                                         </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
 
-                                        <Nav.Link as={Link} to={`${this.props.match.path}/payment`} className={!this.state.sidebarOpened ? 'd-flex flex-column align-items-center' : ''}>
+                                        <Nav.Link as={Link} to={`${this.props.match.path}/payment`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
                                             <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
-                                            {this.state.sidebarOpened ? <span>&nbsp;</span> : null}
+                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
                                             <span>Settings and Payments</span> </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
 
-                                        <Nav.Link as={Link} to={`${this.props.match.path}/help`} className={!this.state.sidebarOpened ? 'd-flex flex-column align-items-center' : ''}>
+                                        <Nav.Link as={Link} to={`${this.props.match.path}/help`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
                                             <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
-                                            {this.state.sidebarOpened ? <span>&nbsp;</span> : null}
+                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
                                             <span>Help and FAQ</span> </Nav.Link>
                                     </Nav.Item>
                                 </Nav>
 
                                 <div className="collapse-button-container d-flex justify-content-center">
                                     <div
-                                        onClick={() => this.setState({ sidebarOpened: !this.state.sidebarOpened })}
+                                        onClick={() => this.setState({ sidebarExpanded: !this.state.sidebarExpanded })}
                                         className="collapse-button d-flex justify-content-center align-items-center rounded-circle"
                                     >
 
-                                        <FontAwesomeIcon icon={this.state.sidebarOpened ? faChevronLeft : faChevronRight} />
+                                        <FontAwesomeIcon icon={this.state.sidebarExpanded ? faChevronLeft : faChevronRight} />
                                     </div>
                                 </div>
 
                             </div>
                             <div className="sidebar-content">
-                                <nav className="navbar navbar-expand-lg navbar-light shadow-sm py-3 mb-4">
-
-                                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                                        <form className="form-inline my-2 my-lg-0 ml-auto">
-                                            <ul className="navbar-nav mr-sm-2">
-                                                <li className="nav-item mr-4">
-                                                    <Link className="nav-link font-weight-bold text-primary text-uppercase" to="/home">Home</Link>
-                                                </li>
-                                                <li className="nav-item mr-4">
-                                                    <Link className="nav-link font-weight-bold text-primary text-uppercase" to="/home">Profile</Link>
-                                                </li>
-                                            </ul>
-                                        </form>
+                                <nav className="navbar navbar-expand navbar-light shadow-sm py-3 mb-4">
+                                    <FontAwesomeIcon icon={faBars} onClick={() => this.toggleSidebar()} />
+                                    <div className="my-2 my-0 ml-auto">
+                                        <ul className="navbar-nav">
+                                            <li className="nav-item mr-4">
+                                                <Link className="nav-link font-weight-bold text-primary text-uppercase" to="/home">Home</Link>
+                                            </li>
+                                            <li className="nav-item mr-4">
+                                                <Link className="nav-link font-weight-bold text-primary text-uppercase" to="/home">Profile</Link>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </nav>
                                 <div className="container-fluid">
