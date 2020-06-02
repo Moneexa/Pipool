@@ -1,3 +1,23 @@
+@media only screen and (max-width: 1023px) {
+  .sidebar {
+    position: absolute;
+    transform: translateX(-100%);
+    z-index: 2;
+  }
+  .sidebar-overlay {
+    content: ' ';
+    background-color: rgba(0, 0, 0, 0.2);
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+  }
+  .sidebar.opened {
+    transform: translateX(0);
+  }
+}
+
+
 .dashboard-influence #wrapper nav .topbar {
   height: 4.375rem;
 }
@@ -16,6 +36,9 @@
   height: 100vh;
   overflow-y: auto;
   background-color: #fff;
+}
+.dashboard-influence #wrapper .sidebar-content nav .navbar-nav{
+  flex-direction: row;
 }
 
 .dashboard-influence #wrapper nav .topbar .topbar-divider {
