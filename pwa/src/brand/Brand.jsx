@@ -148,7 +148,7 @@ export class Brand extends React.Component {
                             </div>
                             <div className="sidebar-content">
                                 <nav className="navbar navbar-expand navbar-light shadow-sm py-3 mb-4">
-                                    <FontAwesomeIcon icon={faBars} onClick={() => this.toggleSidebar()} />
+                                    <FontAwesomeIcon className="d-lg-none" icon={faBars} onClick={() => this.toggleSidebar()} />
                                     <div className="my-2 my-0 ml-auto">
                                         <ul className="navbar-nav">
                                             <li className="nav-item mr-4">
