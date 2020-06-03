@@ -48,6 +48,10 @@ textarea,
   box-shadow: none !important;
 }
 
+.no-shadow {
+  box-shadow: none !important;
+}
+
 .green {
   background: #1cc88a !important;
   color: white;
@@ -55,6 +59,10 @@ textarea,
 .blue {
   background: #36b9cc;
   color: white;
+}
+
+.grey {
+  background-color: #f7f7f7;
 }
 .dark-blue {
   background: #4e73df;

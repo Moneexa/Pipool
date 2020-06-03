@@ -54,45 +54,16 @@ export class Brand extends React.Component {
                                         </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
+
+                                        {/* <Nav.Link disabled className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+                                            <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
+                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
+                                            <span>Campaing Manager</span>
+                                        </Nav.Link> */}
                                         <Nav.Link as={Link} to={`${this.props.match.path}/campaigns`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
-                                            {this.state.sidebarExpanded ? <div className="no-icon-space"></div> : null}
-                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
-                                            <span>Campaigns</span>
-                                        </Nav.Link>
-                                        <Nav.Link as={Link} to={`${this.props.match.path}/pending-requests`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
-                                            {this.state.sidebarExpanded ? <div className="no-icon-space"></div> : null}
-                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
-                                            <span>Pending Requests</span>
-                                        </Nav.Link>
-                                    </Nav.Item>
-                                    <Nav.Item>
-
-                                        <Nav.Link disabled className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
-
                                             <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
                                             {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
-                                            <span>Brand Manager</span>
-                                        </Nav.Link>
-                                    </Nav.Item>
-                                    <Nav.Item>
-                                        <Nav.Link as={Link} to={`${this.props.match.path}/brands`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
-                                            {this.state.sidebarExpanded ? <div className="no-icon-space"></div> : null}
-                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
-                                            <span>Brand</span>
-                                        </Nav.Link>
-
-                                        <Nav.Link as={Link} to={`${this.props.match.path}/add-brand`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
-                                            {this.state.sidebarExpanded ? <div className="no-icon-space"></div> : null}
-                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
-                                            <span>Add New Brand</span>
-                                        </Nav.Link>
-                                    </Nav.Item>
-                                    <Nav.Item>
-
-                                        <Nav.Link disabled className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
-                                            <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
-                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
-                                            <span>Campaings</span>
+                                            <span>Campaing Manager</span>
                                         </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
@@ -106,6 +77,29 @@ export class Brand extends React.Component {
                                             {this.state.sidebarExpanded ? <div className="no-icon-space"></div> : null}
                                             {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
                                             <span>See Previous Campaings</span>
+                                        </Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Nav.Link as={Link} to={`${this.props.match.path}/pending-requests`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+                                            {this.state.sidebarExpanded ? <div className="no-icon-space"></div> : null}
+                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
+                                            <span>Pending Requests</span>
+                                        </Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+
+                                        <Nav.Link as={Link} to={`${this.props.match.path}/brands`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+
+                                            <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
+                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
+                                            <span>Brand Manager</span>
+                                        </Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Nav.Link as={Link} to={`${this.props.match.path}/add-brand`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+                                            {this.state.sidebarExpanded ? <div className="no-icon-space"></div> : null}
+                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
+                                            <span>Add New Brand</span>
                                         </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
