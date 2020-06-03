@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useStyles } from 'react-styles-hook'
 import './Campaign.css';
-import { Tab, Nav, Row, Col } from 'react-bootstrap';
+import { Tab, Nav } from 'react-bootstrap';
 const styles = useStyles({
     bottomSpacer: {
         marginBottom: '5rem'
