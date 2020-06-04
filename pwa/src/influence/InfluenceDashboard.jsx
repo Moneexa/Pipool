@@ -1,11 +1,10 @@
-import { faChevronLeft, faChevronRight, faTachometerAlt,faBars } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faChevronRight, faTachometerAlt, faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Nav } from "react-bootstrap";
 import { BrowserRouter as Router, Link, Redirect, Route, Switch } from "react-router-dom";
-import './influenceDashboard.css';
+import './InfluenceDashboard.css';
 import calenderInfluence from './pages/Calender/calenderInfluence';
-import newCampaignIfluence from './pages/CampaignManager/newCampaignInfluence';
 import PastCampaignFeedback from './pages/CampaignManager/PastCampaignFeedback';
 import AddChannel from './pages/ChannelManager/AddChannel';
 import Channel from './pages/ChannelManager/Channel';
@@ -38,7 +37,7 @@ export class influenceDashboard extends React.Component {
                 <div id="wrapper">
                     <div className="d-flex">
                         <Router>
-                        <div className={"sidebar " + (this.state.sidebarExpanded ? "" : "collapsed") +" "+ (this.state.sidebarOpened ? "opened" : "")}>
+                            <div className={"sidebar " + (this.state.sidebarExpanded ? "" : "collapsed") + " " + (this.state.sidebarOpened ? "opened" : "")}>
                                 <Link to={this.props.match.path} className="sidebar-brand d-flex align-items-center justify-content-center" style={{ marginTop: "20px", marginBottom: "30px" }}>
                                     <img alt="" src="../img/logo.jpg" />
                                     <div className="sidebar-brand-icon rotate-n-15">
@@ -49,40 +48,21 @@ export class influenceDashboard extends React.Component {
                                     activeKey="/influence-home">
                                     <div className="sidebar-sticky"></div>
                                     <Nav.Item>
-                                        <Nav.Link as={Link} to={`${this.props.match.path}/influence-home`} className= {!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+                                        <Nav.Link as={Link} to={`${this.props.match.path}/influence-home`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
                                             <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
                                             {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
                                             <span>Dashboard</span>
                                         </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link as={Link} to={`${this.props.match.path}/campaigns-influence`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
-                                            {this.state.sidebarExpanded ? <div className="no-icon-space"></div> : null}
-                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
-                                            <span>Campaigns</span>
-                                        </Nav.Link>
-                                        <Nav.Link as={Link} to={`${this.props.match.path}/pending-requests-influence`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
-                                            {this.state.sidebarExpanded ? <div className="no-icon-space"></div> : null}
-                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
-                                            <span>Pending Requests</span>
-                                        </Nav.Link>
-                                    </Nav.Item>
-                                    <Nav.Item>
 
-                                        <Nav.Link disabled className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
-
+                                        <Nav.Link as={Link} to={`${this.props.match.path}/channels`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
                                             <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
                                             {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
                                             <span>Channel Manager</span>
                                         </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link as={Link} to={`${this.props.match.path}/channels`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
-                                            {this.state.sidebarExpanded ? <div className="no-icon-space"></div> : null}
-                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
-                                            <span>Channels</span>
-                                        </Nav.Link>
-
                                         <Nav.Link as={Link} to={`${this.props.match.path}/add-channels`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
                                             {this.state.sidebarExpanded ? <div className="no-icon-space"></div> : null}
                                             {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
@@ -90,20 +70,25 @@ export class influenceDashboard extends React.Component {
                                         </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-
-                                        <Nav.Link as={Link} to= {`${this.props.match.path}/campaign-feedbacks`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Nav.Link as={Link} to={`${this.props.match.path}/campaigns-influence`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
                                             <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
+                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
+                                            <span>Campaigns</span>
+                                        </Nav.Link>
+                                        <Nav.Item>
+                                            <Nav.Link as={Link} to={`${this.props.match.path}/pending-requests-influence`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+                                                {this.state.sidebarExpanded ? <div className="no-icon-space"></div> : null}
+                                                {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
+                                                <span>Pending Requests</span>
+                                            </Nav.Link>
+                                        </Nav.Item>
+                                        <Nav.Link as={Link} to={`${this.props.match.path}/campaign-feedbacks`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+                                            {this.state.sidebarExpanded ? <div className="no-icon-space"></div> : null}
                                             {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
                                             <span>Past Campaign Feebdbacks</span>
                                         </Nav.Link>
-                                    </Nav.Item>
-                                    <Nav.Item>
-                                        <Nav.Link as={Link} to={`${this.props.match.path}/new-campaign-influencer`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
-                                            {this.state.sidebarExpanded ? <div className="no-icon-space"></div> : null}
-                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
-                                            <span>Add New Campaign</span>
-                                        </Nav.Link>
-
                                         <Nav.Link className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
                                             {this.state.sidebarExpanded ? <div className="no-icon-space"></div> : null}
                                             {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
@@ -116,7 +101,7 @@ export class influenceDashboard extends React.Component {
 
                                             <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
 
-                                            {this.state.sidebarExpanded? <span>&nbsp;</span> : null}
+                                            {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
 
                                             <span>Calender</span>
                                         </Nav.Link>
@@ -138,14 +123,14 @@ export class influenceDashboard extends React.Component {
                                 </Nav>
 
                                 <div className="collapse-button-container d-flex justify-content-center">
-                                <div
+                                    <div
                                         onClick={() => {
-                                            if(this.state.sidebarOpened){
-                                                this.setState({sidebarOpened:!this.state.sidebarOpened})
+                                            if (this.state.sidebarOpened) {
+                                                this.setState({ sidebarOpened: !this.state.sidebarOpened })
                                             }
-                                            
-                                            else{
-                                            this.setState({ sidebarExpanded: !this.state.sidebarExpanded })
+
+                                            else {
+                                                this.setState({ sidebarExpanded: !this.state.sidebarExpanded })
                                             }
                                         }}
                                         className="collapse-button d-flex justify-content-center align-items-center rounded-circle"
@@ -158,9 +143,9 @@ export class influenceDashboard extends React.Component {
                             </div>
                             <div className="sidebar-content">
                                 <nav className="navbar navbar-expand-lg navbar-light shadow-sm py-3 mb-4">
-                                <FontAwesomeIcon className="d-lg-none" icon={faBars} onClick={() => this.toggleSidebar()} />
+                                    <FontAwesomeIcon className="d-lg-none" icon={faBars} onClick={() => this.toggleSidebar()} />
 
-                                <div className="my-2 my-0 ml-auto">
+                                    <div className="my-2 my-0 ml-auto">
                                         <ul className="navbar-nav">
                                             <li className="nav-item mr-4">
                                                 <Link className="nav-link font-weight-bold text-primary text-uppercase" to="/home">Home</Link>
@@ -180,7 +165,6 @@ export class influenceDashboard extends React.Component {
                                         <Route path={`${this.props.match.path}/channels`} component={Channel} />
                                         <Route path={`${this.props.match.path}/add-channels`} component={AddChannel} />
                                         <Route path={`${this.props.match.path}/campaign-feedbacks`} component={PastCampaignFeedback} />
-                                        <Route path={`${this.props.match.path}/new-campaign-influencer`} component={newCampaignIfluence} />
                                         <Route path={`${this.props.match.path}/calender-influence`} component={calenderInfluence} />
                                         <Route path={`${this.props.match.path}/payment-influence`} component={PaymentInfluence} />
                                         <Route path={`${this.props.match.path}/help-influence`} component={HelpInfluence} />

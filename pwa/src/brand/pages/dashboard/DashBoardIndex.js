@@ -14,7 +14,6 @@ function DashBoardIndex() {
                         <div className="card-body">
                             <div className="chart-area">
                                 <h2 className="m-0 font-weight-bold">Campaign (annual)</h2>
-
                                 <p style={{ fontWeight: "bold" }}>Your feedbacks over this year </p>
                                 <div className="chart-area">
                                     <canvas id="myAreaChart"></canvas>

@@ -15,9 +15,7 @@
 .help-influence #border .card.shadow.mb-4 {
     box-shadow: none !important;
 }
-.help-influence #border .card.shadow.mb-4 .card-body .mb-4, .my-4 {
-    margin-bottom: 1.5rem!important;
-}
+
 .help-influence #border .card {
     position: relative;
     display: flex;
