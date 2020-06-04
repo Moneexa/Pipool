@@ -30,6 +30,15 @@
     border-color: #fff;
 }
 
+.login .btn-linkedin {
+    font-size: .8rem;
+    border-radius: 10rem;
+    padding: .75rem 1rem;
+    color: #fff;
+    background-color: #0073b1;
+    border-color: #fff;
+}
+
 .login input {
     font-size: .8rem;
 }

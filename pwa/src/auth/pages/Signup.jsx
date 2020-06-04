@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import './Signup.css';
-import { faGoogle, faFacebook } from '@fortawesome/free-brands-svg-icons'
+import { faGoogle, faFacebook, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
@@ -69,10 +69,12 @@ export function Signup({ match }) {
                                                  Register with Google
                                             </Link>
                                             <Link to="/" className="btn btn-facebook btn-block">
-
                                                 <FontAwesomeIcon className="social-icon" icon={faFacebook} />
-
-                                            Register with Facebook
+                                                Register with Facebook
+                                            </Link>
+                                            <Link to="/" className="btn btn-linkedin btn-block no-focus-effects d-flex justify-content-center align-items-center">
+                                                <FontAwesomeIcon className="social-icon" icon={faLinkedin} />
+                                                Login with LinkedIn
                                             </Link>
                                         </form>
                                         <hr />

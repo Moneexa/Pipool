@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { faGoogle, faFacebook } from '@fortawesome/free-brands-svg-icons'
+import { faGoogle, faFacebook, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './Login.css'
 export function Login({ match }) {
@@ -54,7 +54,11 @@ export function Login({ match }) {
                                                 </Link>
                                                 <Link to="/" className="btn btn-facebook btn-user btn-block no-focus-effects d-flex justify-content-center align-items-center">
                                                     <FontAwesomeIcon className="social-icon" icon={faFacebook} />
-                                                Login with Facebook
+                                                    Login with Facebook
+                                                </Link>
+                                                <Link to="/" className="btn btn-linkedin btn-block no-focus-effects d-flex justify-content-center align-items-center">
+                                                    <FontAwesomeIcon className="social-icon" icon={faLinkedin} />
+                                                    Login with LinkedIn
                                                 </Link>
                                                 <hr />
                                                 <div className="text-center">
