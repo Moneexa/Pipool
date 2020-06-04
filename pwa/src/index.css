@@ -24,6 +24,11 @@ textarea,
   overflow: hidden;
 }
 
+.btn-primary:focus {
+  background-color: #ffc809;
+  border-color: #ffc809;
+}
+
 .rounded-5 {
   border-radius: 5px;
 }
