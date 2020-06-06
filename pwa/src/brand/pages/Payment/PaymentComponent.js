@@ -5,8 +5,8 @@ import { faUniversity } from '@fortawesome/free-solid-svg-icons';
 import { faPaypal, faCcVisa, faCcMastercard, faCcAmex } from '@fortawesome/free-brands-svg-icons'
 import { Nav, InputGroup, FormControl, Button, Form, Row } from 'react-bootstrap';
 
-import './Payment.css'
-class Payment extends React.Component {
+import './PaymentComponent.css'
+class PaymentComponent extends React.Component {
     render() {
 
 
@@ -162,4 +162,4 @@ tempor incididunt ut labore et dolore magna aliqua. </p>
 
 }
 
-export default Payment
+export default PaymentComponent

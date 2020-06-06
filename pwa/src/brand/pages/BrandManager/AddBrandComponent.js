@@ -1,7 +1,7 @@
 import React from 'react'
-import { styles } from './AddBrand.css'
-import './AddBrnd.css'
-class AddBrand extends React.Component {
+import { styles } from './AddBrandComponent.css'
+import './AddBrndComponent.css'
+class AddBrandComponent extends React.Component {
     render() {
 
         return (
@@ -74,4 +74,4 @@ class AddBrand extends React.Component {
         )
     }
 }
-export default AddBrand
+export default AddBrandComponent

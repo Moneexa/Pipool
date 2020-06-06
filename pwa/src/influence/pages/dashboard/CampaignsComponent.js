@@ -1,7 +1,7 @@
 import React from 'react'
-import './CampaignsInfluence.css';
+import './CampaignsComponent.css';
 
-class CampaignInfluence extends React.Component {
+class CampaignsComponent extends React.Component {
 
     render() {
         return (
@@ -44,4 +44,4 @@ class CampaignInfluence extends React.Component {
     }
 }
 
-export default CampaignInfluence;
+export default CampaignsComponent;

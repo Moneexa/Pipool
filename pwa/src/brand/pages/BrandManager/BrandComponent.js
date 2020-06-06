@@ -1,6 +1,6 @@
 import React from 'react';
-import './Brand.css'
-class Brands extends React.Component {
+import './BrandComponent.css'
+class BrandComponent extends React.Component {
 
     render() {
 
@@ -70,4 +70,4 @@ class Brands extends React.Component {
     }
 }
 
-export default Brands
+export default BrandComponent

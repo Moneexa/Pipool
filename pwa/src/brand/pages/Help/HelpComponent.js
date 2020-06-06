@@ -1,8 +1,8 @@
 import React from 'react'
 
-import './Help.css'
+import './HelpComponent.css'
 
-class Help extends React.Component {
+class HelpComponent extends React.Component {
     render() {
 
         return (<div className="help">
@@ -177,4 +177,4 @@ class Help extends React.Component {
 
 
 }
-export default Help
+export default HelpComponent

@@ -1,10 +1,10 @@
 import React from 'react'
-import './calenderInfluence.css'
+import './CalenderComponent.css'
 
 
-class calenderInfluence extends React.Component {
+class CalenderComponent extends React.Component {
     render() {
-        return (<div className="calender-influence">
+        return (<div className="calender">
 
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
                 <h2 className="m-0 font-weight-bold text-primary">Calender</h2>
@@ -21,4 +21,4 @@ class calenderInfluence extends React.Component {
         </div>)
     }
 }
-export default calenderInfluence
+export default CalenderComponent

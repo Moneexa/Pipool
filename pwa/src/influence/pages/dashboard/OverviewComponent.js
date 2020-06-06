@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import './DashboardInfluenceIndex.css'
+import './OverviewComponent.css'
 
-function DashBoardInfluenceIndex() {
+function OverviewComponent() {
     return (
         <div className="home-influence">
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
@@ -150,4 +150,4 @@ function DashBoardInfluenceIndex() {
     )
 }
 
-export default DashBoardInfluenceIndex;
+export default OverviewComponent;

@@ -1,8 +1,8 @@
 import React from 'react';
 import { faFacebookF, faTwitter, faLinkedinIn, faInstagram } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import './Channel.css'
-class Channel extends React.Component {
+import './ChannelComponent.css'
+class ChannelComponent extends React.Component {
 
     render() {
 
@@ -210,4 +210,4 @@ class Channel extends React.Component {
 
 }
 
-export default Channel
+export default ChannelComponent

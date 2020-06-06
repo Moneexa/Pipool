@@ -29,7 +29,7 @@ const style = useStyles({
     }
 
 })
-function PendingRequests() {
+function PendingRequestsComponent() {
     const _styles = style
     return (
 
@@ -107,4 +107,4 @@ function PendingRequests() {
 }
 
 
-export default PendingRequests;
+export default PendingRequestsComponent;

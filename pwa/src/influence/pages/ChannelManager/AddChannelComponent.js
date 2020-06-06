@@ -1,6 +1,6 @@
 import React from 'react'
-import './AddChannel.css'
-class AddChannel extends React.Component {
+import './AddChannelComponent.css'
+class AddChannelComponent extends React.Component {
     render() {
 
         return (
@@ -59,4 +59,4 @@ class AddChannel extends React.Component {
         )
     }
 }
-export default AddChannel
+export default AddChannelComponent
