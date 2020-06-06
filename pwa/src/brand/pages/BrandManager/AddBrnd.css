@@ -1,0 +1,21 @@
+.add-brand .text-center h2,form{
+    color:rgb(133, 135, 150);
+}
+.add-brand  .form-control{
+    font-size: .8rem;
+    border-radius: 10rem;
+    padding: 1.5rem 1rem;
+}
+.add-brand .form-group label strong {
+    margin: 1px 0px 4px 21px;
+}
+.add-brand .form-group form.user .btn-user {
+    font-size: .8rem;
+    border-radius: 10rem;
+    padding: .75rem 1rem;
+}
+.add-brand  .btn-primary {
+    color: #fff;
+    background-color: #4e73df;
+    border-color: #4e73df;
+}

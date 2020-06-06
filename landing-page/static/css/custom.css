@@ -1,0 +1,78 @@
+.navbar-scrolled .nav-item a {
+    color: #000 !important;
+}
+.navbar.navbar-marketing.navbar-expand-lg.bg-transparent.navbar-dark.fixed-top .container {
+    max-width: 90%;
+}
+#price-btn {
+    background: #fc0;
+    border: 0;
+}
+.footer.pt-10.pb-5.mt-auto.bg-light.footer-light {
+    background:#252c34 !important;
+    padding-top: 30px !important;
+padding-bottom: 30px !important;
+text-align: center;
+}
+.footer.footer-light {
+    color:#fff;.page-header-dark
+}
+.navbar.navbar-marketing.navbar-expand-lg.bg-transparent.navbar-dark.fixed-top img {
+    height: 60px;
+}
+.navbar-nav.ml-auto.mr-lg-5 a {
+    font-size: 18px;
+}
+.navbar-marketing .navbar-brand {
+    font-size: 22px !important;
+    font-weight: bold;
+}
+.navbar-marketing.navbar-dark.navbar-scrolled {
+    background: 
+    #fff !important;
+}
+.fixed-top, .page-header.navbar-fixed .navbar {
+    z-index: 99999999 !important;
+}
+.page-header.page-header-dark.bg-gradient-primary-to-secondary path {
+color: #fff !important;}
+ 
+@media only screen and (max-width: 600px) {
+header {
+    height: 100vh !important;
+}
+}
+@media only screen and (max-width: 991px) {
+.navbar-marketing .navbar-nav .nav-item .nav-link {
+    color: 
+#000 !important;
+}
+.navbar-scrolled .nav-link {
+    color: #000 !important;
+}
+}
+.page-header.page-header-dark.bg-gradient-primary-to-secondary svg {
+    height: 5rem !important;
+}
+.page-header .btn.btn-marketing.rounded-pill.btn-primary.aos-init.aos-animate {
+
+    background: #fc0;
+    border-color: #fc0;
+
+}
+#campagian_sec {
+    padding-bottom: 0px !important;
+    padding-top: 0px !important;
+}
+#campagian_sec h2 {
+    color: #fff;
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+#above-fotter {
+    color: #252c34 !important;
+}
+#campagian_sec .btn.btn-primary.btn-marketing.rounded-pill {
+    background: #fc0;
+    border: 0;
+}

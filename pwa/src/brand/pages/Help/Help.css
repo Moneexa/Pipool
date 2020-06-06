@@ -1,0 +1,52 @@
+.help  .m-0.font-weight-bold.text-primary {
+    color: #000 !important;
+    margin-bottom: 20px !important;
+}
+.help h4,p{
+    color:rgb(133, 135, 150);
+}
+.help #border .card.shadow.mb-4 {
+    background: #f5f5f5;
+    border: 1px solid #e3e6f0;
+    border-radius: .35rem;
+
+
+}
+.help #border .card.shadow.mb-4 {
+    box-shadow: none !important;
+}
+
+.help #border .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    
+}
+.help form.user .form-control-user {
+    font-size: .8rem;
+    border-radius: 10rem;
+    padding: 1.5rem 1rem;
+}
+
+.help form.user  .btn.btn-primary.btn-user.btn-block {
+    font-size: .8rem;
+    border-radius: 10rem;
+    padding: .75rem 1rem;
+    width: 30%;
+    margin-top: 20px;
+    margin-left:20px;   color:white;
+}
+.help form.user #btn-top .d-none.d-sm-inline-block.btn.btn-sm.btn-primary.shadow-sm{
+    color:white;
+}
+
+.help #btn-top  .d-none.d-sm-inline-block.btn.btn-sm.btn-primary.shadow-sm {
+    width: 30%;
+    font-size: 20px;
+    border-radius: 30px;
+    margin-right:20px;
+
+    box-shadow: 0 .125rem .25rem 0 rgba(58,59,69,.2)!important;
+}

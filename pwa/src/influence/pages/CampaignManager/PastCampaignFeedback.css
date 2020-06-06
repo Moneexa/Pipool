@@ -1,0 +1,17 @@
+.past-feedback .d-sm-flex.align-items-center.justify-content-between.mb-4 .m-0.font-weight-bold.text-primary{
+
+    color: #000 !important;
+    margin-bottom: 20px !important;
+}
+
+.past-feedback #border .card.shadow.mb-4 .card-body #contract{
+        width: 30%;
+        float: left;
+    
+}
+
+.past-feedback #border .card.shadow.mb-4 {
+    border-bottom: 1px solid #dadada !important;
+    border: 0;
+    border-radius: 0;
+}
