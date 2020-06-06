@@ -1,6 +1,6 @@
 import React from 'react'
 import { styles } from './AddBrand.css'
-import './AddBrnd.css'
+import './AddBrand.css'
 class AddBrand extends React.Component {
     render() {
 
@@ -10,7 +10,7 @@ class AddBrand extends React.Component {
                 <div className="text-center">
                     <h1 className="h4 text-gray-900 mb-4">Add a New Brand</h1>
                 </div>
-                <form className="row" style={styles.userForm} method="post" encType="multipart/form-data">
+                <form className="row" method="post" encType="multipart/form-data">
 
                     <div className="form-group col-xs-12 col-lg-3">
                         <label htmlFor="basic-url">

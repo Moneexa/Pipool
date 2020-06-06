@@ -3,20 +3,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Nav } from "react-bootstrap";
 import { BrowserRouter as Router, Link, Redirect, Route, Switch } from "react-router-dom";
-import './InfluenceDashboard.css';
-import calenderInfluence from './pages/Calender/calenderInfluence';
-import PastCampaignFeedback from './pages/CampaignManager/PastCampaignFeedback';
-import AddChannel from './pages/ChannelManager/AddChannel';
-import Channel from './pages/ChannelManager/Channel';
-import CampaignInfluence from './pages/dashboard/CampaignInfluence';
-import DashboardInfluenceIndex from './pages/dashboard/DashBoardInfluenceIndex';
-import PendingRequestsInfluence from './pages/dashboard/PendingRequestsInfluence';
-import HelpInfluence from './pages/Help/HelpInfluence';
-import PaymentInfluence from './pages/Payment/PaymentInfluence';
+import './Influencer.css';
+import Calender from './pages/Calender/Calender';
+import PastCampaignFeedback from './pages/PastCampaignFeedback/PastCampaignFeedback';
+import AddChannel from './pages/AddChannel/AddChannel';
+import ChannelManager from './pages/ChannelManager/ChannelManager';
+import CampaignManager from './pages/CampaignManager/CampaignManager';
+import Overview from './pages/Overview/Overview';
+import PendingRequests from './pages/PendingRequests/PendingRequests';
+import Help from './pages/Help/Help';
+import Payment from './pages/Payment/Payment';
 
 //import store from "./shared/store/store"
 
-export class influenceDashboard extends React.Component {
+export class Influencer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -48,7 +48,7 @@ export class influenceDashboard extends React.Component {
                                     activeKey="/influence-home">
                                     <div className="sidebar-sticky"></div>
                                     <Nav.Item>
-                                        <Nav.Link as={Link} to={`${this.props.match.path}/influence-home`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+                                        <Nav.Link as={Link} to={`${this.props.match.path}/overview`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
                                             <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
                                             {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
                                             <span>Dashboard</span>
@@ -72,13 +72,13 @@ export class influenceDashboard extends React.Component {
                                     <Nav.Item>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link as={Link} to={`${this.props.match.path}/campaigns-influence`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+                                        <Nav.Link as={Link} to={`${this.props.match.path}/campaigns`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
                                             <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
                                             {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
                                             <span>Campaigns</span>
                                         </Nav.Link>
                                         <Nav.Item>
-                                            <Nav.Link as={Link} to={`${this.props.match.path}/pending-requests-influence`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+                                            <Nav.Link as={Link} to={`${this.props.match.path}/pending-requests`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
                                                 {this.state.sidebarExpanded ? <div className="no-icon-space"></div> : null}
                                                 {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
                                                 <span>Pending Requests</span>
@@ -97,7 +97,7 @@ export class influenceDashboard extends React.Component {
                                     </Nav.Item>
                                     <Nav.Item>
 
-                                        <Nav.Link as={Link} to={`${this.props.match.path}/calender-influence`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+                                        <Nav.Link as={Link} to={`${this.props.match.path}/calender`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
 
                                             <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
 
@@ -108,14 +108,14 @@ export class influenceDashboard extends React.Component {
                                     </Nav.Item>
                                     <Nav.Item>
 
-                                        <Nav.Link as={Link} to={`${this.props.match.path}/payment-influence`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+                                        <Nav.Link as={Link} to={`${this.props.match.path}/payment`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
                                             <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
                                             {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
                                             <span>Settings and Payments</span> </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
 
-                                        <Nav.Link as={Link} to={`${this.props.match.path}/help-influence`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+                                        <Nav.Link as={Link} to={`${this.props.match.path}/help`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
                                             <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
                                             {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
                                             <span>Help and FAQ</span> </Nav.Link>
@@ -158,16 +158,16 @@ export class influenceDashboard extends React.Component {
                                 </nav>
                                 <div className="container-fluid">
                                     <Switch>
-                                        <Redirect from={`${this.props.match.path}/`} exact to={`${this.props.match.path}/influence-home`} />
-                                        <Route path={`${this.props.match.path}/influence-home`} component={DashboardInfluenceIndex} />
-                                        <Route path={`${this.props.match.path}/campaigns-influence`} component={CampaignInfluence} />
-                                        <Route path={`${this.props.match.path}/pending-requests-influence`} component={PendingRequestsInfluence} />
-                                        <Route path={`${this.props.match.path}/channels`} component={Channel} />
+                                        <Redirect from={`${this.props.match.path}/`} exact to={`${this.props.match.path}/overview`} />
+                                        <Route path={`${this.props.match.path}/overview`} component={Overview} />
+                                        <Route path={`${this.props.match.path}/campaigns`} component={CampaignManager} />
+                                        <Route path={`${this.props.match.path}/pending-requests`} component={PendingRequests} />
+                                        <Route path={`${this.props.match.path}/channels`} component={ChannelManager} />
                                         <Route path={`${this.props.match.path}/add-channels`} component={AddChannel} />
                                         <Route path={`${this.props.match.path}/campaign-feedbacks`} component={PastCampaignFeedback} />
-                                        <Route path={`${this.props.match.path}/calender-influence`} component={calenderInfluence} />
-                                        <Route path={`${this.props.match.path}/payment-influence`} component={PaymentInfluence} />
-                                        <Route path={`${this.props.match.path}/help-influence`} component={HelpInfluence} />
+                                        <Route path={`${this.props.match.path}/calender`} component={Calender} />
+                                        <Route path={`${this.props.match.path}/payment`} component={Payment} />
+                                        <Route path={`${this.props.match.path}/help`} component={Help} />
                                     </Switch>
 
                                 </div>

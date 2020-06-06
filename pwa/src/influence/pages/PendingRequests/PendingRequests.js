@@ -29,7 +29,7 @@ const style = useStyles({
     }
 
 })
-function PendingRequestsInfluence() {
+function PendingRequests() {
     const _styles = style
     return (
 
@@ -107,4 +107,4 @@ function PendingRequestsInfluence() {
 }
 
 
-export default PendingRequestsInfluence;
+export default PendingRequests;

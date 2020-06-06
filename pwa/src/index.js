@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import { Brand } from './brand/Brand';
-import { influenceDashboard } from './influence/InfluenceDashboard';
+import { Influencer } from './influence/Influencer';
 import { Auth } from './auth/Auth';
 function Index() {
   return (
@@ -17,7 +17,7 @@ function Index() {
         <Switch>
           <Redirect from="/" exact to="/auth" />
           <Route  path="/brand" component={Brand} />
-          <Route  path="/influencer" component={influenceDashboard} />
+          <Route  path="/influencer" component={Influencer} />
           <Route  path="/auth" component={Auth} />
         </Switch>
       </Router>

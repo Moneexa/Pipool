@@ -1,8 +1,8 @@
 import React from 'react'
 
-import './Dashboardindex.css'
+import './Overview.css'
 
-function DashBoardIndex() {
+function Overview() {
     return (
         <div className="home">
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
@@ -111,4 +111,4 @@ function DashBoardIndex() {
     )
 }
 
-export default DashBoardIndex;
+export default Overview;
