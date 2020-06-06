@@ -1,8 +1,8 @@
 import React from 'react'
 
-import './OverviewComponent.css'
+import './Overview.css'
 
-function OverviewComponent() {
+function Overview() {
     return (
         <div className="home">
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
@@ -111,4 +111,4 @@ function OverviewComponent() {
     )
 }
 
-export default OverviewComponent;
+export default Overview;

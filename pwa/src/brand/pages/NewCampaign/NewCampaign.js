@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useStyles } from 'react-styles-hook'
-import './CampaignComponent.css';
 import { Tab, Nav } from 'react-bootstrap';
 const styles = useStyles({
     bottomSpacer: {
@@ -129,7 +128,7 @@ const styles = useStyles({
 })
 
 
-function NewCampaignComponent() {
+function NewCampaign() {
 
     const formSteps = ["one", "two", "three"]
     const [currentStepIndex, setCurrentStepIndex] = useState(0);
@@ -384,4 +383,4 @@ function NewCampaignComponent() {
 
     )
 }
-export default NewCampaignComponent;
+export default NewCampaign;

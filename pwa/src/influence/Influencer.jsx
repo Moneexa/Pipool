@@ -3,20 +3,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Nav } from "react-bootstrap";
 import { BrowserRouter as Router, Link, Redirect, Route, Switch } from "react-router-dom";
-import './InfluencerLayout.css';
-import CalenderComponent from './pages/Calender/CalenderComponent';
-import PastCampaignFeedbackComponent from './pages/CampaignManager/PastCampaignFeedbackComponent';
-import AddChannelComponent from './pages/ChannelManager/AddChannelComponent';
-import ChannelComponent from './pages/ChannelManager/ChannelComponent';
-import CampaignsComponent from './pages/dashboard/CampaignsComponent';
-import OverviewComponent from './pages/dashboard/OverviewComponent';
-import PendingRequestsComponent from './pages/dashboard/PendingRequestsComponent';
-import HelpComponent from './pages/Help/HelpComponent';
-import PaymentComponent from './pages/Payment/PaymentComponent';
+import './Influencer.css';
+import Calender from './pages/Calender/Calender';
+import PastCampaignFeedback from './pages/PastCampaignFeedback/PastCampaignFeedback';
+import AddChannel from './pages/AddChannel/AddChannel';
+import ChannelManager from './pages/ChannelManager/ChannelManager';
+import CampaignManager from './pages/CampaignManager/CampaignManager';
+import Overview from './pages/Overview/Overview';
+import PendingRequests from './pages/PendingRequests/PendingRequests';
+import Help from './pages/Help/Help';
+import Payment from './pages/Payment/Payment';
 
 //import store from "./shared/store/store"
 
-export class InfluencerLayout extends React.Component {
+export class Influencer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -159,15 +159,15 @@ export class InfluencerLayout extends React.Component {
                                 <div className="container-fluid">
                                     <Switch>
                                         <Redirect from={`${this.props.match.path}/`} exact to={`${this.props.match.path}/overview`} />
-                                        <Route path={`${this.props.match.path}/overview`} component={OverviewComponent} />
-                                        <Route path={`${this.props.match.path}/campaigns`} component={CampaignsComponent} />
-                                        <Route path={`${this.props.match.path}/pending-requests`} component={PendingRequestsComponent} />
-                                        <Route path={`${this.props.match.path}/channels`} component={ChannelComponent} />
-                                        <Route path={`${this.props.match.path}/add-channels`} component={AddChannelComponent} />
-                                        <Route path={`${this.props.match.path}/campaign-feedbacks`} component={PastCampaignFeedbackComponent} />
-                                        <Route path={`${this.props.match.path}/calender`} component={CalenderComponent} />
-                                        <Route path={`${this.props.match.path}/payment`} component={PaymentComponent} />
-                                        <Route path={`${this.props.match.path}/help`} component={HelpComponent} />
+                                        <Route path={`${this.props.match.path}/overview`} component={Overview} />
+                                        <Route path={`${this.props.match.path}/campaigns`} component={CampaignManager} />
+                                        <Route path={`${this.props.match.path}/pending-requests`} component={PendingRequests} />
+                                        <Route path={`${this.props.match.path}/channels`} component={ChannelManager} />
+                                        <Route path={`${this.props.match.path}/add-channels`} component={AddChannel} />
+                                        <Route path={`${this.props.match.path}/campaign-feedbacks`} component={PastCampaignFeedback} />
+                                        <Route path={`${this.props.match.path}/calender`} component={Calender} />
+                                        <Route path={`${this.props.match.path}/payment`} component={Payment} />
+                                        <Route path={`${this.props.match.path}/help`} component={Help} />
                                     </Switch>
 
                                 </div>

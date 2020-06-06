@@ -1,6 +1,6 @@
 import React from 'react'
-import './PastCampaignFeedbackComponent.css'
-export default class PastCampaignFeedbackComponent extends React.Component {
+import './PastCampaignFeedback.css'
+export default class PastCampaignFeedback extends React.Component {
 
     render() {
         return (

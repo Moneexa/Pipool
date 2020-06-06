@@ -3,20 +3,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Nav } from "react-bootstrap";
 import { BrowserRouter as Router, Link, Redirect, Route, Switch } from "react-router-dom";
-import AddBrandComponent from './pages/BrandManager/AddBrandComponent';
-import BrandComponent from './pages/BrandManager/BrandComponent';
-import CalenderComponent from './pages/Calender/CalenderComponent';
-import NewCampaignComponent from './pages/CampaignManager/NewCampaignComponent';
-import CampaignsComponent from './pages/dashboard/CampaignsComponent';
-import OverviewComponent from './pages/dashboard/OverviewComponent';
-import PendingRequestsComponent from './pages/dashboard/PendingRequestsComponent';
-import HelpComponent from './pages/Help/HelpComponent';
-import PaymentComponent from './pages/Payment/PaymentComponent';
-import './BrandLayout.css';
+import AddBrand from './pages/AddBrand/AddBrand';
+import BrandManager from './pages/BrandManager/BrandManager';
+import Calender from './pages/Calender/Calender';
+import NewCampaign from './pages/NewCampaign/NewCampaign';
+import CampaignManager from './pages/CampaignManager/CampaignManager';
+import Overview from './pages/Overview/Overview';
+import PendingRequests from './pages/PendingRequests/PendingRequests';
+import Help from './pages/Help/Help';
+import Payment from './pages/Payment/Payment';
+import './Brand.css';
 
 //import store from "./shared/store/store"
 
-export class BrandLayout extends React.Component {
+export class Brand extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -169,15 +169,15 @@ export class BrandLayout extends React.Component {
                                 <div className="container-fluid">
                                     <Switch>
                                         <Redirect from={`${this.props.match.path}/`} exact to={`${this.props.match.path}/overview`} />
-                                        <Route path={`${this.props.match.path}/overview`} component={OverviewComponent} />
-                                        <Route path={`${this.props.match.path}/campaigns`} component={CampaignsComponent} />
-                                        <Route path={`${this.props.match.path}/pending-requests`} component={PendingRequestsComponent} />
-                                        <Route path={`${this.props.match.path}/brands`} component={BrandComponent} />
-                                        <Route path={`${this.props.match.path}/add-brand`} component={AddBrandComponent} />
-                                        <Route path={`${this.props.match.path}/new-campaign`} component={NewCampaignComponent} />
-                                        <Route path={`${this.props.match.path}/calender`} component={CalenderComponent} />
-                                        <Route path={`${this.props.match.path}/payment`} component={PaymentComponent} />
-                                        <Route path={`${this.props.match.path}/help`} component={HelpComponent} />
+                                        <Route path={`${this.props.match.path}/overview`} component={Overview} />
+                                        <Route path={`${this.props.match.path}/campaigns`} component={CampaignManager} />
+                                        <Route path={`${this.props.match.path}/pending-requests`} component={PendingRequests} />
+                                        <Route path={`${this.props.match.path}/brands`} component={BrandManager} />
+                                        <Route path={`${this.props.match.path}/add-brand`} component={AddBrand} />
+                                        <Route path={`${this.props.match.path}/new-campaign`} component={NewCampaign} />
+                                        <Route path={`${this.props.match.path}/calender`} component={Calender} />
+                                        <Route path={`${this.props.match.path}/payment`} component={Payment} />
+                                        <Route path={`${this.props.match.path}/help`} component={Help} />
                                     </Switch>
                                 </div>
                             </div>

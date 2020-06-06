@@ -7,8 +7,8 @@ import './index.css';
 import { Provider } from "react-redux";
 import store from "./store/store";
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
-import { BrandLayout } from './brand/BrandLayout';
-import { InfluencerLayout } from './influence/InfluencerLayout';
+import { Brand } from './brand/Brand';
+import { Influencer } from './influence/Influencer';
 import { Auth } from './auth/Auth';
 function Index() {
   return (
@@ -16,8 +16,8 @@ function Index() {
       <Router>
         <Switch>
           <Redirect from="/" exact to="/auth" />
-          <Route  path="/brand" component={BrandLayout} />
-          <Route  path="/influencer" component={InfluencerLayout} />
+          <Route  path="/brand" component={Brand} />
+          <Route  path="/influencer" component={Influencer} />
           <Route  path="/auth" component={Auth} />
         </Switch>
       </Router>

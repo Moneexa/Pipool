@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import './OverviewComponent.css'
+import './Overview.css'
 
-function OverviewComponent() {
+function Overview() {
     return (
         <div className="home-influence">
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
@@ -150,4 +150,4 @@ function OverviewComponent() {
     )
 }
 
-export default OverviewComponent;
+export default Overview;
