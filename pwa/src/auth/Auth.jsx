@@ -12,6 +12,7 @@ export function Auth({ match }) {
                 <Route path={`${match.path}/signup`} component={Signup} />
             </Switch>
             {/* </Router> */}
+            
         </>
     );
 }
