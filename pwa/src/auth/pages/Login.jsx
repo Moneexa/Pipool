@@ -4,6 +4,7 @@ import { faGoogle, faFacebook, faLinkedin } from '@fortawesome/free-brands-svg-i
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { GoogleLogin } from 'react-google-login';
 import ReactDOM from 'react-dom';
+import {Button} from 'react-bootstrap'
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import './Login.css'
 import { LinkedIn } from 'react-linkedin-login-oauth2';
@@ -93,13 +94,13 @@ export class Login extends React.Component {
                                                     <GoogleLogin
                                                         clientId="529379787978-sgjjt3qpl23ivkp2boh1s3q03m3k5a8n.apps.googleusercontent.com"
                                                         render={renderProps => (
-                                                            <Link to="#"
+                                                            <Button
                                                                 onClick={renderProps.onClick} disabled={renderProps.disabled}
 
                                                                 className="btn btn-google btn-user btn-block no-focus-effects d-flex justify-content-center align-items-center">
                                                                 <FontAwesomeIcon className="social-icon" icon={faGoogle} />
                                                     Login with Google
-                                                            </Link>
+                                                            </Button>
                                                         )}
                                                         onSuccess={responseGoogle}
                                                         onFailure={responseGoogle}
@@ -111,13 +112,13 @@ export class Login extends React.Component {
                                                         autoLoad
                                                         callback={responseFacebook}
                                                         render={renderProps => (
-                                                            <Link to="#"
+                                                            <Button
 
                                                                 onClick={renderProps.onClick}
                                                                 className="btn btn-facebook btn-user btn-block no-focus-effects d-flex justify-content-center align-items-center">
                                                                 <FontAwesomeIcon className="social-icon" icon={faFacebook} />
                                                     Login with Facebook
-                                                            </Link>
+                                                            </Button>
                                                         )}
                                                     />
                                                     <LinkedIn
@@ -142,14 +143,14 @@ export class Login extends React.Component {
                                                         redirectUri="http://localhost:3000/auth/login"
                                                         renderElement={({ onClick, disabled }) => (
 
-                                                            <Link to="#"
+                                                            <Button
 
                                                                 onClick={onClick} disabled={disabled}
 
                                                                 className="btn btn-linkedin btn-block no-focus-effects d-flex justify-content-center align-items-center">
                                                                 <FontAwesomeIcon className="social-icon" icon={faLinkedin} />
                                                     Login with LinkedIn
-                                                            </Link>
+                                                            </Button>
                                                         )}
                                                     />
                                                     {!code && <div>No code</div>}
