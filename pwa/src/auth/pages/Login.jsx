@@ -7,8 +7,8 @@ import ReactDOM from 'react-dom';
 import {Button} from 'react-bootstrap'
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import './Login.css'
-import { LinkedIn } from 'react-linkedin-login-oauth2';
-import { LinkedInPopUp } from 'react-linkedin-login-oauth2';
+import { LinkedIn } from '../shared/components/Linkedin';
+
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
@@ -99,7 +99,7 @@ export class Login extends React.Component {
 
                                                                 className="btn btn-google btn-user btn-block no-focus-effects d-flex justify-content-center align-items-center">
                                                                 <FontAwesomeIcon className="social-icon" icon={faGoogle} />
-                                                    Login with Google
+                                                                    Login with Google
                                                             </Button>
                                                         )}
                                                         onSuccess={responseGoogle}
@@ -109,7 +109,6 @@ export class Login extends React.Component {
 
                                                     <FacebookLogin
                                                         appId="263197894950161"
-                                                        autoLoad
                                                         callback={responseFacebook}
                                                         render={renderProps => (
                                                             <Button
@@ -121,7 +120,8 @@ export class Login extends React.Component {
                                                             </Button>
                                                         )}
                                                     />
-                                                    <LinkedIn
+                                                    <LinkedIn />
+                                                    {/* <LinkedIn
                                                         clientId="865ntwzmhauy0w"
                                                         onFailure={this.handleFailure}
                                                         onSuccess={
@@ -135,9 +135,6 @@ export class Login extends React.Component {
                                                                 );
                                                         
                                                             }
-
-
-
                                                         }
                                                         scope="r_liteprofile"
                                                         redirectUri="http://localhost:3000/auth/login"
@@ -152,7 +149,7 @@ export class Login extends React.Component {
                                                     Login with LinkedIn
                                                             </Button>
                                                         )}
-                                                    />
+                                                    /> */}
                                                     {!code && <div>No code</div>}
                                                     {code && <div>Code: {code}</div>}
                                                     {errorMessage && <div>{errorMessage}</div>}
