@@ -4,25 +4,21 @@ import { faGoogle, faFacebook, faLinkedin } from '@fortawesome/free-brands-svg-i
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { GoogleLogin } from 'react-google-login';
 import ReactDOM from 'react-dom';
-import {Button} from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import './Login.css'
 import { LinkedIn } from '../shared/components/Linkedin';
-
+import axios from 'axios'
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-const responseGoogle = (response) => {
-    console.log(response);
-}
-const responseFacebook = (response) => {
-    console.log(response);
-}
+
 
 export class Login extends React.Component {
     state = {
         code: '',
         errorMessage: '',
+        tokenId: '', email:'' , password:'', imgSrc:'', name:''
     };
 
 
@@ -43,6 +39,32 @@ export class Login extends React.Component {
         },
             console.log(error)
         );
+    }
+    responseGoogle = (response) => {
+        console.log(response);
+
+        this.setState({
+            tokenId:response["tokenId"],
+            email:response["profileObj"]["email"],
+            imgSrc:response["profileObj"]["imageUrl"],
+            name:response["profileObj"]["name"]
+        })
+        const _tokenObj={
+            token:this.state.tokenId,
+            email: this.state.email,
+            imgSrc:this.state.imgSrc,
+            name:this.state.name
+        }
+       
+      
+          axios.post(`http://localhost:4242/api/login/google`, { _tokenObj })
+            .then(res => {
+              console.log(res);
+              console.log(res.data);
+            })
+    }
+    responseFacebook = (response) => {
+        console.log(response);
     }
     render() {
         const { code, errorMessage } = this.state;
@@ -102,14 +124,14 @@ export class Login extends React.Component {
                                                                     Login with Google
                                                             </Button>
                                                         )}
-                                                        onSuccess={responseGoogle}
-                                                        onFailure={responseGoogle}
+                                                        onSuccess={this.responseGoogle}
+                                                        onFailure={this.responseGoogle}
                                                         cookiePolicy={'single_host_origin'}
                                                     />
 
                                                     <FacebookLogin
                                                         appId="263197894950161"
-                                                        callback={responseFacebook}
+                                                        callback={this.responseFacebook}
                                                         render={renderProps => (
                                                             <Button
 
@@ -149,7 +171,7 @@ export class Login extends React.Component {
                                                     {!code && <div>No code</div>}
                                                     {code && <div>Code: {code}</div>}
                                                     {errorMessage && <div>{errorMessage}</div>}
-                                                    
+
                                                     <hr />
                                                     <div className="text-center">
                                                         <Link className="small text-dark-blue" to="/">Forgot Password?</Link>
@@ -162,16 +184,11 @@ export class Login extends React.Component {
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
             </div>
         );
-
     }
 }

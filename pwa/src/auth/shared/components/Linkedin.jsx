@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 export function LinkedIn() {
 
     function openPopup() {
+
         const host = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port;
         const oauthWindow = window.open(encodeURI(`${config.linkedin.uri}/?redirect_uri=${host}${config.linkedin.redirectURI}&client_id=${config.linkedin.clientId}&scope=${config.linkedin.scope}&response_type=${config.linkedin.responseType}`));
 
@@ -19,6 +20,7 @@ export function LinkedIn() {
                 console.log(code, error);
             }
         }, 1000);
+        console.log(oauthWindow.location);
 
     }
 
