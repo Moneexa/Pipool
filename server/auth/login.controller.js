@@ -1,17 +1,18 @@
-const express = require('express');
-const router = express.Router();
 const UsertModel = require('./user.model.js');
+const config = require('../config.json');
 const bcrypt = require('bcrypt');
-const myPrivateKey = "DrIFOD55QZhK4ZeXIdtcR3NoWmdV9nr0";
 const jwt = require('jsonwebtoken');
-/*module.exports = {
-	router: router,
-	verify: verify
-};*/
+const { validationResult } = require('express-validator');
+
+module.exports = {
+	login,
+	loginGoogle,
+	verify
+};
 
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client("529379787978-sgjjt3qpl23ivkp2boh1s3q03m3k5a8n.apps.googleusercontent.com");
-exports.post = function (req, res) {
+async function login(req, res) {
 
 	if (req.body.email && req.body.password) {
 		UsertModel.findOne({
@@ -27,7 +28,7 @@ exports.post = function (req, res) {
 					jwt.sign({
 						"id": user._id,
 						"role": user.role
-					}, myPrivateKey, {
+					}, config.privateKey, {
 						expiresIn: '1d'
 					}, function (err, token) {
 						if (err) {
@@ -49,69 +50,63 @@ exports.post = function (req, res) {
 		res.sendStatus(400);
 	}
 }
-exports._post = function (req, res,next) {
-	async function verify() {
+
+async function loginGoogle(req, res, next) {
+
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(422).json({ errors: errors.array() });
+	}
+
+	const code = req.body.code;
+
+	try {
 		const ticket = await client.verifyIdToken({
-			idToken: req.body["_tokenObj"]["token"],
-			audience: "529379787978-sgjjt3qpl23ivkp2boh1s3q03m3k5a8n.apps.googleusercontent.com",  // Specify the CLIENT_ID of the app that accesses the backend
-			// Or, if multiple clients access the backend:
-			//[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+			idToken: code,
+			audience: config.google.clientId,
 		});
 		const payload = ticket.getPayload();
-		const userid = payload['sub'];
-	}
-	verify().catch(console.error);
-	if (req.body["_tokenObj"]["email"]) {
-		UsertModel.findOne({
-			"email": req.body["_tokenObj"]["email"],
-		}).exec(function (err, user) {
-			if (err || !user) {
-				let _user = new UsertModel(
-					{
-						email: req.body["_tokenObj"]["email"],
-						password: '',
-						role: '2',
-						picture: req.body["_tokenObj"]["imgSrc"]
-			
-					}
-				);
-			
-				_user.save(function (err) {
-					if (err) {
-						return next (err);
-					}
-					res.send('user Created successfully')
-				})
-			}
-
-			else {
-				jwt.sign({
-					"id": user._id,
-					"role": user.role
-				}, myPrivateKey, {
-					expiresIn: '1d'
-				}, function (err, token) {
-					if (err) {
-						console.log(err);
-
-						return res.sendStatus(500);
-					}
-					res.json({
-						"token": token,
-						"id": user._id
-					});
-				});
-			}
-
+		const email = payload.email;
+		const picture = payload.picture;
+		let user = await UsertModel.findOne({
+			"email": email,
 		});
+
+		if (!user) {
+			user = new UsertModel(
+				{
+					email: email,
+					picture: picture
+				}
+			);
+			await user.save();
+		}
+
+		jwt.sign({
+			"id": user.id,
+			"role": user.role
+		}, config.privateKey, {
+			expiresIn: '1d'
+		}, function (err, token) {
+			if (err) {
+				console.log(err);
+
+				return res.sendStatus(500);
+			}
+			res.json({
+				"token": token,
+				"id": user.id
+			});
+		});
+
+	} catch (error) {
+		return res.status(422).json({ errors: [{ msg: error.message, param: 'code' }] });
 	}
 
-	// If request specified a G Suite domain:
-	// const domain = payload['hd'];
 }
 
 
-exports.verify = function (req, res, next) {
+function verify(req, res, next) {
 	const authorization = req.headers['authorization'];
 	if (!authorization || typeof authorization !== "string" || !authorization.indexOf(" ") > 0) {
 		return res.status(401).json({
@@ -119,7 +114,7 @@ exports.verify = function (req, res, next) {
 		});
 	}
 	const token = authorization.split(" ")[1];
-	jwt.verify(token, myPrivateKey, function (err, decoded) {
+	jwt.verify(token, config.privateKey, function (err, decoded) {
 		if (err) {
 			return res.status(401).json({
 				"message": err.message

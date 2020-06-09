@@ -9,8 +9,7 @@ import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props
 import './Login.css'
 import { LinkedIn } from '../shared/components/Linkedin';
 import axios from 'axios'
-
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import config from '../../config.json';
 
 
 
@@ -18,7 +17,7 @@ export class Login extends React.Component {
     state = {
         code: '',
         errorMessage: '',
-        tokenId: '', email:'' , password:'', imgSrc:'', name:''
+        tokenId: '', email: '', password: '', imgSrc: '', name: ''
     };
 
 
@@ -40,28 +39,17 @@ export class Login extends React.Component {
             console.log(error)
         );
     }
-    responseGoogle = (response) => {
-        console.log(response);
+    responseGoogle = (googleUser) => {
+        const code = googleUser.getAuthResponse().id_token;
 
-        this.setState({
-            tokenId:response["tokenId"],
-            email:response["profileObj"]["email"],
-            imgSrc:response["profileObj"]["imageUrl"],
-            name:response["profileObj"]["name"]
-        })
-        const _tokenObj={
-            token:this.state.tokenId,
-            email: this.state.email,
-            imgSrc:this.state.imgSrc,
-            name:this.state.name
-        }
-       
-      
-          axios.post(`http://localhost:4242/api/login/google`, { _tokenObj })
+
+        axios.post(`${config.apiUrl}/auth/login/google`,
+            { code })
             .then(res => {
-              console.log(res);
-              console.log(res.data);
+                console.log(res);
+                console.log(res.data);
             })
+            .catch(() => alert("Unable to login"))
     }
     responseFacebook = (response) => {
         console.log(response);
@@ -114,7 +102,7 @@ export class Login extends React.Component {
                                                     </form>
                                                     <hr />
                                                     <GoogleLogin
-                                                        clientId="529379787978-sgjjt3qpl23ivkp2boh1s3q03m3k5a8n.apps.googleusercontent.com"
+                                                        clientId={config.google.clientId}
                                                         render={renderProps => (
                                                             <Button
                                                                 onClick={renderProps.onClick} disabled={renderProps.disabled}

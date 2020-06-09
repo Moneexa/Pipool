@@ -1,0 +1,12 @@
+{
+    "privateKey": "DrIFOD55QZhK4ZeXIdtcR3NoWmdV9nr0",
+    "google": {
+        "clientId": "529379787978-sgjjt3qpl23ivkp2boh1s3q03m3k5a8n.apps.googleusercontent.com",
+        "clientSecret": ""
+    },
+    "mongodb": {
+        "url": "mongodb://ds117749.mlab.com:17749/likeus",
+        "username": "root",
+        "password": "qwerty123"
+    }
+}

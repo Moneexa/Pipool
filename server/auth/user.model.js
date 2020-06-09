@@ -13,7 +13,7 @@ var UserSchema = new Schema({
     },
     role: {
         type: String,
-        required: true
+        required: false
     },
     picture: {
         type: String,

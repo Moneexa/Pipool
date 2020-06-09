@@ -1,0 +1,6 @@
+{
+    "apiUrl": "http://localhost:4242/api",
+    "google": {
+        "clientId": "529379787978-sgjjt3qpl23ivkp2boh1s3q03m3k5a8n.apps.googleusercontent.com"
+    }
+}
