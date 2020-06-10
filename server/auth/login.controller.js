@@ -3,9 +3,11 @@ const config = require('../config.json');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
+const axios = require('axios');
 
 module.exports = {
 	login,
+	loginFacebook,
 	loginGoogle,
 	verify
 };
@@ -50,7 +52,16 @@ async function login(req, res) {
 		res.sendStatus(400);
 	}
 }
-
+async function loginFacebook(req,res,next){
+	axios.get(`https://graph.facebook.com/v7.0/me?access_token=${req.body.access_token}&fields=email,name&format=json&method=get&pretty=0&transport=cors`)
+	.then(response => {
+	  console.log(response);
+	  //console.log(response.data.explanation);
+	})
+	.catch(error => {
+	  console.log(error);
+	});
+}
 async function loginGoogle(req, res, next) {
 
 	const errors = validationResult(req);

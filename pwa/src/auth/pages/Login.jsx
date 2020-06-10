@@ -52,7 +52,16 @@ export class Login extends React.Component {
             .catch(() => alert("Unable to login"))
     }
     responseFacebook = (response) => {
-        console.log(response);
+        const code = response.accessToken;
+        axios.get(`${config.apiUrl}/auth/login/facebook`, { code })
+            .then(res => {
+                console.log(res);
+                console.log(res.data);
+            })
+            .catch(console.error);
+
+
+
     }
     render() {
         const { code, errorMessage } = this.state;
