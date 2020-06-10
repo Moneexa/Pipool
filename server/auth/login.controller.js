@@ -53,11 +53,13 @@ async function login(req, res) {
 	}
 }
 
-async function loginFacebook(req, res) {
+//async
+ function loginFacebook(req, res) {
 	try {
-		const url = encodeURI(`https://graph.facebook.com/v7.0/me?access_token=${req.body.access_token}&fields=email,name&format=json&method=get&pretty=0&transport=cors`)
-		const resp = await axios.get(url);
-		console.log(resp);
+		const url = encodeURI(`https://graph.facebook.com/v7.0/me?access_token=${req.query.code}&fields=email,name&format=json&method=get&pretty=0&transfer=cors`)
+		/*const resp = await axios.get(url);
+		console.log(resp);*/
+		axios.get(url).then((res)=>console.log(res)).catch((error)=>console.log(error))
 		res.status(200).send("Working");
 	} catch (error) {
 		console.error(error.message);
