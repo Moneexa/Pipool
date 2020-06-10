@@ -52,17 +52,19 @@ async function login(req, res) {
 		res.sendStatus(400);
 	}
 }
-async function loginFacebook(req,res,next){
-	axios.get(`https://graph.facebook.com/v7.0/me?access_token=${req.body.access_token}&fields=email,name&format=json&method=get&pretty=0&transport=cors`)
-	.then(response => {
-	  console.log(response);
-	  //console.log(response.data.explanation);
-	})
-	.catch(error => {
-	  console.log(error);
-	});
+
+async function loginFacebook(req, res) {
+	try {
+		const url = encodeURI(`https://graph.facebook.com/v7.0/me?access_token=${req.body.access_token}&fields=email,name&format=json&method=get&pretty=0&transport=cors`)
+		const resp = await axios.get(url);
+		console.log(resp);
+		res.status(200).send("Working");
+	} catch (error) {
+		console.error(error.message);
+		res.status(500).send("Not Working");
+	}
 }
-async function loginGoogle(req, res, next) {
+async function loginGoogle(req, res) {
 
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
