@@ -53,8 +53,8 @@ export class Login extends React.Component {
     }
     responseFacebook = (response) => {
         const code = response.accessToken;
-        fetch(`${config.apiUrl}/auth/login/facebook?code=${code}`)
-        .then(res => res.json())
+        axios.post(`${config.apiUrl}/auth/login/facebook`, {code})
+        .then(res => console.log(res))
         .catch((error)=>console.log(error));
     }
     render() {

@@ -53,14 +53,18 @@ async function login(req, res) {
 	}
 }
 
-//async
- function loginFacebook(req, res) {
+//async 
+function loginFacebook(req, res) {
 	try {
 		const url = encodeURI(`https://graph.facebook.com/v7.0/me?access_token=${req.query.code}&fields=email,name&format=json&method=get&pretty=0&transfer=cors`)
-		/*const resp = await axios.get(url);
-		console.log(resp);*/
-		axios.get(url).then((res)=>console.log(res)).catch((error)=>console.log(error))
-		res.status(200).send("Working");
+		//const resp = await axios.get(url);
+		//console.log(resp);
+		axios.get(url).then((res)=>res.json()).
+		then((res)=>{
+			console.log(res);
+			res.status(200).send(res.data);
+
+		}).catch(res.status(422).send("You have sent an incorrect token"))
 	} catch (error) {
 		console.error(error.message);
 		res.status(500).send("Not Working");
