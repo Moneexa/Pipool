@@ -56,21 +56,71 @@ async function login(req, res) {
 
 //async 
 function loginFacebook(req, res) {
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(422).json({ errors: errors.array() });
+	}
+	let email;
+	// let name;
+	let picture;
+	const code = req.body.code;
 	try {
-		const url = encodeURI(`https://graph.facebook.com/v7.0/me?access_token=${req.body.code}&fields=email,name&format=json&method=get&pretty=0&transfer=cors`)
+		const url = encodeURI(`https://graph.facebook.com/v7.0/me?access_token=${code}&fields=email,name,picture&format=json&method=get&pretty=0&transfer=cors`)
 		//const resp = await axios.get(url);
 		//console.log(resp);
-		axios.get(url).then((res)=>res.json()).
-		then((res)=>{
-			console.log(res);
-			res.status(200).send(res.data);
+		axios.get(url)
+			.then((axiosResponse) => {
+				console.log(axiosResponse);
+				email = axiosResponse.data.email
+				// name = axiosResponse.data.name
+				picture = axiosResponse.data.picture.data.url;
+				return UsertModel.findOne({
+					"email": email
+				})
+				.exec();
+			})
+			.then((user) => {
+				if (!user) {
+					user = new UsertModel(
+						{
+							email: email,
+							picture: picture,
+						}
+					);
+					return user.save();
+				}
+				else {
+					return user
+				}
+			})
+			.then(user => {
+				jwt.sign({
+					"id": user._id,
+					"role": user.role
+				}, config.privateKey, {
+					expiresIn: '1d'
+				}, function (err, token) {
+					if (err) {
+						console.log(err);
 
-		}).catch(res.status(422).send("You have sent an incorrect token"))
+						return res.sendStatus(500);
+					}
+					res.json({
+						"token": token,
+						"id": user._id
+					});
+				});
+			})
+			.catch((error) => {
+				console.error(error);
+				res.status(422).send("You have sent an incorrect token")
+			});
 	} catch (error) {
 		console.error(error.message);
 		res.status(500).send("Not Working");
 	}
 }
+
 async function loginGoogle(req, res) {
 
 	const errors = validationResult(req);

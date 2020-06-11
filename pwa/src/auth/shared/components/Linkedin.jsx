@@ -22,6 +22,7 @@ export function LinkedIn() {
         }, 1000);
         console.log(oauthWindow.location);
 
+        
     }
 
 
