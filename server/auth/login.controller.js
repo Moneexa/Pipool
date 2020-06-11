@@ -53,10 +53,11 @@ async function login(req, res) {
 	}
 }
 
+
 //async 
 function loginFacebook(req, res) {
 	try {
-		const url = encodeURI(`https://graph.facebook.com/v7.0/me?access_token=${req.query.code}&fields=email,name&format=json&method=get&pretty=0&transfer=cors`)
+		const url = encodeURI(`https://graph.facebook.com/v7.0/me?access_token=${req.body.code}&fields=email,name&format=json&method=get&pretty=0&transfer=cors`)
 		//const resp = await axios.get(url);
 		//console.log(resp);
 		axios.get(url).then((res)=>res.json()).
