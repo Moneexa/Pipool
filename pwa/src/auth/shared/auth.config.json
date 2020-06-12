@@ -3,7 +3,8 @@
         "uri": "https://www.linkedin.com/oauth/v2/authorization",
         "redirectURI": "/oauth-redirect",
         "clientId": "865ntwzmhauy0w",
-        "scope": "r_liteprofile",
+        "scope": "r_liteprofile,r_emailaddress",
+
         "responseType": "code",
         "client_secret": "pONWp2pvkJrrJg7I",
         "grant_type" : "authorization_code"
