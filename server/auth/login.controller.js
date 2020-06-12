@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const axios = require('axios');
 const _config = require('../../pwa/src/auth/shared/auth.config.json')
-
+var querystring = require('querystring');
 module.exports = {
 	login,
 	loginFacebook,
@@ -72,13 +72,7 @@ function loginLinkedin(req,res){
 		client_secret : _config.linkedin.client_secret,
 		redirect_uri: _config.linkedin.redirectURI
 	}
-axios.post(encodeURI('https://www.linkedin.com/oauth/v2/accessToken?'), {
-	grant_type: obj.grant_type,
-	code: obj.code,
-	client_id: obj.client_id,
-	client_secret:obj.client_secret,
-	redirect_uri:obj.redirect_uri
-  },  {
+axios.post(encodeURI('https://www.linkedin.com/oauth/v2/accessToken?'), querystring.stringify(obj),  {
     'Content-Type': 'application/x-www-form-urlencoded'
   })
   .then((response) => {
