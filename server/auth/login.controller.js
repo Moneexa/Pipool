@@ -9,6 +9,7 @@ module.exports = {
 	login,
 	loginFacebook,
 	loginGoogle,
+	loginLinkedin,
 	verify
 };
 
@@ -53,8 +54,95 @@ async function login(req, res) {
 	}
 }
 
+function loginLinkedin(req,res){
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(422).json({ errors: errors.array() });
+	}
 
-//async 
+	try{
+	let email;
+	// let name;
+	let picture;
+	const obj = req.body.obj;
+	console.log(obj);
+axios.post(encodeURI('https://www.linkedin.com/oauth/v2/accessToken?'), {
+	grant_type: obj.grant_type,
+	code: obj.code,
+	client_id: obj.client_id,
+	client_secret:obj.client_secret,
+	redirect_uri:obj.redirect_uri
+  },  {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  })
+  .then((response) => {
+	console.log(response);
+  }, (error) => {
+	console.error(error.message);
+  });
+}
+catch{
+	res.sendStatus(500).send("not working")
+}
+
+/*try {
+		const url = encodeURI(`https://api.linkedin.com/v1/people/~:(id,first-name,last-name,headline,picture-url,location,industry,current-share,num-connections,summary,specialties,positions)?format=json&oauth2_access_token=${code}`)
+
+			//const resp = await axios.get(url);
+		//console.log(resp);
+		axios.get(url)
+			.then((axiosResponse) => {
+				console.log(axiosResponse.data);
+                 res.sendStatus(200).send(axiosResponse)
+				//email = axiosResponse.data.email
+				// name = axiosResponse.data.name
+				//picture = axiosResponse.data.picture.data.url;
+				/*return UsertModel.findOne({
+					"email": email
+				})
+				.exec();
+			})
+			/*.then((user) => {
+				if (!user) {
+					user = new UsertModel(
+						{
+							email: email,
+							//picture: picture,
+						}
+					);
+					return user.save();
+				}
+				else {
+					return user
+				}
+			})
+			.then(user => {
+				jwt.sign({
+					"id": user._id,
+					"role": user.role
+				}, config.privateKey, {
+					expiresIn: '1d'
+				}, function (err, token) {
+					if (err) {
+						console.log(err);
+
+						return res.sendStatus(500);
+					}
+					res.json({
+						"token": token,
+						"id": user._id
+					});
+				});
+			})
+			.catch((error) => {
+				//console.error(error);
+				res.status(422).send("You have sent an incorrect token")
+			});
+	} catch (error) {
+		console.error(error.message);
+		res.status(500).send("Not Working");
+	}*/
+}
 function loginFacebook(req, res) {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {

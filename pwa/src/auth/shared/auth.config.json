@@ -4,6 +4,9 @@
         "redirectURI": "/oauth-redirect",
         "clientId": "865ntwzmhauy0w",
         "scope": "r_liteprofile",
-        "responseType": "code"
+        "responseType": "code",
+        "client_secret": "pONWp2pvkJrrJg7I",
+        "grant_type" : "authorization_code"
+
     }
 }

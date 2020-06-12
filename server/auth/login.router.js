@@ -13,4 +13,5 @@ router.post('/login/google', [
     check('code').isString()
 ], loginController.loginGoogle);
 router.post('/login/facebook', [check('code').isString()],loginController.loginFacebook)
+router.post('/login/linkedin', [check('obj').isString()], loginController.loginLinkedin)
 module.exports = router;

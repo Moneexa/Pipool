@@ -1,8 +1,9 @@
 import React from 'react';
 import config from '../auth.config.json';
+
 import { faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import axios from 'axios'
 export function LinkedIn() {
 
     function openPopup() {
@@ -17,12 +18,28 @@ export function LinkedIn() {
                 const searchParams = redirectUrl.searchParams;
                 const code = searchParams.get('code');
                 const error = searchParams.get('error');
+                const client_id=config.linkedin.clientId;
+                const redirect_uri=config.linkedin.uri;
+                const client_secret=config.linkedin.client_secret;
+                const grant_type=config.linkedin.grant_type;
+                const obj={
+                    client_id: client_id,
+                    grant_type: grant_type,
+                    redirect_uri: redirect_uri,
+                    client_secret: client_secret,
+                    code: code,
+
+                }
                 console.log(code, error);
+                axios.post(`http://localhost:4242/api/auth/login/linkedin`, {obj})
+                .then(res => console.log(res)
+                )
+                .catch((error)=>console.error(error.message));
             }
         }, 1000);
         console.log(oauthWindow.location);
 
-        
+
     }
 
 
