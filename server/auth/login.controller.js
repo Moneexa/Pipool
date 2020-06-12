@@ -70,7 +70,7 @@ function loginLinkedin(req,res){
 		grant_type: _config.linkedin.grant_type,
 		client_id: _config.linkedin.clientId,
 		client_secret : _config.linkedin.client_secret,
-		redirect_uri: _config.linkedin.redirect_uri
+		redirect_uri: _config.linkedin.redirectURI
 	}
 axios.post(encodeURI('https://www.linkedin.com/oauth/v2/accessToken?'), {
 	grant_type: obj.grant_type,
