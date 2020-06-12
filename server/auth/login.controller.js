@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const axios = require('axios');
+const _config = require('../../pwa/src/auth/shared/auth.config.json')
 
 module.exports = {
 	login,
@@ -64,8 +65,13 @@ function loginLinkedin(req,res){
 	let email;
 	// let name;
 	let picture;
-	const obj = req.body.obj;
-	console.log(obj);
+	const obj={
+		code:req.body.code,
+		grant_type: _config.grant_type,
+		client_id: _config.clientId,
+		client_secret : _config.client_secret,
+		redirect_uri: _config.redirect_uri
+	}
 axios.post(encodeURI('https://www.linkedin.com/oauth/v2/accessToken?'), {
 	grant_type: obj.grant_type,
 	code: obj.code,
@@ -77,7 +83,7 @@ axios.post(encodeURI('https://www.linkedin.com/oauth/v2/accessToken?'), {
   })
   .then((response) => {
 	console.log(response);
-  }, (error) => {
+  }).catch((error) => {
 	console.error(error.message);
   });
 }
