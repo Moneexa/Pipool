@@ -55,93 +55,147 @@ async function login(req, res) {
 	}
 }
 
-function loginLinkedin(req,res){
+function loginLinkedin(req, res) {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
 		return res.status(422).json({ errors: errors.array() });
 	}
 
-	try{
-	let email;
-	// let name;
-	let picture;
-	const obj={
-		code:req.body.code,
-		grant_type: _config.linkedin.grant_type,
-		client_id: _config.linkedin.clientId,
-		client_secret : _config.linkedin.client_secret,
-		redirect_uri: _config.linkedin.redirectURI
-	}
-axios.post(encodeURI('https://www.linkedin.com/oauth/v2/accessToken?'), querystring.stringify(obj),  {
-    'Content-Type': 'application/x-www-form-urlencoded'
-  })
-  .then((response) => {
-	console.log(response);
-  }).catch((error) => {
-	console.error(error.message);
-  });
-}
-catch{
-	res.sendStatus(500).send("not working")
-}
+	try {
+		let email;
+		// let name;
+		let picture;
+		const obj = {
+			code: req.body.code,
+			grant_type: _config.linkedin.grant_type,
+			client_id: _config.linkedin.clientId,
+			client_secret: _config.linkedin.client_secret,
+			redirect_uri: "http://localhost:3000" + _config.linkedin.redirectURI
+		}
+		axios.post(encodeURI('https://www.linkedin.com/oauth/v2/accessToken?'), querystring.stringify(obj), {
+			'Content-Type': 'application/x-www-form-urlencoded'
+		})
+			.then((response) => {
+				const access_token = response.data.access_token
+				const url = encodeURI(`https://api.linkedin.com/v1/people/~:(id,first-name,last-name,headline,picture-url,location,industry,current-share,num-connections,summary,specialties,positions)?format=json&oauth2_access_token=${access_token}`)
 
-/*try {
-		const url = encodeURI(`https://api.linkedin.com/v1/people/~:(id,first-name,last-name,headline,picture-url,location,industry,current-share,num-connections,summary,specialties,positions)?format=json&oauth2_access_token=${code}`)
-
-			//const resp = await axios.get(url);
-		//console.log(resp);
-		axios.get(url)
-			.then((axiosResponse) => {
-				console.log(axiosResponse.data);
-                 res.sendStatus(200).send(axiosResponse)
-				//email = axiosResponse.data.email
-				// name = axiosResponse.data.name
-				//picture = axiosResponse.data.picture.data.url;
-				/*return UsertModel.findOne({
-					"email": email
-				})
-				.exec();
-			})
-			/*.then((user) => {
-				if (!user) {
-					user = new UsertModel(
-						{
-							email: email,
-							//picture: picture,
+				//const resp = await axios.get(url);
+				//console.log(resp);
+				axios.get(url)
+					.then((axiosResponse) => {
+						console.log(axiosResponse);
+						//email = axiosResponse.data.email
+						// name = axiosResponse.data.name
+						//picture = axiosResponse.data.picture.data.url;
+						/*return UsertModel.findOne({
+							"email": email
+						})
+						.exec();*/
+					})
+					/*.then((user) => {
+						if (!user) {
+							user = new UsertModel(
+								{
+									email: email,
+									//picture: picture,
+								}
+							);
+							return user.save();
 						}
-					);
-					return user.save();
-				}
-				else {
-					return user
-				}
-			})
-			.then(user => {
-				jwt.sign({
-					"id": user._id,
-					"role": user.role
-				}, config.privateKey, {
-					expiresIn: '1d'
-				}, function (err, token) {
-					if (err) {
-						console.log(err);
+						else {
+							return user
+						}
+					})
+					.then(user => {
+						jwt.sign({
+							"id": user._id,
+							"role": user.role
+						}, config.privateKey, {
+							expiresIn: '1d'
+						}, function (err, token) {
+							if (err) {
+								console.log(err);
+		
+								return res.sendStatus(500);
+							}
+							res.json({
+								"token": token,
+								"id": user._id
+							});
+						});
+					})*/
+					.catch((error) => {
+						console.error(error.message);
+						res.status(422).send("You have sent an incorrect token")
 
-						return res.sendStatus(500);
-					}
-					res.json({
-						"token": token,
-						"id": user._id
-					});
-				});
+					})
 			})
 			.catch((error) => {
-				//console.error(error);
-				res.status(422).send("You have sent an incorrect token")
+				console.error(error.message);
 			});
-	} catch (error) {
-		console.error(error.message);
-		res.status(500).send("Not Working");
-	}*/
+
+	}
+	catch{
+		res.sendStatus(500).send("not working")
+	}
+
+	/*try {
+			const url = encodeURI(`https://api.linkedin.com/v1/people/~:(id,first-name,last-name,headline,picture-url,location,industry,current-share,num-connections,summary,specialties,positions)?format=json&oauth2_access_token=${code}`)
+	
+				//const resp = await axios.get(url);
+			//console.log(resp);
+			axios.get(url)
+				.then((axiosResponse) => {
+					console.log(axiosResponse.data);
+					 res.sendStatus(200).send(axiosResponse)
+					//email = axiosResponse.data.email
+					// name = axiosResponse.data.name
+					//picture = axiosResponse.data.picture.data.url;
+					/*return UsertModel.findOne({
+						"email": email
+					})
+					.exec();
+				})
+				/*.then((user) => {
+					if (!user) {
+						user = new UsertModel(
+							{
+								email: email,
+								//picture: picture,
+							}
+						);
+						return user.save();
+					}
+					else {
+						return user
+					}
+				})
+				.then(user => {
+					jwt.sign({
+						"id": user._id,
+						"role": user.role
+					}, config.privateKey, {
+						expiresIn: '1d'
+					}, function (err, token) {
+						if (err) {
+							console.log(err);
+	
+							return res.sendStatus(500);
+						}
+						res.json({
+							"token": token,
+							"id": user._id
+						});
+					});
+				})
+				.catch((error) => {
+					//console.error(error);
+					res.status(422).send("You have sent an incorrect token")
+				});
+		} catch (error) {
+			console.error(error.message);
+			res.status(500).send("Not Working");
+		}*/
 }
 function loginFacebook(req, res) {
 	const errors = validationResult(req);
@@ -165,7 +219,7 @@ function loginFacebook(req, res) {
 				return UsertModel.findOne({
 					"email": email
 				})
-				.exec();
+					.exec();
 			})
 			.then((user) => {
 				if (!user) {
