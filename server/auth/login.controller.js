@@ -67,10 +67,10 @@ function loginLinkedin(req,res){
 	let picture;
 	const obj={
 		code:req.body.code,
-		grant_type: _config.grant_type,
-		client_id: _config.clientId,
-		client_secret : _config.client_secret,
-		redirect_uri: _config.redirect_uri
+		grant_type: _config.linkedin.grant_type,
+		client_id: _config.linkedin.clientId,
+		client_secret : _config.linkedin.client_secret,
+		redirect_uri: _config.linkedin.redirect_uri
 	}
 axios.post(encodeURI('https://www.linkedin.com/oauth/v2/accessToken?'), {
 	grant_type: obj.grant_type,
