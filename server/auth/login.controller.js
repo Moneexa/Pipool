@@ -77,13 +77,17 @@ function loginLinkedin(req, res) {
 		})
 			.then((response) => {
 				const access_token = response.data.access_token
-				const url = encodeURI(`https://api.linkedin.com/v1/people/~:(id,first-name,last-name,headline,picture-url,location,industry,current-share,num-connections,summary,specialties,positions)?format=json&oauth2_access_token=${access_token}`)
+				const url = encodeURI(`https://api.linkedin.com/v2/me/`)
 
 				//const resp = await axios.get(url);
 				//console.log(resp);
-				axios.get(url)
+				axios.get(url, {
+					'Authorization': `Bearer ${access_token}`,
+					'cache-control': 'no-cache',
+					'X-Restli-Protocol-Version': '2.0.0'
+				  })
 					.then((axiosResponse) => {
-						console.log(axiosResponse);
+						console.log(axiosResponse.data);
 						//email = axiosResponse.data.email
 						// name = axiosResponse.data.name
 						//picture = axiosResponse.data.picture.data.url;
@@ -126,7 +130,7 @@ function loginLinkedin(req, res) {
 					})*/
 					.catch((error) => {
 						console.error(error.message);
-						res.status(422).send("You have sent an incorrect token")
+						res.send(error.message)
 
 					})
 			})
