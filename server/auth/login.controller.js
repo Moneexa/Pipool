@@ -77,15 +77,18 @@ function loginLinkedin(req, res) {
 		})
 			.then((response) => {
 				const access_token = response.data.access_token
-				const url = encodeURI(`https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))`)
+				const url = encodeURI(`https://api.linkedin.com/v2/me?projection=(id,firstName,lastName,emailAddress,profilePicture(displayImage~:playableStreams))`)
 
 				//const resp = await axios.get(url);
 				//console.log(resp);
-				axios.get(url, {headers:{
-					'Authorization': `Bearer ${access_token}`,
-					'cache-control': 'no-cache',
-					'X-Restli-Protocol-Version': '2.0.0'
-				  }})
+				axios.get(url, {
+					headers: {
+						'Authorization': `Bearer ${access_token}`,
+						'X-Restli-Protocol-Version': `2.0.0`,
+						'Accept': `application/json`,
+						'Content-Type': `application/json`,
+				  }
+				})
 					.then((axiosResponse) => {
 						console.log(axiosResponse.data);
 						//email = axiosResponse.data.email
