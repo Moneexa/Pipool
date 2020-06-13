@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const axios = require('axios');
-const _config = require('../../pwa/src/auth/shared/auth.config.json')
 var querystring = require('querystring');
 module.exports = {
 	login,
@@ -14,7 +13,40 @@ module.exports = {
 	verify
 };
 
+async function createAndGetProfile(email, name, picture) {
+	let user = await UsertModel.findOne({ "email": email }).exec();
+	if (!user) {
+		user = new UsertModel(
+			{
+				email,
+				name,
+				picture,
+			}
+		);
+		await user.save();
+	}
+	return user;
+}
+
+function signToken(id, name, role, picture, callback) {
+	let payload = {
+		id
+	};
+	if (name) { payload.name = name }
+	if (role) { payload.name = role }
+	if (picture) { payload.name = picture }
+	jwt.sign(
+		payload,
+		config.privateKey,
+		{
+			expiresIn: '1d'
+		},
+		callback
+	);
+}
+
 const { OAuth2Client } = require('google-auth-library');
+const { create } = require('./user.model.js');
 const client = new OAuth2Client("529379787978-sgjjt3qpl23ivkp2boh1s3q03m3k5a8n.apps.googleusercontent.com");
 async function login(req, res) {
 
@@ -55,7 +87,7 @@ async function login(req, res) {
 	}
 }
 
-function loginLinkedin(req, res) {
+async function loginLinkedin(req, res) {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
 		return res.status(422).json({ errors: errors.array() });
@@ -63,204 +95,130 @@ function loginLinkedin(req, res) {
 
 	try {
 		let email;
-		// let name;
+		let name;
 		let picture;
-		const obj = {
-			code: req.body.code,
-			grant_type: _config.linkedin.grant_type,
-			client_id: _config.linkedin.clientId,
-			client_secret: _config.linkedin.client_secret,
-			redirect_uri: "http://localhost:3000" + _config.linkedin.redirectURI
-		}
-		axios.post(encodeURI('https://www.linkedin.com/oauth/v2/accessToken?'), querystring.stringify(obj), {
-			'Content-Type': 'application/x-www-form-urlencoded'
-		})
-			.then((response) => {
-				const access_token = response.data.access_token
-				const url = encodeURI(`https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))`)
 
-				//const resp = await axios.get(url);
-				//console.log(resp);
-				axios.get(url, {headers:{
+		const params = {
+			code: req.body.code,
+			grant_type: config.linkedin.grant_type,
+			client_id: config.linkedin.clientId,
+			client_secret: config.linkedin.client_secret,
+			redirect_uri: "http://localhost:3000" + config.linkedin.redirectURI
+		}
+		let response = await axios.post(
+			encodeURI('https://www.linkedin.com/oauth/v2/accessToken'),
+			querystring.stringify(params),
+			{
+				'Content-Type': 'application/x-www-form-urlencoded'
+			}
+		);
+
+		// fetching email
+		const access_token = response.data.access_token;
+		const url = encodeURI(`https://api.linkedin.com/v2/clientAwareMemberHandles?q=members&projection=(elements*(primary,type,handle~))`)
+		response = await axios.get(
+			url,
+			{
+				headers: {
 					'Authorization': `Bearer ${access_token}`,
 					'cache-control': 'no-cache',
 					'X-Restli-Protocol-Version': '2.0.0'
-				  }})
-					.then((axiosResponse) => {
-						console.log(axiosResponse.data);
-						//email = axiosResponse.data.email
-						// name = axiosResponse.data.name
-						//picture = axiosResponse.data.picture.data.url;
-						/*return UsertModel.findOne({
-							"email": email
-						})
-						.exec();*/
-					})
-					/*.then((user) => {
-						if (!user) {
-							user = new UsertModel(
-								{
-									email: email,
-									//picture: picture,
-								}
-							);
-							return user.save();
-						}
-						else {
-							return user
-						}
-					})
-					.then(user => {
-						jwt.sign({
-							"id": user._id,
-							"role": user.role
-						}, config.privateKey, {
-							expiresIn: '1d'
-						}, function (err, token) {
-							if (err) {
-								console.log(err);
-		
-								return res.sendStatus(500);
-							}
-							res.json({
-								"token": token,
-								"id": user._id
-							});
-						});
-					})*/
-					.catch((error) => {
-						console.error(error.message);
-						res.send(error.message)
+				}
+			}
+		);
+		if (!response.data || !response.data.elements || !response.data.elements.length || !response.data.elements[0]['handle~']) {
+			throw Error('Invalid response');
+		}
+		email = response.data.elements[0]['handle~'].emailAddress;
 
-					})
-			})
-			.catch((error) => {
-				console.error(error.message);
-			});
+		// fetching profile picture and name
+		response = await axios.get(
+			"https://api.linkedin.com/v2/me?projection=(id,firstName,lastName,profilePicture(displayImage~:playableStreams))",
+			{
+				headers: {
+					'Authorization': `Bearer ${access_token}`,
+					'cache-control': 'no-cache',
+					'X-Restli-Protocol-Version': '2.0.0'
+				}
+			}
+		);
+		const imagesLength = response.data.profilePicture['displayImage~'].elements.length;
+		const preferredLocale = response.data.firstName.preferredLocale.language + '_' + response.data.firstName.preferredLocale.country;
+		name = response.data.firstName.localized[preferredLocale] + ' ' + response.data.lastName.localized[preferredLocale]
+		picture = response.data.profilePicture['displayImage~'].elements[imagesLength - 1].identifiers[0].identifier;
+
+		let user = await createAndGetProfile(email, name, picture);
+		signToken(
+			user.id,
+			user.name,
+			user.role,
+			user.picture,
+			function (error, token) {
+				if (error) {
+					res.status(500).send("Unable to sign jwt");
+				}
+
+				res.status(200).send(
+					{
+						id: user.id,
+						name: user.name,
+						role: user.role,
+						picture: user.picture,
+						token
+					}
+				)
+			}
+		)
+
 
 	}
-	catch{
-		res.sendStatus(500).send("not working")
+	catch (error) {
+		console.log(error.code);
+		console.log(error.message);
+		res.status(500).send("not working")
 	}
-
-	/*try {
-			const url = encodeURI(`https://api.linkedin.com/v1/people/~:(id,first-name,last-name,headline,picture-url,location,industry,current-share,num-connections,summary,specialties,positions)?format=json&oauth2_access_token=${code}`)
-	
-				//const resp = await axios.get(url);
-			//console.log(resp);
-			axios.get(url)
-				.then((axiosResponse) => {
-					console.log(axiosResponse.data);
-					 res.sendStatus(200).send(axiosResponse)
-					//email = axiosResponse.data.email
-					// name = axiosResponse.data.name
-					//picture = axiosResponse.data.picture.data.url;
-					/*return UsertModel.findOne({
-						"email": email
-					})
-					.exec();
-				})
-				/*.then((user) => {
-					if (!user) {
-						user = new UsertModel(
-							{
-								email: email,
-								//picture: picture,
-							}
-						);
-						return user.save();
-					}
-					else {
-						return user
-					}
-				})
-				.then(user => {
-					jwt.sign({
-						"id": user._id,
-						"role": user.role
-					}, config.privateKey, {
-						expiresIn: '1d'
-					}, function (err, token) {
-						if (err) {
-							console.log(err);
-	
-							return res.sendStatus(500);
-						}
-						res.json({
-							"token": token,
-							"id": user._id
-						});
-					});
-				})
-				.catch((error) => {
-					//console.error(error);
-					res.status(422).send("You have sent an incorrect token")
-				});
-		} catch (error) {
-			console.error(error.message);
-			res.status(500).send("Not Working");
-		}*/
 }
-function loginFacebook(req, res) {
+
+async function loginFacebook(req, res) {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
 		return res.status(422).json({ errors: errors.array() });
 	}
 	let email;
-	// let name;
+	let name;
 	let picture;
 	const code = req.body.code;
 	try {
 		const url = encodeURI(`https://graph.facebook.com/v7.0/me?access_token=${code}&fields=email,name,picture&format=json&method=get&pretty=0&transfer=cors`)
 		//const resp = await axios.get(url);
 		//console.log(resp);
-		axios.get(url)
-			.then((axiosResponse) => {
-				console.log(axiosResponse);
-				email = axiosResponse.data.email
-				// name = axiosResponse.data.name
-				picture = axiosResponse.data.picture.data.url;
-				return UsertModel.findOne({
-					"email": email
-				})
-					.exec();
-			})
-			.then((user) => {
-				if (!user) {
-					user = new UsertModel(
-						{
-							email: email,
-							picture: picture,
-						}
-					);
-					return user.save();
-				}
-				else {
-					return user
-				}
-			})
-			.then(user => {
-				jwt.sign({
-					"id": user._id,
-					"role": user.role
-				}, config.privateKey, {
-					expiresIn: '1d'
-				}, function (err, token) {
-					if (err) {
-						console.log(err);
+		let response = await axios.get(url);
+		email = response.data.email;
+		name = response.data.name;
+		picture = response.data.picture.data.url;
 
-						return res.sendStatus(500);
+		let user = await createAndGetProfile(email, name, picture);
+		signToken(
+			user.id,
+			user.name,
+			user.role,
+			user.picture,
+			function (error, token) {
+				if (error) {
+					res.status(500).send("Unable to sign jwt");
+				}
+
+				res.status(200).send(
+					{
+						id: user.id,
+						name: user.name,
+						role: user.role,
+						picture: user.picture,
+						token
 					}
-					res.json({
-						"token": token,
-						"id": user._id
-					});
-				});
-			})
-			.catch((error) => {
-				console.error(error);
-				res.status(422).send("You have sent an incorrect token")
-			});
+				)
+			}
+		)
 	} catch (error) {
 		console.error(error.message);
 		res.status(500).send("Not Working");
@@ -284,34 +242,20 @@ async function loginGoogle(req, res) {
 		const payload = ticket.getPayload();
 		const email = payload.email;
 		const picture = payload.picture;
-		let user = await UsertModel.findOne({
-			"email": email,
-		});
+		const name = payload.name;
+		let user = await createAndGetProfile(email, name, picture);
 
-		if (!user) {
-			user = new UsertModel(
-				{
-					email: email,
-					picture: picture
-				}
-			);
-			await user.save();
-		}
-
-		jwt.sign({
-			"id": user.id,
-			"role": user.role
-		}, config.privateKey, {
-			expiresIn: '1d'
-		}, function (err, token) {
+		signToken(user.id, user.name, user.role, user.picture, function (err, token) {
 			if (err) {
 				console.log(err);
-
 				return res.sendStatus(500);
 			}
 			res.json({
-				"token": token,
-				"id": user.id
+				id: user.id,
+				name: user.name,
+				role: user.role,
+				picture: user.picture,
+				token
 			});
 		});
 
