@@ -158,13 +158,19 @@ async function loginLinkedin(req, res) {
 					res.status(500).send("Unable to sign jwt");
 				}
 
+				const tomorrow = new Date();
+				tomorrow.setDate(tomorrow.getDate() + 1);
+
 				res.status(200).send(
 					{
 						id: user.id,
 						name: user.name,
 						role: user.role,
 						picture: user.picture,
-						token
+						token: {
+							value: token,
+							expiry: tomorrow
+						}
 					}
 				)
 			}
@@ -207,14 +213,18 @@ async function loginFacebook(req, res) {
 				if (error) {
 					res.status(500).send("Unable to sign jwt");
 				}
-
+				const tomorrow = new Date();
+				tomorrow.setDate(tomorrow.getDate() + 1);
 				res.status(200).send(
 					{
 						id: user.id,
 						name: user.name,
 						role: user.role,
 						picture: user.picture,
-						token
+						token: {
+							value: token,
+							expiry: tomorrow
+						}
 					}
 				)
 			}
@@ -250,13 +260,21 @@ async function loginGoogle(req, res) {
 				console.log(err);
 				return res.sendStatus(500);
 			}
-			res.json({
-				id: user.id,
-				name: user.name,
-				role: user.role,
-				picture: user.picture,
-				token
-			});
+
+			const tomorrow = new Date();
+			tomorrow.setDate(tomorrow.getDate() + 1);
+			res.status(200).send(
+				{
+					id: user.id,
+					name: user.name,
+					role: user.role,
+					picture: user.picture,
+					token: {
+						value: token,
+						expiry: tomorrow
+					}
+				}
+			)
 		});
 
 	} catch (error) {
