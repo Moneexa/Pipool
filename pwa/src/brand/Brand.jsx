@@ -36,7 +36,7 @@ export class Brand extends React.Component {
                 <div id="wrapper">
                     <div className="d-flex">
                         <Router>
-                            <div className={"sidebar " + (this.state.sidebarExpanded ? "" : "collapsed") +" "+(this.state.sidebarOpened ? "opened" : "")}>
+                            <div className={"sidebar " + (this.state.sidebarExpanded ? "" : "collapsed") + " " + (this.state.sidebarOpened ? "opened" : "")}>
                                 <Link to={this.props.match.path} className="sidebar-brand d-flex align-items-center justify-content-center" style={{ marginTop: "20px", marginBottom: "30px" }}>
                                     <img alt="" src="../img/logo.jpg" />
                                     <div className="sidebar-brand-icon rotate-n-15">
@@ -131,18 +131,17 @@ export class Brand extends React.Component {
 
                                 <div className="collapse-button-container d-flex justify-content-center">
                                     <div
-                                        onClick={() => 
-                                        {
-                                            if(this.state.sidebarOpened){
-                                                this.setState({sidebarOpened:!this.state.sidebarOpened})
+                                        onClick={() => {
+                                            if (this.state.sidebarOpened) {
+                                                this.setState({ sidebarOpened: !this.state.sidebarOpened })
                                             }
-                                            
-                                            else{
-                                            this.setState({ sidebarExpanded: !this.state.sidebarExpanded })
+
+                                            else {
+                                                this.setState({ sidebarExpanded: !this.state.sidebarExpanded })
                                             }
-                                        
+
                                         }
-                                        
+
                                         }
                                         className="collapse-button d-flex justify-content-center align-items-center rounded-circle"
                                     >
@@ -150,6 +149,13 @@ export class Brand extends React.Component {
                                         <FontAwesomeIcon icon={this.state.sidebarExpanded ? faChevronLeft : faChevronRight} />
                                     </div>
                                 </div>
+                                <div className="fill-space"></div>
+
+                                {/* <div className="logout-container">
+                                    <Nav.Item>
+                                        <span>Logout</span>
+                                    </Nav.Item>
+                                </div> */}
 
                             </div>
                             <div className="sidebar-content">
