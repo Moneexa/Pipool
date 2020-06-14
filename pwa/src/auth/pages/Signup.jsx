@@ -44,6 +44,7 @@ export class Signup extends React.Component {
     handlePhoneNumberChange   =(e)=>   {
         this.setState({
 
+            
             phone: e.target.value,
             name:this.state.name,
             email:this.state.email,
