@@ -42,24 +42,27 @@ function signToken(id, name, role, picture, callback) {
     );
 }
 const { create } = require('./user.model.js');
-async function signup(req, res) {
-console.log(req.body);
-    if (req.body.obj.email) {
-        const user = new UsertModel(
+function signup(req, res, next) {
+    console.log(req.body)
+    if (req.body.email) {
+        const _user = new UsertModel(
             {
-                email: req.body.obj.email,
-                name: req.body.obj.name,
-                //password: req.body.password,
-               // role: req.body.role,
+                email: req.body.email,
+                name: req.body.name,
+                password: req.body.password,
+                 role: req.body.role,
             }
         );
-     const resp= await user.save();
+        _user.save((err) => {
+            if (err) {
+                return next(err);
 
-           resp .exec(function (err, user) {
-
+            }
+            else {
+                //console.log(user)
                 jwt.sign({
-                    "id": user._id,
-                    "role": user.role
+                    "id": _user._id,
+                    "role": _user.role,
                 }, config.privateKey, {
                     expiresIn: '1d'
                 }, function (err, token) {
@@ -70,10 +73,13 @@ console.log(req.body);
                     }
                     res.json({
                         "token": token,
-                        "id": user._id
+                        "id": _user._id
                     });
                 });
-            });
+            }
+        })
+
+        //.catch(error => console.error(error.message))
     }
     else {
         res.sendStatus(400);

@@ -91,7 +91,7 @@ export class Signup extends React.Component {
     }
     handlePasswordChange   =(e)=>   {
         this.setState({
-            password: e.target.password,
+            password: e.target.value,
             name:this.state.name,
             email:this.state.email,
             password1:this.state.password1,
@@ -102,7 +102,7 @@ export class Signup extends React.Component {
     }
     handlePassword1Change   =(e)=>   {
         this.setState({
-            password1: e.target.password1,
+            password1: e.target.value,
             name:this.state.name,
             email:this.state.email,
             password:this.state.password,
@@ -114,7 +114,7 @@ export class Signup extends React.Component {
     handleRoleChange   =(e)=>   {
         console.log(e.target.value)
         this.setState({
-            role: e.target.role,
+            role: e.target.value,
             name:this.state.name,
             email:this.state.email,
             password:this.state.password,
@@ -132,8 +132,7 @@ export class Signup extends React.Component {
             role: this.state.role
 
         }
-        console.log(obj)
-        axios.post(`${config.apiUrl}/auth/signup`, { obj }).then((response) => { console.log(response) }).catch(error => console.error(error.message));
+        axios.post(`${config.apiUrl}/auth/signup`,  obj ).then((response) => { console.log(response) }).catch(error => console.error(error.message));
 
     }
 
