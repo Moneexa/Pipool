@@ -51,6 +51,7 @@ function signup(req, res, next) {
                 name: req.body.name,
                 password: req.body.password,
                  role: req.body.role,
+                 
             }
         );
         _user.save((err) => {
