@@ -44,7 +44,7 @@ export class Signup extends React.Component {
     handlePhoneNumberChange   =(e)=>   {
         this.setState({
 
-            
+
             phone: e.target.value,
             name:this.state.name,
             email:this.state.email,
@@ -149,7 +149,7 @@ export class Signup extends React.Component {
                                         <div className="p-5">
                                             <img src="/img/logo.jpg" alt="" />
                                             <div className="text-center">
-                                                <h1 className="h4 text-gray-900 mb-4">Create an Account!</h1>
+                                                <h1 className="h4 text-gray-900 mb-4">Complete your Registeration</h1>
                                             </div>
                                             <form className="user" method="post">
                                                 <div className="form-group row">

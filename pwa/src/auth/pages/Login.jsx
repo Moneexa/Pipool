@@ -148,7 +148,7 @@ export function Login() {
                                                     <Link className="small text-dark-blue" to="/">Forgot Password?</Link>
                                                 </div>
                                                 <div className="text-center">
-                                                    <Link className="small text-dark-blue" to="/auth/signup">Create an Account!</Link>
+                                                    <Link className="small text-dark-blue" to="/auth/register">Create an Account!</Link>
                                                 </div>
                                             </div>
                                         </div>
