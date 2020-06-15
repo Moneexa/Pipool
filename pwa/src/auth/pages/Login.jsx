@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { faGoogle, faFacebook, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { GoogleLogin } from 'react-google-login';
 import ReactDOM from 'react-dom';
 import { Button } from 'react-bootstrap'
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+import { FacebookLoginWrapper } from '../shared/components/FacebookLoginWrapper';
+import { GoogleLoginWrapper } from '../shared/components/GoogleLoginWrapper';
 import './Login.css'
-import { LinkedIn } from '../shared/components/Linkedin';
+import { LinkedInWrapper } from '../shared/components/LinkedinWrapper';
 import axios from 'axios'
 import config from '../../config.json';
 import { useStoreActions } from 'easy-peasy';
@@ -16,29 +16,6 @@ import { useStoreActions } from 'easy-peasy';
 
 export function Login() {
     const login = useStoreActions(actions => actions.user.login);
-    let responseGoogle = (googleUser) => {
-        const code = googleUser.getAuthResponse().id_token;
-
-
-        axios.post(`${config.apiUrl}/auth/login/google`,
-            { code })
-            .then(res => {
-                console.log(res);
-                console.log(res.data);
-                login(res.data)
-            })
-            .catch(() => alert("Unable to login"))
-    }
-    let responseFacebook = (response) => {
-        const code = response.accessToken;
-        axios.post(`${config.apiUrl}/auth/login/facebook`, { code })
-            .then(res => {
-                console.log(res);
-                console.log(res.data)
-                login(res.data);
-            })
-            .catch((error) => console.log(error));
-    }
 
     return (
         <div className="login">
@@ -84,71 +61,16 @@ export function Login() {
 
                                                 </form>
                                                 <hr />
-                                                <GoogleLogin
-                                                    clientId={config.google.clientId}
-                                                    render={renderProps => (
-                                                        <Button
-                                                            onClick={renderProps.onClick} disabled={renderProps.disabled}
-
-                                                            className="btn btn-google btn-user btn-block no-focus-effects d-flex justify-content-center align-items-center">
-                                                            <FontAwesomeIcon className="social-icon" icon={faGoogle} />
-                                                                    Login with Google
-                                                        </Button>
-                                                    )}
-                                                    onSuccess={responseGoogle}
-                                                    onFailure={responseGoogle}
-                                                    cookiePolicy={'single_host_origin'}
-                                                />
-
-                                                <FacebookLogin
-                                                    appId="263197894950161"
-                                                    callback={responseFacebook}
-                                                    render={renderProps => (
-                                                        <Button
-
-                                                            onClick={renderProps.onClick}
-                                                            className="btn btn-facebook btn-user btn-block no-focus-effects d-flex justify-content-center align-items-center">
-                                                            <FontAwesomeIcon className="social-icon" icon={faFacebook} />
-                                                    Login with Facebook
-                                                        </Button>
-                                                    )}
-                                                />
-                                                <LinkedIn />
-                                                {/* <LinkedIn
-                                                        clientId="865ntwzmhauy0w"
-                                                        onFailure={this.handleFailure}
-                                                        onSuccess={
-                                                             function(data) {
-                                                                console.log(data)
-                                                                this.setState({
-                                                                    code: data.code,
-                                                                    errorMessage: '',
-                                                                },
-                                                                );
-                                                        
-                                                            }
-                                                        }
-                                                        scope="r_liteprofile"
-                                                        redirectUri="http://localhost:3000/auth/login"
-                                                        renderElement={({ onClick, disabled }) => (
-                                                            <Button
-                                                                onClick={onClick} disabled={disabled}
-                                                                className="btn btn-linkedin btn-block no-focus-effects d-flex justify-content-center align-items-center">
-                                                                <FontAwesomeIcon className="social-icon" icon={faLinkedin} />
-                                                    Login with LinkedIn
-                                                            </Button>
-                                                        )}
-                                                    /> */}
-                                                {/* {!code && <div>No code</div>}
-                                                {code && <div>Code: {code}</div>}
-                                                {errorMessage && <div>{errorMessage}</div>} */}
+                                                <GoogleLoginWrapper />
+                                                <FacebookLoginWrapper />
+                                                <LinkedInWrapper />
 
                                                 <hr />
                                                 <div className="text-center">
                                                     <Link className="small text-dark-blue" to="/">Forgot Password?</Link>
                                                 </div>
                                                 <div className="text-center">
-                                                    <Link className="small text-dark-blue" to="/auth/signup">Create an Account!</Link>
+                                                    <Link className="small text-dark-blue" to="/auth/finish-signup">Create an Account!</Link>
                                                 </div>
                                             </div>
                                         </div>

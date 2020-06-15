@@ -1,13 +1,13 @@
-.signup.singup-container {
+.finish-signup.signup-container {
     height: 100vh;
 }
-.signup .social-icon {
+.finish-signup .social-icon {
     width: 1em;
     margin-right: 7px;
     color:white;
 }
 
-.signup .btn-facebook {
+.finish-signup .btn-facebook {
     font-size: .8rem;
     border-radius: 10rem;
     padding: .75rem 1rem;
@@ -16,7 +16,7 @@
     border-color: #fff;
 }
 
-.signup .btn-google {
+.finish-signup .btn-google {
     font-size: .8rem;
     border-radius: 10rem;
     padding: .75rem 1rem;
@@ -25,7 +25,7 @@
     border-color: #fff;
 }
 
-.signup .btn-linkedin {
+.finish-signup .btn-linkedin {
     font-size: .8rem;
     border-radius: 10rem;
     padding: .75rem 1rem;
@@ -34,29 +34,29 @@
     border-color: #fff;
 }
 
-.signup .bg-gradient-primary {
+.finish-signup .bg-gradient-primary {
     background-color: #4e73df;
     background-image: linear-gradient(180deg,#4e73df 10%,#224abe 100%);
     background-size: cover;
 }
 
-.signup .btn-user {
+.finish-signup .btn-user {
     font-size: .8rem;
     border-radius: 10rem;
     padding: .75rem 1rem;
     background-color:rgb(78, 115, 223);
 }
 
-.signup .btn:focus {
+.finish-signup .btn:focus {
     box-shadow: none;
     border: none;
 }
 
-.signup select:focus{
+.finish-signup select:focus{
     border-color: #80bdff !important;
     box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25) !important;
 }
 
-.signup input {
+.finish-signup input {
     font-size: .8rem;
 }

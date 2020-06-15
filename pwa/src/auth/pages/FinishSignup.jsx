@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import './Signup.css';
+import './FinishSignup.css';
 import { faGoogle, faFacebook, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from 'react-bootstrap'
 import axios from 'axios'
 import config from '../../config.json';
 
-export class Signup extends React.Component {
+export class FinishSignup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -139,7 +139,7 @@ export class Signup extends React.Component {
 
     render() {
         return (
-            <div className="signup singup-container">
+            <div className="finish-signup signup-container">
                 <div className="bg-gradient-primary py-5">
                     <div className="container">
                         <div className="card o-hidden border-0 shadow-lg">
