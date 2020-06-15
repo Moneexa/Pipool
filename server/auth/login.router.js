@@ -5,14 +5,12 @@ const { check } = require('express-validator');
 
 // Require the controllers WHICH WE DID NOT CREATE YET!!
 const loginController = require('./login.controller');
-const signupController = require('./signup.controller');
 
 // a simple test url to check that all of our files are communicating correctly.
-router.post('/login', loginController.login);
-router.post('/login/google', [
+router.post('/', loginController.login);
+router.post('/google', [
     check('code').isString()
 ], loginController.loginGoogle);
-router.post('/login/facebook', [check('code').isString()],loginController.loginFacebook)
-router.post('/login/linkedin', [check('code').isString()], loginController.loginLinkedin)
-router.post('/signup', signupController.signup);
+router.post('/facebook', [check('code').isString()],loginController.loginFacebook)
+router.post('/linkedin', [check('code').isString()], loginController.loginLinkedin)
 module.exports = router;
