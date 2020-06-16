@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { faGoogle, faFacebook, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,7 +15,17 @@ import { useStoreActions } from 'easy-peasy';
 
 
 export function Login() {
-    const login = useStoreActions(actions => actions.user.login);
+    const [signingup, setSigningup] = useState(false);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const signup = useStoreActions(actions => actions.user.signup);
+    function onSubmit() {
+        if (signingup) {
+            signup(email)
+        } else {
+
+        }
+    }
 
     return (
         <div className="login">
@@ -39,25 +49,33 @@ export function Login() {
                                         <div className="col-lg-6">
                                             <div className="p-5">
                                                 <div className="text-center">
-                                                    <h1 className="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                                    <h1 className="h4 text-gray-900 mb-4">{signingup ? 'Create an Account' : 'Welcome Back!'} </h1>
                                                 </div>
                                                 <form className="user" method="post">
                                                     <div className="form-group">
-                                                        <input type="email" name="email" className="py-4 form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address..." />
+                                                        <input value={email} onChange={(event) => setEmail(event.target.value)} type="email" name="email" className="py-4 form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address..." />
                                                         <p style={{ color: "red" }}> </p>
                                                     </div>
 
-                                                    <div className="form-group">
-                                                        <input type="password" name="password" className="py-4 form-control form-control-user" id="exampleInputPassword" placeholder="Password" />
-                                                        <p style={{ color: "red" }}> </p>
-                                                    </div>
-                                                    <div className="form-group remember-me">
-                                                        <div className="custom-control custom-checkbox small d-flex align-items-center">
-                                                            <input type="checkbox" name="checkbox" className="py-4 custom-control-input" id="customCheck" />
-                                                            <label className="custom-control-label" htmlFor="customCheck">Remember Me</label>
-                                                        </div>
-                                                    </div>
-                                                    <Link to="/brand" className="btn btn-user btn-block text-white no-focus-effects">Login</Link>
+                                                    {
+                                                        signingup ? '' :
+                                                            <div>
+                                                                <div className="form-group">
+                                                                    <input value={password} onChange={(event) => setPassword(event.target.value)} type="password" name="password" className="py-4 form-control form-control-user" id="exampleInputPassword" placeholder="Password" />
+                                                                    <p style={{ color: "red" }}> </p>
+                                                                </div>
+                                                                <div className="form-group remember-me">
+                                                                    <div className="custom-control custom-checkbox small d-flex align-items-center">
+                                                                        <input type="checkbox" name="checkbox" className="py-4 custom-control-input" id="customCheck" />
+                                                                        <label className="custom-control-label" htmlFor="customCheck">Remember Me</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                    }
+
+                                                    <button type="button" onClick={() => onSubmit()} to="/brand" className="btn btn-user btn-block text-white no-focus-effects">
+                                                        {signingup ? 'Register Account' : 'Login'}
+                                                    </button>
 
                                                 </form>
                                                 <hr />
@@ -66,13 +84,24 @@ export function Login() {
                                                 <LinkedInWrapper />
 
                                                 <hr />
-                                                <div className="text-center">
-                                                    <Link className="small text-dark-blue" to="/">Forgot Password?</Link>
-                                                </div>
-                                                <div className="text-center">
 
-                                                    <Link className="small text-dark-blue" to="/auth/finish-signup">Create an Account!</Link>
-                                                </div>
+                                                {
+                                                    !signingup ?
+                                                        <div className="text-center">
+                                                            <Link className="small text-dark-blue" to="/">Forgot Password?</Link>
+                                                        </div> :
+                                                        ''
+                                                }
+
+                                                {
+                                                    !signingup ?
+                                                        <Link className="text-center">
+                                                            <div className="small text-dark-blue" onClick={() => setSigningup(true)}>Create an Account!</div>
+                                                        </Link> :
+                                                        <Link className="text-center">
+                                                            <div className="small text-dark-blue" onClick={() => setSigningup(false)}>Already have an account? Login!</div>
+                                                        </Link>
+                                                }
                                             </div>
                                         </div>
                                     </div>

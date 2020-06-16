@@ -17,5 +17,10 @@
         "responseType": "code",
         "grant_type" : "authorization_code",
         "client_secret": "pONWp2pvkJrrJg7I"
-    }
+    },
+    "smtp": {
+        "email": "mohsin.studysmarter@gmail.com",
+        "password": "v3RX-%RST>n!qbb"
+    },
+    "domain": "http://localhost:3000"
 }

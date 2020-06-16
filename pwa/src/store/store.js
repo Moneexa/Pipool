@@ -26,12 +26,6 @@ if (localStorageData && localStorageData.token) {
 }
 
 export const store = createStore({
-    todos: {
-        items: ['Create store', 'Wrap application', 'Use store'],
-        add: action((state, payload) => {
-            state.items.push(payload)
-        })
-    },
     user: {
         isLoggedIn: user.isLoggedIn,
         id: user.id,
@@ -96,5 +90,14 @@ export const store = createStore({
                 }
             }
         }),
+        signup: thunk(async (actions, payload) => {
+            const email = payload;
+            try {
+                const res = await axios.post(`${config.apiUrl}/auth/signup`, { email })
+            } catch (error) {
+                actions.loginError("Failed to authorize user.")
+            }
+        }),
+
     }
 });
