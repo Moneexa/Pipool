@@ -19,12 +19,16 @@ var transporter = nodemailer.createTransport({
 
 module.exports = {
     signup,
+    finishSignup
 };
 
-function signToken(id, callback) {
+function signToken(id, name, role, picture, callback) {
     let payload = {
         id
     };
+    if (name) { payload.name = name }
+    if (role) { payload.role = role }
+    if (picture) { payload.name = picture }
     jwt.sign(
         payload,
         config.privateKey,
@@ -53,7 +57,7 @@ function signup(req, res) {
         }
         else {
             //console.log(user)
-            signToken(user.id, function (err, token) {
+            signToken(user.id, undefined, undefined, undefined, function (err, token) {
                 if (err) {
                     console.log(err);
                     return res.sendStatus(500);
@@ -62,7 +66,7 @@ function signup(req, res) {
                     from: config.smtp.email,
                     to: user.email,
                     subject: 'Confirm Your Email',
-                    text: `Confirm your email by clicking on following\n${config.domain}/auth/complete-signup?token=${token}&email=${user.email}`
+                    text: `Confirm your email by clicking on following\n${config.domain}/auth/finish-signup?token=${token}&email=${user.email}`
                 };
                 transporter.sendMail(mailOptions, function (error, info) {
                     if (error) {
@@ -75,4 +79,60 @@ function signup(req, res) {
             });
         }
     })
+}
+
+function finishSignup(req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+    }
+    const fullName = req.body.firstName + ' ' + req.body.lastName;
+    const phone = req.body.phone;
+    const company = req.body.company;
+    const designation = req.body.designation;
+    const role = req.body.role;
+    const id = res.locals.user.id;
+    bcrypt.hash(req.body.password, 8)
+        .then((password) => {
+            return UsertModel.updateOne({ id }, {
+                fullName,
+                phone,
+                company,
+                designation,
+                password,
+                role
+            });
+        })
+        .then(() => {
+
+            signToken(
+                id,
+                fullName,
+                role,
+                undefined,
+                (error, token) => {
+                    if (error) {
+                        res.status(500).send("Unable to sign jwt");
+                    }
+
+                    const tomorrow = new Date();
+                    tomorrow.setDate(tomorrow.getDate() + 1);
+                    const obj = {
+                        "id": id,
+                        "fullName": fullName || "",
+                        "role": role || "",
+                        "token": {
+                            "value": token,
+                            "expiry": tomorrow
+                        }
+                    }
+                    res.status(200).send(obj)
+                }
+            )
+        })
+        .catch(error => {
+            console.error(error);
+            res.status(500).send("Something went wrong");
+        });
+
 }
