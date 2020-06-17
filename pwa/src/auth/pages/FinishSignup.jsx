@@ -1,21 +1,23 @@
-import { faFacebook, faGoogle, faLinkedin } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios from 'axios';
-import React, { useState } from 'react';
+import { useStoreActions } from 'easy-peasy';
+import React from 'react';
 import { Button } from 'react-bootstrap';
-import { Link, Redirect } from "react-router-dom";
-import config from '../../config.json';
 import { useForm } from "react-hook-form";
+import { Redirect } from "react-router-dom";
 import './FinishSignup.css';
+
 
 export function FinishSignup({ location }) {
     let params = new URLSearchParams(location.search);
     const token = params.get('token');
     const email = params.get('email');
+    const finishSignup = useStoreActions(actions => actions.user.finishSignup);
     const { register, handleSubmit, watch, errors } = useForm();
 
     const updateUser = (values) => {
-        axios.post(`${config.apiUrl}/auth/signup/finish`, values, { headers: { 'Authorization': `Bearer ${token}` } }).then((response) => { console.log(response) }).catch(error => console.error(error.message));
+        finishSignup({
+            body: values,
+            token: token
+        });
     }
     if (!email || !token) {
         return <Redirect to="/" />
@@ -98,12 +100,18 @@ export function FinishSignup({ location }) {
                                             <div className="form-group row">
                                                 <div className="col-sm-6 mb-3 mb-sm-0">
                                                     <input
-                                                        ref={register({ required: true })}
+                                                        ref={register({
+                                                            required: true,
+                                                            pattern: {
+                                                                value: /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/i,
+                                                                message: "Make sure to enter a valid password(min 8 characters, 1 uppercase,1 lowercase,1 digit or special case letter.)"
+                                                            }
+                                                        })}
                                                         type="password"
                                                         className="py-4 pl-3 form-control form-control-user"
                                                         name="password"
                                                         placeholder="Password" />
-                                                    {errors.password && <span className="text-danger ml-3">This field is required</span>}
+                                                    <span className="px-3 text-danger">{errors.password && errors.password.message}</span>
                                                 </div>
                                                 <div className="col-sm-6">
                                                     <input

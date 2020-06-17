@@ -1,4 +1,5 @@
-import { useStoreActions } from 'easy-peasy';
+import { useStoreActions, useStoreState } from 'easy-peasy';
+import { useForm } from "react-hook-form";
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { FacebookLoginWrapper } from '../shared/components/FacebookLoginWrapper';
@@ -9,15 +10,16 @@ import './Login.css';
 
 
 export function Login() {
+    const { register, handleSubmit, watch, errors } = useForm();
     const [signingup, setSigningup] = useState(false);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
     const signup = useStoreActions(actions => actions.user.signup);
-    function onSubmit() {
+    const login = useStoreActions(actions => actions.user.login);
+    const loading = useStoreState(state => state.user.loading);
+    function onSubmit(values) {
         if (signingup) {
-            signup(email)
+            signup(values.email);
         } else {
-
+            login(values);
         }
     }
 
@@ -40,23 +42,46 @@ export function Login() {
                                         }}>
 
                                         </div>
-                                        <div className="col-lg-6">
+                                        <div className="col-lg-6 p-0">
+                                            {
+                                                !loading?'':
+                                                <div className="loading-overlay d-flex justify-content-center align-items-center">
+                                                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                </div>
+                                            }
                                             <div className="p-5">
                                                 <div className="text-center">
                                                     <h1 className="h4 text-gray-900 mb-4">{signingup ? 'Create an Account' : 'Welcome Back!'} </h1>
                                                 </div>
-                                                <form className="user" method="post">
+                                                <form className="user" onSubmit={handleSubmit(onSubmit)}>
                                                     <div className="form-group">
-                                                        <input value={email} onChange={(event) => setEmail(event.target.value)} type="email" name="email" className="py-4 form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address..." />
-                                                        <p style={{ color: "red" }}> </p>
+                                                        <input
+                                                            ref={register({
+                                                                required: true,
+                                                                pattern: {
+                                                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                                                                    message: "invalid email address"
+                                                                }
+                                                            })}
+                                                            type="email"
+                                                            name="email"
+                                                            className="py-4 form-control form-control-user"
+                                                            aria-describedby="emailHelp"
+                                                            placeholder="Enter Email Address..." />
+                                                        <p className="form-error px-3 text-danger h6">{errors.email && errors.email.message}</p>
                                                     </div>
 
                                                     {
                                                         signingup ? '' :
                                                             <div>
                                                                 <div className="form-group">
-                                                                    <input value={password} onChange={(event) => setPassword(event.target.value)} type="password" name="password" className="py-4 form-control form-control-user" id="exampleInputPassword" placeholder="Password" />
-                                                                    <p style={{ color: "red" }}> </p>
+                                                                    <input 
+                                                                    required
+                                                                    ref={register}
+                                                                    type="password" name="password" 
+                                                                    className="py-4 form-control form-control-user" 
+                                                                    placeholder="Password" />
+                                                                    {errors.password && <span className="form-error px-3 text-danger h6">This field is required</span>}
                                                                 </div>
                                                                 <div className="form-group remember-me">
                                                                     <div className="custom-control custom-checkbox small d-flex align-items-center">
@@ -67,7 +92,7 @@ export function Login() {
                                                             </div>
                                                     }
 
-                                                    <button type="button" onClick={() => onSubmit()} to="/brand" className="btn btn-user btn-block text-white no-focus-effects">
+                                                    <button type="submit" to="/brand" className="btn btn-user btn-block text-white no-focus-effects">
                                                         {signingup ? 'Register Account' : 'Login'}
                                                     </button>
 
@@ -89,7 +114,7 @@ export function Login() {
 
                                                 {
                                                     !signingup ?
-                                                        <Link className="text-center"> 
+                                                        <Link className="text-center">
                                                             <div className="small text-dark-blue" onClick={() => setSigningup(true)}>Create an Account!</div>
                                                         </Link> :
                                                         <Link className="text-center" >

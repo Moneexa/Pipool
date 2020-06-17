@@ -59,7 +59,7 @@ async function login(req, res) {
 			} else {
 				bcrypt.compare(req.body.password, user.password, function (err, passed) {
 					if (err || !passed) {
-						return res.sendStatus(500);
+						return res.status(401).send("Invalid credentials");
 					}
 					jwt.sign({
 						"id": user._id,
