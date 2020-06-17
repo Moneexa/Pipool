@@ -36,8 +36,11 @@ export const store = createStore({
             value: user.token.value,
             expiry: user.token.expiry
         },
-        loginErrorMessage: "",
-        login: action((state, payload) => {
+        errors: {
+            loginErrorMessage: "",
+            finishSignupMessage: ""
+        },
+        updateUser: action((state, payload) => {
             console.log(state)
             state.isLoggedIn = true;
             state.id = payload.id || state.id;
@@ -49,7 +52,18 @@ export const store = createStore({
             localStorage.setItem('userInfo', JSON.stringify(state))
         }),
         loginError: action((state, payload) => {
-            state.loginErrorMessage = payload;
+            state.errors.loginErrorMessage = payload;
+        }),
+        finishSignupError: action((state, payload) => {
+            state.errors.loginErrorMessage = payload;
+        }),
+        login: thunk(async (actions, payload) => {
+            try {
+                const res = await axios.post(`${config.apiUrl}/auth/login`, payload)
+                actions.updateUser(res.data);
+            } catch (error) {
+                actions.loginError("Username or password is incorrect.")
+            }
         }),
         loginFacebook: thunk(async (actions, payload) => {
             const code = payload;
@@ -58,7 +72,7 @@ export const store = createStore({
             } else {
                 try {
                     const res = await axios.post(`${config.apiUrl}/auth/login/facebook`, { code })
-                    actions.login(res.data);
+                    actions.updateUser(res.data);
                 } catch (error) {
                     actions.loginError("Failed to authorize user.")
                 }
@@ -71,7 +85,7 @@ export const store = createStore({
             } else {
                 try {
                     const res = await axios.post(`${config.apiUrl}/auth/login/google`, { code })
-                    actions.login(res.data);
+                    actions.updateUser(res.data);
                 } catch (error) {
                     actions.loginError("Failed to authorize user.")
                 }
@@ -84,7 +98,7 @@ export const store = createStore({
             } else {
                 try {
                     const res = await axios.post(`${config.apiUrl}/auth/login/linkedin`, { code })
-                    actions.login(res.data);
+                    actions.updateUser(res.data);
                 } catch (error) {
                     actions.loginError("Failed to authorize user.")
                 }
@@ -98,6 +112,21 @@ export const store = createStore({
                 actions.loginError("Failed to authorize user.")
             }
         }),
+        finishSignup: thunk(async (actions, payload) => {
+            const body = payload.body;
+            const token = payload.token;
+
+            try {
+                const response = await axios.post(
+                    `${config.apiUrl}/auth/signup/finish`,
+                    body,
+                    { headers: { 'Authorization': `Bearer ${token}` } }
+                );
+                actions.updateUser(response.data);
+            } catch (error) {
+                actions.finishSignupError('Failed to finish the profile');
+            }
+        })
 
     }
 });

@@ -63,4 +63,7 @@
 .login .remember-me .custom-control-input:focus~.custom-control-label::before {
     box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
 }
+.login .form-error {
+    font-size: 10px;
+}
 /*------------------------------------------------------------------------------------------*/

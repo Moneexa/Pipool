@@ -14,7 +14,7 @@ export function Routes() {
                 <Redirect from="/" exact to="/auth" />
                 <ProtectedRoute path="/brand" redirectTo="/auth" isAuthenticated={loggedIn} component={Brand} />
                 <ProtectedRoute path="/influencer" redirectTo="/auth" isAuthenticated={loggedIn} component={Influencer} />
-                <ProtectedRoute path="/auth" redirectTo={role || "/brand"} isAuthenticated={!loggedIn} component={Auth} />
+                <ProtectedRoute path="/auth" redirectTo={'/'+(role || "brand")} isAuthenticated={!loggedIn} component={Auth} />
             </Switch>
         </Router>
     )
