@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import config from '../../config.json';
 import { useForm } from "react-hook-form";
 import './FinishSignup.css';
@@ -16,6 +16,9 @@ export function FinishSignup({ location }) {
 
     const updateUser = (values) => {
         axios.post(`${config.apiUrl}/auth/signup/finish`, values, { headers: { 'Authorization': `Bearer ${token}` } }).then((response) => { console.log(response) }).catch(error => console.error(error.message));
+    }
+    if (!email || !token) {
+        return <Redirect to="/" />
     }
     return (
         <div className="finish-signup signup-container">
