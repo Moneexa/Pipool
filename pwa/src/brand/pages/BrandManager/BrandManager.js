@@ -2,9 +2,17 @@ import React from 'react';
 import './BrandManager.css'
 import axios from 'axios';
 import config from '../../../config.json'
-import { Link } from 'react-router-dom'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    useParams
+} from "react-router-dom";
+import AddBrand from '../AddBrand/AddBrand'
+
 class BrandManager extends React.Component {
     constructor(props) {
         super(props);
@@ -23,11 +31,11 @@ class BrandManager extends React.Component {
             })
             .catch(error => console.log(error))
     }
-   
+
     render() {
-          
-   
-        
+
+
+
         return (
 
             <div className="brand">
@@ -52,7 +60,7 @@ class BrandManager extends React.Component {
                         </div>
                     </div>
                     <div id="border" className="col-xl-4 col-lg-7">
-                        <div className="card shadow mb-4">
+                        <div   className="card shadow mb-4">
                             <div className="card-body">
                                 <img alt="" src={process.env.PUBLIC_URL + "/img/dog-647528__340.webp"} style={{ width: "100%" }} />
                             </div>
@@ -64,40 +72,42 @@ class BrandManager extends React.Component {
                         <div className="plus-icon" style={{ fontSize: "90px", color: "#fff", textAlign: "center", fontWeight: "bold" }}>+</div>
                         <div className="heading">Add a new brand</div>
                     </div>
+                    <Router>
 
-                    {this.state.brands.map((element, index, array) => {
-                        // Return value for new_array
+                        {this.state.brands.map((element, index, array) => {
+                            // Return value for new_array
 
-                        return (
-                            <div key={index} className="grid-item mr-5 mb-3 p-3 bg-primary text-white rounded-5 d-flex flex-column justify-content-center align-items-center">
-                                <div  className="grid-thumbnail w-100 h-100 rounded-5"
-                                >
-                                    <div className="overlay"
+                            return (
+                                <div key={index} className="grid-item mr-5 mb-3 p-3 bg-primary text-white rounded-5 d-flex flex-column justify-content-center align-items-center">
+                                    <div className="grid-thumbnail w-100 h-100 rounded-5">
+                                        <div className="overlay">
+                                            <Link to={"/brand/add-brand/" + element._id}
+                                                className="icon">
+                                                <FontAwesomeIcon
+
+                                                    className="d-flex align-items-center justify-content-center"
 
 
-                                    >
-                                        <Link to={"/brand/add-brand/" + element._id} className="icon"
-                                          
-                                        >
-                                            <FontAwesomeIcon 
-                                            
-                                            className="d-flex align-items-center justify-content-center"
-                                            
-                                                
-                                                icon={faEdit} />
-                                          
-                                        </Link>
+                                                    icon={faEdit} />
+
+                                            </Link>
+                                        </div>
+
+
                                     </div>
-
-
                                 </div>
-                            </div>
-                        )
-                    })
-                    }
+                            )
+                        })
+                        }
+                        <Switch>
+                            <Route path="/brand/add-brand/:id" component={AddBrand} />
+
+                        </Switch>
+                    </Router>
 
                 </div>
             </div>
+
         )
     }
 }
