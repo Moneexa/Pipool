@@ -8,7 +8,7 @@ export function Auth({ match }) {
     return (
         <>
             <Switch>
-                <Redirect from={`${match.path}/`} exact to={`${match.path}/finish-signup`} />
+                <Redirect from={`${match.path}/`} exact to={`${match.path}/login`} />
                 <Route path={`${match.path}/login`} component={Login} />
 
                 <Route path={`${match.path}/finish-signup`} component={FinishSignup} />

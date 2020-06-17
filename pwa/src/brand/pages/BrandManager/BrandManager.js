@@ -76,7 +76,7 @@ class BrandManager extends React.Component {
 
 
                                     >
-                                        <Link to="/brand/add-brand" className="icon"
+                                        <Link to={"/brand/add-brand/" + element._id} className="icon"
                                           
                                         >
                                             <FontAwesomeIcon 
