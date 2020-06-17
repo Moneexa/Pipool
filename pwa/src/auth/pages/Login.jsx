@@ -89,7 +89,7 @@ export function Login() {
 
                                                 {
                                                     !signingup ?
-                                                        <Link className="text-center" to="/auth/finish-signup"> 
+                                                        <Link className="text-center"> 
                                                             <div className="small text-dark-blue" onClick={() => setSigningup(true)}>Create an Account!</div>
                                                         </Link> :
                                                         <Link className="text-center" >

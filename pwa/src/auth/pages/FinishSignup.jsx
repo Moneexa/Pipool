@@ -15,24 +15,24 @@ export class FinishSignup extends React.Component {
         const email = params.get('email');
         console.log(token);
         this.state = {
-            name: '', lastname: '',
+            name: '', lastName: '',
             password: '', password1: '',
             role: '',
-            company: '', phone: '', companyrole: '',
+            company: '', phone: '', designation: '',
             email: email || '',
-            token: ''
+            token: token || ''
         }
     }
-    handleNameChange = (e) => {
+    handleFirstNameChange = (e) => {
 
         this.setState({
-            name: e.target.value
+            firstName: e.target.value
         })
     }
     handleLastNameChange = (e) => {
 
         this.setState({
-            lastname: e.target.value
+            lastName: e.target.value
         })
     }
     handlePhoneNumberChange = (e) => {
@@ -41,9 +41,9 @@ export class FinishSignup extends React.Component {
         })
 
     }
-    handleCompanyRole = (e) => {
+    handleDesignation = (e) => {
         this.setState({
-            companyrole: e.target.value
+            designation: e.target.value
         })
 
     }
@@ -79,14 +79,15 @@ export class FinishSignup extends React.Component {
     }
     handleSubmit = (e) => {
         const obj = {
-            name: this.state.name,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
             password: this.state.password,
-            email: this.state.email,
-            role: this.state.role
-
+            role: this.state.role,
+            phone: this.state.phone,
+            designation: this.state.designation,
+            company: this.state.company
         }
-        axios.post(`${config.apiUrl}/auth/signup`, obj).then((response) => { console.log(response) }).catch(error => console.error(error.message));
-
+        axios.post(`${config.apiUrl}/auth/signup/finish`, obj, {headers: {'Authorization': `Bearer ${this.state.token}`}}).then((response) => { console.log(response) }).catch(error => console.error(error.message));
     }
 
     render() {
@@ -108,10 +109,10 @@ export class FinishSignup extends React.Component {
                                                     <div className="col-sm-6 mb-3 mb-sm-0">
                                                         <input
 
-                                                            onChange={this.handleNameChange}
+                                                            onChange={this.handleFirstNameChange}
                                                             type="text" className="py-4 pl-3 form-control form-control-user"
                                                             id="exampleFirstName" name="First_Name" placeholder="First Name"
-                                                            value={this.state.name} />
+                                                            value={this.state.firstName} />
                                                     </div>
 
                                                     <div className="col-sm-6">
@@ -145,11 +146,11 @@ export class FinishSignup extends React.Component {
 
                                                     <div className="col-sm-6">
                                                         <input
-                                                            onChange={this.handleCompanyRole}
+                                                            onChange={this.handleDesignation}
 
                                                             type="text" className="py-4 pl-3 form-control form-control-user"
-                                                            id="exampleCompanyRole" name="role" placeholder="Your role in company"
-                                                            value={this.state.companyrole} />
+                                                            id="exampledesignation" name="role" placeholder="Your role in company"
+                                                            value={this.state.designation} />
                                                     </div>
                                                 </div>
 
@@ -189,8 +190,8 @@ export class FinishSignup extends React.Component {
                                                         className="py-4 pl-3 browser-default custom-select" name="admin_type"
                                                         value={this.state.role}
                                                     >
-                                                        <option value="1">I'm a Brand</option>
-                                                        <option value="2">I'm a Influencer</option>
+                                                        <option value="brand">I'm a Brand</option>
+                                                        <option value="influencer">I'm a Influencer</option>
                                                     </select>
 
                                                 </div>
