@@ -2,6 +2,7 @@ const UsertModel = require('./user.model.js');
 const config = require('../config.json');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 const { validationResult } = require('express-validator');
 const axios = require('axios');
 var querystring = require('querystring');
@@ -22,13 +23,14 @@ module.exports = {
     finishSignup
 };
 
-function signToken(id, name, role, picture, callback) {
+function signToken(id, email, name, role, picture, callback) {
     let payload = {
         id
     };
     if (name) { payload.name = name }
     if (role) { payload.role = role }
     if (picture) { payload.name = picture }
+    if (email) { payload.email = email }
     jwt.sign(
         payload,
         config.privateKey,
@@ -44,41 +46,29 @@ function signup(req, res) {
     if (!errors.isEmpty()) {
         return res.status(422).json({ errors: errors.array() });
     }
+    const id = new mongoose.Types.ObjectId();
+    const email = req.body.email;
 
-    const user = new UsertModel(
-        {
-            email: req.body.email,
-        }
-    );
-    user.save((err) => {
+    signToken(id, email, undefined, undefined, undefined, function (err, token) {
         if (err) {
-            console.error(err);
-            return res.status(422).send("User already exists");
+            console.log(err);
+            return res.sendStatus(500);
         }
-        else {
-            //console.log(user)
-            signToken(user.id, undefined, undefined, undefined, function (err, token) {
-                if (err) {
-                    console.log(err);
-                    return res.sendStatus(500);
-                }
-                var mailOptions = {
-                    from: config.smtp.email,
-                    to: user.email,
-                    subject: 'Confirm Your Email',
-                    text: `Confirm your email by clicking on following\n${config.domain}/auth/finish-signup?token=${token}&email=${user.email}`
-                };
-                transporter.sendMail(mailOptions, function (error, info) {
-                    if (error) {
-                        console.log(error);
-                        res.status(500).send("Something went wrong while sending email");
-                    } else {
-                        res.status(201).send();
-                    }
-                });
-            });
-        }
-    })
+        var mailOptions = {
+            from: config.smtp.email,
+            to: email,
+            subject: 'Confirm Your Email',
+            text: `Confirm your email by clicking on following\n${config.domain}/auth/finish-signup?token=${token}&email=${email}`
+        };
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+                res.status(500).send("Something went wrong while sending email");
+            } else {
+                res.status(201).send();
+            }
+        });
+    });
 }
 
 function finishSignup(req, res) {
@@ -92,21 +82,30 @@ function finishSignup(req, res) {
     const designation = req.body.designation;
     const role = req.body.role;
     const id = res.locals.user.id;
+    const email = res.locals.user.email;
     bcrypt.hash(req.body.password, 8)
         .then((password) => {
-            return UsertModel.updateOne({ _id: id }, {
-                fullName,
-                phone,
-                company,
-                designation,
-                password,
-                role
-            });
+            return UsertModel.updateOne(
+                { _id: id },
+                {
+                    email,
+                    fullName,
+                    phone,
+                    company,
+                    designation,
+                    password,
+                    role
+                },
+                {
+                    upsert: true
+                }
+            );
         })
         .then(() => {
 
             signToken(
                 id,
+                undefined,
                 fullName,
                 role,
                 undefined,
