@@ -70,7 +70,7 @@ class BrandManager extends React.Component {
 
                         return (
                             <div key={index} className="grid-item mr-5 mb-3 p-3 bg-primary text-white rounded-5 d-flex flex-column justify-content-center align-items-center">
-                                <div key={index} className="grid-thumbnail w-100 h-100 rounded-5"
+                                <div  className="grid-thumbnail w-100 h-100 rounded-5"
                                 >
                                     <div className="overlay"
 
@@ -82,7 +82,7 @@ class BrandManager extends React.Component {
                                             <FontAwesomeIcon 
                                             
                                             className="d-flex align-items-center justify-content-center"
-                                            key={index}
+                                            
                                                 
                                                 icon={faEdit} />
                                           
