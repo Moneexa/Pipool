@@ -1,239 +1,170 @@
-import React from 'react';
-import { Link } from "react-router-dom";
-import './FinishSignup.css';
-import { faGoogle, faFacebook, faLinkedin } from '@fortawesome/free-brands-svg-icons'
+import { faFacebook, faGoogle, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button } from 'react-bootstrap'
-import axios from 'axios'
+import axios from 'axios';
+import React, { useState } from 'react';
+import { Button } from 'react-bootstrap';
+import { Link } from "react-router-dom";
 import config from '../../config.json';
+import { useForm } from "react-hook-form";
+import './FinishSignup.css';
 
-export class FinishSignup extends React.Component {
-    constructor(props) {
-        super(props);
-        let params = new URLSearchParams(this.props.location.search);
-        const token = params.get('token');
-        const email = params.get('email');
-        console.log(token);
-        this.state = {
-            name: '', lastName: '',
-            password: '', password1: '',
-            role: '',
-            company: '', phone: '', designation: '',
-            email: email || '',
-            token: token || ''
-        }
+export function FinishSignup({ location }) {
+    let params = new URLSearchParams(location.search);
+    const token = params.get('token');
+    const email = params.get('email');
+    const { register, handleSubmit, watch, errors } = useForm();
+
+    const updateUser = (values) => {
+        axios.post(`${config.apiUrl}/auth/signup/finish`, values, { headers: { 'Authorization': `Bearer ${token}` } }).then((response) => { console.log(response) }).catch(error => console.error(error.message));
     }
-    handleFirstNameChange = (e) => {
-
-        this.setState({
-            firstName: e.target.value
-        })
-    }
-    handleLastNameChange = (e) => {
-
-        this.setState({
-            lastName: e.target.value
-        })
-    }
-    handlePhoneNumberChange = (e) => {
-        this.setState({
-            phone: e.target.value,
-        })
-
-    }
-    handleDesignation = (e) => {
-        this.setState({
-            designation: e.target.value
-        })
-
-    }
-    handleCompanyName = (e) => {
-
-        this.setState({
-            company: e.target.value
-        })
-    }
-    handleEmailChange = (e) => {
-        this.setState({
-            email: e.target.value,
-        })
-
-    }
-    handlePasswordChange = (e) => {
-        this.setState({
-            password: e.target.value
-        })
-
-    }
-    handlePassword1Change = (e) => {
-        this.setState({
-            password1: e.target.value
-        })
-
-    }
-    handleRoleChange = (e) => {
-        console.log(e.target.value)
-        this.setState({
-            role: e.target.value
-        })
-    }
-    handleSubmit = (e) => {
-        const obj = {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            password: this.state.password,
-            role: this.state.role,
-            phone: this.state.phone,
-            designation: this.state.designation,
-            company: this.state.company
-        }
-        axios.post(`${config.apiUrl}/auth/signup/finish`, obj, {headers: {'Authorization': `Bearer ${this.state.token}`}}).then((response) => { console.log(response) }).catch(error => console.error(error.message));
-    }
-
-    render() {
-        return (
-            <div className="finish-signup signup-container">
-                <div className="bg-gradient-primary py-5">
-                    <div className="container">
-                        <div className="card o-hidden border-0 shadow-lg">
-                            <div className="card-body p-0">
-                                <div className="row">
-                                    <div className="col-lg-12">
-                                        <div className="p-5">
-                                            <img src="/img/logo.jpg" alt="" />
-                                            <div className="text-center">
-                                                <h1 className="h4 text-gray-900 mb-4">Complete your Registeration</h1>
-                                            </div>
-                                            <form className="user" method="post">
-                                                <div className="form-group row">
-                                                    <div className="col-sm-6 mb-3 mb-sm-0">
-                                                        <input
-
-                                                            onChange={this.handleFirstNameChange}
-                                                            type="text" className="py-4 pl-3 form-control form-control-user"
-                                                            id="exampleFirstName" name="First_Name" placeholder="First Name"
-                                                            value={this.state.firstName} />
-                                                    </div>
-
-                                                    <div className="col-sm-6">
-                                                        <input
-                                                            onChange={this.handleLastNameChange}
-
-                                                            type="text" className="py-4 pl-3 form-control form-control-user"
-                                                            id="exampleLastName" name="Last_Name" placeholder="Last Name"
-                                                            value={this.state.lastname} />
-                                                    </div>
-                                                </div>
-                                                <div className="form-group">
+    return (
+        <div className="finish-signup signup-container">
+            <div className="bg-gradient-primary py-5">
+                <div className="container">
+                    <div className="card o-hidden border-0 shadow-lg">
+                        <div className="card-body p-0">
+                            <div className="row">
+                                <div className="col-lg-12">
+                                    <div className="p-5">
+                                        <img src="/img/logo.jpg" alt="" />
+                                        <div className="text-center">
+                                            <h1 className="h4 text-gray-900 mb-4">Complete your Registeration</h1>
+                                        </div>
+                                        <form className="user" method="post" onSubmit={handleSubmit(updateUser)}>
+                                            <div className="form-group row">
+                                                <div className="col-sm-6 mb-3 mb-sm-0">
                                                     <input
-                                                        onChange={this.handlePhoneNumberChange}
+                                                        ref={register({ required: true })}
+                                                        type="text"
+                                                        className="py-4 pl-3 form-control form-control-user"
+                                                        name="firstName"
+                                                        placeholder="First Name" />
+                                                    {errors.firstName && <span className="text-danger ml-3">This field is required</span>}
+                                                </div>
 
+                                                <div className="col-sm-6">
+                                                    <input
+                                                        ref={register({ required: true })}
                                                         type="text" className="py-4 pl-3 form-control form-control-user"
-                                                        id="examplePhoneNumber" name="phone" placeholder="Telephone number(optional)"
-                                                        value={this.state.phone} />
+                                                        name="lastName"
+                                                        placeholder="Last Name" />
+                                                    {errors.lastName && <span className="text-danger ml-3">This field is required</span>}
                                                 </div>
+                                            </div>
+                                            <div className="form-group">
+                                                <input
+                                                    ref={register({ required: true })}
+                                                    type="text"
+                                                    className="py-4 pl-3 form-control form-control-user"
+                                                    name="phone"
+                                                    placeholder="Telephone number(optional)" />
+                                                {errors.phone && <span className="text-danger ml-3">This field is required</span>}
+                                            </div>
 
-                                                <div className="form-group row">
-                                                    <div className="col-sm-6">
-                                                        <input
-
-                                                            onChange={this.handleCompanyName}
-
-                                                            type="text" className="py-4 pl-3 form-control form-control-user"
-                                                            id="exampleCompanyName" name="company" placeholder="Company Name"
-                                                            value={this.state.company} />
-                                                    </div>
-
-                                                    <div className="col-sm-6">
-                                                        <input
-                                                            onChange={this.handleDesignation}
-
-                                                            type="text" className="py-4 pl-3 form-control form-control-user"
-                                                            id="exampledesignation" name="role" placeholder="Your role in company"
-                                                            value={this.state.designation} />
-                                                    </div>
-                                                </div>
-
-
-                                                <div className="form-group">
+                                            <div className="form-group row">
+                                                <div className="col-sm-6">
                                                     <input
-                                                        disabled
-                                                        type="email" className="py-4 pl-3 form-control form-control-user"
-                                                        id="exampleEmailChange" name="email" placeholder="Email Address"
-                                                        value={this.state.email} />
+                                                        ref={register({ required: true })}
+                                                        type="text"
+                                                        className="py-4 pl-3 form-control form-control-user"
+                                                        name="company"
+                                                        placeholder="Company Name" />
+                                                    {errors.company && <span className="text-danger ml-3">This field is required</span>}
                                                 </div>
-                                                <div className="form-group row">
-                                                    <div className="col-sm-6 mb-3 mb-sm-0">
-                                                        <input type="password" className="py-4 pl-3 form-control form-control-user"
-                                                            onChange={this.handlePassword1Change}
 
-
-                                                            id="exampleInputPassword" name="password" placeholder="Password"
-                                                            value={this.state.password1} />
-                                                    </div>
-                                                    <div className="col-sm-6">
-                                                        <input
-
-                                                            onChange={this.handlePasswordChange}
-
-                                                            type="password" className="py-4 pl-3 form-control form-control-user"
-
-                                                            id="exampleRepeatPassword" name="confirm" placeholder="Repeat Password"
-                                                            value={this.state.password} />
-                                                    </div>
+                                                <div className="col-sm-6">
+                                                    <input
+                                                        ref={register({ required: true })}
+                                                        type="text"
+                                                        className="py-4 pl-3 form-control form-control-user"
+                                                        name="designation"
+                                                        placeholder="Your role in company" />
+                                                    {errors.designation && <span className="text-danger ml-3">This field is required</span>}
                                                 </div>
-                                                <div className="form-group">
-                                                    <select
+                                            </div>
 
-                                                        onChange={this.handleRoleChange}
 
-                                                        className="py-4 pl-3 browser-default custom-select" name="admin_type"
-                                                        value={this.state.role}
-                                                    >
-                                                        <option value="brand">I'm a Brand</option>
-                                                        <option value="influencer">I'm a Influencer</option>
-                                                    </select>
-
+                                            <div className="form-group">
+                                                <input
+                                                    disabled
+                                                    type="email" className="py-4 pl-3 form-control form-control-user"
+                                                    name="email"
+                                                    placeholder="Email Address"
+                                                    value={email} />
+                                            </div>
+                                            <div className="form-group row">
+                                                <div className="col-sm-6 mb-3 mb-sm-0">
+                                                    <input
+                                                        ref={register({ required: true })}
+                                                        type="password"
+                                                        className="py-4 pl-3 form-control form-control-user"
+                                                        name="password"
+                                                        placeholder="Password" />
+                                                    {errors.password && <span className="text-danger ml-3">This field is required</span>}
                                                 </div>
-                                                <Button
+                                                <div className="col-sm-6">
+                                                    <input
+                                                        ref={register({
+                                                            validate: (value) => {
+                                                                return value === watch('password'); // value is from password2 and watch will return value from password1
+                                                            }
+                                                        })}
+                                                        type="password"
+                                                        className="py-4 pl-3 form-control form-control-user"
+                                                        name="repeatedPassword"
+                                                        placeholder="Repeat Password" />
+                                                    {errors.repeatedPassword && <span className="text-danger ml-3">Passwords do not match</span>}
+                                                </div>
+                                            </div>
+                                            <div className="form-group">
+                                                <select
+                                                    ref={register({ required: true })}
+                                                    className="pad-12 h-auto pl-3 browser-default custom-select"
+                                                    name="role">
 
-                                                    onClick={this.handleSubmit}
-                                                    className="btn btn-user btn-block text-white">
-                                                    Register Account
+                                                    <option value="brand">I'm a Brand</option>
+                                                    <option value="influencer">I'm a Influencer</option>
+                                                </select>
+                                                {errors.role && <span className="text-danger ml-3">This field is required</span>}
+
+                                            </div>
+                                            <Button
+                                                type="submit"
+                                                className="btn btn-user btn-block text-white">
+                                                Register Account
                                                 </Button>
-                                                <hr />
-                                                <Link to="/" className="btn btn-google btn-block">
-                                                    <FontAwesomeIcon className="social-icon" icon={faGoogle} />
+                                            <hr />
+                                            <Link to="/" className="btn btn-google btn-block">
+                                                <FontAwesomeIcon className="social-icon" icon={faGoogle} />
                                                  Register with Google
                                             </Link>
-                                                <Link to="/" className="btn btn-facebook btn-block">
-                                                    <FontAwesomeIcon className="social-icon" icon={faFacebook} />
+                                            <Link to="/" className="btn btn-facebook btn-block">
+                                                <FontAwesomeIcon className="social-icon" icon={faFacebook} />
                                                 Register with Facebook
                                             </Link>
-                                                <Link to="/" className="btn btn-linkedin btn-block no-focus-effects d-flex justify-content-center align-items-center">
-                                                    <FontAwesomeIcon className="social-icon" icon={faLinkedin} />
+                                            <Link to="/" className="btn btn-linkedin btn-block no-focus-effects d-flex justify-content-center align-items-center">
+                                                <FontAwesomeIcon className="social-icon" icon={faLinkedin} />
                                                 Login with LinkedIn
                                             </Link>
-                                            </form>
-                                            <hr />
-                                            <div className="text-center">
-                                                <Link className="small text-dark-blue" to="/">Forgot Password?</Link>
-                                            </div>
-                                            <div className="text-center">
-                                                <Link className="small text-dark-blue" to="/auth/login">Already have an account? Login!</Link>
-                                            </div>
-                                            <div>
-                                            </div>
+                                        </form>
+                                        <hr />
+                                        <div className="text-center">
+                                            <Link className="small text-dark-blue" to="/">Forgot Password?</Link>
+                                        </div>
+                                        <div className="text-center">
+                                            <Link className="small text-dark-blue" to="/auth/login">Already have an account? Login!</Link>
+                                        </div>
+                                        <div>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
 
                         </div>
+
                     </div>
                 </div>
             </div>
-        );
-    }
+        </div>
+    );
 }
