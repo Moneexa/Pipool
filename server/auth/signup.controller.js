@@ -94,7 +94,7 @@ function finishSignup(req, res) {
     const id = res.locals.user.id;
     bcrypt.hash(req.body.password, 8)
         .then((password) => {
-            return UsertModel.updateOne({ id }, {
+            return UsertModel.updateOne({ _id: id }, {
                 fullName,
                 phone,
                 company,
