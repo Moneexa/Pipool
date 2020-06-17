@@ -133,27 +133,8 @@ export function FinishSignup({ location }) {
                                                 className="btn btn-user btn-block text-white">
                                                 Register Account
                                                 </Button>
-                                            <hr />
-                                            <Link to="/" className="btn btn-google btn-block">
-                                                <FontAwesomeIcon className="social-icon" icon={faGoogle} />
-                                                 Register with Google
-                                            </Link>
-                                            <Link to="/" className="btn btn-facebook btn-block">
-                                                <FontAwesomeIcon className="social-icon" icon={faFacebook} />
-                                                Register with Facebook
-                                            </Link>
-                                            <Link to="/" className="btn btn-linkedin btn-block no-focus-effects d-flex justify-content-center align-items-center">
-                                                <FontAwesomeIcon className="social-icon" icon={faLinkedin} />
-                                                Login with LinkedIn
-                                            </Link>
                                         </form>
                                         <hr />
-                                        <div className="text-center">
-                                            <Link className="small text-dark-blue" to="/">Forgot Password?</Link>
-                                        </div>
-                                        <div className="text-center">
-                                            <Link className="small text-dark-blue" to="/auth/login">Already have an account? Login!</Link>
-                                        </div>
                                         <div>
                                         </div>
                                     </div>
