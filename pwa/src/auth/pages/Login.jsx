@@ -1,16 +1,10 @@
+import { useStoreActions } from 'easy-peasy';
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import { faGoogle, faFacebook, faLinkedin } from '@fortawesome/free-brands-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ReactDOM from 'react-dom';
-import { Button } from 'react-bootstrap'
 import { FacebookLoginWrapper } from '../shared/components/FacebookLoginWrapper';
 import { GoogleLoginWrapper } from '../shared/components/GoogleLoginWrapper';
-import './Login.css'
 import { LinkedInWrapper } from '../shared/components/LinkedinWrapper';
-import axios from 'axios'
-import config from '../../config.json';
-import { useStoreActions } from 'easy-peasy';
+import './Login.css';
 
 
 

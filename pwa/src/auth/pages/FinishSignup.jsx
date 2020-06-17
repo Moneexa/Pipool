@@ -10,122 +10,74 @@ import config from '../../config.json';
 export class FinishSignup extends React.Component {
     constructor(props) {
         super(props);
+        let params = new URLSearchParams(this.props.location.search);
+        const token = params.get('token');
+        const email = params.get('email');
+        console.log(token);
         this.state = {
             name: '', lastname: '',
-            email: '',
-            password: '', password1:'',
+            password: '', password1: '',
             role: '',
-            company: '', phone: '', companyrole: ''
+            company: '', phone: '', companyrole: '',
+            email: email || '',
+            token: ''
         }
     }
-    handleNameChange =(e)=>{
+    handleNameChange = (e) => {
 
         this.setState({
-            name: e.target.value,
-            email:this.state.email,
-            password:this.state.password,
-            password1:this.state.password1,
-            role:this.state.role
-
+            name: e.target.value
         })
     }
-    handleLastNameChange   =(e)=>   {
+    handleLastNameChange = (e) => {
 
         this.setState({
-            lastname: e.target.value,
-            name:this.state.name,
-            email:this.state.email,
-            password:this.state.password,
-            password1:this.state.password1,
-
-            role:this.state.role
+            lastname: e.target.value
         })
     }
-    handlePhoneNumberChange   =(e)=>   {
+    handlePhoneNumberChange = (e) => {
         this.setState({
-
-            
             phone: e.target.value,
-            name:this.state.name,
-            email:this.state.email,
-            password:this.state.password,
-            password1:this.state.password1,
-
-            role:this.state.role
         })
 
     }
-    handleCompanyRole   =(e)=>   {
+    handleCompanyRole = (e) => {
         this.setState({
-            companyrole: e.target.value,
-            name:this.state.name,
-            email:this.state.email,
-            password:this.state.password,
-            password1:this.state.password1,
-
-            role:this.state.role
+            companyrole: e.target.value
         })
 
     }
-    handleCompanyName   =(e)=>   {
+    handleCompanyName = (e) => {
 
         this.setState({
-            company: e.target.value,
-            name:this.state.name,
-            email:this.state.email,
-            password:this.state.password,
-            password1:this.state.password1,
-
-            role:this.state.role
+            company: e.target.value
         })
     }
-    handleEmailChange   =(e)=>   {
+    handleEmailChange = (e) => {
         this.setState({
             email: e.target.value,
-            name:this.state.name,
-            password:this.state.password,
-            password1:this.state.password1,
-
-            role:this.state.role
         })
 
     }
-    handlePasswordChange   =(e)=>   {
+    handlePasswordChange = (e) => {
         this.setState({
-            password: e.target.value,
-            name:this.state.name,
-            email:this.state.email,
-            password1:this.state.password1,
-
-            role:this.state.role
+            password: e.target.value
         })
 
     }
-    handlePassword1Change   =(e)=>   {
+    handlePassword1Change = (e) => {
         this.setState({
-            password1: e.target.value,
-            name:this.state.name,
-            email:this.state.email,
-            password:this.state.password,
-
-            role:this.state.role
+            password1: e.target.value
         })
 
     }
-    handleRoleChange   =(e)=>   {
+    handleRoleChange = (e) => {
         console.log(e.target.value)
         this.setState({
-            role: e.target.value,
-            name:this.state.name,
-            email:this.state.email,
-            password:this.state.password,
+            role: e.target.value
         })
-
-
     }
-    handleSubmit=(e)=>   {
-
-
+    handleSubmit = (e) => {
         const obj = {
             name: this.state.name,
             password: this.state.password,
@@ -133,7 +85,7 @@ export class FinishSignup extends React.Component {
             role: this.state.role
 
         }
-        axios.post(`${config.apiUrl}/auth/signup`,  obj ).then((response) => { console.log(response) }).catch(error => console.error(error.message));
+        axios.post(`${config.apiUrl}/auth/signup`, obj).then((response) => { console.log(response) }).catch(error => console.error(error.message));
 
     }
 
@@ -204,9 +156,7 @@ export class FinishSignup extends React.Component {
 
                                                 <div className="form-group">
                                                     <input
-
-                                                        onChange={this.handleEmailChange}
-
+                                                        disabled
                                                         type="email" className="py-4 pl-3 form-control form-control-user"
                                                         id="exampleEmailChange" name="email" placeholder="Email Address"
                                                         value={this.state.email} />
