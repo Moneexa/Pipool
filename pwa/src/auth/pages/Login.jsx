@@ -1,4 +1,4 @@
-import { useStoreActions } from 'easy-peasy';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 import { useForm } from "react-hook-form";
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
@@ -14,6 +14,7 @@ export function Login() {
     const [signingup, setSigningup] = useState(false);
     const signup = useStoreActions(actions => actions.user.signup);
     const login = useStoreActions(actions => actions.user.login);
+    const loading = useStoreState(state => state.user.loading);
     function onSubmit(values) {
         if (signingup) {
             signup(values.email);
@@ -41,7 +42,13 @@ export function Login() {
                                         }}>
 
                                         </div>
-                                        <div className="col-lg-6">
+                                        <div className="col-lg-6 p-0">
+                                            {
+                                                !loading?'':
+                                                <div className="loading-overlay d-flex justify-content-center align-items-center">
+                                                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                </div>
+                                            }
                                             <div className="p-5">
                                                 <div className="text-center">
                                                     <h1 className="h4 text-gray-900 mb-4">{signingup ? 'Create an Account' : 'Welcome Back!'} </h1>

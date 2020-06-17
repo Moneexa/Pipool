@@ -40,6 +40,7 @@ export const store = createStore({
             loginErrorMessage: "",
             finishSignupMessage: ""
         },
+        loading: false,
         updateUser: action((state, payload) => {
             console.log(state)
             state.isLoggedIn = true;
@@ -51,6 +52,9 @@ export const store = createStore({
             state.token.expiry = payload.token.expiry;
             localStorage.setItem('userInfo', JSON.stringify(state))
         }),
+        toggleLoading: action((state, payload) => {
+            state.loading = payload;
+        }),
         loginError: action((state, payload) => {
             state.errors.loginErrorMessage = payload;
         }),
@@ -59,11 +63,13 @@ export const store = createStore({
         }),
         login: thunk(async (actions, payload) => {
             try {
+                actions.toggleLoading(true);
                 const res = await axios.post(`${config.apiUrl}/auth/login`, payload)
                 actions.updateUser(res.data);
             } catch (error) {
                 actions.loginError("Username or password is incorrect.")
             }
+            actions.toggleLoading(false);
         }),
         loginFacebook: thunk(async (actions, payload) => {
             const code = payload;
@@ -71,12 +77,14 @@ export const store = createStore({
                 actions.loginError("Failed to authorize user.")
             } else {
                 try {
+                    actions.toggleLoading(true);
                     const res = await axios.post(`${config.apiUrl}/auth/login/facebook`, { code })
                     actions.updateUser(res.data);
                 } catch (error) {
                     actions.loginError("Failed to authorize user.")
                 }
             }
+            actions.toggleLoading(false);
         }),
         loginGoogle: thunk(async (actions, payload) => {
             const code = payload;
@@ -84,12 +92,14 @@ export const store = createStore({
                 actions.loginError("Failed to authorize user.")
             } else {
                 try {
+                    actions.toggleLoading(true);
                     const res = await axios.post(`${config.apiUrl}/auth/login/google`, { code })
                     actions.updateUser(res.data);
                 } catch (error) {
                     actions.loginError("Failed to authorize user.")
                 }
             }
+            actions.toggleLoading(false);
         }),
         loginLinkedin: thunk(async (actions, payload) => {
             const code = payload;
@@ -97,26 +107,31 @@ export const store = createStore({
                 actions.loginError("Failed to authorize user.")
             } else {
                 try {
+                    actions.toggleLoading(true);
                     const res = await axios.post(`${config.apiUrl}/auth/login/linkedin`, { code })
                     actions.updateUser(res.data);
                 } catch (error) {
                     actions.loginError("Failed to authorize user.")
                 }
             }
+            actions.toggleLoading(false);
         }),
         signup: thunk(async (actions, payload) => {
             const email = payload;
             try {
-                const res = await axios.post(`${config.apiUrl}/auth/signup`, { email })
+                actions.toggleLoading(true);
+                await axios.post(`${config.apiUrl}/auth/signup`, { email })
             } catch (error) {
                 actions.loginError("Failed to authorize user.")
             }
+            actions.toggleLoading(false);
         }),
         finishSignup: thunk(async (actions, payload) => {
             const body = payload.body;
             const token = payload.token;
 
             try {
+                actions.toggleLoading(true);
                 const response = await axios.post(
                     `${config.apiUrl}/auth/signup/finish`,
                     body,
@@ -126,6 +141,7 @@ export const store = createStore({
             } catch (error) {
                 actions.finishSignupError('Failed to finish the profile');
             }
+            actions.toggleLoading(false);
         })
 
     }
