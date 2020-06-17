@@ -15,6 +15,7 @@ export function Login() {
     const signup = useStoreActions(actions => actions.user.signup);
     const login = useStoreActions(actions => actions.user.login);
     const loading = useStoreState(state => state.user.loading);
+    const loginErrorMessage = useStoreState(state => state.user.errors.loginErrorMessage);
     function onSubmit(values) {
         if (signingup) {
             signup(values.email);
@@ -53,6 +54,13 @@ export function Login() {
                                                 <div className="text-center">
                                                     <h1 className="h4 text-gray-900 mb-4">{signingup ? 'Create an Account' : 'Welcome Back!'} </h1>
                                                 </div>
+                                                {
+                                                    loginErrorMessage?
+                                                    <div class="alert alert-danger" role="alert">
+                                                        {loginErrorMessage}
+                                                    </div>
+                                                    :''
+                                                }
                                                 <form className="user" onSubmit={handleSubmit(onSubmit)}>
                                                     <div className="form-group">
                                                         <input
