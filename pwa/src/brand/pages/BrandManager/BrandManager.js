@@ -1,15 +1,39 @@
 import React from 'react';
 import './BrandManager.css'
+import axios from 'axios';
+import config from '../../../config.json'
+import { Link } from 'react-router-dom'
+import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 class BrandManager extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = ({
+            brands: [],
+        })
+    }
+    componentDidMount() {
 
+        axios.get(`${config.apiUrl}/brands/`)
+            .then((response) => {
+                this.setState({
+                    brands: response.data
+
+                })
+            })
+            .catch(error => console.log(error))
+    }
+   
     render() {
-
+          
+   
+        
         return (
 
             <div className="brand">
 
                 <div className="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h2  className="m-0 font-weight-bold text-primary">Brands</h2>
+                    <h2 className="m-0 font-weight-bold text-primary">Brands</h2>
                 </div>
                 {/* <div className="row">
                     <div id="border" className="col-xl-4 col-lg-7">
@@ -40,30 +64,38 @@ class BrandManager extends React.Component {
                         <div className="plus-icon" style={{ fontSize: "90px", color: "#fff", textAlign: "center", fontWeight: "bold" }}>+</div>
                         <div className="heading">Add a new brand</div>
                     </div>
-                    <div className="grid-item mr-5 mb-3 p-3 bg-primary text-white rounded-5 d-flex flex-column justify-content-center align-items-center">
-                        <div className="grid-thumbnail w-100 h-100 rounded-5"></div>
-                    </div>
-                    <div className="grid-item mr-5 mb-3 p-3 bg-primary text-white rounded-5 d-flex flex-column justify-content-center align-items-center">
-                        <div className="grid-thumbnail w-100 h-100 rounded-5"></div>
-                    </div>
-                    <div className="grid-item mr-5 mb-3 p-3 bg-primary text-white rounded-5 d-flex flex-column justify-content-center align-items-center">
-                        <div className="grid-thumbnail w-100 h-100 rounded-5"></div>
-                    </div>
-                    <div className="grid-item mr-5 mb-3 p-3 bg-primary text-white rounded-5 d-flex flex-column justify-content-center align-items-center">
-                        <div className="grid-thumbnail w-100 h-100 rounded-5"></div>
-                    </div>
-                    <div className="grid-item mr-5 mb-3 p-3 bg-primary text-white rounded-5 d-flex flex-column justify-content-center align-items-center">
-                        <div className="grid-thumbnail w-100 h-100 rounded-5"></div>
-                    </div>
-                    <div className="grid-item mr-5 mb-3 p-3 bg-primary text-white rounded-5 d-flex flex-column justify-content-center align-items-center">
-                        <div className="grid-thumbnail w-100 h-100 rounded-5"></div>
-                    </div>
-                    <div className="grid-item mr-5 mb-3 p-3 bg-primary text-white rounded-5 d-flex flex-column justify-content-center align-items-center">
-                        <div className="grid-thumbnail w-100 h-100 rounded-5"></div>
-                    </div>
-                    <div className="grid-item mr-5 mb-3 p-3 bg-primary text-white rounded-5 d-flex flex-column justify-content-center align-items-center">
-                        <div className="grid-thumbnail w-100 h-100 rounded-5"></div>
-                    </div>
+
+                    {this.state.brands.map((element, index, array) => {
+                        // Return value for new_array
+
+                        return (
+                            <div key={index} className="grid-item mr-5 mb-3 p-3 bg-primary text-white rounded-5 d-flex flex-column justify-content-center align-items-center">
+                                <div key={index} className="grid-thumbnail w-100 h-100 rounded-5"
+                                >
+                                    <div className="overlay"
+
+
+                                    >
+                                        <Link to="/brand/add-brand" className="icon"
+                                          
+                                        >
+                                            <FontAwesomeIcon 
+                                            
+                                            className="d-flex align-items-center justify-content-center"
+                                            key={index}
+                                                
+                                                icon={faEdit} />
+                                          
+                                        </Link>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        )
+                    })
+                    }
+
                 </div>
             </div>
         )

@@ -78,6 +78,7 @@ export function Login() {
                                                 <LinkedInWrapper />
 
                                                 <hr />
+
                                                 {
                                                     !signingup ?
                                                         <div className="text-center">
@@ -88,15 +89,13 @@ export function Login() {
 
                                                 {
                                                     !signingup ?
-                                                        <Link className="text-center">
+                                                        <Link className="text-center" to="/auth/finish-signup"> 
                                                             <div className="small text-dark-blue" onClick={() => setSigningup(true)}>Create an Account!</div>
                                                         </Link> :
-                                                        <Link className="text-center">
+                                                        <Link className="text-center" >
                                                             <div className="small text-dark-blue" onClick={() => setSigningup(false)}>Already have an account? Login!</div>
                                                         </Link>
                                                 }
-
-
                                             </div>
                                         </div>
                                     </div>
