@@ -17,6 +17,20 @@ let user = {
         expiry: new Date(-8640000000000000)
     },
 };
+let brand = {
+    id: "",
+    name: "",
+    desc: "",
+    website: "",
+    skype: "",
+    phoneNo: "",
+    contactName: "",
+    postalCode: "",
+    city: "",
+    country: "",
+    address: "",
+
+};
 
 if (localStorageData && localStorageData.token) {
     localStorageData.token.expiry = new Date(localStorageData.token.expiry);
@@ -143,6 +157,84 @@ export const store = createStore({
             }
             actions.toggleLoading(false);
         })
+
+    },
+    brand: {
+        id: brand.id,
+        name: brand.name,
+        desc: brand.desc,
+        website: brand.website,
+        skype: brand.skype,
+        contactName: brand.contactName,
+        phoneNo: brand.phoneNo,
+        addrless: brand.address,
+        postalCode: brand.postalCode,
+        country: brand.country,
+        city: brand.city,
+        errors: {
+            postErrorMessage: "",
+        },
+
+        updateBrand: action((state, payload) => {
+            console.log(state)
+
+            state.name = payload.name || state.name;
+            state.desc = payload.description || state.desc;
+            state.website = payload.website || state.website;
+            state.contactName = payload.contactName || state.contactName;
+            state.phoneNo = payload.phoneNo || state.phoneNo;
+            state.address = payload.address || state.address;
+            state.postalCode = payload.postalCode || state.postalCode;
+            state.country = payload.country || state.country;
+            state.city = payload.city || state.city;
+            localStorage.setItem('brandInfo', JSON.stringify(state))
+        }),
+
+        postError: action((state, payload) => {
+            state.errors.postErrorMessage = payload;
+        }),
+        getId: thunk(async (actions, payload) => {
+
+            const id = payload
+            const res = await axios.get(`${config.apiUrl}/brands/${id}`);
+            console.log(res)
+            const { data } = await res;
+            actions.updateBrand(res.data);
+
+
+        }),
+        put: thunk(async (actions, payload) => {
+            const id = payload.id
+            const obj = {
+                name: payload.name,
+                description: payload.description,
+                website: payload.website,
+                skype: payload.skype,
+                PhoneNo: payload.PhoneNo,
+                contactName: payload.contactName,
+                City: payload.City,
+                Country: payload.Country,
+                PostalCode: payload.PostalCode,
+                hashTags: payload.hashTags,
+                Address: payload.Address,
+            }
+            try {
+                const res = await axios.put(`${config.apiUrl}/brands/${id}`, obj)
+                actions.updateBrand(res.data);
+            } catch (error) {
+                actions.postError("Form values are not correct.")
+            }
+        }),
+
+        post: thunk(async (actions, payload) => {
+            try {
+                actions.toggleLoading(true);
+                await axios.post(`${config.apiUrl}/brands/`, payload)
+            } catch (error) {
+                actions.postError("Failed to create brand.")
+            }
+        }),
+
 
     }
 });

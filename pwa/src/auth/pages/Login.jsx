@@ -18,7 +18,8 @@ export function Login() {
     function onSubmit(values) {
         if (signingup) {
             signup(values.email);
-        } else {
+        }
+        else {
             login(values);
         }
     }
@@ -44,10 +45,10 @@ export function Login() {
                                         </div>
                                         <div className="col-lg-6 p-0">
                                             {
-                                                !loading?'':
-                                                <div className="loading-overlay d-flex justify-content-center align-items-center">
-                                                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                                </div>
+                                                !loading ? '' :
+                                                    <div className="loading-overlay d-flex justify-content-center align-items-center">
+                                                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                    </div>
                                             }
                                             <div className="p-5">
                                                 <div className="text-center">
@@ -75,12 +76,12 @@ export function Login() {
                                                         signingup ? '' :
                                                             <div>
                                                                 <div className="form-group">
-                                                                    <input 
-                                                                    required
-                                                                    ref={register}
-                                                                    type="password" name="password" 
-                                                                    className="py-4 form-control form-control-user" 
-                                                                    placeholder="Password" />
+                                                                    <input
+                                                                        required
+                                                                        ref={register}
+                                                                        type="password" name="password"
+                                                                        className="py-4 form-control form-control-user"
+                                                                        placeholder="Password" />
                                                                     {errors.password && <span className="form-error px-3 text-danger h6">This field is required</span>}
                                                                 </div>
                                                                 <div className="form-group remember-me">
