@@ -73,7 +73,7 @@ export const store = createStore({
             state.errors.loginErrorMessage = payload;
         }),
         finishSignupError: action((state, payload) => {
-            state.errors.loginErrorMessage = payload;
+            state.errors.finishSignupMessage = payload;
         }),
         login: thunk(async (actions, payload) => {
             try {
@@ -153,7 +153,7 @@ export const store = createStore({
                 );
                 actions.updateUser(response.data);
             } catch (error) {
-                actions.finishSignupError('Failed to finish the profile');
+                actions.finishSignupError("The link you're using is either expired or invalid");
             }
             actions.toggleLoading(false);
         })

@@ -1,4 +1,4 @@
-import { useStoreActions } from 'easy-peasy';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
@@ -11,6 +11,8 @@ export function FinishSignup({ location }) {
     const token = params.get('token');
     const email = params.get('email');
     const finishSignup = useStoreActions(actions => actions.user.finishSignup);
+    const loading = useStoreState(state => state.user.loading);
+    const finishSignupMessage = useStoreState(state => state.user.errors.finishSignupMessage);
     const { register, handleSubmit, watch, errors } = useForm();
 
     const updateUser = (values) => {
@@ -28,6 +30,12 @@ export function FinishSignup({ location }) {
                 <div className="container">
                     <div className="card o-hidden border-0 shadow-lg">
                         <div className="card-body p-0">
+                            {
+                                !loading ? '' :
+                                    <div className="loading-overlay d-flex justify-content-center align-items-center">
+                                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    </div>
+                            }
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="p-5">
@@ -35,6 +43,14 @@ export function FinishSignup({ location }) {
                                         <div className="text-center">
                                             <h1 className="h4 text-gray-900 mb-4">Complete your Registeration</h1>
                                         </div>
+                                        {
+                                            finishSignupMessage?
+                                            <div class="alert alert-danger" role="alert">
+                                                {finishSignupMessage}
+                                            </div>
+                                            :''
+                                        }
+                                        
                                         <form className="user" method="post" onSubmit={handleSubmit(updateUser)}>
                                             <div className="form-group row">
                                                 <div className="col-sm-6 mb-3 mb-sm-0">
