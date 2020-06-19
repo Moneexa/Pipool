@@ -40,8 +40,8 @@
             
 }
 .brand .grid-item .grid-thumbnail .overlay:hover{
-    opacity: 1;
-    background-color: grey;
+    opacity: 0.8;
+     background-color: grey;  
 }
 .brand .grid-item .grid-thumbnail .overlay .icon{
     color: white;
@@ -53,4 +53,7 @@
     text-align: center;
 
 }
-
+.brand .grid-ite .grid-thumbnail .overlay .svg-inline--fa.fa-w-18{
+    vertical-align: middle;
+    padding:14px;
+}

@@ -13,17 +13,22 @@ export default function AddBrand(props) {
         exact: false,
         strict: false
     })
+    const active = useStoreState(state => state.brand.active);
+
     //const [updateRequired, setUpdateRequired] = useState(false);
     const { register, handleSubmit, watch, errors } = useForm()
 
     const put = useStoreActions(actions => actions.brand.put);
     const post = useStoreActions(actions => actions.brand.post);
     const obj = useStoreActions(actions => actions.brand.getId);
-    let id = match.params.id;
+    let id;
+    if(match){
+    id = match.params.id;
+    }
     console.log(id)
 
 
-    var arr = {
+    /*var arr = {
         name: "",
         description: "",
         website: "",
@@ -35,22 +40,20 @@ export default function AddBrand(props) {
         PostalCode: "",
         hashTags: "",
         Address: "",
-    }
-
+    }*/
     if (id) {
-        obj(id).then(resp => {
-            arr = resp
+        obj(id)
 
-        })
-        .catch(error => console.log(error))
+
 
     }
 
-
-    const updateBrand = (values) => {
+    function updateBrand(values) {
         if (id) {
             values.id = id;
+
             put(values)
+
         }
         else {
             post(values)
@@ -66,7 +69,7 @@ export default function AddBrand(props) {
             </div>
             <form className="row" method="post"
 
-                encType="multipart/form-data" onSubmit={() => handleSubmit(updateBrand)}>
+                encType="multipart/form-data" onSubmit={handleSubmit(updateBrand)}>
 
                 <div className="form-group col-xs-12 col-lg-3">
                     <label htmlFor="basic-url">
@@ -81,17 +84,15 @@ export default function AddBrand(props) {
                             <label
                                 className="custom-file-label" htmlFor="inputGroupFile01" >
                             </label>
-
-
+ 
                         </div>
                     </div>
                 </div>
-                {() => "this is the name" + arr.name}
                 <div className="form-group col-xs-12 col-lg-9 mb-3 mb-sm-0">
                     <label><strong>Brand name *</strong></label>
 
                     <input ref={register({ required: true })}
-                        defaultValue={arr.name}
+                    defaultValue={active.name}
                         type="text" name="name" className="form-control form-control-user"
                         id="exampleInputEmail" placeholder="Enter the name of your brand"
                     />
@@ -101,7 +102,7 @@ export default function AddBrand(props) {
 
                     <textarea
                         ref={register({ required: true })}
-
+                        defaultValue={active.desc}
                         className="form-control form-control-user"
                         name="desc"
                         id=""
@@ -110,10 +111,11 @@ export default function AddBrand(props) {
                     </textarea>
                     <p style={{ color: "red" }}></p>
 
+
                     <label><strong>Website</strong></label>
                     <input
                         ref={register({ required: true })}
-
+                        defaultValue={active.website}
                         type="text"
                         name="website" className="form-control form-control-user"
                         placeholder="http://" />
@@ -121,7 +123,7 @@ export default function AddBrand(props) {
 
                     <label><strong>Skype (optional)</strong></label>
                     <input ref={register({ required: true })}
-
+                        defaultValue={active.skype}
                         type="text"
                         name="skype"
                         className="form-control form-control-user"
@@ -131,6 +133,7 @@ export default function AddBrand(props) {
                     <input ref={register({ required: true })}
 
                         type="text" name="contactName"
+                        defaultValue={active.contactName}
                         className="form-control form-control-user"
                         placeholder="First and last name of the contact" />
                     <p style={{ color: "red" }}></p>
@@ -145,6 +148,7 @@ export default function AddBrand(props) {
                     <input
 
                         ref={register({ required: true })}
+                        defaultValue={active.phoneNo}
                         type="text" name="phoneNo"
                         className="form-control form-control-user"
                         placeholder="Enter a phone number" />
@@ -153,26 +157,26 @@ export default function AddBrand(props) {
                     <label><strong>Address *</strong></label>
                     <input
                         ref={register({ required: true })}
-
+                        defaultValue={active.address}
                         type="text" name="address"
                         className="form-control form-control-user" />
                     <p style={{ color: "red" }}></p>
                     <label><strong>Postal code *</strong></label>
                     <input ref={register({ required: true })}
-
+                        defaultValue={active.postalCode}
                         type="text" name="postalCode" className="form-control form-control-user" />
                     <p style={{ color: "red" }}></p>
 
                     <label><strong>City *</strong></label>
                     <input ref={register({ required: true })}
-
+                        defaultValue={active.city}
                         type="text" name="city"
                         className="form-control form-control-user" />
                     <p style={{ color: "red" }}></p>
 
                     <label><strong>Country *</strong></label>
                     <input ref={register({ required: true })}
-
+                        defaultValue={active.country} 
                         type="text" name="country"
                         className="form-control form-control-user" />
                     <p style={{ color: "red" }}></p>

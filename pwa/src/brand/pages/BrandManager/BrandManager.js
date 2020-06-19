@@ -85,7 +85,7 @@ class BrandManager extends React.Component {
                                                 className="icon">
                                                 <FontAwesomeIcon
 
-                                                    className="d-flex align-items-center justify-content-center"
+                                                    className="m-2"
 
 
                                                     icon={faEdit} />

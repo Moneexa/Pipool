@@ -160,6 +160,7 @@ export const store = createStore({
 
     },
     brand: {
+        active:{
         id: brand.id,
         name: brand.name,
         desc: brand.desc,
@@ -171,6 +172,7 @@ export const store = createStore({
         postalCode: brand.postalCode,
         country: brand.country,
         city: brand.city,
+    },
         errors: {
             postErrorMessage: "",
         },
@@ -178,15 +180,15 @@ export const store = createStore({
         updateBrand: action((state, payload) => {
             console.log(state)
 
-            state.name = payload.name || state.name;
-            state.desc = payload.description || state.desc;
-            state.website = payload.website || state.website;
-            state.contactName = payload.contactName || state.contactName;
-            state.phoneNo = payload.phoneNo || state.phoneNo;
-            state.address = payload.address || state.address;
-            state.postalCode = payload.postalCode || state.postalCode;
-            state.country = payload.country || state.country;
-            state.city = payload.city || state.city;
+            state.active.name = payload.name || state.name;
+            state.active.desc = payload.description || state.desc;
+            state.active.website = payload.website || state.website;
+            state.active.contactName = payload.contactName || state.contactName;
+            state.active.phoneNo = payload.phoneNo || state.phoneNo;
+            state.active.address = payload.address || state.address;
+            state.active.postalCode = payload.postalCode || state.postalCode;
+            state.active.country = payload.country || state.country;
+            state.active.city = payload.city || state.city;
             localStorage.setItem('brandInfo', JSON.stringify(state))
         }),
 
@@ -227,9 +229,23 @@ export const store = createStore({
         }),
 
         post: thunk(async (actions, payload) => {
+            const obj = {
+                name: payload.name,
+                description: payload.description,
+                website: payload.website,
+                skype: payload.skype,
+                PhoneNo: payload.PhoneNo,
+                contactName: payload.contactName,
+                City: payload.City,
+                Country: payload.Country,
+                PostalCode: payload.PostalCode,
+                hashTags: payload.hashTags,
+                Address: payload.Address,
+            }
             try {
-                actions.toggleLoading(true);
-                await axios.post(`${config.apiUrl}/brands/`, payload)
+              const res=  await axios.post(`${config.apiUrl}/brands/`, obj)
+
+              actions.updateBrand(res.data);
             } catch (error) {
                 actions.postError("Failed to create brand.")
             }
