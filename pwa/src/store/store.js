@@ -22,6 +22,7 @@ let brand = {
     name: "",
     desc: "",
     website: "",
+    hashTags: "",
     skype: "",
     phoneNo: "",
     contactName: "",
@@ -166,9 +167,10 @@ export const store = createStore({
         desc: brand.desc,
         website: brand.website,
         skype: brand.skype,
+        hashTags: brand.hashTags,
         contactName: brand.contactName,
         phoneNo: brand.phoneNo,
-        addrless: brand.address,
+        address: brand.address,
         postalCode: brand.postalCode,
         country: brand.country,
         city: brand.city,
@@ -180,15 +182,18 @@ export const store = createStore({
         updateBrand: action((state, payload) => {
             console.log(state)
 
-            state.active.name = payload.name || state.name;
-            state.active.desc = payload.description || state.desc;
-            state.active.website = payload.website || state.website;
-            state.active.contactName = payload.contactName || state.contactName;
-            state.active.phoneNo = payload.phoneNo || state.phoneNo;
-            state.active.address = payload.address || state.address;
-            state.active.postalCode = payload.postalCode || state.postalCode;
-            state.active.country = payload.country || state.country;
-            state.active.city = payload.city || state.city;
+            state.active.name = payload.name || state.active.name;
+            state.active.desc = payload.desc || state.active.desc;
+            state.active.website = payload.website || state.active.website;
+            state.active.skype= payload.skeype || state.active.skype;
+            state.active.contactName = payload.contactName || state.active.contactName;
+            state.active.phoneNo = payload.phoneNo || state.active.phoneNo;
+            state.active.address = payload.address || state.active.address;
+            state.active.postalCode = payload.postalCode || state.active.postalCode;
+            state.active.country = payload.country || state.active.country;
+            state.active.city = payload.city || state.active.city;
+            state.active.hashTags = payload.city || state.active.hashTags;
+
             localStorage.setItem('brandInfo', JSON.stringify(state))
         }),
 
@@ -209,16 +214,16 @@ export const store = createStore({
             const id = payload.id
             const obj = {
                 name: payload.name,
-                description: payload.description,
+                description: payload.desc,
                 website: payload.website,
                 skype: payload.skype,
-                PhoneNo: payload.PhoneNo,
+                PhoneNo: payload.phoneNo,
                 contactName: payload.contactName,
-                City: payload.City,
-                Country: payload.Country,
-                PostalCode: payload.PostalCode,
+                City: payload.city,
+                Country: payload.country,
+                PostalCode: payload.postalCode,
                 hashTags: payload.hashTags,
-                Address: payload.Address,
+                Address: payload.address,
             }
             try {
                 const res = await axios.put(`${config.apiUrl}/brands/${id}`, obj)
@@ -231,16 +236,16 @@ export const store = createStore({
         post: thunk(async (actions, payload) => {
             const obj = {
                 name: payload.name,
-                description: payload.description,
+                description: payload.desc,
                 website: payload.website,
                 skype: payload.skype,
-                PhoneNo: payload.PhoneNo,
+                PhoneNo: payload.phoneNo,
                 contactName: payload.contactName,
-                City: payload.City,
-                Country: payload.Country,
-                PostalCode: payload.PostalCode,
+                City: payload.city,
+                Country: payload.country,
+                PostalCode: payload.postalCode,
                 hashTags: payload.hashTags,
-                Address: payload.Address,
+                Address: payload.address,
             }
             try {
               const res=  await axios.post(`${config.apiUrl}/brands/`, obj)

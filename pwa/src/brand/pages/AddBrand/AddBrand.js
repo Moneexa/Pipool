@@ -97,7 +97,7 @@ export default function AddBrand({ match }) {
                     <p style={{ color: "red" }}></p>
 
                     <label><strong>Tell us about your brand *</strong></label>
-                    <div>{active.name}</div>
+                    <div>{active.country}</div>
 
                     <textarea
                         ref={register({ required: true })}
