@@ -43,7 +43,7 @@
     opacity: 0.8;
      background-color: grey;  
 }
-.brand .grid-item .grid-thumbnail .overlay .icon{
+.brand .grid-item .grid-thumbnail .overlay .d-flex.align-items-center.justify-content-center{
     color: white;
     font-size: 100px;
     top: 50%;
@@ -53,7 +53,7 @@
     text-align: center;
 
 }
-.brand .grid-ite .grid-thumbnail .overlay .svg-inline--fa.fa-w-18{
-    vertical-align: middle;
-    padding:14px;
+.brand .grid-ite .grid-thumbnail .overlay  .svg-inline--fa.fa-w-18{
+    margin-top: 168px;
+    margin-left: 212px;
 }

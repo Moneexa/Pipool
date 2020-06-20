@@ -82,14 +82,9 @@ class BrandManager extends React.Component {
                                     <div className="grid-thumbnail w-100 h-100 rounded-5">
                                         <div className="overlay">
                                             <Link to={"/brand/add-brand/" + element._id}
-                                                className="icon">
+                                                className="d-flex align-items-center justify-content-center">
                                                 <FontAwesomeIcon
-
-                                                    className="m-2"
-
-
                                                     icon={faEdit} />
-
                                             </Link>
                                         </div>
 
