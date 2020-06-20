@@ -6,13 +6,7 @@ import { useForm } from "react-hook-form";
 import { matchPath } from 'react-router';
 import { BrowserRouter as Router, useParams } from "react-router-dom";
 import { useStoreActions, useStoreState } from 'easy-peasy';
-export default function AddBrand(props) {
-
-    const match = matchPath(props.history.location.pathname, {
-        path: '/brand/add-brand/:id',
-        exact: false,
-        strict: false
-    })
+export default function AddBrand({ match }) {
     const active = useStoreState(state => state.brand.active);
 
     //const [updateRequired, setUpdateRequired] = useState(false);
@@ -22,8 +16,8 @@ export default function AddBrand(props) {
     const post = useStoreActions(actions => actions.brand.post);
     const obj = useStoreActions(actions => actions.brand.getId);
     let id;
-    if(match){
-    id = match.params.id;
+    if (match) {
+        id = match.params.id;
     }
     console.log(id)
 
@@ -84,7 +78,7 @@ export default function AddBrand(props) {
                             <label
                                 className="custom-file-label" htmlFor="inputGroupFile01" >
                             </label>
- 
+
                         </div>
                     </div>
                 </div>
@@ -92,7 +86,7 @@ export default function AddBrand(props) {
                     <label><strong>Brand name *</strong></label>
 
                     <input ref={register({ required: true })}
-                    defaultValue={active.name}
+                        defaultValue={active.name}
                         type="text" name="name" className="form-control form-control-user"
                         id="exampleInputEmail" placeholder="Enter the name of your brand"
                     />
@@ -176,7 +170,7 @@ export default function AddBrand(props) {
 
                     <label><strong>Country *</strong></label>
                     <input ref={register({ required: true })}
-                        defaultValue={active.country} 
+                        defaultValue={active.country}
                         type="text" name="country"
                         className="form-control form-control-user" />
                     <p style={{ color: "red" }}></p>

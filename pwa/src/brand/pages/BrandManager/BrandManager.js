@@ -72,33 +72,32 @@ class BrandManager extends React.Component {
                         <div className="plus-icon" style={{ fontSize: "90px", color: "#fff", textAlign: "center", fontWeight: "bold" }}>+</div>
                         <div className="heading">Add a new brand</div>
                     </div>
-                    <Router>
 
-                        {this.state.brands.map((element, index, array) => {
-                            // Return value for new_array
+                    {this.state.brands.map((element, index, array) => {
+                        // Return value for new_array
 
-                            return (
-                                <div key={index} className="grid-item mr-5 mb-3 p-3 bg-primary text-white rounded-5 d-flex flex-column justify-content-center align-items-center">
-                                    <div className="grid-thumbnail w-100 h-100 rounded-5">
-                                        <div className="overlay">
-                                            <Link to={"/brand/add-brand/" + element._id}
-                                                className="d-flex align-items-center justify-content-center">
-                                                <FontAwesomeIcon
-                                                    icon={faEdit} />
-                                            </Link>
-                                        </div>
+                        return (
+                            <div key={index} className="grid-item mr-5 mb-3 p-3 bg-primary text-white rounded-5 d-flex flex-column justify-content-center align-items-center">
+                                <div className="grid-thumbnail w-100 h-100 rounded-5">
+                                    <div className="overlay d-flex align-items-center justify-content-center">
+                                        <Link to={"/brand/edit/" + element._id}
+                                            className="icon">
+                                            <FontAwesomeIcon
+
+                                                className="m-2"
 
 
+                                                icon={faEdit} />
+
+                                        </Link>
                                     </div>
-                                </div>
-                            )
-                        })
-                        }
-                        <Switch>
-                            <Route path="/brand/add-brand/:id" component={AddBrand} />
 
-                        </Switch>
-                    </Router>
+
+                                </div>
+                            </div>
+                        )
+                    })
+                    }
 
                 </div>
             </div>
