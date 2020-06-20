@@ -96,7 +96,7 @@ export class Brand extends React.Component {
                                         </Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link as={Link} to={`${this.props.match.path}/add-brand`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+                                        <Nav.Link as={Link} to={`${this.props.match.path}/add`} className={!this.state.sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
                                             {this.state.sidebarExpanded ? <div className="no-icon-space"></div> : null}
                                             {this.state.sidebarExpanded ? <span>&nbsp;</span> : null}
                                             <span>Add New Brand</span>
@@ -175,15 +175,16 @@ export class Brand extends React.Component {
                                 <div className="container-fluid">
                                     <Switch>
                                         <Redirect from={`${this.props.match.path}/`} exact to={`${this.props.match.path}/overview`} />
-                                        <Route path={`${this.props.match.path}/overview`} component={Overview} />
-                                        <Route path={`${this.props.match.path}/campaigns`} component={CampaignManager} />
-                                        <Route path={`${this.props.match.path}/pending-requests`} component={PendingRequests} />
-                                        <Route path={`${this.props.match.path}/brands`} component={BrandManager} />
-                                        <Route path={`${this.props.match.path}/add-brand`} component={AddBrand} />
-                                        <Route path={`${this.props.match.path}/new-campaign`} component={NewCampaign} />
-                                        <Route path={`${this.props.match.path}/calender`} component={Calender} />
-                                        <Route path={`${this.props.match.path}/payment`} component={Payment} />
-                                        <Route path={`${this.props.match.path}/help`} component={Help} />
+                                        <Route path={`${this.props.match.path}/overview`} exact component={Overview} />
+                                        <Route path={`${this.props.match.path}/campaigns`} exact component={CampaignManager} />
+                                        <Route path={`${this.props.match.path}/pending-requests`} exact component={PendingRequests} />
+                                        <Route path={`${this.props.match.path}/brands`} exact component={BrandManager} />
+                                        <Route path={`${this.props.match.path}/add/`} exact component={AddBrand} />
+                                        <Route path={`${this.props.match.path}/edit/:id`} exact component={AddBrand} />
+                                        <Route path={`${this.props.match.path}/new-campaign`} exact component={NewCampaign} />
+                                        <Route path={`${this.props.match.path}/calender`} exact component={Calender} />
+                                        <Route path={`${this.props.match.path}/payment`} exact component={Payment} />
+                                        <Route path={`${this.props.match.path}/help`} exact component={Help} />
                                     </Switch>
                                 </div>
                             </div>

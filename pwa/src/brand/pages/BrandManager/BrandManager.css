@@ -23,37 +23,30 @@
     font-size: 1.4em;
 }
 .brand .grid-item .grid-thumbnail {
-    background-image: url('/img/brand-logo.png');
+    background-image: url("/img/brand-logo.png");
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
 }
-.brand .grid-item .grid-thumbnail .overlay{
-                 top: 0;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                height: 100%;
-                width: 100%;
-                opacity: 0;
-                transition: .3s ease;
-            
+.brand .grid-item .grid-thumbnail .overlay {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: 0.3s ease;
 }
-.brand .grid-item .grid-thumbnail .overlay:hover{
+.brand .grid-item .grid-thumbnail .overlay:hover {
     opacity: 0.8;
-     background-color: grey;  
+    background-color: grey;
 }
-.brand .grid-item .grid-thumbnail .overlay .icon{
+.brand .grid-item .grid-thumbnail .overlay .icon {
     color: white;
     font-size: 100px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    text-align: center;
-
 }
-.brand .grid-ite .grid-thumbnail .overlay .svg-inline--fa.fa-w-18{
+.brand .grid-ite .grid-thumbnail .overlay .svg-inline--fa.fa-w-18 {
     vertical-align: middle;
-    padding:14px;
+    padding: 14px;
 }
