@@ -185,7 +185,7 @@ export const store = createStore({
             state.active.name = payload.name || state.active.name;
             state.active.desc = payload.desc || state.active.desc;
             state.active.website = payload.website || state.active.website;
-            state.active.skype= payload.skeype || state.active.skype;
+            state.active.skype= payload.skype || state.active.skype;
             state.active.contactName = payload.contactName || state.active.contactName;
             state.active.phoneNo = payload.phoneNo || state.active.phoneNo;
             state.active.address = payload.address || state.active.address;
@@ -217,13 +217,13 @@ export const store = createStore({
                 description: payload.desc,
                 website: payload.website,
                 skype: payload.skype,
-                PhoneNo: payload.phoneNo,
+                phoneNo: payload.phoneNo,
                 contactName: payload.contactName,
-                City: payload.city,
-                Country: payload.country,
-                PostalCode: payload.postalCode,
+                city: payload.city,
+                country: payload.country,
+                postalCode: payload.postalCode,
                 hashTags: payload.hashTags,
-                Address: payload.address,
+                address: payload.address,
             }
             try {
                 const res = await axios.put(`${config.apiUrl}/brands/${id}`, obj)
@@ -239,13 +239,13 @@ export const store = createStore({
                 description: payload.desc,
                 website: payload.website,
                 skype: payload.skype,
-                PhoneNo: payload.phoneNo,
+                phoneNo: payload.phoneNo,
                 contactName: payload.contactName,
-                City: payload.city,
-                Country: payload.country,
-                PostalCode: payload.postalCode,
+                city: payload.city,
+                country: payload.country,
+                postalCode: payload.postalCode,
                 hashTags: payload.hashTags,
-                Address: payload.address,
+                address: payload.address,
             }
             try {
               const res=  await axios.post(`${config.apiUrl}/brands/`, obj)

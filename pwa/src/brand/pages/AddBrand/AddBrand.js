@@ -97,7 +97,6 @@ export default function AddBrand({ match }) {
                     <p style={{ color: "red" }}></p>
 
                     <label><strong>Tell us about your brand *</strong></label>
-                    <div>{active.country}</div>
 
                     <textarea
                         ref={register({ required: true })}
@@ -137,7 +136,7 @@ export default function AddBrand({ match }) {
 
                     <label><strong>Hashtags *</strong></label>
                     <input ref={register({ required: true })}
-
+                       defaultValue={active.hashTags}
                         type="text" name="hashTags"
                         className="form-control form-control-user"
                         placeholder="Hashtags" />
@@ -155,26 +154,26 @@ export default function AddBrand({ match }) {
                     <input
                         ref={register({ required: true })}
                         defaultValue={active.address}
-                        type="text" name="address"
+                        type="text" name="address" placeholder={active.address}
                         className="form-control form-control-user" />
                     <p style={{ color: "red" }}></p>
                     <label><strong>Postal code *</strong></label>
                     <input ref={register({ required: true })}
-                        defaultValue={active.postalCode}
+                        defaultValue={active.postalCode} placeholder={active.postalCode}
                         type="text" name="postalCode" className="form-control form-control-user" />
                     <p style={{ color: "red" }}></p>
 
                     <label><strong>City *</strong></label>
                     <input ref={register({ required: true })}
                         defaultValue={active.city}
-                        type="text" name="city"
+                        type="text" name="city" placeholder={active.city} 
                         className="form-control form-control-user" />
                     <p style={{ color: "red" }}></p>
 
                     <label><strong>Country *</strong></label>
                     <input ref={register({ required: true })}
                         defaultValue={active.country}
-                        type="text" name="country"
+                        type="text" name="country" placeholder={active.country}
                         className="form-control form-control-user" />
                     <p style={{ color: "red" }}></p>
                 </div>

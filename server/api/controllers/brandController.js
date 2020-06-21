@@ -55,11 +55,11 @@ module.exports = {
             description: req.body.description,
             website: req.body.website,
             hashTags: req.body.hashTags,
-            PhoneNo: req.body.PhoneNo,
-            Address: req.body.Address,
-            PostalCode: req.body.PostalCode,
-            City: req.body.City,
-            Country: req.body.Country
+            phoneNo: req.body.phoneNo,
+            address: req.body.address,
+            postalCode: req.body.postalCode,
+            city: req.body.city,
+            country: req.body.country
 
         });
 
@@ -114,11 +114,11 @@ module.exports = {
             brand.description = req.body.description ? req.body.description : brand.description;
             brand.website = req.body.website ? req.body.website : req.body.website;
             brand.hashTags = req.body.hashTags ? req.body.hashTags : req.body.hashTags;
-            brand.PhoneNo = req.body.PhoneNo ? req.body.PhoneNo : req.body.PhoneNo;
-            brand.Address = req.body.Address ? req.body.Address : req.body.Address;
-            brand.PostalCode = req.body.PostalCode ? req.body.PostalCode : req.body.PostalCode;
-            brand.City = req.body.City ? req.body.City : req.body.City;
-            brand.Country = req.body.Country ? req.body.Country : req.body.Country;
+            brand.phoneNo = req.body.phoneNo ? req.body.phoneNo : req.body.phoneNo;
+            brand.address = req.body.address ? req.body.address : req.body.address;
+            brand.postalCode = req.body.postalCode ? req.body.postalCode : req.body.postalCode;
+            brand.city = req.body.city ? req.body.city : req.body.city;
+            brand.country = req.body.country ? req.body.country : req.body.country;
 
 
             brand.save(function (err, brand) {

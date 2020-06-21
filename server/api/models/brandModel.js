@@ -9,11 +9,11 @@ var brandSchema = new Schema({
 	'description' : String,
 	'website' :String,
 	'hashTags' :String,
-	'PhoneNo' :String,
-	'Address':String,
-	'PostalCode' :String,
-	'City' :String,
-	'Country' :String
+	'phoneNo' :String,
+	'address':String,
+	'postalCode' :String,
+	'city' :String,
+	'country' :String
 
 });
 
