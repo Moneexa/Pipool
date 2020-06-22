@@ -1,4 +1,4 @@
-var brandModel = require('../models/brandModel.js');
+var brandModel = require('./brandModel.js');
 
 /**
  * brandController.js
@@ -11,7 +11,8 @@ module.exports = {
      * brandController.list()
      */
     list: function (req, res) {
-        brandModel.find(function (err, brands) {
+        console.log(res.locals.user.id)
+        brandModel.find( { createdBy: res.locals.user.id }, function (err, brands) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting brand.',
@@ -48,6 +49,7 @@ module.exports = {
      */
     create: function (req, res) {
         var brand = new brandModel({
+            id: req.body.id,
             name: req.body.name,
             logo: req.body.logo,
             contactName: req.body.contactName,
@@ -59,7 +61,9 @@ module.exports = {
             address: req.body.address,
             postalCode: req.body.postalCode,
             city: req.body.city,
-            country: req.body.country
+            country: req.body.country,
+            createdBy: res.locals.user.id
+
 
         });
 
@@ -119,8 +123,6 @@ module.exports = {
             brand.postalCode = req.body.postalCode ? req.body.postalCode : req.body.postalCode;
             brand.city = req.body.city ? req.body.city : req.body.city;
             brand.country = req.body.country ? req.body.country : req.body.country;
-
-
             brand.save(function (err, brand) {
                 if (err) {
                     return res.status(500).json({

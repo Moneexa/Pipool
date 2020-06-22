@@ -8,7 +8,7 @@ var cors = require('cors');
 
 const loginRoute = require('./auth/login.router'); // Imports routes for the products
 const signupRoute = require('./auth/signup.router'); // Imports routes for the products
-const brandRoute = require('./api/routes/brandRoutes')
+const brandRoute = require('./brand/brandRoutes')
 
 var port = process.env.PORT || 4242;
 

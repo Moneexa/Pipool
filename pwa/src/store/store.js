@@ -20,7 +20,7 @@ let user = {
 let brand = {
     id: "",
     name: "",
-    desc: "",
+    description: "",
     website: "",
     hashTags: "",
     skype: "",
@@ -161,49 +161,101 @@ export const store = createStore({
 
     },
     brand: {
-        active:{
-        id: brand.id,
-        name: brand.name,
-        desc: brand.desc,
-        website: brand.website,
-        skype: brand.skype,
-        hashTags: brand.hashTags,
-        contactName: brand.contactName,
-        phoneNo: brand.phoneNo,
-        address: brand.address,
-        postalCode: brand.postalCode,
-        country: brand.country,
-        city: brand.city,
-    },
+        activeArray: [],
+        active: {
+            id: brand.id,
+            name: brand.name,
+            description: brand.description,
+            website: brand.website,
+            skype: brand.skype,
+            hashTags: brand.hashTags,
+            contactName: brand.contactName,
+            phoneNo: brand.phoneNo,
+            address: brand.address,
+            postalCode: brand.postalCode,
+            country: brand.country,
+            city: brand.city,
+        },
+        token: {
+            value: user.token.value,
+            expiry: user.token.expiry
+        },
         errors: {
             postErrorMessage: "",
         },
 
         updateBrand: action((state, payload) => {
-            console.log(state)
+            const brandList = [];
+            if (Array.isArray(payload) === false) {
 
-            state.active.name = payload.name || state.active.name;
-            state.active.desc = payload.desc || state.active.desc;
-            state.active.website = payload.website || state.active.website;
-            state.active.skype= payload.skype || state.active.skype;
-            state.active.contactName = payload.contactName || state.active.contactName;
-            state.active.phoneNo = payload.phoneNo || state.active.phoneNo;
-            state.active.address = payload.address || state.active.address;
-            state.active.postalCode = payload.postalCode || state.active.postalCode;
-            state.active.country = payload.country || state.active.country;
-            state.active.city = payload.city || state.active.city;
-            state.active.hashTags = payload.city || state.active.hashTags;
+                state.active.id= payload._id || state.active.id;
+                state.active.name = payload.name || state.active.name;
+                state.active.description = payload.description || state.active.description;
+                state.active.website = payload.website || state.active.website;
+                state.active.skype= payload.skype || state.active.skype;
+                state.active.contactName= payload.contactName || state.active.contactName;
+                state.active.phoneNo= payload.phoneNo || state.active.phoneNo;
+                state.active.address= payload.address || state.active.address;
+                state.active.postalCode= payload.postalCode || state.active.postalCode;
+                state.active.country= payload.country || state.active.country;
+                state.active.city= payload.city || state.active.city;
+                state.active.hashTags= payload.hashTags || state.active.hashTags;
+            }
+            else{
 
+              payload.map((values, index) => {
+               console.log(values)
+                brandList.push(
+                    
+                state.active={
+                        id : values._id || state.active.id,
+                        name : values.name || state.active.name,
+                        description : values.description || state.active.description,
+                        website : values.website || state.active.website,
+                        skype: values.skype || state.active.skype,
+                        contactName: values.contactName || state.active.contactName,
+                        phoneNo: values.phoneNo || state.active.phoneNo,
+                        address: values.address || state.active.address,
+                        postalCode: values.postalCode || state.active.postalCode,
+                        country: values.country || state.active.country,
+                        city: values.city || state.active.city,
+                        hashTags: values.hashTags || state.active.hashTags,
+                    }
+                )
+            })
+        }
+              console.log(brandList)
+              state.activeArray=brandList
+             console.log(JSON.stringify(state))
+            /* state.token.value : payload.token.value;
+             state.token.expiry : payload.token.expiry;*/
             localStorage.setItem('brandInfo', JSON.stringify(state))
         }),
 
         postError: action((state, payload) => {
             state.errors.postErrorMessage = payload;
         }),
+
+        get: thunk(async (actions, payload) => {
+
+            const token = user.token.value;
+            console.log(token.value)
+            const res = await axios.get(`${config.apiUrl}/brands/`,
+                { headers: { 'Authorization': `Bearer ${token}` } }
+            );
+            console.log(res.data)
+            const { data } = await res;
+            actions.updateBrand(res.data);
+
+
+        }),
         getId: thunk(async (actions, payload) => {
+            const token = user.token.value;
 
             const id = payload
-            const res = await axios.get(`${config.apiUrl}/brands/${id}`);
+            const res = await axios.get(`${config.apiUrl}/brands/${id}`,
+                { headers: { 'Authorization': `Bearer ${token}` } }
+            );
             console.log(res)
             const { data } = await res;
             actions.updateBrand(res.data);
@@ -212,9 +264,11 @@ export const store = createStore({
         }),
         put: thunk(async (actions, payload) => {
             const id = payload.id
+            const token = user.token.value;
+
             const obj = {
                 name: payload.name,
-                description: payload.desc,
+                description: payload.description,
                 website: payload.website,
                 skype: payload.skype,
                 phoneNo: payload.phoneNo,
@@ -226,17 +280,30 @@ export const store = createStore({
                 address: payload.address,
             }
             try {
-                const res = await axios.put(`${config.apiUrl}/brands/${id}`, obj)
+                if(token){
+                const res = await axios.put(`${config.apiUrl}/brands/${id}`, obj,
+                    { headers: { 'Authorization': `Bearer ${token}` } },
+                
+
+                )
+                
+
                 actions.updateBrand(res.data);
+
+                }
             } catch (error) {
+
                 actions.postError("Form values are not correct.")
+
             }
         }),
 
         post: thunk(async (actions, payload) => {
+            const token = user.token.value;
+            console.log(token)
             const obj = {
                 name: payload.name,
-                description: payload.desc,
+                description: payload.description,
                 website: payload.website,
                 skype: payload.skype,
                 phoneNo: payload.phoneNo,
@@ -248,11 +315,15 @@ export const store = createStore({
                 address: payload.address,
             }
             try {
-              const res=  await axios.post(`${config.apiUrl}/brands/`, obj)
+                const res = await axios.post(`${config.apiUrl}/brands/`, obj,
+                    { headers: { 'Authorization': `Bearer ${token}` } }
+                )
+                actions.updateBrand(res.data);
 
-              actions.updateBrand(res.data);
             } catch (error) {
+
                 actions.postError("Failed to create brand.")
+
             }
         }),
 

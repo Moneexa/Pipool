@@ -13,7 +13,10 @@ var brandSchema = new Schema({
 	'address':String,
 	'postalCode' :String,
 	'city' :String,
-	'country' :String
+	'country' :String,
+	'createdBy' : [
+		{type: Schema.Types.ObjectId, ref: 'User'}
+	  ]
 
 });
 

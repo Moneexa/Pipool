@@ -12,30 +12,16 @@ import {
     useParams
 } from "react-router-dom";
 import AddBrand from '../AddBrand/AddBrand'
-
-class BrandManager extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = ({
-            brands: [],
-        })
-    }
-    componentDidMount() {
-
-        axios.get(`${config.apiUrl}/brands/`)
-            .then((response) => {
-                this.setState({
-                    brands: response.data
-
-                })
-            })
-            .catch(error => console.log(error))
-    }
-
-    render() {
+import { useStoreActions, useStoreState } from 'easy-peasy';
 
 
+export default function BrandManager() {
+    const get = useStoreActions(actions => actions.brand.get);
+    const active = useStoreState(state => state.brand.activeArray);
 
+    get();
+    console.log(active);
+    const brand=[]
         return (
 
             <div className="brand">
@@ -73,14 +59,14 @@ class BrandManager extends React.Component {
                         <div className="heading">Add a new brand</div>
                     </div>
 
-                    {this.state.brands.map((element, index, array) => {
+                    {active.map((element, index, array) => {
                         // Return value for new_array
-
+                          
                         return (
                             <div key={index} className="grid-item mr-5 mb-3 p-3 bg-primary text-white rounded-5 d-flex flex-column justify-content-center align-items-center">
                                 <div className="grid-thumbnail w-100 h-100 rounded-5">
                                     <div className="overlay d-flex align-items-center justify-content-center">
-                                        <Link to={"/brand/edit/" + element._id}
+                                        <Link to={"/brand/edit/" + element.id}
                                             className="icon">
                                             <FontAwesomeIcon
 
@@ -104,6 +90,3 @@ class BrandManager extends React.Component {
 
         )
     }
-}
-
-export default BrandManager
