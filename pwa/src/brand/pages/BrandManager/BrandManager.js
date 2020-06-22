@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './BrandManager.css'
 import axios from 'axios';
 import config from '../../../config.json'
@@ -16,12 +16,15 @@ import { useStoreActions, useStoreState } from 'easy-peasy';
 
 
 export default function BrandManager() {
-    const get = useStoreActions(actions => actions.brand.get);
-    const active = useStoreState(state => state.brand.activeArray);
+    const listBrands = useStoreActions(actions => actions.brand.listBrands);
+    const list = useStoreState(state => state.brand.list);
 
-    get();
-    console.log(active);
-    const brand=[]
+
+    useEffect(() => {
+        listBrands();
+    }, []);
+
+    console.log(list);
         return (
 
             <div className="brand">
@@ -59,14 +62,14 @@ export default function BrandManager() {
                         <div className="heading">Add a new brand</div>
                     </div>
 
-                    {active.map((element, index, array) => {
+                    {list.map((element, index, array) => {
                         // Return value for new_array
                           
                         return (
                             <div key={index} className="grid-item mr-5 mb-3 p-3 bg-primary text-white rounded-5 d-flex flex-column justify-content-center align-items-center">
                                 <div className="grid-thumbnail w-100 h-100 rounded-5">
                                     <div className="overlay d-flex align-items-center justify-content-center">
-                                        <Link to={"/brand/edit/" + element.id}
+                                        <Link to={"/brand/edit/" + element._id}
                                             className="icon">
                                             <FontAwesomeIcon
 

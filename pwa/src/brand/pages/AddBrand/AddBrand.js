@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { matchPath } from 'react-router';
 import { BrowserRouter as Router, useParams } from "react-router-dom";
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import { ToastProvider } from 'react-toast-notifications';
 
 export default function AddBrand({ match }) {
     //const [updateRequired, setUpdateRequired] = useState(false);
@@ -14,7 +13,7 @@ export default function AddBrand({ match }) {
     const active = useStoreState(state => state.brand.active);
     const put = useStoreActions(actions => actions.brand.put);
     const post = useStoreActions(actions => actions.brand.post);
-    const obj = useStoreActions(actions => actions.brand.getId);
+    const obj = useStoreActions(actions => actions.brand.get);
 
     var success, update;
     let id;
