@@ -15,6 +15,7 @@ export default function AddBrand({ match }) {
     const put = useStoreActions(actions => actions.brand.put);
     const post = useStoreActions(actions => actions.brand.post);
     const obj = useStoreActions(actions => actions.brand.getId);
+   var message=""; 
 
     var success, update;
     let id;
@@ -59,6 +60,7 @@ export default function AddBrand({ match }) {
 
             success = true
         }
+        message="Information saved successfully"
     }
 
 
@@ -182,7 +184,10 @@ export default function AddBrand({ match }) {
                     <div className="w-100 px-4 mb-5">
                         <button type="submit"
                             name="brand_save" className="btn btn-primary btn-user btn-block rounded-30 py-3">Save</button>
-
+                      
+                      { success ?
+                       <p style={{color:"grey"}}>{message}</p>
+                    : ""}
                     </div>
 
                 </form>
