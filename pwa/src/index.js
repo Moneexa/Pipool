@@ -6,7 +6,7 @@ import './index.css';
 import { StoreProvider } from 'easy-peasy';
 import { store } from "./store/store";
 import { Routes } from './Routes';
-
+import 'toastr/build/toastr.css'
 function Index() {
   return (
     <StoreProvider store={store}>

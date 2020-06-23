@@ -3,6 +3,7 @@ import axios from 'axios';
 import config from '../config.json';
 import { notify } from 'reapop';
 import {reducer as notificationsReducer} from 'reapop';
+import * as toastr from 'toastr';
 
 
 
@@ -246,7 +247,7 @@ export const store = createStore({
             const { data } = await res;
             actions.updateBrand(res.data);
 
-
+            toastr.success("Successfulyl got data");
         }),
         put: thunk(async (actions, payload) => {
             const id = payload.id
@@ -319,5 +320,6 @@ export const store = createStore({
         }),
 
 
-    }
+    },
+    notifications: thunk(notificationsReducer())
 });
