@@ -6,7 +6,8 @@ import { useForm } from "react-hook-form";
 import { matchPath } from 'react-router';
 import { BrowserRouter as Router, useParams } from "react-router-dom";
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import { ToastProvider } from 'react-toast-notifications';
+import {notify} from 'reapop';
+
 
 export default function AddBrand({ match }) {
     //const [updateRequired, setUpdateRequired] = useState(false);
@@ -14,10 +15,9 @@ export default function AddBrand({ match }) {
     const active = useStoreState(state => state.brand.active);
     const put = useStoreActions(actions => actions.brand.put);
     const post = useStoreActions(actions => actions.brand.post);
-    const obj = useStoreActions(actions => actions.brand.getId);
-   var message=""; 
-
-    var success, update;
+    const obj = useStoreActions(actions => actions.brand.get);
+    const notification= useStoreActions(actions => actions.brand.notificationReducer);
+    var success, update, message=""
     let id;
     if (match) {
         id = match.params.id;
@@ -51,16 +51,31 @@ export default function AddBrand({ match }) {
 
             put(values)
             update = true;
-            success = true
+            success = true;
+            
+            notification({title: 'Welcome',
+            message: 'you clicked on the button',
+            status: 'success',
+            dismissible: true,
+            dismissAfter: 3000});
 
+            //console.log(notification);
 
         }
         else {
             post(values)
 
             success = true
+        
+        notification({title: 'Welcome',
+        message: 'you clicked on the button',
+        status: 'success',
+        dismissible: true,
+        dismissAfter: 3000});
+        // console.log(notification);
+
         }
-        message="Information saved successfully"
+
     }
 
 

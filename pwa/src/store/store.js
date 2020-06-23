@@ -1,6 +1,8 @@
 import { createStore, action, thunk } from 'easy-peasy';
 import axios from 'axios';
 import config from '../config.json';
+import { notify } from 'reapop';
+import {reducer as notificationsReducer} from 'reapop';
 
 
 
@@ -37,6 +39,8 @@ if (localStorageData && localStorageData.token) {
     localStorageData.token.expiry = new Date(localStorageData.token.expiry);
     if (localStorageData.token.expiry > new Date()) {
         user = localStorageData;
+        axios.defaults.headers['Authorization'] = `Bearer ${user.token.value}`;
+
     }
 }
 
@@ -65,6 +69,7 @@ export const store = createStore({
             state.role = payload.role || state.role;
             state.token.value = payload.token.value;
             state.token.expiry = payload.token.expiry;
+            axios.defaults.headers['Authorization'] = `Bearer ${payload.token.value}`;
             localStorage.setItem('userInfo', JSON.stringify(state))
         }),
         toggleLoading: action((state, payload) => {
@@ -150,7 +155,7 @@ export const store = createStore({
                 const response = await axios.post(
                     `${config.apiUrl}/auth/signup/finish`,
                     body,
-                    { headers: { 'Authorization': `Bearer ${token}` } }
+
                 );
                 actions.updateUser(response.data);
             } catch (error) {
@@ -161,7 +166,7 @@ export const store = createStore({
 
     },
     brand: {
-        activeArray: [],
+        list: [],
         active: {
             id: brand.id,
             name: brand.name,
@@ -184,77 +189,58 @@ export const store = createStore({
             postErrorMessage: "",
         },
 
+        updateBrandList: action((state, payload) => {
+            state.list = payload;
+        }),
+
         updateBrand: action((state, payload) => {
-            const brandList = [];
-            if (Array.isArray(payload) === false) {
-
-                state.active.id= payload._id || state.active.id;
-                state.active.name = payload.name || state.active.name;
-                state.active.description = payload.description || state.active.description;
-                state.active.website = payload.website || state.active.website;
-                state.active.skype= payload.skype || state.active.skype;
-                state.active.contactName= payload.contactName || state.active.contactName;
-                state.active.phoneNo= payload.phoneNo || state.active.phoneNo;
-                state.active.address= payload.address || state.active.address;
-                state.active.postalCode= payload.postalCode || state.active.postalCode;
-                state.active.country= payload.country || state.active.country;
-                state.active.city= payload.city || state.active.city;
-                state.active.hashTags= payload.hashTags || state.active.hashTags;
-            }
-            else{
-
-              payload.map((values, index) => {
-               console.log(values)
-                brandList.push(
-                    
-                state.active={
-                        id : values._id || state.active.id,
-                        name : values.name || state.active.name,
-                        description : values.description || state.active.description,
-                        website : values.website || state.active.website,
-                        skype: values.skype || state.active.skype,
-                        contactName: values.contactName || state.active.contactName,
-                        phoneNo: values.phoneNo || state.active.phoneNo,
-                        address: values.address || state.active.address,
-                        postalCode: values.postalCode || state.active.postalCode,
-                        country: values.country || state.active.country,
-                        city: values.city || state.active.city,
-                        hashTags: values.hashTags || state.active.hashTags,
-                    }
-                )
-            })
-        }
-              console.log(brandList)
-              state.activeArray=brandList
-             console.log(JSON.stringify(state))
-            /* state.token.value : payload.token.value;
-             state.token.expiry : payload.token.expiry;*/
-            localStorage.setItem('brandInfo', JSON.stringify(state))
+            state.active.id = payload._id || state.active.id;
+            state.active.name = payload.name || state.active.name;
+            state.active.description = payload.description || state.active.description;
+            state.active.website = payload.website || state.active.website;
+            state.active.skype = payload.skype || state.active.skype;
+            state.active.contactName = payload.contactName || state.active.contactName;
+            state.active.phoneNo = payload.phoneNo || state.active.phoneNo;
+            state.active.address = payload.address || state.active.address;
+            state.active.postalCode = payload.postalCode || state.active.postalCode;
+            state.active.country = payload.country || state.active.country;
+            state.active.city = payload.city || state.active.city;
+            state.active.hashTags = payload.hashTags || state.active.hashTags;
         }),
 
         postError: action((state, payload) => {
             state.errors.postErrorMessage = payload;
         }),
+        notify_: action((state, payload)=>{
+          
+            notify({message: payload.message, status: payload.status})
 
-        get: thunk(async (actions, payload) => {
+        }),
+         
+        notificationReducer:thunk (async(actions, payload)=>{
+           
+            actions.notify_(payload);
+
+        }),
+      
+        
+        listBrands: thunk(async (actions, payload) => {
 
             const token = user.token.value;
             console.log(token.value)
-            const res = await axios.get(`${config.apiUrl}/brands/`,
-                { headers: { 'Authorization': `Bearer ${token}` } }
-            );
+            const res = await axios.get(`${config.apiUrl}/brands/`);
             console.log(res.data)
-            const { data } = await res;
-            actions.updateBrand(res.data);
+
+            actions.updateBrandList(res.data);
 
 
         }),
-        getId: thunk(async (actions, payload) => {
+        get: thunk(async (actions, payload) => {
             const token = user.token.value;
 
             const id = payload
             const res = await axios.get(`${config.apiUrl}/brands/${id}`,
-                { headers: { 'Authorization': `Bearer ${token}` } }
+
             );
             console.log(res)
             const { data } = await res;
@@ -280,20 +266,21 @@ export const store = createStore({
                 address: payload.address,
             }
             try {
-                if(token){
-                const res = await axios.put(`${config.apiUrl}/brands/${id}`, obj,
-                    { headers: { 'Authorization': `Bearer ${token}` } },
-                
+                if (token) {
+                    const res = await axios.put
+                        (
+                            `${config.apiUrl}/brands/${id}`, obj,
+                        )
 
-                )
-                
 
-                actions.updateBrand(res.data);
+                    actions.updateBrand(res.data);
+                    actions.notify_("Data Sent Successfully")
 
                 }
             } catch (error) {
 
                 actions.postError("Form values are not correct.")
+
 
             }
         }),
@@ -316,12 +303,15 @@ export const store = createStore({
             }
             try {
                 const res = await axios.post(`${config.apiUrl}/brands/`, obj,
-                    { headers: { 'Authorization': `Bearer ${token}` } }
+
                 )
+
                 actions.updateBrand(res.data);
+                actions.notify_("Data Sent Successfully")
+
 
             } catch (error) {
-
+                 
                 actions.postError("Failed to create brand.")
 
             }
