@@ -211,7 +211,7 @@ export const store = createStore({
         postError: action((state, payload) => {
             state.errors.postErrorMessage = payload;
         }),
-        notify_: action((state, payload)=>{
+       /* notify_: action((state, payload)=>{
           
             notify({message: payload.message, status: payload.status})
 
@@ -221,7 +221,7 @@ export const store = createStore({
            
             actions.notify_(payload);
 
-        }),
+        }),*/
       
         
         listBrands: thunk(async (actions, payload) => {
@@ -274,7 +274,7 @@ export const store = createStore({
 
 
                     actions.updateBrand(res.data);
-                    actions.notify_("Data Sent Successfully")
+                    notify({message: res.statusText, status: res.statusCode})
 
                 }
             } catch (error) {
@@ -307,7 +307,8 @@ export const store = createStore({
                 )
 
                 actions.updateBrand(res.data);
-                actions.notify_("Data Sent Successfully")
+
+                notify({message: res.statusText, status: res.statusCode})
 
 
             } catch (error) {

@@ -16,7 +16,6 @@ export default function AddBrand({ match }) {
     const put = useStoreActions(actions => actions.brand.put);
     const post = useStoreActions(actions => actions.brand.post);
     const obj = useStoreActions(actions => actions.brand.get);
-    const notification= useStoreActions(actions => actions.brand.notificationReducer);
     var success, update, message=""
     let id;
     if (match) {
@@ -53,7 +52,7 @@ export default function AddBrand({ match }) {
             update = true;
             success = true;
             
-            notification({title: 'Welcome',
+            notify({title: 'Welcome',
             message: 'you clicked on the button',
             status: 'success',
             dismissible: true,
@@ -67,7 +66,7 @@ export default function AddBrand({ match }) {
 
             success = true
         
-        notification({title: 'Welcome',
+        notify({title: 'Welcome',
         message: 'you clicked on the button',
         status: 'success',
         dismissible: true,
