@@ -56,18 +56,21 @@ async function login(req, res) {
 		}).exec(function (err, user) {
 			if (err || !user) {
 				return res.sendStatus(400);
-			} else {
+			}
+			else {
+
 				bcrypt.compare(req.body.password, user.password, function (err, passed) {
 					if (err || !passed) {
 						return res.status(401).send("Invalid credentials");
 					}
-					jwt.sign({
-						"id": user._id,
-						"role": user.role,
+					// jwt.sign({
+					// 	"id": user._id,
+					// 	"role": user.role,
 
-					}, config.privateKey, {
-						expiresIn: '1d'
-					}, function (err, token) {
+					// }, config.privateKey, {
+					// 	expiresIn: '1d'
+					// }, 
+					signToken(user._id, user._name, user.role, undefined, function (err, token) {
 						console.log(err);
 						if (err) {
 							console.log(err);
@@ -75,21 +78,23 @@ async function login(req, res) {
 							return res.sendStatus(500);
 						}
 						res.json({
-							"id": user.id,
+							"id": user._id,
 							"name": user.name,
 							"role": user.role,
-							"token": {
+							"token":
+							{
 								"value": token,
 								"expiry": (new Date()).setDate((new Date()).getDate() + 1)
 							}
 						});
-					});
-				});
+					})
 
+
+				})
 			}
 		});
-
-	} else {
+	}
+	else {
 		res.sendStatus(400);
 	}
 }
