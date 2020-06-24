@@ -124,3 +124,11 @@
 
     display: inline-block
 }
+
+.new-campaign .custom-postfix input{
+    border-radius: 2rem 0 0 2rem;
+    border-right: none;
+}
+.new-campaign .custom-postfix button{
+    border-radius: 0 2rem 2rem 0;
+}

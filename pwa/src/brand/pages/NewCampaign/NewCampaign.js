@@ -3,13 +3,14 @@ import { useStyles } from 'react-styles-hook'
 import { Tab, Nav } from 'react-bootstrap';
 import { Form1 } from './Form1';
 import './NewCampaign.css'
+import { Form2 } from './Form2';
 
 function NewCampaign() {
 
     const formSteps = ["one", "two", "three"]
     const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
-    function saveForm1(values) {
+    function saveForm(values) {
         setCurrentStepIndex(currentStepIndex + 1);
     }
 
@@ -23,83 +24,10 @@ function NewCampaign() {
                 <Tab.Container activeKey={formSteps[currentStepIndex]} defaultActiveKey={formSteps[currentStepIndex]}>
                     <Tab.Content>
                         <Tab.Pane eventKey={formSteps[0]} className="mb-5">
-                            <Form1 onNext={saveForm1} />
+                            <Form1 onNext={saveForm} />
                         </Tab.Pane>
                         <Tab.Pane eventKey={formSteps[1]}>
-                            <div className="row">
-                                <div className="col-12 col-lg-6 mb-3 mb-sm-0">
-                                    <label className="call-for-action" >Call for action *</label>
-                                    <input type="text" className="simple-sentence-input form-control form-control-user" id="exampleInputEmail" placeholder="Describe in a simple sentence what you request from the influencers" />
-
-
-
-                                    <label className="call-for-action">Brief the influencers *</label>
-                                    <textarea className="simple-sentence-input form-control form-control-user" id="exampleInputEmail" placeholder="Describe the content you'd like from our influencers. Try to be as clear as possible to avoid out of context content from the influencers"></textarea>
-
-
-
-
-                                    <label className="call-for-action">Do </label>
-                                    <input type="text" className="simple-sentence-input form-control form-control-user" id="exampleInputEmail" placeholder="Add a rule - press enter to confirm" />
-
-
-
-                                    <label className="call-for-action">Don't </label>
-                                    <input type="text" className="simple-sentence-input form-control form-control-user" id="exampleInputEmail" placeholder="Add a rule - press enter to confirm" />
-
-
-
-                                    <label className="call-for-action" >Caption example (Optional)  </label>
-                                    <input type="text" className="simple-sentence-input form-control form-control-user" id="exampleInputEmail" placeholder="Describe in a simple sentence what you request from the influencers" />
-                                </div>
-
-                                <div className="col-12 col-lg-6 mb-3 mb-sm-0">
-                                    <div className="background-box need-product" id="bacground_box">
-                                        <p>Does the influencer need the product ?</p>
-                                        <label><input type="radio" name="optradio" /> No, the influencers don’t need to physically have the product. </label><br />
-                                        <label><input type="radio" name="optradio" /> Yes, the influencers and the product must appear on the post </label><br />
-                                        <label><input type="radio" name="optradio" />  You will send the product sample to the influencers </label><br />
-                                        <label><input type="checkbox" value="" /> The influencers will need to return the product (high value or prototype) </label>
-                                        <label><input type="radio" name="optradio" />  The influencers should purchase or already own the product  </label>
-                                    </div>
-                                    <div id="upload_btn" className="choose-file-form form-group row" >
-                                        <div className="choose-file-div form-group col-sm-4 mb-3 mb-sm-0">
-                                            <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
-                                        </div>
-                                        <div className="choose-file-div form-group col-sm-4 mb-3 mb-sm-0">
-                                            <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
-
-                                        </div>
-                                        <div className="choose-file-div form-group col-sm-4 mb-3 mb-sm-0">
-                                            <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
-
-                                        </div>
-                                        <div className="choose-file-div form-group col-sm-4 mb-3 mb-sm-0">
-                                            <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
-
-                                        </div>
-                                        <div className="choose-file-div form-group col-sm-4 mb-3 mb-sm-0">
-                                            <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
-
-                                        </div>
-                                        <div className="choose-file-div form-group col-sm-4 mb-3 mb-sm-0">
-                                            <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
-
-                                        </div>
-                                        <div className="choose-file-div form-group col-sm-4 mb-3 mb-sm-0">
-                                            <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
-
-                                        </div>
-                                        <div className="choose-file-div form-group col-sm-4 mb-3 mb-sm-0">
-                                            <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
-
-                                        </div>
-                                        <div className="choose-file-div form-group col-sm-4 mb-3 mb-sm-0">
-                                            <button className="btn btn-secondary rounded-20" type="button">Upload file here...</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <Form2 onNext={saveForm} />
                         </Tab.Pane>
                         <Tab.Pane eventKey={formSteps[2]}>
                             <div className="form-group row" >
