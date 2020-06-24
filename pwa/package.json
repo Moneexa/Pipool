@@ -33,6 +33,7 @@
     "reapop": "^2.1.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "smtp": "^0.1.4",
     "toastr": "^2.1.4",
     "use-force-update": "^1.0.7"
   },

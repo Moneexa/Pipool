@@ -63,18 +63,25 @@ async function login(req, res) {
 					}
 					jwt.sign({
 						"id": user._id,
-						"role": user.role
+						"role": user.role,
+
 					}, config.privateKey, {
 						expiresIn: '1d'
 					}, function (err, token) {
+						console.log(err);
 						if (err) {
 							console.log(err);
 
 							return res.sendStatus(500);
 						}
 						res.json({
-							"token": token,
-							"id": user._id
+							"id": user.id,
+							"name": user.name,
+							"role": user.role,
+							"token": {
+								"value": token,
+								"expiry": (new Date()).setDate((new Date()).getDate() + 1)
+							}
 						});
 					});
 				});

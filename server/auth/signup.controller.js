@@ -10,6 +10,7 @@ var nodemailer = require('nodemailer');
 
 var transporter = nodemailer.createTransport({
     service: 'gmail',
+    
     auth: {
         user: config.smtp.email,
         pass: config.smtp.password
@@ -48,25 +49,30 @@ function signup(req, res) {
     }
     const id = new mongoose.Types.ObjectId();
     const email = req.body.email;
+    console.log(email);
 
     signToken(id, email, undefined, undefined, undefined, function (err, token) {
-        if (err) {
+        // console.log(id);
+       // console.log(token)
+       /* if (err) {
             console.log(err);
-            return res.sendStatus(500);
-        }
+            return res.sendStatus(200);
+        }*/
         var mailOptions = {
             from: config.smtp.email,
             to: email,
             subject: 'Confirm Your Email',
-            text: `Confirm your email by clicking on following\n${config.domain}/auth/finish-signup?token=${token}&email=${email}`
+            text: `Confirm your email by clicking on following ${config.domain}/auth/finish-signup?token=${token}&email=${email}`
         };
+        //console.log(mailOptions);
         transporter.sendMail(mailOptions, function (error, info) {
-            if (error) {
+            console.log(info)
+            /*if (error) {
                 console.log(error);
                 res.status(500).send("Something went wrong while sending email");
-            } else {
+            } else {*/
                 res.status(201).send();
-            }
+            // }
         });
     });
 }

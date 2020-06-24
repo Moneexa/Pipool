@@ -62,16 +62,18 @@ export const store = createStore({
         },
         loading: false,
         updateUser: action((state, payload) => {
-            console.log(state)
             state.isLoggedIn = true;
             state.id = payload.id || state.id;
             state.name = payload.name || state.name;
             state.email = payload.email || state.email;
             state.role = payload.role || state.role;
+            
             state.token.value = payload.token.value;
+            
             state.token.expiry = payload.token.expiry;
             axios.defaults.headers['Authorization'] = `Bearer ${payload.token.value}`;
             localStorage.setItem('userInfo', JSON.stringify(state))
+            console.log(JSON.stringify(state))
         }),
         toggleLoading: action((state, payload) => {
             state.loading = payload;
@@ -86,9 +88,11 @@ export const store = createStore({
             try {
                 actions.toggleLoading(true);
                 const res = await axios.post(`${config.apiUrl}/auth/login`, payload)
+                console.log(res.data)
                 actions.updateUser(res.data);
             } catch (error) {
                 actions.loginError("Username or password is incorrect.")
+
             }
             actions.toggleLoading(false);
         }),
@@ -103,6 +107,9 @@ export const store = createStore({
                     actions.updateUser(res.data);
                 } catch (error) {
                     actions.loginError("Failed to authorize user.")
+                    toastr.error("there was error in logging in");
+
+
                 }
             }
             actions.toggleLoading(false);
@@ -118,6 +125,7 @@ export const store = createStore({
                     actions.updateUser(res.data);
                 } catch (error) {
                     actions.loginError("Failed to authorize user.")
+                    toastr.error("there was error in logging in");
                 }
             }
             actions.toggleLoading(false);
@@ -131,8 +139,10 @@ export const store = createStore({
                     actions.toggleLoading(true);
                     const res = await axios.post(`${config.apiUrl}/auth/login/linkedin`, { code })
                     actions.updateUser(res.data);
+                    //toastr.success("logged in successfully")
                 } catch (error) {
                     actions.loginError("Failed to authorize user.")
+                    toastr.error("There was an error logging in")
                 }
             }
             actions.toggleLoading(false);
@@ -141,9 +151,12 @@ export const store = createStore({
             const email = payload;
             try {
                 actions.toggleLoading(true);
-                await axios.post(`${config.apiUrl}/auth/signup`, { email })
+                const res=await axios.post(`${config.apiUrl}/auth/signup`, { email })
+                //console.log(res)
+               // toastr.success("check your email")
             } catch (error) {
                 actions.loginError("Failed to authorize user.")
+                // toastr.error("");
             }
             actions.toggleLoading(false);
         }),
@@ -155,12 +168,18 @@ export const store = createStore({
                 actions.toggleLoading(true);
                 const response = await axios.post(
                     `${config.apiUrl}/auth/signup/finish`,
-                    body,
+                    body, {
+                        headers: {
+                          Authorization: 'Bearer ' + token
+                        }
+                      }
 
                 );
                 actions.updateUser(response.data);
             } catch (error) {
                 actions.finishSignupError("The link you're using is either expired or invalid");
+                toastr.error("The link you're using is either expired or invalid")
+
             }
             actions.toggleLoading(false);
         })
@@ -247,7 +266,6 @@ export const store = createStore({
             const { data } = await res;
             actions.updateBrand(res.data);
 
-            toastr.success("Successfulyl got data");
         }),
         put: thunk(async (actions, payload) => {
             const id = payload.id
@@ -276,11 +294,14 @@ export const store = createStore({
 
                     actions.updateBrand(res.data);
                     notify({message: res.statusText, status: res.statusCode})
+                    toastr.success("Successfully updated data");
+
 
                 }
             } catch (error) {
 
                 actions.postError("Form values are not correct.")
+                toastr.error("There was problem saving you data")
 
 
             }
@@ -308,6 +329,7 @@ export const store = createStore({
                 )
 
                 actions.updateBrand(res.data);
+                toastr.success("Successfully  data has been sent");
 
                 notify({message: res.statusText, status: res.statusCode})
 
@@ -315,6 +337,8 @@ export const store = createStore({
             } catch (error) {
                  
                 actions.postError("Failed to create brand.")
+                toastr.error("There was problem saving you data")
+
 
             }
         }),
