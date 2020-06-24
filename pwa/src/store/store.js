@@ -365,7 +365,7 @@ export const store = createStore({
 
     },
     campaign: {
-        campaignlist: [],
+        campaignList: [],
         actv: {
             id: campaign.id,
             serviceName: campaign.serviceName,
