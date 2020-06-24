@@ -120,7 +120,7 @@ export default function AddBrand({ match }) {
                             ref={register({ required: true })}
                             defaultValue={active.description}
                             className="form-control form-control-user"
-                            name="desc"
+                            name="description"
                             id=""
                             placeholder="This description should help influencers understand more about you brand, try to be as clear as possible.">
 
