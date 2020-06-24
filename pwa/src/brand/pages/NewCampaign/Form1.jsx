@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from "react-hook-form";
 
-export function Form1({ onNext }) {
+export function Form1({ onNext}) {
     const { register, handleSubmit, watch, errors } = useForm()
     return (
         <form className="row" onSubmit={handleSubmit((values) => {

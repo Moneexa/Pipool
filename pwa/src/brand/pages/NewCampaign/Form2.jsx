@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
-export function Form2({ onNext }) {
+export function Form2({ onNext, onPrevious }) {
     const { register, handleSubmit, watch, errors } = useForm();
     const [dos, setDos] = useState([]);
     const [donts, setDonts] = useState([]);
@@ -115,10 +115,10 @@ export function Form2({ onNext }) {
             <div className="col-12 col-lg-6 mb-3 mb-sm-0">
                 <div className="background-box need-product" id="bacground_box">
                     <p>Does the influencer need the product ?</p>
-                    <label><input type="radio" name="optradio" /> No, the influencers don’t need to physically have the product. </label><br />
-                    <label><input type="radio" name="optradio" /> Yes, the influencers and the product must appear on the post </label><br />
-                    <label><input type="radio" name="optradio" />  You will send the product sample to the influencers </label><br />
-                    <label><input type="radio" name="optradio" /> The influencers will need to return the product (high value or prototype) </label>
+                    <label><input type="radio" name="optradio" ref={register({ required: true })} /> No, the influencers don’t need to physically have the product. </label><br />
+                    <label><input type="radio" name="optradio" ref={register({ required: true })} /> Yes, the influencers and the product must appear on the post </label><br />
+                    <label><input type="radio" name="optradio" ref={register({ required: true })} />  You will send the product sample to the influencers </label><br />
+                    <label><input type="radio" name="optradio" ref={register({ required: true })} /> The influencers will need to return the product (high value or prototype) </label>
                     <label><input type="radio" name="optradio" ref={register({ required: true })} />  The influencers should purchase or already own the product  </label>
                     {errors.optradio && <span className="text-danger ml-3 form-error">This field is required</span>}
                 </div>
@@ -160,6 +160,12 @@ export function Form2({ onNext }) {
                 </div>
             </div>
             <div className="mt-5 d-flex justify-content-center align-items-center w-100">
+                <button
+                    onClick={() => onPrevious()}
+                    type="button"
+                    className="btn btn-secondary btn-user text-white next-button">
+                    Previous
+                </button>
                 <button
                     type="submit"
                     className="btn btn-primary btn-user text-white next-button">
