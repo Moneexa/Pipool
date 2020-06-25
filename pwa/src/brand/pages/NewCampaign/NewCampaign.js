@@ -31,7 +31,7 @@ function NewCampaign() {
 
     function onFinish(values) {
         setFormData(Object.assign({}, formData, values))
-        //post(formData);
+        post(formData);
         console.log(formData)
     }
 
