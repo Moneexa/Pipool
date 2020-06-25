@@ -30,9 +30,10 @@ function NewCampaign() {
     }
 
     function onFinish(values) {
-        setFormData(Object.assign({}, formData, values))
-        post(formData);
-        console.log(formData)
+        const data = Object.assign({}, formData, values);
+        setFormData(data);
+        post(data);
+        console.log(data)
     }
 
     return (

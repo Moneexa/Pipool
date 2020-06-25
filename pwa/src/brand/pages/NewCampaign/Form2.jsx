@@ -116,11 +116,23 @@ export function Form2({ onNext, onPrevious }) {
             <div className="col-12 col-lg-6 mb-3 mb-sm-0">
                 <div className="background-box need-product" id="bacground_box">
                     <p>Does the influencer need the product ?</p>
-                    <label><input type="radio" name="productNeed" ref={register({ required: true })} /> No, the influencers don’t need to physically have the product. </label><br />
-                    <label><input type="radio" name="productNeed" ref={register({ required: true })} /> Yes, the influencers and the product must appear on the post </label><br />
-                    <label><input type="radio" name="productNeed" ref={register({ required: true })} />  You will send the product sample to the influencers </label><br />
-                    <label><input type="radio" name="productNeed" ref={register({ required: true })} /> The influencers will need to return the product (high value or prototype) </label>
-                    <label><input type="radio" name="productNeed" ref={register({ required: true })} />  The influencers should purchase or already own the product  </label>
+                    <label><input type="radio" 
+                    
+                    value="No, the influencers don’t need to physically have the product."
+                    name="productNeed" ref={register({ required: true })} /> 
+                    No, the influencers don’t need to physically have the product.
+                     </label><br />
+                    <label><input type="radio" value="Yes, the influencers and the product must appear on the post"
+                    name="productNeed" ref={register({ required: true })} /> 
+                    Yes, the influencers and the product must appear on the post </label><br />
+                    <label><input type="radio" value="You will send the product sample to the influencers"
+                    name="productNeed" ref={register({ required: true })} /> 
+                     You will send the product sample to the influencers </label><br />
+                    <label><input type="radio" value="The influencers will need to return the product (high value or prototype)"
+                    name="productNeed" ref={register({ required: true })} />
+                     The influencers will need to return the product (high value or prototype) </label>
+                    <label><input type="radio" name="productNeed" value="The influencers should purchase or already own the product" 
+                    ref={register({ required: true })} />  The influencers should purchase or already own the product  </label>
                     {errors.optradio && <span className="text-danger ml-3 form-error">This field is required</span>}
                 </div>
                 <div id="upload_btn" className="choose-file-form form-group row" >
