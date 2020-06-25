@@ -172,7 +172,7 @@ export const store = createStore({
                 actions.toggleLoading(true);
                 const res = await axios.post(`${config.apiUrl}/auth/signup`, { email })
                 //console.log(res)
-                // toastr.success("check your email")
+                 toastr.success("check your email")
             } catch (error) {
                 actions.loginError("Failed to authorize user.")
                 // toastr.error("");
