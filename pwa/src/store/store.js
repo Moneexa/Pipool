@@ -498,8 +498,8 @@ export const store = createStore({
                 coverImage: payload.coverImage,
                 callForAction: payload.callForAction,
                 briefInfluencers: payload.briefInfluencers,
-                do: payload.do,
-                dont: payload.dont,
+                do: payload.dos,
+                dont: payload.donts,
                 caption: payload.caption,
                 productNeed: payload.productNeed,
                 gender: payload.gender,
@@ -507,7 +507,7 @@ export const store = createStore({
                 age: payload.age,
                 minFollowers: payload.minFollowers,
                 postingLanguages: payload.postingLanguages,
-                influencers: payload.influencers,
+                influencers: payload.interests,
             }
             try {
                 const res = await axios.post(`${config.apiUrl}/campaigns/`, obj,

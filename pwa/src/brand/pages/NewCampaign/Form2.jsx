@@ -38,7 +38,7 @@ export function Form2({ onNext, onPrevious }) {
                     <label className="call-for-action">Brief the influencers *</label>
                     <textarea
                         ref={register({ required: true })}
-                        name="briefing"
+                        name="briefInfluencers"
                         className="simple-sentence-input form-control form-control-user pt-3"
                         placeholder="Describe the content you'd like from our influencers. Try to be as clear as possible to avoid out of context content from the influencers"></textarea>
                     {errors.briefing && <span className="text-danger ml-3 form-error">This field is required</span>}
@@ -50,6 +50,7 @@ export function Form2({ onNext, onPrevious }) {
                     <div className="d-flex custom-postfix">
                         <input
                             value={doVal}
+                            name="do"
                             type="text"
                             className="simple-sentence-input form-control form-control-user"
                             placeholder="Add a rule - press enter to confirm"
@@ -115,11 +116,11 @@ export function Form2({ onNext, onPrevious }) {
             <div className="col-12 col-lg-6 mb-3 mb-sm-0">
                 <div className="background-box need-product" id="bacground_box">
                     <p>Does the influencer need the product ?</p>
-                    <label><input type="radio" name="optradio" ref={register({ required: true })} /> No, the influencers don’t need to physically have the product. </label><br />
-                    <label><input type="radio" name="optradio" ref={register({ required: true })} /> Yes, the influencers and the product must appear on the post </label><br />
-                    <label><input type="radio" name="optradio" ref={register({ required: true })} />  You will send the product sample to the influencers </label><br />
-                    <label><input type="radio" name="optradio" ref={register({ required: true })} /> The influencers will need to return the product (high value or prototype) </label>
-                    <label><input type="radio" name="optradio" ref={register({ required: true })} />  The influencers should purchase or already own the product  </label>
+                    <label><input type="radio" name="productNeed" ref={register({ required: true })} /> No, the influencers don’t need to physically have the product. </label><br />
+                    <label><input type="radio" name="productNeed" ref={register({ required: true })} /> Yes, the influencers and the product must appear on the post </label><br />
+                    <label><input type="radio" name="productNeed" ref={register({ required: true })} />  You will send the product sample to the influencers </label><br />
+                    <label><input type="radio" name="productNeed" ref={register({ required: true })} /> The influencers will need to return the product (high value or prototype) </label>
+                    <label><input type="radio" name="productNeed" ref={register({ required: true })} />  The influencers should purchase or already own the product  </label>
                     {errors.optradio && <span className="text-danger ml-3 form-error">This field is required</span>}
                 </div>
                 <div id="upload_btn" className="choose-file-form form-group row" >

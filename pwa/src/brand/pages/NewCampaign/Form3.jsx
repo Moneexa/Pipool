@@ -58,7 +58,7 @@ export function Form3({ onFinish, onPrevious }) {
                 </div>
                 <div className="form-group col-sm-6 mb-3 mb-sm-0">
                     <label>Posting languages</label>
-                    <select ref={register} className="browser-default custom-select" name="postingLang">
+                    <select ref={register} className="browser-default custom-select" name="postingLanguages">
                         <option value="English">English</option>
                         <option value="French">French</option>
                         <option value="Spanish">Spanish</option>

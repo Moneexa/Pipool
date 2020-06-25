@@ -5,6 +5,8 @@ import { Form1 } from './Form1';
 import './NewCampaign.css'
 import { Form2 } from './Form2';
 import { Form3 } from './Form3';
+import { useStoreActions, useStoreState } from 'easy-peasy';
+
 
 function NewCampaign() {
 
@@ -12,6 +14,9 @@ function NewCampaign() {
     const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
     let [formData, setFormData] = useState({});
+    const active = useStoreState(state => state.campaign.actv);
+    const post = useStoreActions(actions => actions.campaign.postCampaign);
+    const obj = useStoreActions(actions => actions.campaign.getCampaign);
 
     function saveForm(values) {
         setFormData(Object.assign({}, formData, values))
@@ -26,6 +31,7 @@ function NewCampaign() {
 
     function onFinish(values) {
         setFormData(Object.assign({}, formData, values))
+        //post(formData);
         console.log(formData)
     }
 
@@ -47,7 +53,7 @@ function NewCampaign() {
                         <Tab.Pane eventKey={formSteps[2]}>
                             <Form3 onFinish={onFinish} onPrevious={stepBack} />
                         </Tab.Pane>
-                    </Tab.Content>
+                    </Tab.Content> 
                 </Tab.Container>
             </div>
         </div>

@@ -26,7 +26,7 @@ export function Form1({ onNext}) {
                         ref={register({ required: true })}
                         className="form-control form-control-user first-form pt-3"
                         rows="10"
-                        name="description"
+                        name="serviceDescription"
                         placeholder="Describe your product or service as if your audience is new to it. On the next steps, you'll be able to describe the content you'd like from our influencers. ">
                     </textarea>
                     {errors.description && <span className="text-danger ml-3 form-error">This field is required</span>}

@@ -8,8 +8,8 @@ var campaignSchema = new Schema({
 	'coverImage': String,
 	'callForAction': String,
 	'briefInfluencers': String,
-	'do': String,
-	'dont' : String,
+	'do': Array,
+	'dont' : Array,
 	'caption' : String,
 	'productNeed': String,
 	'gender': String,
@@ -17,7 +17,7 @@ var campaignSchema = new Schema({
 	'age': String,
 	'minFollowers': String,
 	'postingLanguages': String,
-	'influencers': String,
+	'influencers': Array,
 	'createdBy': [
 		{ type: Schema.Types.ObjectId, ref: 'User' }
 	]
