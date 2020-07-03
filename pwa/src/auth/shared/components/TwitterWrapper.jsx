@@ -20,6 +20,8 @@ export default function TwitterWrapper() {
     var timer = setInterval(function () {
         if (oauthWindow.closed) {
             clearInterval(timer);
+            const redirectUrl = new URL(localStorage.getItem('oAuthRedirectUrl'));
+            const searchParams = redirectUrl.searchParams;
             
         }
     }, 1000);

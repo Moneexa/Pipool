@@ -178,8 +178,8 @@ export const store = createStore({
         }),
         loginTwitter: thunk(async (actions, payload) => {
             const res = await axios.post(`${config.apiUrl}/auth/login/twitter`);
-            actions.updateTwitterToken(res.data.response.oauth_token)
-            actions.updateTwitterTokenSecret(res.data.response.oauth_token_secret)
+            actions.updateTwitterToken(res.data.oauth_token)
+            actions.updateTwitterTokenSecret(res.data.oauth_token_secret)
             console.log(res)
         }
         ),
