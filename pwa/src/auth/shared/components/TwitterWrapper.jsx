@@ -13,6 +13,8 @@ export default function TwitterWrapper() {
   const [tokenSecret, setTokenSecret] = useState("")
   const [success, setSuccess] = useState(false)
   function listenMessage(msg) {
+    if(msg.origin!="127.0.0.1:3000")
+    return 
     console.log(msg);
 }
 
@@ -25,11 +27,8 @@ export default function TwitterWrapper() {
     var timer = setInterval(function () {
         if (oauthWindow.closed) {
             clearInterval(timer);
-            if (window.addEventListener) {
               window.addEventListener("message", listenMessage, false);
-          } else {
-              window.attachEvent("onmessage", listenMessage);
-          }
+          
            // console.log(localStorage);
            // const redirectUrl = new URL(localStorage.getItem('oAuthRedirectUrl',window.location.href));
             //const searchParams = redirectUrl.searchParams;
