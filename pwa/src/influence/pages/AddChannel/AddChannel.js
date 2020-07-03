@@ -1,5 +1,6 @@
 import React from 'react'
 import './AddChannel.css'
+import TwitterWrapper  from '../../../auth/shared/components/TwitterWrapper'
 class AddChannel extends React.Component {
     render() {
 
@@ -46,7 +47,7 @@ class AddChannel extends React.Component {
                             </div>
                         </div>
 
-
+                      <TwitterWrapper />
                         <div className="form-group col-sm-12 mb-3 mb-sm-0">
                             <label>Message *</label>
                             <textarea className="form-control form-control-user" name="S_service" id="S_service" placeholder="Description"></textarea>

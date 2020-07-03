@@ -18,6 +18,12 @@
         "grant_type" : "authorization_code",
         "client_secret": "pONWp2pvkJrrJg7I"
     },
+    "twitter":{
+            "api_key":"ZrY5mHYxKKd8TDTOh0ZNk8ex1",
+            "api_secret": "F8peao6czqDaQFDbQncNeH4C3T1MVtxP0UyJJvPaBdoER7pJrf",
+            "redirectUri": "http://127.0.0.1:3000/oauth-redirect"
+        },
+    
     "smtp": {
         "email": "mohsin.studysmarter@gmail.com",
         "password": "v3RX-%RST>n!qbb"

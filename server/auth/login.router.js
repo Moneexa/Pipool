@@ -13,4 +13,5 @@ router.post('/google', [
 ], loginController.loginGoogle);
 router.post('/facebook', [check('code').isString()],loginController.loginFacebook)
 router.post('/linkedin', [check('code').isString()], loginController.loginLinkedin)
+router.post('/twitter',loginController.twitterOAuth)
 module.exports = router;

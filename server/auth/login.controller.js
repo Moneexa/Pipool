@@ -5,11 +5,14 @@ const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const axios = require('axios');
 var querystring = require('querystring');
+const Twitter= require('twitter-lite');
+
 module.exports = {
 	login,
 	loginFacebook,
 	loginGoogle,
 	loginLinkedin,
+	twitterOAuth,
 	verify
 };
 
@@ -196,6 +199,37 @@ async function loginLinkedin(req, res) {
 		res.status(500).send("not working")
 	}
 }
+async function twitterOAuth(req, res) {
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(422).json({ errors: errors.array() });
+	}
+
+	try {
+		
+		const client = new Twitter({
+			consumer_key: config.twitter.api_key, // from Twitter.
+			consumer_secret: config.twitter.api_secret, // from Twitter.
+			callback: config.twitter.redirectUri
+			
+		  });
+		const response=await client.getRequestToken(config.twitter.redirectUri)
+		 
+		res.status(200).send(response)
+		 /* const client = new Twitter({
+			consumer_key: config.twitter.api_key,
+			consumer_secret: config.twitter.api_secret,
+			access_token_key: response.data.oauth_token,
+			access_token_secret: response.data.oauth_token_secret
+		  });*/
+		}
+		catch(error){
+			res.json(error)
+		}
+		// fetching email
+	
+}
+
 
 async function loginFacebook(req, res) {
 	const errors = validationResult(req);

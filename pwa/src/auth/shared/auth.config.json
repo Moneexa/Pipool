@@ -5,7 +5,7 @@
         "clientId": "865ntwzmhauy0w",
         "scope": "r_liteprofile,r_emailaddress",
         "responseType": "code",
-        "grant_type" : "authorization_code"
+        "grant_type": "authorization_code"
     },
     "facebook": {
         "clientId": "263197894950161"
@@ -13,4 +13,5 @@
     "google": {
         "clientId": "529379787978-sgjjt3qpl23ivkp2boh1s3q03m3k5a8n.apps.googleusercontent.com"
     }
+    
 }

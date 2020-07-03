@@ -80,6 +80,8 @@ export const store = createStore({
             finishSignupMessage: ""
         },
         loading: false,
+        twitter_oauth_token: "",
+        twitter_oauth_access_secret: "",
         updateUser: action((state, payload) => {
             state.isLoggedIn = true;
             state.id = payload.id || state.id;
@@ -102,6 +104,14 @@ export const store = createStore({
         }),
         finishSignupError: action((state, payload) => {
             state.errors.finishSignupMessage = payload;
+        }),
+        updateTwitterToken: action((state, payload) => {
+            state.twitter_oauth_token = payload
+            // console.log(state.twitter_oauth_token)
+        }),
+        updateTwitterTokenSecret: action((state, payload) => {
+            state.twitter_oauth_access_secret = payload
+            // console.log(state.twitter_oauth_access_secret)
         }),
         login: thunk(async (actions, payload) => {
             try {
@@ -166,13 +176,20 @@ export const store = createStore({
             }
             actions.toggleLoading(false);
         }),
+        loginTwitter: thunk(async (actions, payload) => {
+            const res = await axios.post(`${config.apiUrl}/auth/login/twitter`);
+            actions.updateTwitterToken(res.data.response.oauth_token)
+            actions.updateTwitterTokenSecret(res.data.response.oauth_token_secret)
+            console.log(res)
+        }
+        ),
         signup: thunk(async (actions, payload) => {
             const email = payload;
             try {
                 actions.toggleLoading(true);
                 const res = await axios.post(`${config.apiUrl}/auth/signup`, { email })
                 //console.log(res)
-                 toastr.success("check your email")
+                toastr.success("check your email")
             } catch (error) {
                 actions.loginError("Failed to authorize user.")
                 // toastr.error("");
@@ -529,5 +546,5 @@ export const store = createStore({
             }
         }),
     },
-        //notifications: thunk(notificationsReducer())
-    });
+    //notifications: thunk(notificationsReducer())
+});
