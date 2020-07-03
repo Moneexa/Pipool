@@ -8,6 +8,8 @@
 <body>
     <script>
         localStorage.setItem("oAuthRedirectUrl", window.location.href);
+        window.parent.postMessage(localStorage);
+
         window.close();
     </script>
 </body>
