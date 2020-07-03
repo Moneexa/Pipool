@@ -7,8 +7,10 @@
 </head>
 <body>
     <script>
+        if(window.location.hostname !== 'localhost') {
+            window.location.href = 'http://localhost:3000' + window.location.pathname+window.location.search;
+        }
         localStorage.setItem("oAuthRedirectUrl", window.location.href);
-        window.parent.postMessage(localStorage);
 
         window.close();
     </script>
