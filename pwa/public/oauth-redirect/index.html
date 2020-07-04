@@ -11,10 +11,9 @@
             window.location.href = 'http://localhost:3000' + window.location.pathname+window.location.search;
         }
         localStorage.setItem("oAuthRedirectUrl", window.location.href);
-        window.parent.postMessage(localStorage.getItem("oAuthRedirectUrl", window.location.href));
-
-
-     // window.close();
+        setTimeout(() => {
+            window.close();
+        }, 1000);
     </script>
 </body>
 </html>

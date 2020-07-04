@@ -1,7 +1,8 @@
 import React from 'react'
 import './AddChannel.css'
-import TwitterWrapper  from '../../../auth/shared/components/TwitterWrapper'
-import { FacebookVerify} from '../../shared/components/FacebookVerify';
+import TwitterWrapper from '../../../auth/shared/components/TwitterWrapper'
+import { FacebookVerify } from '../../shared/components/FacebookVerify';
+
 class AddChannel extends React.Component {
     render() {
 
@@ -12,10 +13,11 @@ class AddChannel extends React.Component {
 
                     <h2 className="m-0 font-weight-bold text-primary">Add New Channel</h2>
 
-                    <FacebookVerify />
 
 
                 </div>
+                {/* <FacebookVerify /> */}
+                <TwitterWrapper />
                 <form className="user">
 
                     <div className="form-group row">
@@ -50,7 +52,6 @@ class AddChannel extends React.Component {
                             </div>
                         </div>
 
-                      <TwitterWrapper />
                         <div className="form-group col-sm-12 mb-3 mb-sm-0">
                             <label>Message *</label>
                             <textarea className="form-control form-control-user" name="S_service" id="S_service" placeholder="Description"></textarea>
