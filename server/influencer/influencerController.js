@@ -165,8 +165,8 @@ module.exports = {
                 access_token_secret: fetchedCredentials.oauth_token_secret
             });
 
-            const existingChannel = await InfluencerModel.findOne({channelId: fetchedCredentials.user_id, channelType: 'twitter'});
-            if(existingChannel) return res.status(405).send('Channel already exists');
+            const existingChannel = await InfluencerModel.findOne({ channelId: fetchedCredentials.user_id, channelType: 'twitter' });
+            if (existingChannel) return res.status(405).send('Channel already exists');
             const userData = await client.get("users/show", {
                 user_id: fetchedCredentials.user_id
             });
@@ -186,5 +186,20 @@ module.exports = {
             res.status(401).send("Unable to add channel. Make sure you have authorized the app.")
         }
 
+    },
+    youtubeOAuth: async function (req, res) {
+        try {
+            const { token, id } = req.body;
+            const res = await axios.post(`https://www.googleapis.com/youtube/v3/channels?part=id,statistics,snippet&mine=true&key=AIzaSyDe6galtm6BnVZE-8PfF7v8YtZzSeyO9S0`,
+                undefined,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    }
+                })
+        } catch (error) {
+            console.log(error)
+        }
     }
 };
