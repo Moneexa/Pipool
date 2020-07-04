@@ -2,5 +2,23 @@
     "apiUrl": "http://localhost:4242/api",
     "google": {
         "clientId": "529379787978-sgjjt3qpl23ivkp2boh1s3q03m3k5a8n.apps.googleusercontent.com"
+    },
+    "facebook": {
+        "clientId": "317550049274306",
+        "uri": "https://api.instagram.com/oauth/authorize",
+        "redirectURI": "/oauth-redirect",
+        "scope": "instagram_basic"
+    },
+    "temp": {
+        "Google": "google",
+        "ClientId": "142042380562-rlbn36asca8v33isilvpok4n3cmf1o89.apps.googleusercontent.com",
+        "ClientSecret": "Rq0_5C0pmLswW9N7UA18cqLQ",
+        "Twitter": "",
+        "APIKey": "ZrY5mHYxKKd8TDTOh0ZNk8ex1",
+        "APISecret": "F8peao6czqDaQFDbQncNeH4C3T1MVtxP0UyJJvPaBdoER7pJrf",
+        "Facebook":"Facebook",
+        "AppId": "575154859788422",
+        "Secret": "c088d70aa85813620e77f8103e5812d9"
     }
+
 }

@@ -1,5 +1,5 @@
-var influencerModel = require('./influencerModel.js');
-const Twitter= require('twitter-lite')
+var InfluencerModel = require('./InfluencerModel.js');
+const Twitter = require('twitter-lite')
 const config = require('../config.json')
 const axios = require('axios')
 /**
@@ -13,7 +13,7 @@ module.exports = {
      * influencerController.list()
      */
     list: function (req, res) {
-        influencerModel.find(function (err, influencers) {
+        InfluencerModel.find(function (err, influencers) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting influencer.',
@@ -29,7 +29,7 @@ module.exports = {
      */
     show: function (req, res) {
         var id = req.params.id;
-        influencerModel.findOne({ _id: id }, function (err, influencer) {
+        InfluencerModel.findOne({ _id: id }, function (err, influencer) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting influencer.',
@@ -49,7 +49,7 @@ module.exports = {
      * influencerController.create()
      */
     create: function (req, res) {
-        var influencer = new influencerModel({
+        var influencer = new InfluencerModel({
             channel_name: req.body.channel_name,
             channel_id: req.body.channel_id,
             screen_name: req.body.screen_name,
@@ -73,7 +73,7 @@ module.exports = {
      */
     update: function (req, res) {
         var id = req.params.id;
-        influencerModel.findOne({ _id: id }, function (err, influencer) {
+        InfluencerModel.findOne({ _id: id }, function (err, influencer) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting influencer',
@@ -109,7 +109,7 @@ module.exports = {
      */
     remove: function (req, res) {
         var id = req.params.id;
-        influencerModel.findByIdAndRemove(id, function (err, influencer) {
+        InfluencerModel.findByIdAndRemove(id, function (err, influencer) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when deleting the influencer.',
@@ -121,7 +121,7 @@ module.exports = {
     },
 
     twitterOAuth: async function (req, res) {
-       
+
         try {
 
             const client = new Twitter({
@@ -148,65 +148,42 @@ module.exports = {
     },
     twitterPostOAuth: async function (req, res) {
         try {
-            const resp = await axios.post(`https://api.twitter.com/oauth/access_token?oauth_token=${req.body.oauth_token}&oauth_verifier=${req.body.verifier}`)
-            var arr = resp.data.split("&")
-            var token = (arr[0].split("=")[1]).split("-")[1]
-            const obj = {
-                oauth_token: (arr[0].split("=")[1]).split("-")[1],
-                oauth_secret: arr[1].split("=")[1],
-                user_id: arr[2].split("=")[1],
-                screen_name: arr[3].split("=")[1]
-
-            }
-            console.log(obj)
-            var influencer = new influencerModel({
-                channel_name: "twitter",
-                channel_id: obj.user_id,
-                screen_name: obj.screen_name,
-                name: ""
-
-            });
-            var influencer_obj = {
-               
-            }
-            influencer.save(function (err, influencer) {
-                if (err) {
-                    return res.status(500).json({
-                        message: 'Error when creating influencer',
-                        error: err
-                    });
-                }
-                else{
-            influencer_obj= influencer;
-                }
+            let client = new Twitter({
+                consumer_key: config.twitter.api_key,
+                consumer_secret: config.twitter.api_secret,
             });
 
-            influencerModel.findOne({channel_id: obj.user_id, screen_name:obj.screen_name }, function (err, influencer) {
-                if (err) {
-                    return res.status(500).json({
-                        message: 'Error when getting influencer.',
-                        error: err
-                    });
-                }
-                if (!influencer) {
-                    return res.status(404).json({
-                        message: 'No such influencer'
-                    });
-                }
-                axios.get(`https://api.twitter.com/1.1/users/show.json?screen_name=${influencer.screen_name}`,
-                    
-                       { headers: {
-                            'Authorization': `Bearer ${token}`,
-                        }
-                    }
-                    )
-                  .then(result=> res.status(200).send(result))
-                  .catch(error=>res.json(error))
-                
+            const fetchedCredentials = await client.getAccessToken({
+                oauth_verifier: req.body.verifier,
+                oauth_token: req.body.oauth_token
+            })
+
+            client = new Twitter({
+                consumer_key: config.twitter.api_key,
+                consumer_secret: config.twitter.api_secret,
+                access_token_key: fetchedCredentials.oauth_token,
+                access_token_secret: fetchedCredentials.oauth_token_secret
             });
+
+            const existingChannel = await InfluencerModel.findOne({channelId: fetchedCredentials.user_id, channelType: 'twitter'});
+            if(existingChannel) return res.status(405).send('Channel already exists');
+            const userData = await client.get("users/show", {
+                user_id: fetchedCredentials.user_id
+            });
+
+            var influencerModel = new InfluencerModel({
+                channelName: userData.name,
+                channelId: userData.id,
+                followers: userData.followers_count,
+                channelType: 'twitter'
+            });
+
+            const influencer = await influencerModel.save();
+            res.status(201).send(influencer);
         }
         catch (error) {
-            res.json(error)
+            console.error(error);
+            res.status(401).send("Unable to add channel. Make sure you have authorized the app.")
         }
 
     }

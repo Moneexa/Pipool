@@ -26,6 +26,6 @@ router.put('/:id', influencerController.update);
  * DELETE
  */
 router.delete('/:id', influencerController.remove);
-router.post('/twitter',influencerController.twitterOAuth),
-router.post('/twitter/oauth/access_token', influencerController.twitterPostOAuth);
+router.post('/twitter/oauth/request_token',influencerController.twitterOAuth),
+router.post('/twitter/oauth/', influencerController.twitterPostOAuth);
 module.exports = router;

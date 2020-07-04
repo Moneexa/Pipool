@@ -23,6 +23,6 @@ app.use('/api/auth/login', loginRoute);
 app.use('/api/auth/signup', signupRoute);
 app.use('/api/brands', brandRoute);
 app.use('/api/campaigns', campaignRoute);
-app.use('/api/influencer', twitter);
+app.use('/api/influencers/channels', twitter);
 
 app.listen(port, () => console.log('Server running on port 4242!'))

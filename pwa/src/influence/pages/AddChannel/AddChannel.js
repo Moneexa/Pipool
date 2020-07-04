@@ -1,6 +1,7 @@
 import React from 'react'
 import './AddChannel.css'
 import TwitterWrapper  from '../../../auth/shared/components/TwitterWrapper'
+import { FacebookVerify} from '../../shared/components/FacebookVerify';
 class AddChannel extends React.Component {
     render() {
 
@@ -10,6 +11,8 @@ class AddChannel extends React.Component {
                 <div className="d-sm-flex align-items-center justify-content-between mb-4">
 
                     <h2 className="m-0 font-weight-bold text-primary">Add New Channel</h2>
+
+                    <FacebookVerify />
 
 
                 </div>
