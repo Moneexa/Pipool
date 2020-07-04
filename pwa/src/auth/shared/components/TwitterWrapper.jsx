@@ -14,8 +14,8 @@ export default function TwitterWrapper() {
   }
   return (
     <div>
-      <button onClick={handleClick} type="button" >
-        <FontAwesomeIcon icon={faTwitter} />
+      <button className="btn btn-primary rounded-20 text-white" onClick={handleClick} type="button" >
+        <FontAwesomeIcon icon={faTwitter} /> Add Twitter Account
       </button>
 
     </div>
