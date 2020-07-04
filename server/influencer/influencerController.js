@@ -190,16 +190,30 @@ module.exports = {
     youtubeOAuth: async function (req, res) {
         try {
             const { token, id } = req.body;
-            const res = await axios.post(`https://www.googleapis.com/youtube/v3/channels?part=id,statistics,snippet&mine=true&key=AIzaSyDe6galtm6BnVZE-8PfF7v8YtZzSeyO9S0`,
-                undefined,
+            const { data } = await axios.get(`https://www.googleapis.com/youtube/v3/channels?part=id,statistics,snippet&mine=true&key=AIzaSyDe6galtm6BnVZE-8PfF7v8YtZzSeyO9S0`,
                 {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',
                     }
-                })
+                });
+            for (let channel of data.items) {
+                if (channel.id === id) {
+                    const influencerModel = new InfluencerModel({
+                        channelName: channel.snippet.title,
+                        channelId: id,
+                        followers: channel.statistics.subscriberCount,
+                        channelType: 'youtube'
+                    })
+                    const newChannel = await influencerModel.save();
+                    return res.status(201).send(newChannel)
+                }
+            }
+            throw ("Channel not found")
+
         } catch (error) {
             console.log(error)
+            res.status(400).send('Unable to add channel. Make sure you authorized it');
         }
     }
 };
