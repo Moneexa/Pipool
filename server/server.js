@@ -10,6 +10,7 @@ const loginRoute = require('./auth/login.router'); // Imports routes for the pro
 const signupRoute = require('./auth/signup.router'); // Imports routes for the products
 const brandRoute = require('./brand/brandRoutes')
 const campaignRoute = require('./campaign/campaignRoutes')
+const twitter= require('./influencer/influencerRoutes');
 
 var port = process.env.PORT || 4242;
 
@@ -22,5 +23,6 @@ app.use('/api/auth/login', loginRoute);
 app.use('/api/auth/signup', signupRoute);
 app.use('/api/brands', brandRoute);
 app.use('/api/campaigns', campaignRoute);
+app.use('/api/influencer', twitter);
 
 app.listen(port, () => console.log('Server running on port 4242!'))

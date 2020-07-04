@@ -67,6 +67,7 @@ if (localStorageData && localStorageData.token) {
 export const store = createStore({
     user: {
         isLoggedIn: user.isLoggedIn,
+    
         id: user.id,
         name: user.name,
         email: user.email,
@@ -113,6 +114,29 @@ export const store = createStore({
             state.twitter_oauth_access_secret = payload
             // console.log(state.twitter_oauth_access_secret)
         }),
+        
+         updatePayload: action((state,payload)=>{
+            const obj={
+                user_id: state.twitter_id,
+                screen_name: state.screen_name,
+                oauth_token: state.twitter_oauth_token
+            }
+         axios.get(`${config.apiUrl}/auth/login/twitter/users_lookup`, {params:obj}).then(result=>console.log(result)).
+         catch(error=>console.log(error));
+           //console.log(res);
+             
+
+         }),   
+         twitterGetAccessToken: thunk(async (actions, payload)=>{
+            const res= await axios.post(`${config.apiUrl}/influencer/twitter/oauth/access_token`, payload);
+
+            actions.updateTwitterToken(res.oauth_token);
+            actions.updateTwitterTokenSecret(res.oauth_secret);
+            
+         }),   
+         twitterUsersLookUp: thunk(async (actions, payload)=>{
+           actions.updatePayload();
+         }),   
         login: thunk(async (actions, payload) => {
             try {
                 actions.toggleLoading(true);
@@ -177,7 +201,7 @@ export const store = createStore({
             actions.toggleLoading(false);
         }),
         loginTwitter: thunk(async (actions, payload) => {
-            const res = await axios.post(`${config.apiUrl}/auth/login/twitter`);
+            const res = await axios.post(`${config.apiUrl}/influencer/twitter`);
             actions.updateTwitterToken(res.data.oauth_token)
             actions.updateTwitterTokenSecret(res.data.oauth_token_secret)
             console.log(res)
