@@ -61,6 +61,9 @@ export const ChannelsModel = {
                 toastr.error(error.message);
         }
 
+    }),
+    saveYoutube: thunk(async (actions, payload) => {
+        const res = await axios.post(`${config.apiUrl}/influencers/channels/youtube/oauth/`, payload);
     })
 
 };
