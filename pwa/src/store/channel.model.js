@@ -4,7 +4,7 @@ import * as toastr from 'toastr';
 
 const { action, thunk } = require("easy-peasy");
 
-export const ChannelsModel = {
+export const ChannelModel = {
     channels: [],
     loading: false,
     setChannels: action((state, payload) => {
