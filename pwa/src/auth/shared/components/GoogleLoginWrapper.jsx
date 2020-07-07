@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useStoreActions } from 'easy-peasy';
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import authConfig from '../auth.config.json';
+import authConfig from '../../../config.json';
 import { GoogleLogin } from 'react-google-login';
 
 

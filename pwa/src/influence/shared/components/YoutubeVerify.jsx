@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from 'react'
-import config from '../../../auth/shared/auth.config.json'
+import config from '../../../config.json'
 import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useStoreActions, useStoreState, debug } from 'easy-peasy';

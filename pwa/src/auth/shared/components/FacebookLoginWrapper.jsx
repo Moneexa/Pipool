@@ -5,7 +5,7 @@ import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props
 import { useStoreActions } from 'easy-peasy';
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import authConfig from '../auth.config.json';
+import authConfig from '../../../config.json';
 
 
 
