@@ -215,5 +215,19 @@ module.exports = {
             console.log(error)
             res.status(400).send('Unable to add channel. Make sure you authorized it');
         }
+    },
+    InstaPostOAuth:  async function (req, res) {
+        const body={}
+        try {
+           const response= await axios.post(`https://api.instagram.com/oauth/access_token?client_id=${req.body.appId}&client_secret=${req.body.secret}&grant_type=authorization_code&redirect_uri=${req.body.redirectUri}&code=${req.body.token}`, body)
+            console.log(response)
+           res.status(200).send(response)
+        }
+
+        catch (error) {
+            console.log(error)
+            res.status(400).send('Unable to add channel. Make sure you authorized it');
+        }
     }
+
 };

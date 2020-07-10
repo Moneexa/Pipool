@@ -3,6 +3,7 @@ import './AddChannel.css'
 import TwitterVerify from '../../shared/components/TwitterVerify'
 import { FacebookVerify } from '../../shared/components/FacebookVerify';
 import { YoutubeVerify } from '../../shared/components/YoutubeVerify';
+import {InstagramVerify} from '../../shared/components/InstagramVerify'
 
 class AddChannel extends React.Component {
     render() {
@@ -20,6 +21,7 @@ class AddChannel extends React.Component {
                 {/* <FacebookVerify /> */}
                 <TwitterVerify />
                 <YoutubeVerify />
+                <InstagramVerify />
                 <form className="user">
 
                     <div className="form-group row">

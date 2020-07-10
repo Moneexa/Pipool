@@ -4,11 +4,12 @@
         "clientId": "110053771767-189lvlqc6v89acs4lub3v62odqivt6g2.apps.googleusercontent.com",
         "apiKey": "AIzaSyDe6galtm6BnVZE-8PfF7v8YtZzSeyO9S0"
     },
-    "_facebook": {
-        "clientId": "317550049274306",
-        "uri": "https://api.instagram.com/oauth/authorize",
-        "redirectURI": "/oauth-redirect",
-        "scope": "instagram_basic"
+    "instagram": {
+        "appId": "2362555797382454",
+        "redirectURI": "https://localhost:3000/oauth-redirect",
+        "scope": "user_profile,user_media",
+        "secret" : "eea55b63024a65c2dde528fb379a16dd"
+        
     },
     "temp": {
         "Google": "google",

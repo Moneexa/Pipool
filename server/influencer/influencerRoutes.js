@@ -29,4 +29,5 @@ router.delete('/:id', influencerController.remove);
 router.post('/twitter/oauth/request_token',influencerController.twitterOAuth),
 router.post('/twitter/oauth/', influencerController.twitterPostOAuth);
 router.post('/youtube/oauth/', influencerController.youtubeOAuth);
+router.post('/instagram/oauth/', influencerController.InstaPostOAuth)
 module.exports = router;
