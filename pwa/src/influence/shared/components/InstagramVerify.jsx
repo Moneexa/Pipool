@@ -19,9 +19,9 @@ const authenticateInsta =  useStoreActions(actions=>actions.channels.authenticat
 
         <button
             onClick={() => openPopup()}
-            className="btn btn-primary rounded-20 text-white ">
-            <FontAwesomeIcon className="social-icon" icon={faInstagram} />
-                Login with Instagram
+            className="btn btn-primary rounded-20 text-white">
+            <FontAwesomeIcon icon={faInstagram} />
+                + Instagram Account
         </button>
 
     );

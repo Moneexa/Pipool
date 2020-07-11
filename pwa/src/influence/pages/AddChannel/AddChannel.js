@@ -29,62 +29,60 @@ class AddChannel extends React.Component {
 
 
                 </div>
-                {/* <FacebookVerify /> */}
-                <TwitterVerify />
-                <InstagramVerify />
+
                 <form className="user">
 
-                    <div className="form-group row">
-                        <div className="form-group col-sm-6 mb-3 mb-sm-0">
-                            <label>Your name *</label>
-                            <input type="text" className="form-control form-control-user" name="service" id="service" placeholder="Enter your name" />
-                        </div>
+                    <div className="form-group">
+                        
 
-                        <div className="form-group col-sm-6 mb-3 mb-sm-0">
-                            <label>Your Email *</label>
-                            <input type="text" className="form-control form-control-user" name="service" id="service" placeholder="Enter your email" />
-                        </div>
+                        <div className="form-group m-3 mb-sm-0">
+                        <div className="col-md-12">
+                                <label>Selelct Channel Category*</label>
+                                <select className="browser-default custom-select h-auto pad-12" id="category" name="category">
+                                    <option selected>Select</option>
+                                    <option value="1">Animal</option>
+                                    <option value="2">Art</option>
+                                    <option value="3">Beauty</option>
+                                    <option value="4">Books</option>
+                                    <option value="5">Business</option>
+                                    <option value="6">Causes</option>
+                                    <option value="8">Comedy</option>
+                                    <option value="9">Dance</option>
+                                    <option value="10">DIY</option>
+                                    <option value="11">Education</option>
+                                    <option value="12">Entertainment</option>
+                                    <option value="13">Family</option>
+                                    <option value="14">Fashion</option>
+                                    <option value="15">Film</option>
+                                    <option value="16">Fitness</option>
+                                    <option value="17">Food</option>
+                                    <option value="18">Gaming</option>
+                                    <option value="19">Lifestyle</option>
+                                    <option value="20">Music</option>
+                                    <option value="21">News</option>
+                                    <option value="22">Photograpy</option>
+                                    <option value="23">Politics</option>
+                                    <option value="24">Science</option>
+                                    <option value="25">Sports</option>
+                                    <option value="26">Tech</option>
+                                    <option value="27">Travel</option>
+                                    <option value="28">TV</option>
 
-                        <div className="form-group col-sm-6 mb-3 mb-sm-0">
-                            <label>Selelct Channel *</label>
-                            <select onChange={this.onPlatformChange} className="browser-default custom-select h-auto pad-12" id="category" name="category">
-                                <option selected>Select</option>
-                                <option value="1">Youtube</option>
-                                <option value="2">Twitter</option>
-                                <option value="3">Instagram</option>
-                                <option value="4">Linkdin</option>
+                                </select>
 
-                            </select>
-                        </div>
-                        <div className="form-group col-sm-6 mb-3 mb-sm-0">
-                            {
-                                () => {
-                                    if (this.state.platform === "Youtube")
-                                        return (<YoutubeVerify />)
-                                    else if(this.state.platform==="Twitter")
-                                         return(<TwitterVerify />)
-                                    else if(this.state.platform==="Instagram")
-                                          return(<InstagramVerify />)         
-                                }
+                            <div className="row">
+                               <div className="col-md-4 my-3"><InstagramVerify /> </div>
+                               <div className="col-md-4 my-3"><YoutubeVerify /> </div>
+                               <div className="col-md-4 my-3"><TwitterVerify /> </div>
+                               </div>
 
-                            }
-                        </div>
+                               
 
-                        <div className="form-group col-sm-6 mb-3 mb-sm-0">
-                            <label>Upload the image *</label>
-                            {/* <input style={{border: "none", padding: "5px 21px"}} type="file" placeholder="Enter the name" className="form-control form-control-user" /> */}
-                            <div className="custom-file channel-logo">
-                                <input type="file" className="custom-file-input" id="inputGroupFile01" />
-                                <label className="custom-file-label mt-0" htmlFor="inputGroupFile01"></label>
                             </div>
                         </div>
 
-                        <div className="form-group col-sm-12 mb-3 mb-sm-0">
-                            <label>Message *</label>
-                            <textarea className="form-control form-control-user" name="S_service" id="S_service" placeholder="Description"></textarea>
 
-                        </div>
-                        <button className="btn btn-primary btn-user btn-block rounded-30"> SEND</button>
+                        
                     </div>
                 </form>
             </div>

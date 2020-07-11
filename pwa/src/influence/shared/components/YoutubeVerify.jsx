@@ -68,7 +68,7 @@ export function YoutubeVerify() {
 
         <div>
             <button onClick={() => handleAuthClick()} className="btn btn-primary rounded-20 text-white" type="button" >
-                <FontAwesomeIcon icon={faYoutube} /> Add Youtube Account {canSignIn.toString()}
+                <FontAwesomeIcon icon={faYoutube} /> + Youtube Account {canSignIn.toString()}
             </button>
 
             <Modal show={showModal} onHide={handleClose}>

@@ -16,7 +16,7 @@ export default function TwitterVerify() {
   return (
     <div>
       <button className="btn btn-primary rounded-20 text-white" onClick={handleClick} type="button" >
-        <FontAwesomeIcon icon={faTwitter} /> Add Twitter Account
+        <FontAwesomeIcon icon={faTwitter} /> + Twitter Account
       </button>
 
     </div>

@@ -5,7 +5,9 @@ var InfluencerSchema = new Schema({
 	'channelName' : String,
 	'channelId' : String,
 	'followers': Number,
-	'channelType': String
+	'channelType': String,'createdBy' : [
+		{type: Schema.Types.ObjectId, ref: 'User'}
+	  ]
 });
 
 module.exports = mongoose.model('Influencer', InfluencerSchema);

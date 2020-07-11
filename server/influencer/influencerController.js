@@ -29,7 +29,7 @@ module.exports = {
      */
     show: function (req, res) {
         var id = req.params.id;
-        InfluencerModel.findOne({ _id: id }, function (err, influencer) {
+        InfluencerModel.findOne({ createdBy: res.locals.user.id}, function (err, influencer) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting influencer.',
@@ -53,7 +53,9 @@ module.exports = {
             channel_name: req.body.channel_name,
             channel_id: req.body.channel_id,
             screen_name: req.body.screen_name,
-            name: req.body.name
+            name: req.body.name,
+            createdBy: res.locals.user.id
+
 
         });
 
