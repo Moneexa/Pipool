@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema   = mongoose.Schema;
 
-var InfluencerSchema = new Schema({
+var ChannelSchema = new Schema({
 	'channelName' : String,
 	'channelId' : String,
 	'followers': Number,
@@ -10,4 +10,4 @@ var InfluencerSchema = new Schema({
 	  ]
 });
 
-module.exports = mongoose.model('Influencer', InfluencerSchema);
+module.exports = mongoose.model('Channel', ChannelSchema);

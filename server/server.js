@@ -10,7 +10,7 @@ const loginRoute = require('./auth/login.router'); // Imports routes for the pro
 const signupRoute = require('./auth/signup.router'); // Imports routes for the products
 const brandRoute = require('./brand/brandRoutes')
 const campaignRoute = require('./campaign/campaignRoutes')
-const twitter= require('./influencer/influencerRoutes');
+const twitter= require('./channel/channelRoutes');
 
 var port = process.env.PORT || 4242;
 

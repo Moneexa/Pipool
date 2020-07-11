@@ -1,55 +1,55 @@
-var InfluencerModel = require('./InfluencerModel.js');
+var ChannelModel = require('./channelModel.js');
 const Twitter = require('twitter-lite')
 const config = require('../config.json')
 const axios = require('axios')
 /**
- * influencerController.js
+ * channelController.js
  *
- * @description :: Server-side logic for managing influencers.
+ * @description :: Server-side logic for managing channels.
  */
 module.exports = {
 
     /**
-     * influencerController.list()
+     * channelController.list()
      */
     list: function (req, res) {
-        InfluencerModel.find(function (err, influencers) {
+        ChannelModel.find(function (err, channels) {
             if (err) {
                 return res.status(500).json({
-                    message: 'Error when getting influencer.',
+                    message: 'Error when getting channel.',
                     error: err
                 });
             }
-            return res.json(influencers);
+            return res.json(channels);
         });
     },
 
     /**
-     * influencerController.show()
+     * channelController.show()
      */
     show: function (req, res) {
         var id = req.params.id;
-        InfluencerModel.findOne({ createdBy: res.locals.user.id}, function (err, influencer) {
+        ChannelModel.findOne({ createdBy: res.locals.user.id}, function (err, channel) {
             if (err) {
                 return res.status(500).json({
-                    message: 'Error when getting influencer.',
+                    message: 'Error when getting channel.',
                     error: err
                 });
             }
-            if (!influencer) {
+            if (!channel) {
                 return res.status(404).json({
-                    message: 'No such influencer'
+                    message: 'No such channel'
                 });
             }
-            return res.json(influencer);
+            return res.json(channel);
         });
     },
 
     /**
-     * influencerController.create()
+     * channelController.create()
      */
     create: function (req, res) {
-        var influencer = new InfluencerModel({
+        var channel = new ChannelModel({
             channel_name: req.body.channel_name,
             channel_id: req.body.channel_id,
             screen_name: req.body.screen_name,
@@ -59,62 +59,62 @@ module.exports = {
 
         });
 
-        influencer.save(function (err, influencer) {
+        channel.save(function (err, channel) {
             if (err) {
                 return res.status(500).json({
-                    message: 'Error when creating influencer',
+                    message: 'Error when creating channel',
                     error: err
                 });
             }
-            return res.status(201).json(influencer);
+            return res.status(201).json(channel);
         });
     },
 
     /**
-     * influencerController.update()
+     * channelController.update()
      */
     update: function (req, res) {
         var id = req.params.id;
-        InfluencerModel.findOne({ _id: id }, function (err, influencer) {
+        ChannelModel.findOne({ _id: id }, function (err, channel) {
             if (err) {
                 return res.status(500).json({
-                    message: 'Error when getting influencer',
+                    message: 'Error when getting channel',
                     error: err
                 });
             }
-            if (!influencer) {
+            if (!channel) {
                 return res.status(404).json({
-                    message: 'No such influencer'
+                    message: 'No such channel'
                 });
             }
 
-            influencer.channel_name = req.body.channel_name ? req.body.channel_name : influencer.channel_name;
-            influencer.channel_id = req.body.channel_id ? req.body.channel_id : influencer.channel_id;
-            influencer.screen_name = req.body.screen_name ? req.body.screen_name : influencer.screen_name;
-            influencer.name = req.body.name ? req.body.name : influencer.name;
+            channel.channel_name = req.body.channel_name ? req.body.channel_name : channel.channel_name;
+            channel.channel_id = req.body.channel_id ? req.body.channel_id : channel.channel_id;
+            channel.screen_name = req.body.screen_name ? req.body.screen_name : channel.screen_name;
+            channel.name = req.body.name ? req.body.name : channel.name;
 
-            influencer.save(function (err, influencer) {
+            channel.save(function (err, channel) {
                 if (err) {
                     return res.status(500).json({
-                        message: 'Error when updating influencer.',
+                        message: 'Error when updating channel.',
                         error: err
                     });
                 }
 
-                return res.json(influencer);
+                return res.json(channel);
             });
         });
     },
 
     /**
-     * influencerController.remove()
+     * channelController.remove()
      */
     remove: function (req, res) {
         var id = req.params.id;
-        InfluencerModel.findByIdAndRemove(id, function (err, influencer) {
+        ChannelModel.findByIdAndRemove(id, function (err, channel) {
             if (err) {
                 return res.status(500).json({
-                    message: 'Error when deleting the influencer.',
+                    message: 'Error when deleting the channel.',
                     error: err
                 });
             }
@@ -167,21 +167,21 @@ module.exports = {
                 access_token_secret: fetchedCredentials.oauth_token_secret
             });
 
-            const existingChannel = await InfluencerModel.findOne({ channelId: fetchedCredentials.user_id, channelType: 'twitter' });
+            const existingChannel = await ChannelModel.findOne({ channelId: fetchedCredentials.user_id, channelType: 'twitter' });
             if (existingChannel) return res.status(405).send('Channel already exists');
             const userData = await client.get("users/show", {
                 user_id: fetchedCredentials.user_id
             });
 
-            var influencerModel = new InfluencerModel({
+            var channels = new ChannelModel({
                 channelName: userData.name,
                 channelId: userData.id,
                 followers: userData.followers_count,
                 channelType: 'twitter'
             });
 
-            const influencer = await influencerModel.save();
-            res.status(201).send(influencer);
+            const channel = await channels.save();
+            res.status(201).send(channel);
         }
         catch (error) {
             console.error(error);
@@ -201,13 +201,13 @@ module.exports = {
                 });
             for (let channel of data.items) {
                 if (channel.id === id) {
-                    const influencerModel = new InfluencerModel({
+                    const channels = new ChannelModel({
                         channelName: channel.snippet.title,
                         channelId: id,
                         followers: channel.statistics.subscriberCount,
                         channelType: 'youtube'
                     })
-                    const newChannel = await influencerModel.save();
+                    const newChannel = await channels.save();
                     return res.status(201).send(newChannel)
                 }
             }
