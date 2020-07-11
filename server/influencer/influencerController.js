@@ -217,7 +217,10 @@ module.exports = {
         }
     },
     InstaPostOAuth:  async function (req, res) {
-        const body={}
+        const body={
+            client_id:req.body.appId,
+            client_secret
+        }
         try {
            const response= await axios.post(`https://api.instagram.com/oauth/access_token?client_id=${req.body.appId}&client_secret=${req.body.secret}&grant_type=authorization_code&redirect_uri=${req.body.redirectUri}&code=${req.body.token}`, body)
             console.log(response)

@@ -3,9 +3,20 @@ import './AddChannel.css'
 import TwitterVerify from '../../shared/components/TwitterVerify'
 import { FacebookVerify } from '../../shared/components/FacebookVerify';
 import { YoutubeVerify } from '../../shared/components/YoutubeVerify';
-import {InstagramVerify} from '../../shared/components/InstagramVerify'
+import { InstagramVerify } from '../../shared/components/InstagramVerify'
 
 class AddChannel extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            platform: ""
+        }
+    }
+    onPlatformChange = (e) => {
+        this.setState({
+            platform: e.target.value
+        })
+    }
     render() {
 
         return (
@@ -20,7 +31,6 @@ class AddChannel extends React.Component {
                 </div>
                 {/* <FacebookVerify /> */}
                 <TwitterVerify />
-                <YoutubeVerify />
                 <InstagramVerify />
                 <form className="user">
 
@@ -37,7 +47,7 @@ class AddChannel extends React.Component {
 
                         <div className="form-group col-sm-6 mb-3 mb-sm-0">
                             <label>Selelct Channel *</label>
-                            <select className="browser-default custom-select h-auto pad-12" id="category" name="category">
+                            <select onChange={this.onPlatformChange} className="browser-default custom-select h-auto pad-12" id="category" name="category">
                                 <option selected>Select</option>
                                 <option value="1">Youtube</option>
                                 <option value="2">Twitter</option>
@@ -45,6 +55,19 @@ class AddChannel extends React.Component {
                                 <option value="4">Linkdin</option>
 
                             </select>
+                        </div>
+                        <div className="form-group col-sm-6 mb-3 mb-sm-0">
+                            {
+                                () => {
+                                    if (this.state.platform === "Youtube")
+                                        return (<YoutubeVerify />)
+                                    else if(this.state.platform==="Twitter")
+                                         return(<TwitterVerify />)
+                                    else if(this.state.platform==="Instagram")
+                                          return(<InstagramVerify />)         
+                                }
+
+                            }
                         </div>
 
                         <div className="form-group col-sm-6 mb-3 mb-sm-0">
