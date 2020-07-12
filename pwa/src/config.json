@@ -7,9 +7,7 @@
     "instagram": {
         "appId": "2362555797382454",
         "redirectURI": "https://localhost:3000/oauth-redirect",
-        "scope": "user_profile,user_media",
-        "secret" : "eea55b63024a65c2dde528fb379a16dd"
-        
+        "scope": "user_profile,user_media"
     },
     "temp": {
         "Google": "google",

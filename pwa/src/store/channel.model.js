@@ -77,10 +77,8 @@ export const ChannelModel = {
 
                         console.log(token);
                         const body={
-                           appId: config.instagram.appId,
-                           secret: config.instagram.secret,
+                           
                            token: token,
-                           redirectURI: config.instagram.redirectURI
                         }
 
                         const res = await axios.post(`${config.apiUrl}/influencers/channels/instagram/oauth/`, body);

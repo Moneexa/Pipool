@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rdirecting</title>
 </head>
+
 <body>
     <script>
-        if(window.location.hostname !== 'localhost') {
-            window.location.href = 'http://localhost:3000' + window.location.pathname+window.location.search;
+        localStorage.setItem("oAuthRedirectUrl", window.location.href);
+
+        if (window.location.hostname !== 'localhost') {
+            window.location.href = 'http://localhost:3000' + window.location.pathname + window.location.search;
         }
         localStorage.setItem("oAuthRedirectUrl", window.location.href);
         setTimeout(() => {
@@ -16,4 +20,5 @@
         }, 1000);
     </script>
 </body>
+
 </html>
