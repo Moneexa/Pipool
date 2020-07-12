@@ -1,33 +1,34 @@
 var express = require('express');
 var router = express.Router();
 var channelController = require('./channelController.js');
+var auth= require('../auth/auth')
 
 /*
  * GET
  */
-router.get('/', channelController.list);
+router.get('/', auth.verify, channelController.list);
 
 /*
  * GET
  */
-router.get('/:id', channelController.show);
+router.get('/:id',auth.verify, channelController.show);
 
 /*
  * POST
  */
-router.post('/', channelController.create);
+router.post('/', auth.verify, channelController.create);
 
 /*
  * PUT
  */
-router.put('/:id', channelController.update);
+router.put('/:id', auth.verify, channelController.update);
 
 /*
  * DELETE
  */
 router.delete('/:id', channelController.remove);
-router.post('/twitter/oauth/request_token',channelController.twitterOAuth),
-router.post('/twitter/oauth/', channelController.twitterPostOAuth);
-router.post('/youtube/oauth/', channelController.youtubeOAuth);
-router.post('/instagram/oauth/', channelController.InstaPostOAuth)
+router.post('/twitter/oauth/request_token', auth.verify, channelController.twitterOAuth),
+router.post('/twitter/oauth/',auth.verify,  channelController.twitterPostOAuth);
+router.post('/youtube/oauth/',auth.verify, channelController.youtubeOAuth);
+router.post('/instagram/oauth/', auth.verify, channelController.InstaPostOAuth)
 module.exports = router;
