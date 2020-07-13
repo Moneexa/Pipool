@@ -13,7 +13,7 @@ module.exports = {
      * channelController.list()
      */
     list: function (req, res) {
-        ChannelModel.find({ createdBy: res.locals.user.id }, function (err, channels) {
+        ChannelModel.find(function (err, channels) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting channel.',
@@ -177,7 +177,6 @@ module.exports = {
                 channelName: userData.name,
                 channelId: userData.id,
                 followers: userData.followers_count,
-                createdBy: res.locals.user.id,
                 channelType: 'twitter'
             });
 
@@ -206,8 +205,7 @@ module.exports = {
                         channelName: channel.snippet.title,
                         channelId: id,
                         followers: channel.statistics.subscriberCount,
-                        channelType: 'youtube',
-                        createdBy: res.locals.user.id,
+                        channelType: 'youtube'
                     })
                     const newChannel = await channels.save();
                     return res.status(201).send(newChannel)

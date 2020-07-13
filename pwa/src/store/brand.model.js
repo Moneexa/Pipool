@@ -19,6 +19,7 @@ let brand = {
 
 };
 export const BrandModel = {
+    loading: false,
     list: [],
     active: {
         id: brand.id,
@@ -33,6 +34,7 @@ export const BrandModel = {
         postalCode: brand.postalCode,
         country: brand.country,
         city: brand.city,
+
     },
     errors: {
         postErrorMessage: "",
@@ -40,6 +42,9 @@ export const BrandModel = {
 
     updateBrandList: action((state, payload) => {
         state.list = payload;
+    }),
+    updateLoading: action((state, payload) => {
+        state.loading = payload
     }),
 
     updateBrand: action((state, payload) => {
@@ -99,7 +104,10 @@ export const BrandModel = {
         try {
             const res = await axios.put(`${config.apiUrl}/brands/${id}`, obj)
             actions.updateBrand(res.data);
+            actions.updateLoading(true);
+
             toastr.success("Successfully updated data");
+            actions.updateLoading(false);
 
         } catch (error) {
             actions.postError("Form values are not correct.")
@@ -125,7 +133,10 @@ export const BrandModel = {
             const res = await axios.post(`${config.apiUrl}/brands/`, obj)
 
             actions.updateBrand(res.data);
+            actions.updateLoading(true);
             toastr.success("Successfully  data has been sent");
+            actions.updateLoading(false);
+
 
 
 

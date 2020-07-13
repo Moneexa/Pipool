@@ -6,9 +6,11 @@ import './NewCampaign.css'
 import { Form2 } from './Form2';
 import { Form3 } from './Form3';
 import { useStoreActions, useStoreState } from 'easy-peasy';
+import { Spinner } from 'react-bootstrap'
 
 
 function NewCampaign() {
+    const loading = useStoreState(state => state.campaign.loading)
 
     const formSteps = ["one", "two", "three"]
     const [currentStepIndex, setCurrentStepIndex] = useState(0);
@@ -56,6 +58,13 @@ function NewCampaign() {
                         </Tab.Pane>
                     </Tab.Content> 
                 </Tab.Container>
+                {
+                        !loading ? '' :
+                            <div className="loading-overlay d-flex justify-content-center align-items-center">
+
+                                <Spinner size="bg" animation="grow" variant="success" />
+                            </div>
+                    }
             </div>
         </div>
 

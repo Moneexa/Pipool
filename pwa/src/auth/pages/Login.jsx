@@ -1,12 +1,13 @@
+import React, { useState } from 'react';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { useForm } from "react-hook-form";
-import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { FacebookLoginWrapper } from '../shared/components/FacebookLoginWrapper';
 import { GoogleLoginWrapper } from '../shared/components/GoogleLoginWrapper';
 import { LinkedInWrapper } from '../shared/components/LinkedinWrapper';
 import './Login.css';
 import Loader from 'react-loader-spinner'
+import { Spinner } from 'react-bootstrap';
 
 
 
@@ -52,14 +53,7 @@ export function Login() {
                                                 !loading ? '' :
                                                     <div className="loading-overlay d-flex justify-content-center align-items-center">
 
-                                                        <Loader
-                                                            type="Puff"
-                                                            color="#00BFFF"
-                                                            height={100}
-                                                            width={100}
-                                                            timeout={3000} //3 secs
-
-                                                        />
+                                                        <Spinner size="bg" animation="grow" variant="success" />
                                                     </div>
                                             }
                                             <div className="p-5">

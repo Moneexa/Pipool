@@ -24,6 +24,7 @@ let campaign = {
 
 };
 export const CampaignModel = {
+    loading: false,
     campaignList: [],
     actv: {
         id: campaign.id,
@@ -50,7 +51,9 @@ export const CampaignModel = {
     updateCampaignList: action((state, payload) => {
         state.campaignList = payload;
     }),
-
+    updateLoading: action((state, payload) => {
+        state.loading = payload
+    }),
     updateCampaign: action((state, payload) => {
         state.actv.id = payload._id || state.actv.id;
         state.actv.serviceName = payload.serviceName || state.actv.serviceName;
@@ -117,7 +120,11 @@ export const CampaignModel = {
         try {
             const res = await axios.put(`${config.apiUrl}/campaigns/${id}`, obj,)
             actions.updateCampaign(res.data);
+            actions.updateLoading(true);
+
             toastr.success("Successfully updated data");
+            actions.updateLoading(false);
+
         } catch (error) {
 
             actions.postError("Form values are not correct.")
@@ -150,7 +157,10 @@ export const CampaignModel = {
             const res = await axios.post(`${config.apiUrl}/campaigns/`, obj)
 
             actions.updateCampaign(res.data);
+            actions.updateLoading(true);
+
             toastr.success("Successfully  data has been sent");
+            actions.updateLoading(false);
 
 
 
