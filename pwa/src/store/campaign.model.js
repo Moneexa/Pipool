@@ -118,9 +118,10 @@ export const CampaignModel = {
             influencers: payload.influencers,
         }
         try {
+            actions.updateLoading(true);
+
             const res = await axios.put(`${config.apiUrl}/campaigns/${id}`, obj,)
             actions.updateCampaign(res.data);
-            actions.updateLoading(true);
 
             toastr.success("Successfully updated data");
             actions.updateLoading(false);
@@ -154,10 +155,11 @@ export const CampaignModel = {
             influencers: payload.interests,
         }
         try {
+            actions.updateLoading(true);
+
             const res = await axios.post(`${config.apiUrl}/campaigns/`, obj)
 
             actions.updateCampaign(res.data);
-            actions.updateLoading(true);
 
             toastr.success("Successfully  data has been sent");
             actions.updateLoading(false);

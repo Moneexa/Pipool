@@ -6,13 +6,8 @@ import './NewCampaign.css'
 import { Form2 } from './Form2';
 import { Form3 } from './Form3';
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import { Spinner } from 'react-bootstrap'
-import { trackPromise } from 'react-promise-tracker';
-import { usePromiseTracker } from "react-promise-tracker";
-import { LoadingSpinerComponent } from '../AddBrand/AddBrand'
 
 function NewCampaign() {
-    const loading = useStoreState(state => state.campaign.loading)
 
     const formSteps = ["one", "two", "three"]
     const [currentStepIndex, setCurrentStepIndex] = useState(0);
@@ -37,8 +32,7 @@ function NewCampaign() {
         const data = Object.assign({}, formData, values);
         setFormData(data);
 
-        trackPromise(
-            post(data));
+            post(data);
         console.log(data)
     }
 

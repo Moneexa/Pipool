@@ -6,28 +6,7 @@ import { useForm } from "react-hook-form";
 import { matchPath } from 'react-router';
 import { BrowserRouter as Router, useParams } from "react-router-dom";
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import { notify } from 'reapop';
 import { Spinner } from 'react-bootstrap'
-import { trackPromise } from 'react-promise-tracker';
-import { usePromiseTracker } from "react-promise-tracker";
-export const LoadingSpinerComponent = (props) => {
-    const { promiseInProgress } = usePromiseTracker();
-
-    return (
-        <div>
-            {
-                (promiseInProgress === true) ?
-                    <div className="loading-overlay d-flex justify-content-center align-items-center">
-
-                        <Spinner size="bg" animation="grow" variant="success" />
-                    </div>
-                    :
-                    null
-            }
-        </div>
-    )
-};
-
 export default function AddBrand({ match }) {
     //const [updateRequired, setUpdateRequired] = useState(false);
     const { register, handleSubmit, watch, errors } = useForm()
@@ -68,36 +47,21 @@ export default function AddBrand({ match }) {
         if (id) {
             values.id = id;
 
-            trackPromise(
-                put(values)
-            );
+            put(values)
             update = true;
             success = true;
 
-            notify({
-                title: 'Welcome',
-                message: 'you clicked on the button',
-                status: 'success',
-                dismissible: true,
-                dismissAfter: 3000
-            });
+
 
             //console.log(notification);
 
         }
         else {
-            trackPromise(
-                post(values) );
+            post(values)
 
             success = true
 
-            notify({
-                title: 'Welcome',
-                message: 'you clicked on the button',
-                status: 'success',
-                dismissible: true,
-                dismissAfter: 3000
-            });
+            
             // console.log(notification);
 
         }
@@ -226,9 +190,14 @@ export default function AddBrand({ match }) {
                 <div className="w-100 px-4 mb-5">
                     <button type="submit"
                         name="brand_save" className="btn btn-primary btn-user btn-block rounded-30 py-3">Save
-                    
-                    <LoadingSpinerComponent />
                     </button>
+                    {
+                        loading ? 
+                        <div className="d-flex align-items-center justify-content-center">
+                        <Spinner animation="grow" variant="success" />
+                        </div>
+                        : ''
+                    }
 
                 </div>
 

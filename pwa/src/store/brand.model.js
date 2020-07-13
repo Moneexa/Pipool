@@ -102,17 +102,21 @@ export const BrandModel = {
             address: payload.address,
         }
         try {
-            const res = await axios.put(`${config.apiUrl}/brands/${id}`, obj)
-            actions.updateBrand(res.data);
             actions.updateLoading(true);
+
+            const res = await axios.put(`${config.apiUrl}/brands/${id}`, obj)
+
+            actions.updateBrand(res.data);
 
             toastr.success("Successfully updated data");
             actions.updateLoading(false);
+
 
         } catch (error) {
             actions.postError("Form values are not correct.")
             toastr.error("There was problem saving you data")
         }
+
     }),
 
     post: thunk(async (actions, payload) => {
@@ -130,13 +134,14 @@ export const BrandModel = {
             address: payload.address,
         }
         try {
+            actions.updateLoading(true);
+
             const res = await axios.post(`${config.apiUrl}/brands/`, obj)
 
             actions.updateBrand(res.data);
-            actions.updateLoading(true);
             toastr.success("Successfully  data has been sent");
-            actions.updateLoading(false);
 
+            actions.updateLoading(false);
 
 
 

@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import {LoadingSpinerComponent} from '../AddBrand/AddBrand'
+import { Spinner } from 'react-bootstrap'
+import { useStoreActions, useStoreState } from 'easy-peasy';
+
 export function Form3({ onFinish, onPrevious }) {
     const { register, handleSubmit, watch, errors } = useForm();
     const [interests, setInterests] = useState(interestVals);
+    const loading = useStoreState(state => state.campaign.loading)
 
     function toggleInterest(index) {
         const list = JSON.parse(JSON.stringify(interests));
@@ -132,8 +135,15 @@ export function Form3({ onFinish, onPrevious }) {
                 <button
                     type="submit" 
                     className="btn btn-success btn-user text-white next-button">
-                    Finish  <LoadingSpinerComponent />
+                    Finish  
                 </button>
+                {
+                        loading ? 
+                        <div className="d-flex align-items-center justify-content-center">
+                        <Spinner animation="grow" variant="success" />
+                        </div>
+                        : ''
+                    }
             </div>
         </form>
     )
