@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-
+import {LoadingSpinerComponent} from '../AddBrand/AddBrand'
 export function Form3({ onFinish, onPrevious }) {
     const { register, handleSubmit, watch, errors } = useForm();
     const [interests, setInterests] = useState(interestVals);
@@ -130,9 +130,9 @@ export function Form3({ onFinish, onPrevious }) {
                     Previous
                 </button>
                 <button
-                    type="submit"
+                    type="submit" 
                     className="btn btn-success btn-user text-white next-button">
-                    Finish
+                    Finish  <LoadingSpinerComponent />
                 </button>
             </div>
         </form>

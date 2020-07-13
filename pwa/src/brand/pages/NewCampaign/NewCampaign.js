@@ -7,7 +7,9 @@ import { Form2 } from './Form2';
 import { Form3 } from './Form3';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { Spinner } from 'react-bootstrap'
-
+import { trackPromise } from 'react-promise-tracker';
+import { usePromiseTracker } from "react-promise-tracker";
+import { LoadingSpinerComponent } from '../AddBrand/AddBrand'
 
 function NewCampaign() {
     const loading = useStoreState(state => state.campaign.loading)
@@ -34,7 +36,9 @@ function NewCampaign() {
     function onFinish(values) {
         const data = Object.assign({}, formData, values);
         setFormData(data);
-        post(data);
+
+        trackPromise(
+            post(data));
         console.log(data)
     }
 
@@ -56,15 +60,9 @@ function NewCampaign() {
                         <Tab.Pane eventKey={formSteps[2]}>
                             <Form3 onFinish={onFinish} onPrevious={stepBack} />
                         </Tab.Pane>
-                    </Tab.Content> 
+                    </Tab.Content>
                 </Tab.Container>
-                {
-                        !loading ? '' :
-                            <div className="loading-overlay d-flex justify-content-center align-items-center">
-
-                                <Spinner size="bg" animation="grow" variant="success" />
-                            </div>
-                    }
+                
             </div>
         </div>
 

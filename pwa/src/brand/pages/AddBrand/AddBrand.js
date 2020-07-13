@@ -8,7 +8,25 @@ import { BrowserRouter as Router, useParams } from "react-router-dom";
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { notify } from 'reapop';
 import { Spinner } from 'react-bootstrap'
+import { trackPromise } from 'react-promise-tracker';
+import { usePromiseTracker } from "react-promise-tracker";
+export const LoadingSpinerComponent = (props) => {
+    const { promiseInProgress } = usePromiseTracker();
 
+    return (
+        <div>
+            {
+                (promiseInProgress === true) ?
+                    <div className="loading-overlay d-flex justify-content-center align-items-center">
+
+                        <Spinner size="bg" animation="grow" variant="success" />
+                    </div>
+                    :
+                    null
+            }
+        </div>
+    )
+};
 
 export default function AddBrand({ match }) {
     //const [updateRequired, setUpdateRequired] = useState(false);
@@ -50,7 +68,9 @@ export default function AddBrand({ match }) {
         if (id) {
             values.id = id;
 
-            put(values)
+            trackPromise(
+                put(values)
+            );
             update = true;
             success = true;
 
@@ -66,7 +86,8 @@ export default function AddBrand({ match }) {
 
         }
         else {
-            post(values)
+            trackPromise(
+                post(values) );
 
             success = true
 
@@ -86,6 +107,7 @@ export default function AddBrand({ match }) {
 
     return (
         <div className="add-brand">
+
             <div className="text-center">
                 <h1 className="h4 text-gray-900 mb-4">Add a New Brand</h1>
             </div>
@@ -203,18 +225,15 @@ export default function AddBrand({ match }) {
                 </div>
                 <div className="w-100 px-4 mb-5">
                     <button type="submit"
-                        name="brand_save" className="btn btn-primary btn-user btn-block rounded-30 py-3">Save</button>
+                        name="brand_save" className="btn btn-primary btn-user btn-block rounded-30 py-3">Save
+                    
+                    <LoadingSpinerComponent />
+                    </button>
 
-                    {
-                        !loading ? '' :
-                            <div className="loading-overlay d-flex justify-content-center align-items-center">
-
-                                <Spinner size="bg" animation="grow" variant="success" />
-                            </div>
-                    }
                 </div>
 
             </form>
+
         </div >
     )
 }
