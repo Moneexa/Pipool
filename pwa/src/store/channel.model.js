@@ -43,7 +43,7 @@ export const ChannelModel = {
                         const res = await axios.post(`${config.apiUrl}/influencers/channels/twitter/oauth/`, body);
 
                         actions.add(res.data);
-                        toastr.success("Successfully added channel")
+                        toastr.success("Successfully Twitter Channel")
 
                     }
                 } catch (error) {
@@ -76,13 +76,12 @@ export const ChannelModel = {
                         const error = searchParams.get('error');
 
                         console.log(token);
-                        const body={
-                           
-                           token: token,
+                        const body = {
+                            token: token,
                         }
 
                         const res = await axios.post(`${config.apiUrl}/influencers/channels/instagram/oauth/`, body);
-                         console.log(res)
+                        console.log(res)
                         //actions.add(res.data);
                         //toastr.success("Successfully added channel")
 
@@ -104,7 +103,12 @@ export const ChannelModel = {
 
     }),
     saveYoutube: thunk(async (actions, payload) => {
-        const res = await axios.post(`${config.apiUrl}/influencers/channels/youtube/oauth/`, payload);
+        try {
+            await axios.post(`${config.apiUrl}/influencers/channels/youtube/oauth/`, payload);
+            toastr.success('Successfully added YouTube Channel')
+        } catch (error) {
+            toastr.error("Something went wrong when adding the YouTube Channel")
+        }
     })
 
 };

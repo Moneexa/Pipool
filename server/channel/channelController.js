@@ -13,7 +13,7 @@ module.exports = {
      * channelController.list()
      */
     list: function (req, res) {
-        ChannelModel.find(function (err, channels) {
+        ChannelModel.find({ createdBy: res.locals.user.id }, function (err, channels) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting channel.',
@@ -29,7 +29,7 @@ module.exports = {
      */
     show: function (req, res) {
         var id = req.params.id;
-        ChannelModel.findOne({ createdBy: res.locals.user.id}, function (err, channel) {
+        ChannelModel.findOne({ createdBy: res.locals.user.id }, function (err, channel) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting channel.',
@@ -177,6 +177,7 @@ module.exports = {
                 channelName: userData.name,
                 channelId: userData.id,
                 followers: userData.followers_count,
+                createdBy: res.locals.user.id,
                 channelType: 'twitter'
             });
 
@@ -205,7 +206,8 @@ module.exports = {
                         channelName: channel.snippet.title,
                         channelId: id,
                         followers: channel.statistics.subscriberCount,
-                        channelType: 'youtube'
+                        channelType: 'youtube',
+                        createdBy: res.locals.user.id,
                     })
                     const newChannel = await channels.save();
                     return res.status(201).send(newChannel)
@@ -218,15 +220,15 @@ module.exports = {
             res.status(400).send('Unable to add channel. Make sure you authorized it');
         }
     },
-    InstaPostOAuth:  async function (req, res) {
-        const body={
-            client_id:config.instagram.appId,
-            client_secret:config.instagram.secret 
+    InstaPostOAuth: async function (req, res) {
+        const body = {
+            client_id: config.instagram.appId,
+            client_secret: config.instagram.secret
         }
         try {
-           const response= await axios.post(`https://api.instagram.com/oauth/access_token?client_id=${config.instagram.appId}&client_secret=${config.instagram.secret}&grant_type=authorization_code&redirect_uri=${config.instagram.redirectUri}&code=${req.body.token}`, body)
+            const response = await axios.post(`https://api.instagram.com/oauth/access_token?client_id=${config.instagram.appId}&client_secret=${config.instagram.secret}&grant_type=authorization_code&redirect_uri=${config.instagram.redirectUri}&code=${req.body.token}`, body)
             console.log(response)
-           res.status(200).send(response)
+            res.status(200).send(response)
         }
 
         catch (error) {
