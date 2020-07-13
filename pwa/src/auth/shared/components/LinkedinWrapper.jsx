@@ -2,7 +2,7 @@ import { faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useStoreActions } from 'easy-peasy';
 import React from 'react';
-import config from '../auth.config.json';
+import config from '../../../config.json';
 
 
 

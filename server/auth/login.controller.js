@@ -5,11 +5,14 @@ const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const axios = require('axios');
 var querystring = require('querystring');
+const Twitter = require('twitter-lite');
+
 module.exports = {
 	login,
 	loginFacebook,
 	loginGoogle,
 	loginLinkedin,
+	
 	verify
 };
 
