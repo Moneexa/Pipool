@@ -7,6 +7,7 @@ import * as toastr from 'toastr';
 
 
 
+
 const localStorageData = JSON.parse(localStorage.getItem('userInfo') || "{}");
 // default user info
 let user = {
@@ -109,7 +110,11 @@ export const store = createStore({
                 const res = await axios.post(`${config.apiUrl}/auth/login`, payload)
                 console.log(res.data)
                 actions.updateUser(res.data);
+            
+               
+       
             } catch (error) {
+                
                 actions.loginError("Username or password is incorrect.")
 
             }
