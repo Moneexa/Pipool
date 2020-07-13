@@ -23,7 +23,16 @@ export function Form3({ onFinish, onPrevious }) {
         onFinish(Object.assign({}, values, { interests: selectedInterests }))
     }
 
-    return (
+    return (<>
+        <div className="col-md-12 p-0">
+            {
+                !loading ? '' :
+                    <div className="loading-overlay d-flex align-items-center justify-content-center">
+
+                        <Spinner animation="border" variant="success" />
+                    </div>
+            }
+        </div>
         <form onSubmit={handleSubmit(submit)}>
             <div className="form-group row" >
                 <div className="form-group col-12">
@@ -133,19 +142,14 @@ export function Form3({ onFinish, onPrevious }) {
                     Previous
                 </button>
                 <button
-                    type="submit" 
+                    type="submit"
                     className="btn btn-success btn-user text-white next-button">
-                    Finish  
+                    Finish
                 </button>
-                {
-                        loading ? 
-                        <div className="d-flex align-items-center justify-content-center">
-                        <Spinner animation="grow" variant="success" />
-                        </div>
-                        : ''
-                    }
+
             </div>
         </form>
+    </>
     )
 }
 

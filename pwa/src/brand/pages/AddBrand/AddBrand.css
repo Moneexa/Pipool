@@ -1,6 +1,17 @@
 .add-brand .text-center h2,form{
     color:rgb(133, 135, 150);
 }
+.add-brand .loading-overlay {
+   
+    position: absolute;
+    width: 100vw;
+    height: 200vh;
+  
+    background-color: rgba(0, 0, 0, 0.3);
+
+    z-index: 1;
+}
+
 .add-brand  .form-control{
     font-size: .8rem;
     padding: 1.5rem 1rem;

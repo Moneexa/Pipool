@@ -109,13 +109,13 @@ export const BrandModel = {
             actions.updateBrand(res.data);
 
             toastr.success("Successfully updated data");
-            actions.updateLoading(false);
 
 
         } catch (error) {
             actions.postError("Form values are not correct.")
             toastr.error("There was problem saving you data")
         }
+        actions.updateLoading(false);
 
     }),
 
@@ -141,7 +141,6 @@ export const BrandModel = {
             actions.updateBrand(res.data);
             toastr.success("Successfully  data has been sent");
 
-            actions.updateLoading(false);
 
 
 
@@ -152,6 +151,8 @@ export const BrandModel = {
 
 
         }
+        actions.updateLoading(false);
+
     }),
 
 

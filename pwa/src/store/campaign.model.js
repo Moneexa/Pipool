@@ -124,7 +124,6 @@ export const CampaignModel = {
             actions.updateCampaign(res.data);
 
             toastr.success("Successfully updated data");
-            actions.updateLoading(false);
 
         } catch (error) {
 
@@ -133,6 +132,8 @@ export const CampaignModel = {
 
 
         }
+        actions.updateLoading(false);
+
     }),
 
     postCampaign: thunk(async (actions, payload) => {
@@ -162,7 +163,6 @@ export const CampaignModel = {
             actions.updateCampaign(res.data);
 
             toastr.success("Successfully  data has been sent");
-            actions.updateLoading(false);
 
 
 
@@ -173,5 +173,7 @@ export const CampaignModel = {
 
 
         }
+        actions.updateLoading(false);
+
     }),
 };

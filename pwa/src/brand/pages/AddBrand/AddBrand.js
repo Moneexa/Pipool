@@ -61,7 +61,7 @@ export default function AddBrand({ match }) {
 
             success = true
 
-            
+
             // console.log(notification);
 
         }
@@ -71,10 +71,11 @@ export default function AddBrand({ match }) {
 
     return (
         <div className="add-brand">
-
+            
             <div className="text-center">
                 <h1 className="h4 text-gray-900 mb-4">Add a New Brand</h1>
             </div>
+
             <form className="row" method="post"
 
                 encType="multipart/form-data" onSubmit={handleSubmit(updateBrand)}>
@@ -191,17 +192,11 @@ export default function AddBrand({ match }) {
                     <button type="submit"
                         name="brand_save" className="btn btn-primary btn-user btn-block rounded-30 py-3">Save
                     </button>
-                    {
-                        loading ? 
-                        <div className="d-flex align-items-center justify-content-center">
-                        <Spinner animation="grow" variant="success" />
-                        </div>
-                        : ''
-                    }
 
                 </div>
 
             </form>
+
 
         </div >
     )
