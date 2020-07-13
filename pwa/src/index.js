@@ -7,6 +7,8 @@ import { StoreProvider } from 'easy-peasy';
 import { store } from "./store/store";
 import { Routes } from './Routes';
 import 'toastr/build/toastr.css'
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+
 function Index() {
   return (
     <StoreProvider store={store}>

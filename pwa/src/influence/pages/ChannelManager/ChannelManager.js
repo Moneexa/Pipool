@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import { faFacebookF, faTwitter, faLinkedinIn, faInstagram } from '@fortawesome/free-brands-svg-icons'
+import { faFacebookF, faTwitter, faLinkedinIn, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './ChannelManager.css'
 import { useEffect } from 'react';
@@ -22,29 +22,47 @@ function Channel() {
             </div>
 
             <div className="row">
-                {channels.map((value, index) => 
-                    <div id="border" className="col-xl-4   col-lg-7">
+                {channels.map((value, index) =>
+                    <div id="border" key={index} className="col-xl-4   col-lg-7">
 
                         <div className="card shadow mb-4">
                             <div className="card-body">
 
                                 <img alt="" src="../img/users_profile.jpg" />
                                 <h4>{value.channelName}</h4>
-                                <p><b>Project Manager</b></p>
+                                <p><b>Followers: {value.followers}</b></p>
                                 <p style={{ marginBottom: "50px" }}>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
                                 <div className="text-center d-none d-md-inline">
-                                    <button className="btn btn-floating btn-lg btn-fb" type="button">
-                                        <FontAwesomeIcon icon={faFacebookF} />
-                                    </button>
-                                    <button className="btn btn-floating btn-lg btn-tw" type="button">
-                                        <FontAwesomeIcon icon={faTwitter} />
-                                    </button>
-                                    <button className="btn btn-floating btn-lg btn-li" type="button">
-                                        <FontAwesomeIcon icon={faLinkedinIn} />
-                                    </button>
-                                    <button className="btn btn-floating btn-lg btn-ins" type="button">
-                                        < FontAwesomeIcon icon={faInstagram} />
-                                    </button>
+                                    {
+                                        value.channelType === "facebook" ?
+                                            <button className="btn btn-floating btn-lg btn-fb" type="button">
+                                                <FontAwesomeIcon icon={faFacebookF} />
+                                            </button> : ''
+                                    }
+                                    {
+                                        value.channelType === "twitter" ?
+                                            <button className="btn btn-floating btn-lg btn-tw" type="button">
+                                                <FontAwesomeIcon icon={faTwitter} />
+                                            </button> : ''
+                                    }
+                                    {
+                                        value.channelType === "linkedinin" ?
+                                            <button className="btn btn-floating btn-lg btn-li" type="button">
+                                                <FontAwesomeIcon icon={faLinkedinIn} />
+                                            </button> : ''
+                                    }
+                                    {
+                                        value.channelType === "instagram" ?
+                                            <button className="btn btn-floating btn-lg btn-ins" type="button">
+                                                < FontAwesomeIcon icon={faInstagram} />
+                                            </button> : ''
+                                    }
+                                    {
+                                        value.channelType === "youtube" ?
+                                            <button className="btn btn-floating btn-lg btn-ins" type="button">
+                                                < FontAwesomeIcon icon={faYoutube} />
+                                            </button> : ''
+                                    }
                                 </div>
 
                             </div>

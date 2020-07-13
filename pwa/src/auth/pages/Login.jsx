@@ -6,6 +6,8 @@ import { FacebookLoginWrapper } from '../shared/components/FacebookLoginWrapper'
 import { GoogleLoginWrapper } from '../shared/components/GoogleLoginWrapper';
 import { LinkedInWrapper } from '../shared/components/LinkedinWrapper';
 import './Login.css';
+import Loader from 'react-loader-spinner'
+
 
 
 
@@ -23,6 +25,7 @@ export function Login() {
         else {
             login(values);
         }
+
     }
 
     return (
@@ -48,7 +51,15 @@ export function Login() {
                                             {
                                                 !loading ? '' :
                                                     <div className="loading-overlay d-flex justify-content-center align-items-center">
-                                                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+
+                                                        <Loader
+                                                            type="Puff"
+                                                            color="#00BFFF"
+                                                            height={100}
+                                                            width={100}
+                                                            timeout={3000} //3 secs
+
+                                                        />
                                                     </div>
                                             }
                                             <div className="p-5">
@@ -56,11 +67,11 @@ export function Login() {
                                                     <h1 className="h4 text-gray-900 mb-4">{signingup ? 'Create an Account' : 'Welcome Back!'} </h1>
                                                 </div>
                                                 {
-                                                    loginErrorMessage?
-                                                    <div class="alert alert-danger" role="alert">
-                                                        {loginErrorMessage}
-                                                    </div>
-                                                    :''
+                                                    loginErrorMessage ?
+                                                        <div class="alert alert-danger" role="alert">
+                                                            {loginErrorMessage}
+                                                        </div>
+                                                        : ''
                                                 }
                                                 <form className="user" onSubmit={handleSubmit(onSubmit)}>
                                                     <div className="form-group">
