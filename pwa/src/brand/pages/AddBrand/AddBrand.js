@@ -71,7 +71,15 @@ export default function AddBrand({ match }) {
 
     return (
         <div className="add-brand">
-            
+            <div className="col-md-12 p-0">
+            {
+                !loading ? '' :
+                    <div className="loading-overlay d-flex align-items-center justify-content-center">
+
+                        <Spinner animation="border" variant="success" />
+                    </div>
+            }
+        </div>
             <div className="text-center">
                 <h1 className="h4 text-gray-900 mb-4">Add a New Brand</h1>
             </div>
