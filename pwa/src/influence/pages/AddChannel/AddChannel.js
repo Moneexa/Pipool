@@ -4,7 +4,7 @@ import TwitterVerify from '../../shared/components/TwitterVerify'
 import { FacebookVerify } from '../../shared/components/FacebookVerify';
 import { YoutubeVerify } from '../../shared/components/YoutubeVerify';
 import { InstagramVerify } from '../../shared/components/InstagramVerify'
-
+import {TiktokVerify} from '../../shared/components/TiktokVerify'
 class AddChannel extends React.Component {
     constructor(props) {
         super(props);
@@ -71,9 +71,11 @@ class AddChannel extends React.Component {
                                 </select>
 
                             <div className="row">
-                               <div className="col-md-4 my-3"><InstagramVerify /> </div>
-                               <div className="col-md-4 my-3"><YoutubeVerify /> </div>
-                               <div className="col-md-4 my-3"><TwitterVerify /> </div>
+                               <div className="col-md-3 my-3"><InstagramVerify /> </div>
+                               <div className="col-md-3 my-3"><YoutubeVerify /> </div>
+                               <div className="col-md-3 my-3"><TwitterVerify /> </div>
+                               <div className="col-md-3 my-3"><TiktokVerify /> </div>
+
                                </div>
 
                                
