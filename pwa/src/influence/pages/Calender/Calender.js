@@ -1,5 +1,7 @@
 import React from 'react'
 import './Calender.css'
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid'
 
 
 class Calender extends React.Component {
@@ -14,6 +16,10 @@ class Calender extends React.Component {
                 <div className="card shadow mb-4">
                     <div className="card-body">
                         <div className="pt-4 pb-2" style={{ padding: "0 ! important" }}>
+                            <FullCalendar
+                                plugins={[dayGridPlugin]}
+                                initialView="dayGridMonth"
+                            />
                         </div>
                     </div>
                 </div>

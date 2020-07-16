@@ -18,6 +18,11 @@ class Calender extends React.Component {
                             <FullCalendar
                                 plugins={[dayGridPlugin]}
                                 initialView="dayGridMonth"
+
+                                events={[
+                                    { title: 'event 1', date: '2020-07-18' },
+                                    { title: 'event 2', date: '2020-07-16' }
+                                ]}
                             />
                         </div>
                     </div>
