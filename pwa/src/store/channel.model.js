@@ -102,6 +102,9 @@ export const ChannelModel = {
         }
 
     }),
+    authenticateTiktok: thunk(async (actions, _, headers)=>{
+
+    }),
     saveYoutube: thunk(async (actions, payload) => {
         try {
             await axios.post(`${config.apiUrl}/influencers/channels/youtube/oauth/`, payload);
