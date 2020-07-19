@@ -30,5 +30,7 @@ router.delete('/:id', channelController.remove);
 router.post('/twitter/oauth/request_token', auth.verify, channelController.twitterOAuth);
 router.post('/twitter/oauth/', auth.verify, channelController.twitterPostOAuth);
 router.post('/youtube/oauth/', auth.verify, channelController.youtubeOAuth);
-router.post('/instagram/oauth/', auth.verify, channelController.InstaPostOAuth)
+router.post('/instagram/oauth/', auth.verify, channelController.InstaPostOAuth);
+router.post('/tiktok/oauth/', auth.verify, channelController.TiktokPostOauth)
+
 module.exports = router;

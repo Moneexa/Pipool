@@ -1,6 +1,8 @@
 var ChannelModel = require('./channelModel.js');
 const Twitter = require('twitter-lite')
 const config = require('../config.json')
+var unirest = require("unirest");
+
 const axios = require('axios')
 /**
  * channelController.js
@@ -233,6 +235,24 @@ module.exports = {
             console.log(error)
             res.status(400).send('Unable to add channel. Make sure you authorized it');
         }
+    },
+    TiktokPostOauth: function (req, res) {
+        axios.get(
+            "https://tiktok.p.rapidapi.com/live/hashtag/feed?name=mohsini172",
+            {
+                headers: {
+                    "content-type": "application/octet-stream",
+                    "x-rapidapi-host": "tiktok.p.rapidapi.com",
+                    "x-rapidapi-key": "fa98cc93aemshe352abd8965de42p1d8eeajsn83afb5249913",
+                    "useQueryString": true
+                }
+            })
+            .then((response) => {
+                console.log(response)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
 };

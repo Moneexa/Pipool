@@ -2,8 +2,8 @@ import axios from 'axios';
 import config from '../config.json';
 import * as toastr from 'toastr';
 
+ 
 const { action, thunk } = require("easy-peasy");
-
 export const ChannelModel = {
     channels: [],
     loading: false,
@@ -102,7 +102,10 @@ export const ChannelModel = {
         }
 
     }),
-    authenticateTiktok: thunk(async (actions, _, headers)=>{
+    authenticateTiktok: thunk(async (actions,payload)=>{
+        const body={user_id:payload}
+       const response= await axios.post(`${config.apiUrl}/influencers/channels/tiktok/oauth`, body)
+        console.log(response)  
 
     }),
     saveYoutube: thunk(async (actions, payload) => {
