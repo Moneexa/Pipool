@@ -18,6 +18,10 @@
         "grant_type" : "authorization_code",
         "client_secret": "pONWp2pvkJrrJg7I"
     },
+    "tiktok":{
+        "username": "mohsini172",
+        "key": "059b94221dmsh387d8c69d69c540p1b7ba5jsn7620540538d5"
+    },
     "instagram": {
         "appId": "2362555797382454",
         "redirectURI": "https://localhost:3000/oauth-redirect",

@@ -238,12 +238,12 @@ module.exports = {
     },
     TiktokPostOauth: function (req, res) {
         axios.get(
-            "https://tiktok.p.rapidapi.com/live/hashtag/feed?name=mohsini172",
+            `https://tiktok.p.rapidapi.com/live/hashtag/feed?name=${config.tiktok.username}`,
             {
                 headers: {
                     "content-type": "application/octet-stream",
                     "x-rapidapi-host": "tiktok.p.rapidapi.com",
-                    "x-rapidapi-key": "fa98cc93aemshe352abd8965de42p1d8eeajsn83afb5249913",
+                    "x-rapidapi-key": config.tiktok.key,
                     "useQueryString": true
                 }
             })
