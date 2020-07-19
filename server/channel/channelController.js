@@ -1,8 +1,7 @@
 var ChannelModel = require('./channelModel.js');
 const Twitter = require('twitter-lite')
 const config = require('../config.json')
-var unirest = require("unirest");
-
+const fetch = require("node-fetch");
 const axios = require('axios')
 /**
  * channelController.js
@@ -237,22 +236,20 @@ module.exports = {
         }
     },
     TiktokPostOauth: function (req, res) {
-        axios.get(
-            `https://tiktok.p.rapidapi.com/live/hashtag/feed?name=${config.tiktok.username}`,
-            {
-                headers: {
-                    "content-type": "application/octet-stream",
-                    "x-rapidapi-host": "tiktok.p.rapidapi.com",
-                    "x-rapidapi-key": config.tiktok.key,
-                    "useQueryString": true
-                }
+        fetch(`https://tiktok.p.rapidapi.com/live/post/comments?video_id=${config.tiktok.video_id}`, {
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-host": "tiktok.p.rapidapi.com",
+                "x-rapidapi-key": config.tiktok.key
+            }
+        })
+            .then(response => {
+                console.log(response);
+                res.status(200).send(response)
             })
-            .then((response) => {
-                console.log(response)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 
 };
