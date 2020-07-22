@@ -236,20 +236,27 @@ module.exports = {
         }
     },
     TiktokPostOauth: function (req, res) {
-        fetch(`https://tiktok.p.rapidapi.com/live/post/comments?video_id=${config.tiktok.video_id}`, {
+        axios({
             "method": "GET",
+            "url": "https://tiktok.p.rapidapi.com/live/post/comments",
             "headers": {
+                "content-type": "application/octet-stream",
                 "x-rapidapi-host": "tiktok.p.rapidapi.com",
-                "x-rapidapi-key": config.tiktok.key
+                "x-rapidapi-key": config.tiktok.key,
+                "useQueryString": true
+            }, "params": {
+                "video_id": config.tiktok.video_id
             }
         })
-            .then(response => {
-                console.log(response);
-                res.status(200).send(response)
-            })
-            .catch(err => {
-                console.log(err);
-            });
+        .then(response => {
+            console.log(response);
+            res.status(200).send(response)
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).send('Something went wrong')
+        });
+        
     }
 
 };

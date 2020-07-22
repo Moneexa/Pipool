@@ -3,26 +3,91 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useStoreActions } from 'easy-peasy';
 import React from 'react';
 import config from '../../../config.json';
+import { Modal, Button } from 'react-bootstrap'
 
-import {faTiktok} from '@fortawesome/free-brands-svg-icons'
+import { faTiktok } from '@fortawesome/free-brands-svg-icons'
+import { useState } from 'react';
+import axios from 'axios';
 
 export function InstagramVerify() {
     // const loginFacebook = useStoreActions(actions => actions.user.loginFacebook);
-const authenticateInsta =  useStoreActions(actions=>actions.channels.authenticateInstagram)
+    const authenticateInsta = useStoreActions(actions => actions.channels.authenticateInstagram)
+    const [showPopup, setShowPopup] = useState(false)
+    const [selectedAccount, setSelectedAccount] = useState(0)
+    const [accountsList, setAccountsList] = useState([])
     function openPopup() {
+        //   authenticateInsta();
+        const host = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port;
+        const oauthWindow = window.open(encodeURI(`${config.instagram.uri}/?redirect_uri=${host}${config.instagram.redirectURI}&client_id=${config.instagram.appId}&scope=${config.instagram.scope}&response_type=token&state={"{st=state123abc,ds=123456789}"}`));
 
-      authenticateInsta();
+        var timer = setInterval(function () {
+            console.log("here")
+            if (oauthWindow.closed) {
+                clearInterval(timer);
+                const redirectUrl = new URL(localStorage.getItem('oAuthRedirectUrl').replace('?#','?'));
+                const searchParams = redirectUrl.searchParams;
+                console.log(searchParams);
+
+                const code = searchParams.get('access_token');
+                // const error = searchParams.get('error');
+                console.log(code)
+                axios.get(`https://graph.facebook.com/v7.0/me/accounts?fields=instagram_business_account,name,idaccess_token=${code}`)
+                    .then(res => {
+                        setAccountsList(res.data.data)
+                        setShowPopup(true);
+                    })
+                    .catch(console.error)
+
+                // loginFacebook(code);
+            }
+        }, 1000);
+    }
+
+    function handleClose() {
+        console.log('here')
     }
 
 
     return (
+        <>
+            <Modal show={showPopup} handleClose={() => setShowPopup(false)}
+                databackdrop="false"
+                className="shadow-lg d-flex align-items-center"
+                style={{
+                    position: "absolute",
 
-        <button
-            onClick={() => openPopup()}
-            className="btn btn-primary rounded-20 text-white">
-            <FontAwesomeIcon icon={faInstagram} />
-                + Instagram Account
-        </button>
+                }}
 
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Choose an account you want to add</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {
+                        accountsList.map((value, index) =>
+                            <label key={index}>
+                                <input type="radio" name="account" value={index} checked={selectedAccount === index} onChange={(ev) => setSelectedAccount(ev.target.value)} />
+                                {value.name}
+                            </label>
+                        )
+                    }
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleClose}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            <button
+                type="button"
+                onClick={() => openPopup()}
+                className="btn btn-primary rounded-20 text-white">
+                <FontAwesomeIcon icon={faInstagram} />
+                    + Instagram
+            </button>
+        </>
     );
 }
