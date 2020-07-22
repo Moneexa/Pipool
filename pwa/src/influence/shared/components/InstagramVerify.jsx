@@ -10,11 +10,9 @@ import { useState } from 'react';
 import axios from 'axios';
 
 export function InstagramVerify() {
-    // const loginFacebook = useStoreActions(actions => actions.user.loginFacebook);
-    const authenticateInsta = useStoreActions(actions => actions.channels.authenticateInstagram)
     const authInsta = useStoreActions(actions => actions.channels.authInsta)
-    const [_payload, setPayload] = useState({})
     const [showPopup, setShowPopup] = useState(false)
+    const [token, setToken] = useState(false)
     const [selectedAccount, setSelectedAccount] = useState(0)
     const [accountsList, setAccountsList] = useState([])
     function openPopup() {
@@ -31,6 +29,7 @@ export function InstagramVerify() {
                 console.log(searchParams);
 
                 const code = searchParams.get('access_token');
+                setToken(code);
                 // const error = searchParams.get('error');
                 console.log(code)
                 axios.get(`https://graph.facebook.com/v7.0/me/accounts?fields=instagram_business_account,name,id&access_token=${code}`)
@@ -39,10 +38,6 @@ export function InstagramVerify() {
                         
                         setAccountsList(res.data.data)
                         setShowPopup(true);
-                        setPayload({
-                            insta_id: res.data.data[selectedAccount].id,
-                            code: code
-                        })
                     })
                     .catch(console.error)
 
@@ -52,8 +47,9 @@ export function InstagramVerify() {
         }, 1000);
     }
     function handleSubmit() {
-        console.log(_payload)
-        authInsta(_payload)
+        console.log(selectedAccount)
+        console.log(accountsList)
+        authInsta({token: token, id: accountsList[selectedAccount].instagram_business_account.id})
 
         //console.log('here')
         setShowPopup(false)
@@ -68,6 +64,7 @@ export function InstagramVerify() {
         <>
             <Modal show={showPopup}
                 databackdrop="false"
+                onHide={()=>this.handleClose()}
                 className="shadow-lg d-flex align-items-center"
                 style={{
                     position: "absolute",
@@ -89,10 +86,10 @@ export function InstagramVerify() {
                     }
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button variant="secondary" onClick={() => handleClose()}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleSubmit}>
+                    <Button variant="primary" onClick={() => handleSubmit()}>
                         Save Changes
                     </Button>
                 </Modal.Footer>
