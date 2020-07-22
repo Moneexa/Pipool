@@ -36,12 +36,13 @@ export function InstagramVerify() {
                 axios.get(`https://graph.facebook.com/v7.0/me/accounts?fields=instagram_business_account,name,id&access_token=${code}`)
                     .then(res => {
                         console.log(res)
-                        setPayload({
-                            insta_id: res.data.data[0].id,
-                            code: code
-                        })
+                        
                         setAccountsList(res.data.data)
                         setShowPopup(true);
+                        setPayload({
+                            insta_id: res.data.data[selectedAccount].id,
+                            code: code
+                        })
                     })
                     .catch(console.error)
 
