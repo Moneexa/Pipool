@@ -64,7 +64,7 @@ export function InstagramVerify() {
         <>
             <Modal show={showPopup}
                 databackdrop="false"
-                onHide={()=>this.handleClose()}
+                onHide={()=>handleClose()}
                 className="shadow-lg d-flex align-items-center"
                 style={{
                     position: "absolute",
