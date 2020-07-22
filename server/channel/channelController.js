@@ -3,6 +3,7 @@ const Twitter = require('twitter-lite')
 const config = require('../config.json')
 const fetch = require("node-fetch");
 const axios = require('axios')
+const got = require('got');
 /**
  * channelController.js
  *
@@ -238,7 +239,7 @@ module.exports = {
     InstaOAuth: async function (req,res){
       try{
 
-        const resp= await axios.get(`https://graph.facebook.com/v7.0/${req.body.id}?fields=followers_count,name,username,profile_picture_url&access_token=${req.body.token}`)
+        const resp= await got(`https://graph.facebook.com/v7.0/${req.body.id}?fields=followers_count,name,username,profile_picture_url&access_token=${req.body.token}`)
         res.status(200).send(resp)  
     }
       catch(error){
