@@ -13,7 +13,7 @@ export function InstagramVerify() {
     // const loginFacebook = useStoreActions(actions => actions.user.loginFacebook);
     const authenticateInsta = useStoreActions(actions => actions.channels.authenticateInstagram)
     const authInsta = useStoreActions(actions => actions.channels.authInsta)
-
+    const [_payload, setPayload] = useState({})
     const [showPopup, setShowPopup] = useState(false)
     const [selectedAccount, setSelectedAccount] = useState(0)
     const [accountsList, setAccountsList] = useState([])
@@ -26,7 +26,7 @@ export function InstagramVerify() {
             console.log("here")
             if (oauthWindow.closed) {
                 clearInterval(timer);
-                const redirectUrl = new URL(localStorage.getItem('oAuthRedirectUrl').replace('?#','?'));
+                const redirectUrl = new URL(localStorage.getItem('oAuthRedirectUrl').replace('?#', '?'));
                 const searchParams = redirectUrl.searchParams;
                 console.log(searchParams);
 
@@ -36,30 +36,36 @@ export function InstagramVerify() {
                 axios.get(`https://graph.facebook.com/v7.0/me/accounts?fields=instagram_business_account,name,id&access_token=${code}`)
                     .then(res => {
                         console.log(res)
-                        const _payload={
-                            insta_id: res.data.data,
+                        setPayload({
+                            insta_id: res.data.data[0].id,
                             code: code
-                        }
-                        authInsta(_payload)
+                        })
                         setAccountsList(res.data.data)
                         setShowPopup(true);
                     })
                     .catch(console.error)
 
                 // loginFacebook(code);
-                
+
             }
         }, 1000);
     }
+    function handleSubmit() {
+        console.log(_payload)
+        authInsta(_payload)
 
+        //console.log('here')
+        setShowPopup(false)
+    }
     function handleClose() {
-        console.log('here')
+        setShowPopup(false)
+
     }
 
 
     return (
         <>
-            <Modal show={showPopup} handleClose={() => setShowPopup(false)}
+            <Modal show={showPopup}
                 databackdrop="false"
                 className="shadow-lg d-flex align-items-center"
                 style={{
@@ -85,7 +91,7 @@ export function InstagramVerify() {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleClose}>
+                    <Button variant="primary" onClick={handleSubmit}>
                         Save Changes
                     </Button>
                 </Modal.Footer>

@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from '../config.json';
 import * as toastr from 'toastr';
 
- 
+
 const { action, thunk } = require("easy-peasy");
 export const ChannelModel = {
     channels: [],
@@ -62,10 +62,15 @@ export const ChannelModel = {
         }
 
     }),
-    authInsta: thunk(async (actions, payload)=>{
+    authInsta: thunk(async (actions, payload) => {
 
-     const res= await axios.post(`${config.apiUrl}/influencers/channels/instagram/post-oauth`,payload)
-      console.log(res)
+        try {
+            const res = await axios.post(`${config.apiUrl}/influencers/channels/instagram/post-oauth`, payload)
+            console.log(res)
+        }
+        catch (error) {
+            console.log(error)
+        }
     }),
     authenticateInstagram: thunk(async (actions, _, helpers) => {
         try {
@@ -107,10 +112,10 @@ export const ChannelModel = {
         }
 
     }),
-    authenticateTiktok: thunk(async (actions,payload)=>{
-        const body={user_id:payload}
-       const response= await axios.post(`${config.apiUrl}/influencers/channels/tiktok/oauth`, body)
-        console.log(response)  
+    authenticateTiktok: thunk(async (actions, payload) => {
+        const body = { user_id: payload }
+        const response = await axios.post(`${config.apiUrl}/influencers/channels/tiktok/oauth`, body)
+        console.log(response)
 
     }),
     saveYoutube: thunk(async (actions, payload) => {
