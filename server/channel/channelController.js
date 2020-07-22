@@ -236,20 +236,51 @@ module.exports = {
         }
     },
     TiktokPostOauth: function (req, res) {
-        fetch(`https://tiktok.p.rapidapi.com/live/post/comments?video_id=${config.tiktok.video_id}`, {
+        var uid = req.body.user_id;
+        var user_id, sec_uid;
+        axios({
             "method": "GET",
+            "url": "https://tiktok.p.rapidapi.com/live/post/comments",
             "headers": {
+                "content-type": "application/octet-stream",
                 "x-rapidapi-host": "tiktok.p.rapidapi.com",
-                "x-rapidapi-key": config.tiktok.key
+                "x-rapidapi-key": config.tiktok.key,
+                "useQueryString": true
+            }, "params": {
+                "video_id": config.tiktok.video_id
             }
-        })
-            .then(response => {
-                console.log(response);
-                res.status(200).send(response)
+        }).then(response => {
+            user_id = (response.data.comments[0].comment_id)
+            sec_uid = (response.data.comments[0].author.sec_uid)
+        }
+
+        ).catch(error => console.log(error))
+
+        if (uid === user_id) {
+            axios({
+                "method": "GET",
+                "url": "https://tiktok.p.rapidapi.com/live/user/follower/list",
+                "headers": {
+                    "content-type": "application/octet-stream",
+                    "x-rapidapi-host": "tiktok.p.rapidapi.com",
+                    "x-rapidapi-key": config.tiktok.key,
+                    "useQueryString": true
+                }, "params": {
+                    "sec_uid": sec_uid,
+                    "max_cursor": "0",
+                    "limit": "40"
+                }
             })
-            .catch(err => {
-                console.log(err);
-            });
+                .then((response) => {
+                    console.log(response)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+
+        }
+
+
     }
 
 };
