@@ -3,7 +3,6 @@ const Twitter = require('twitter-lite')
 const config = require('../config.json')
 const fetch = require("node-fetch");
 const axios = require('axios')
-const got = require('got');
 /**
  * channelController.js
  *
@@ -194,6 +193,8 @@ module.exports = {
     youtubeOAuth: async function (req, res) {
         try {
             const { token, id } = req.body;
+            const existingChannel = await ChannelModel.findOne({ channelId: id, channelType: 'youtube' });
+            if (existingChannel) return res.status(405).send('Channel already exists');
             const { data } = await axios.get(`https://www.googleapis.com/youtube/v3/channels?part=id,statistics,snippet&mine=true&key=AIzaSyDe6galtm6BnVZE-8PfF7v8YtZzSeyO9S0`,
                 {
                     headers: {
@@ -236,16 +237,26 @@ module.exports = {
             res.status(400).send('Unable to add channel. Make sure you authorized it');
         }
     },
-    InstaOAuth: async function (req,res){
-      try{
+    InstaOAuth: async function (req, res) {
+        const existingChannel = await ChannelModel.findOne({ channelId: req.body.id, channelType: 'instagram' });
+        if (existingChannel) return res.status(405).send('Channel already exists');
+        try {
+            const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.id}?fields=followers_count,name,username,profile_picture_url&access_token=${req.body.token}`)
+            res.status(200).send(resp.data)
+            var channel = new ChannelModel({
+                channelName: resp.data.name,
+                channelId: resp.data.id,
+                followers: resp.data.followers_count,
+                channelType: 'instagram'
+            });
+            await channel.save();
+            return res.status(201).send(channel)
 
-        const resp= await got(`https://graph.facebook.com/v7.0/${req.body.id}?fields=followers_count,name,username,profile_picture_url&access_token=${req.body.token}`)
-        res.status(200).send(resp)  
-    }
-      catch(error){
-        res.status(500).send(error)  
+        }
+        catch (error) {
+            res.status(500).send(error)
 
-      }
+        }
     },
     TiktokPostOauth: function (req, res) {
         var uid = req.body.user_id;
