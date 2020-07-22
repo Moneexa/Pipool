@@ -98,8 +98,7 @@ export function InstagramVerify() {
                 type="button"
                 onClick={() => openPopup()}
                 className="btn btn-primary rounded-20 text-white">
-                <FontAwesomeIcon icon={faInstagram} />
-                    + Instagram
+                <FontAwesomeIcon icon={faInstagram} /> Instagram +
             </button>
         </>
     );

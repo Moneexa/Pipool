@@ -67,50 +67,12 @@ export const ChannelModel = {
         try {
             const res = await axios.post(`${config.apiUrl}/influencers/channels/instagram/post-oauth`, payload)
             console.log(res)
+            toastr.success('Successfully added channel')
         }
         catch (error) {
-            console.log(error)
+            debugger
+            toastr.error(error.response.status === 405? 'Account already exists': 'Error while adding the channel')
         }
-    }),
-    authenticateInstagram: thunk(async (actions, _, helpers) => {
-        try {
-
-            const oauthWindow = window.open(encodeURI(`https://api.instagram.com/oauth/authorize?client_id=${config.instagram.appId}&redirect_uri=${config.instagram.redirectURI}&scope=${config.instagram.scope}&response_type=code`));
-            var timer = setInterval(async () => {
-                try {
-                    if (oauthWindow.closed) {
-                        clearInterval(timer);
-                        const redirectUrl = new URL(localStorage.getItem('oAuthRedirectUrl', window.location.href));
-                        const searchParams = redirectUrl.searchParams;
-                        const token = searchParams.get('code');
-                        const error = searchParams.get('error');
-
-                        console.log(token);
-                        const body = {
-                            token: token,
-                        }
-
-                        const res = await axios.post(`${config.apiUrl}/influencers/channels/instagram/oauth/`, body);
-                        console.log(res)
-                        //actions.add(res.data);
-                        //toastr.success("Successfully added channel")
-
-                    }
-                } catch (error) {
-                    if (error.response && error.response.data)
-                        toastr.error(error.response.data);
-                    else
-                        toastr.error(error.message);
-                }
-
-            }, 1000);
-        } catch (error) {
-            if (error.response && error.response.data)
-                toastr.error(error.response.data);
-            else
-                toastr.error(error.message);
-        }
-
     }),
     authenticateTiktok: thunk(async (actions, payload) => {
         const body = { user_id: payload }

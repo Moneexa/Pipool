@@ -73,7 +73,7 @@ export function TiktokVerify() {
                 onClick={() => openPopup()}
                 className="btn btn-primary rounded-20 text-white">
                 <FontAwesomeIcon icon={faTiktok} />
-                + Tiktok Account
+                &nbsp;Tiktok+
         </button>
         </>
 
