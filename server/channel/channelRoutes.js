@@ -31,6 +31,8 @@ router.post('/twitter/oauth/request_token', auth.verify, channelController.twitt
 router.post('/twitter/oauth/', auth.verify, channelController.twitterPostOAuth);
 router.post('/youtube/oauth/', auth.verify, channelController.youtubeOAuth);
 router.post('/instagram/oauth/', auth.verify, channelController.InstaPostOAuth);
+router.post('/instagram/post-oauth/', auth.verify, channelController.InstaOAuth);
+
 router.post('/tiktok/oauth/', auth.verify, channelController.TiktokPostOauth)
 
 module.exports = router;

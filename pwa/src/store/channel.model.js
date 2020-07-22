@@ -62,6 +62,11 @@ export const ChannelModel = {
         }
 
     }),
+    authInsta: thunk(async (actions, payload)=>{
+
+     const res= await axios.post(`${config.apiUrl}/influencers/channels/instagram/post-oauth`,payload)
+      console.log(res)
+    }),
     authenticateInstagram: thunk(async (actions, _, helpers) => {
         try {
 
