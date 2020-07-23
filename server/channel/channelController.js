@@ -311,21 +311,17 @@ module.exports = {
                 //console.log(response.data.total_followers)
                 followers = response.data.total_followers
                 //console.log(followers)
+                console.log(followers)
+                var channel = new ChannelModel({
+                    channelName: name,
+                    channelId: user_id,
+                    followers: followers,
+                    channelType: 'tiktok'
+                });
+                await channel.save();
+                return res.status(201).send(channel)
 
 
-
-                if (followers) {
-                    console.log(followers)
-                    var channel = new ChannelModel({
-                        channelName: name,
-                        channelId: user_id,
-                        followers: followers,
-                        channelType: 'tiktok'
-                    });
-                    await channel.save();
-                    return res.status(201).send(channel)
-
-                }
             }
 
         }
