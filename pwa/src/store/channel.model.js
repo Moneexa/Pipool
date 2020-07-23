@@ -71,13 +71,22 @@ export const ChannelModel = {
         }
         catch (error) {
             debugger
-            toastr.error(error.response.status === 405? 'Account already exists': 'Error while adding the channel')
+            toastr.error(error.response.status === 405 ? 'Account already exists' : 'Error while adding the channel')
         }
     }),
     authenticateTiktok: thunk(async (actions, payload) => {
-        const body = { user_id: payload }
-        const response = await axios.post(`${config.apiUrl}/influencers/channels/tiktok/oauth`, body)
-        console.log(response)
+        try {
+
+            const body = { user_id: payload }
+            const response = await axios.post(`${config.apiUrl}/influencers/channels/tiktok/oauth`, body)
+            console.log(response)
+            toastr.success('Successfully added channel')
+        }
+        catch (error) {
+            debugger
+            console.log(error)
+            toastr.error(error.response.status === 405 ? 'Account already exists' : 'Error while adding the channel')
+        }
 
     }),
     authFacebook: thunk(async (actions, payload) => {
@@ -88,18 +97,12 @@ export const ChannelModel = {
             toastr.success('Successfully added channel')
         }
         catch (error) {
-            //debugger
+            debugger
             console.log(error)
-           // toastr.error(error.response.status === 405? 'Account already exists': 'Error while adding the channel')
+            toastr.error(error.response.status === 405 ? 'Account already exists' : 'Error while adding the channel')
         }
     }),
-    authenticateTiktok: thunk(async (actions, payload) => {
-        const body = { user_id: payload }
-        const response = await axios.post(`${config.apiUrl}/influencers/channels/tiktok/oauth`, body)
-        console.log(response)
 
-    }),
-    
     saveYoutube: thunk(async (actions, payload) => {
         try {
             await axios.post(`${config.apiUrl}/influencers/channels/youtube/oauth/`, payload);

@@ -225,12 +225,13 @@ module.exports = {
         const existingChannel = await ChannelModel.findOne({ channelId: req.body.id, channelType: 'facebook' });
         if (existingChannel) return res.status(405).send('Channel already exists');
         try {
-            const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.id}?fields=followers_count,name,username,profile_picture_url&access_token=${req.body.token}`)
-            res.status(200).send(resp.data)
+            const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.id}?fields=username,name,picture,fan_count&access_token=${req.body.token}`)
+            //res.status(200).send(resp.data.fan_count)
+            console.log(resp.data.fan_count)
             var channel = new ChannelModel({
                 channelName: resp.data.name,
                 channelId: resp.data.id,
-                followers: resp.data.followers_count,
+                followers: resp.data.fan_count,
                 channelType: 'facebook'
             });
             await channel.save();
@@ -238,10 +239,11 @@ module.exports = {
 
         }
         catch (error) {
+            console.log(error)
             res.status(500).send(error)
 
         }
-    },  
+    },
     InstaOAuth: async function (req, res) {
         const existingChannel = await ChannelModel.findOne({ channelId: req.body.id, channelType: 'instagram' });
         if (existingChannel) return res.status(405).send('Channel already exists');
@@ -259,56 +261,77 @@ module.exports = {
 
         }
         catch (error) {
-            res.status(500).send(error)
+            res.send(error)
 
         }
     },
-    TiktokPostOauth: function (req, res) {
-        var uid = req.body.user_id;
-        var user_id, sec_uid;
-        axios({
-            "method": "GET",
-            "url": "https://tiktok.p.rapidapi.com/live/post/comments",
-            "headers": {
-                "content-type": "application/octet-stream",
-                "x-rapidapi-host": "tiktok.p.rapidapi.com",
-                "x-rapidapi-key": config.tiktok.key,
-                "useQueryString": true
-            }, "params": {
-                "video_id": config.tiktok.video_id
-            }
-        }).then(response => {
-            user_id = (response.data.comments[0].comment_id)
-            sec_uid = (response.data.comments[0].author.sec_uid)
-        }
+    TiktokPostOauth: async function (req, res) {
+        const existingChannel = await ChannelModel.findOne({ channelId: req.body.user_id, channelType: 'tiktok' });
+        if (existingChannel) return res.status(405).send('Channel already exists');
+        try {
 
-        ).catch(error => console.log(error))
-
-        if (uid === user_id) {
-            axios({
+            var uid = req.body.user_id;
+            var user_id = '', sec_uid = '', name = '', followers = '';
+            const response = await axios({
                 "method": "GET",
-                "url": "https://tiktok.p.rapidapi.com/live/user/follower/list",
+                "url": "https://tiktok.p.rapidapi.com/live/post/comments",
                 "headers": {
                     "content-type": "application/octet-stream",
                     "x-rapidapi-host": "tiktok.p.rapidapi.com",
                     "x-rapidapi-key": config.tiktok.key,
                     "useQueryString": true
                 }, "params": {
-                    "sec_uid": sec_uid,
-                    "max_cursor": "0",
-                    "limit": "40"
+                    "video_id": config.tiktok.video_id
                 }
             })
-                .then((response) => {
-                    console.log(response)
+            //console.log(response.data.comments[0].author)
+            user_id = response.data.comments[0].author.unique_id
+            name = response.data.comments[0].author.nickname
+
+            //console.log(response.data.comments[0].comment_id)
+            sec_uid = response.data.comments[0].author.sec_uid
+            console.log(user_id + " " + uid)
+
+            if (uid === user_id) {
+                // console.log("here")
+                const response = await axios({
+                    "method": "GET",
+                    "url": "https://tiktok.p.rapidapi.com/live/user/follower/list",
+                    "headers": {
+                        "content-type": "application/octet-stream",
+                        "x-rapidapi-host": "tiktok.p.rapidapi.com",
+                        "x-rapidapi-key": config.tiktok.key,
+                        "useQueryString": true
+                    }, "params": {
+                        "sec_uid": sec_uid,
+                        "max_cursor": "0",
+                        "limit": "40"
+                    }
                 })
-                .catch((error) => {
-                    console.log(error)
-                })
+                //console.log(response.data.total_followers)
+                followers = response.data.total_followers
+                //console.log(followers)
+
+
+
+                if (followers) {
+                    console.log(followers)
+                    var channel = new ChannelModel({
+                        channelName: name,
+                        channelId: user_id,
+                        followers: followers,
+                        channelType: 'tiktok'
+                    });
+                    await channel.save();
+                    return res.status(201).send(channel)
+
+                }
+            }
 
         }
+        catch (error) {
+            res.send(error)
 
-
+        }
     }
-
 };
