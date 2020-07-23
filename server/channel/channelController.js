@@ -221,22 +221,27 @@ module.exports = {
             res.status(400).send('Unable to add channel. Make sure you authorized it');
         }
     },
-    InstaPostOAuth: async function (req, res) {
-        const body = {
-            client_id: config.instagram.appId,
-            client_secret: config.instagram.secret
-        }
+    FacebookOAuth: async function (req, res) {
+        const existingChannel = await ChannelModel.findOne({ channelId: req.body.id, channelType: 'facebook' });
+        if (existingChannel) return res.status(405).send('Channel already exists');
         try {
-            const response = await axios.post(`https://api.instagram.com/oauth/access_token?client_id=${config.instagram.appId}&client_secret=${config.instagram.secret}&grant_type=authorization_code&redirect_uri=${config.instagram.redirectUri}&code=${req.body.token}`, body)
-            console.log(response)
-            res.status(200).send(response)
-        }
+            const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.id}?fields=followers_count,name,username,profile_picture_url&access_token=${req.body.token}`)
+            res.status(200).send(resp.data)
+            var channel = new ChannelModel({
+                channelName: resp.data.name,
+                channelId: resp.data.id,
+                followers: resp.data.followers_count,
+                channelType: 'facebook'
+            });
+            await channel.save();
+            return res.status(201).send(channel)
 
-        catch (error) {
-            console.log(error)
-            res.status(400).send('Unable to add channel. Make sure you authorized it');
         }
-    },
+        catch (error) {
+            res.status(500).send(error)
+
+        }
+    },  
     InstaOAuth: async function (req, res) {
         const existingChannel = await ChannelModel.findOne({ channelId: req.body.id, channelType: 'instagram' });
         if (existingChannel) return res.status(405).send('Channel already exists');

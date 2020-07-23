@@ -72,9 +72,10 @@ class AddChannel extends React.Component {
 
                             <div className="row">
                                <div className="col-md-3 my-3"><InstagramVerify /> </div>
-                               <div className="col-md-3 my-3"><YoutubeVerify /> </div>
+                               <div className="col-md-2 my-3"><YoutubeVerify /> </div>
                                <div className="col-md-3 my-3"><TwitterVerify /> </div>
-                               <div className="col-md-3 my-3"><TiktokVerify /> </div>
+                               <div className="col-md-2 my-3"><TiktokVerify /> </div>
+                               <div className="col-md-2 my-3"><FacebookVerify /> </div>
 
                                </div>
 

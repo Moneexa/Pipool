@@ -65,7 +65,7 @@ export const ChannelModel = {
     authInsta: thunk(async (actions, payload) => {
 
         try {
-            const res = await axios.post(`${config.apiUrl}/influencers/channels/instagram/post-oauth`, payload)
+            const res = await axios.post(`${config.apiUrl}/influencers/channels/instagram/oauth`, payload)
             console.log(res)
             toastr.success('Successfully added channel')
         }
@@ -80,6 +80,25 @@ export const ChannelModel = {
         console.log(response)
 
     }),
+    authFacebook: thunk(async (actions, payload) => {
+
+        try {
+            const res = await axios.post(`${config.apiUrl}/influencers/channels/facebook/oauth`, payload)
+            console.log(res)
+            toastr.success('Successfully added channel')
+        }
+        catch (error) {
+            debugger
+            toastr.error(error.response.status === 405? 'Account already exists': 'Error while adding the channel')
+        }
+    }),
+    authenticateTiktok: thunk(async (actions, payload) => {
+        const body = { user_id: payload }
+        const response = await axios.post(`${config.apiUrl}/influencers/channels/tiktok/oauth`, body)
+        console.log(response)
+
+    }),
+    
     saveYoutube: thunk(async (actions, payload) => {
         try {
             await axios.post(`${config.apiUrl}/influencers/channels/youtube/oauth/`, payload);
