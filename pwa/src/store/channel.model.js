@@ -88,8 +88,9 @@ export const ChannelModel = {
             toastr.success('Successfully added channel')
         }
         catch (error) {
-            debugger
-            toastr.error(error.response.status === 405? 'Account already exists': 'Error while adding the channel')
+            //debugger
+            console.log(error)
+           // toastr.error(error.response.status === 405? 'Account already exists': 'Error while adding the channel')
         }
     }),
     authenticateTiktok: thunk(async (actions, payload) => {
