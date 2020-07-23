@@ -24,6 +24,7 @@ let campaign = {
 
 };
 export const CampaignModel = {
+    loading: false,
     campaignList: [],
     actv: {
         id: campaign.id,
@@ -50,7 +51,9 @@ export const CampaignModel = {
     updateCampaignList: action((state, payload) => {
         state.campaignList = payload;
     }),
-
+    updateLoading: action((state, payload) => {
+        state.loading = payload
+    }),
     updateCampaign: action((state, payload) => {
         state.actv.id = payload._id || state.actv.id;
         state.actv.serviceName = payload.serviceName || state.actv.serviceName;
@@ -115,9 +118,13 @@ export const CampaignModel = {
             influencers: payload.influencers,
         }
         try {
+            actions.updateLoading(true);
+
             const res = await axios.put(`${config.apiUrl}/campaigns/${id}`, obj,)
             actions.updateCampaign(res.data);
+
             toastr.success("Successfully updated data");
+
         } catch (error) {
 
             actions.postError("Form values are not correct.")
@@ -125,6 +132,8 @@ export const CampaignModel = {
 
 
         }
+        actions.updateLoading(false);
+
     }),
 
     postCampaign: thunk(async (actions, payload) => {
@@ -147,9 +156,12 @@ export const CampaignModel = {
             influencers: payload.interests,
         }
         try {
+            actions.updateLoading(true);
+
             const res = await axios.post(`${config.apiUrl}/campaigns/`, obj)
 
             actions.updateCampaign(res.data);
+
             toastr.success("Successfully  data has been sent");
 
 
@@ -161,5 +173,7 @@ export const CampaignModel = {
 
 
         }
+        actions.updateLoading(false);
+
     }),
 };

@@ -7,7 +7,6 @@ import { Form2 } from './Form2';
 import { Form3 } from './Form3';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 
-
 function NewCampaign() {
 
     const formSteps = ["one", "two", "three"]
@@ -32,7 +31,8 @@ function NewCampaign() {
     function onFinish(values) {
         const data = Object.assign({}, formData, values);
         setFormData(data);
-        post(data);
+
+            post(data);
         console.log(data)
     }
 
@@ -54,8 +54,9 @@ function NewCampaign() {
                         <Tab.Pane eventKey={formSteps[2]}>
                             <Form3 onFinish={onFinish} onPrevious={stepBack} />
                         </Tab.Pane>
-                    </Tab.Content> 
+                    </Tab.Content>
                 </Tab.Container>
+                
             </div>
         </div>
 

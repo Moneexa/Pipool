@@ -19,6 +19,7 @@ let brand = {
 
 };
 export const BrandModel = {
+    loading: false,
     list: [],
     active: {
         id: brand.id,
@@ -33,6 +34,7 @@ export const BrandModel = {
         postalCode: brand.postalCode,
         country: brand.country,
         city: brand.city,
+
     },
     errors: {
         postErrorMessage: "",
@@ -40,6 +42,9 @@ export const BrandModel = {
 
     updateBrandList: action((state, payload) => {
         state.list = payload;
+    }),
+    updateLoading: action((state, payload) => {
+        state.loading = payload
     }),
 
     updateBrand: action((state, payload) => {
@@ -97,14 +102,21 @@ export const BrandModel = {
             address: payload.address,
         }
         try {
+            actions.updateLoading(true);
+
             const res = await axios.put(`${config.apiUrl}/brands/${id}`, obj)
+
             actions.updateBrand(res.data);
+
             toastr.success("Successfully updated data");
+
 
         } catch (error) {
             actions.postError("Form values are not correct.")
             toastr.error("There was problem saving you data")
         }
+        actions.updateLoading(false);
+
     }),
 
     post: thunk(async (actions, payload) => {
@@ -122,10 +134,13 @@ export const BrandModel = {
             address: payload.address,
         }
         try {
+            actions.updateLoading(true);
+
             const res = await axios.post(`${config.apiUrl}/brands/`, obj)
 
             actions.updateBrand(res.data);
             toastr.success("Successfully  data has been sent");
+
 
 
 
@@ -136,6 +151,8 @@ export const BrandModel = {
 
 
         }
+        actions.updateLoading(false);
+
     }),
 
 

@@ -1,6 +1,7 @@
 var ChannelModel = require('./channelModel.js');
 const Twitter = require('twitter-lite')
 const config = require('../config.json')
+const fetch = require("node-fetch");
 const axios = require('axios')
 /**
  * channelController.js
@@ -13,7 +14,7 @@ module.exports = {
      * channelController.list()
      */
     list: function (req, res) {
-        ChannelModel.find({ createdBy: res.locals.user.id }, function (err, channels) {
+        ChannelModel.find(function (err, channels) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting channel.',
@@ -177,7 +178,6 @@ module.exports = {
                 channelName: userData.name,
                 channelId: userData.id,
                 followers: userData.followers_count,
-                createdBy: res.locals.user.id,
                 channelType: 'twitter'
             });
 
@@ -193,6 +193,8 @@ module.exports = {
     youtubeOAuth: async function (req, res) {
         try {
             const { token, id } = req.body;
+            const existingChannel = await ChannelModel.findOne({ channelId: id, channelType: 'youtube' });
+            if (existingChannel) return res.status(405).send('Channel already exists');
             const { data } = await axios.get(`https://www.googleapis.com/youtube/v3/channels?part=id,statistics,snippet&mine=true&key=AIzaSyDe6galtm6BnVZE-8PfF7v8YtZzSeyO9S0`,
                 {
                     headers: {
@@ -206,8 +208,7 @@ module.exports = {
                         channelName: channel.snippet.title,
                         channelId: id,
                         followers: channel.statistics.subscriberCount,
-                        channelType: 'youtube',
-                        createdBy: res.locals.user.id,
+                        channelType: 'youtube'
                     })
                     const newChannel = await channels.save();
                     return res.status(201).send(newChannel)
@@ -220,21 +221,94 @@ module.exports = {
             res.status(400).send('Unable to add channel. Make sure you authorized it');
         }
     },
-    InstaPostOAuth: async function (req, res) {
-        const body = {
-            client_id: config.instagram.appId,
-            client_secret: config.instagram.secret
-        }
+    FacebookOAuth: async function (req, res) {
+        const existingChannel = await ChannelModel.findOne({ channelId: req.body.id, channelType: 'facebook' });
+        if (existingChannel) return res.status(405).send('Channel already exists');
         try {
-            const response = await axios.post(`https://api.instagram.com/oauth/access_token?client_id=${config.instagram.appId}&client_secret=${config.instagram.secret}&grant_type=authorization_code&redirect_uri=${config.instagram.redirectUri}&code=${req.body.token}`, body)
-            console.log(response)
-            res.status(200).send(response)
+            const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.id}?fields=followers_count,name,username,profile_picture_url&access_token=${req.body.token}`)
+            res.status(200).send(resp.data)
+            var channel = new ChannelModel({
+                channelName: resp.data.name,
+                channelId: resp.data.id,
+                followers: resp.data.followers_count,
+                channelType: 'facebook'
+            });
+            await channel.save();
+            return res.status(201).send(channel)
+
+        }
+        catch (error) {
+            res.status(500).send(error)
+
+        }
+    },  
+    InstaOAuth: async function (req, res) {
+        const existingChannel = await ChannelModel.findOne({ channelId: req.body.id, channelType: 'instagram' });
+        if (existingChannel) return res.status(405).send('Channel already exists');
+        try {
+            const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.id}?fields=followers_count,name,username,profile_picture_url&access_token=${req.body.token}`)
+            res.status(200).send(resp.data)
+            var channel = new ChannelModel({
+                channelName: resp.data.name,
+                channelId: resp.data.id,
+                followers: resp.data.followers_count,
+                channelType: 'instagram'
+            });
+            await channel.save();
+            return res.status(201).send(channel)
+
+        }
+        catch (error) {
+            res.status(500).send(error)
+
+        }
+    },
+    TiktokPostOauth: function (req, res) {
+        var uid = req.body.user_id;
+        var user_id, sec_uid;
+        axios({
+            "method": "GET",
+            "url": "https://tiktok.p.rapidapi.com/live/post/comments",
+            "headers": {
+                "content-type": "application/octet-stream",
+                "x-rapidapi-host": "tiktok.p.rapidapi.com",
+                "x-rapidapi-key": config.tiktok.key,
+                "useQueryString": true
+            }, "params": {
+                "video_id": config.tiktok.video_id
+            }
+        }).then(response => {
+            user_id = (response.data.comments[0].comment_id)
+            sec_uid = (response.data.comments[0].author.sec_uid)
         }
 
-        catch (error) {
-            console.log(error)
-            res.status(400).send('Unable to add channel. Make sure you authorized it');
+        ).catch(error => console.log(error))
+
+        if (uid === user_id) {
+            axios({
+                "method": "GET",
+                "url": "https://tiktok.p.rapidapi.com/live/user/follower/list",
+                "headers": {
+                    "content-type": "application/octet-stream",
+                    "x-rapidapi-host": "tiktok.p.rapidapi.com",
+                    "x-rapidapi-key": config.tiktok.key,
+                    "useQueryString": true
+                }, "params": {
+                    "sec_uid": sec_uid,
+                    "max_cursor": "0",
+                    "limit": "40"
+                }
+            })
+                .then((response) => {
+                    console.log(response)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+
         }
+
+
     }
 
 };

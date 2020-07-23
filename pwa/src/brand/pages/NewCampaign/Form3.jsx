@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { Spinner } from 'react-bootstrap'
+import { useStoreActions, useStoreState } from 'easy-peasy';
 
 export function Form3({ onFinish, onPrevious }) {
     const { register, handleSubmit, watch, errors } = useForm();
     const [interests, setInterests] = useState(interestVals);
+    const loading = useStoreState(state => state.campaign.loading)
 
     function toggleInterest(index) {
         const list = JSON.parse(JSON.stringify(interests));
@@ -20,7 +23,16 @@ export function Form3({ onFinish, onPrevious }) {
         onFinish(Object.assign({}, values, { interests: selectedInterests }))
     }
 
-    return (
+    return (<>
+        <div className="col-md-12 p-0">
+            {
+                !loading ? '' :
+                    <div className="loading-overlay d-flex align-items-center justify-content-center">
+
+                        <Spinner animation="border" variant="success" />
+                    </div>
+            }
+        </div>
         <form onSubmit={handleSubmit(submit)}>
             <div className="form-group row" >
                 <div className="form-group col-12">
@@ -134,8 +146,10 @@ export function Form3({ onFinish, onPrevious }) {
                     className="btn btn-success btn-user text-white next-button">
                     Finish
                 </button>
+
             </div>
         </form>
+    </>
     )
 }
 
