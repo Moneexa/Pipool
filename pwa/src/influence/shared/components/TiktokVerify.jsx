@@ -49,6 +49,14 @@ export function TiktokVerify() {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    <p className="align-items-center justify-content-center"
+                        id="p1"
+                        style={{
+                            display: "none",
+                        }}
+                    >Go to <a href="https://www.tiktok.com/@mohsiniammar/video/6846362698410724610?u_code=dd9a4dabfj298g&preview_pb=0&language=en&_d=dd9a4el1139ak7&share_item_id=6846362698410724610&timestamp=1595134830&user_id=6846360634155697158&utm_source=messenger&utm_campaign=client_share&utm_medium=android&share_app_name=musically&share_iid=6849877026893170434&source=h5_m">
+                            Link
+                </a> and comment</p>
                     <form className="mt-3 mx-3 user" onSubmit={handleSubmit(userSubmit)}
 
                     >
@@ -63,14 +71,7 @@ export function TiktokVerify() {
                                 }}
                                 name="userId" type="text" className="form-control form-control-user"></input>
                             <br />
-                            <p className="align-items-center justify-content-center"
-                                id="p1"
-                                style={{
-                                    display: "none",
-                                }}
-                            >Go to <a href="https://www.tiktok.com/@mohsiniammar/video/6846362698410724610?u_code=dd9a4dabfj298g&preview_pb=0&language=en&_d=dd9a4el1139ak7&share_item_id=6846362698410724610&timestamp=1595134830&user_id=6846360634155697158&utm_source=messenger&utm_campaign=client_share&utm_medium=android&share_app_name=musically&share_iid=6849877026893170434&source=h5_m">
-                                    Link
-                </a> and comment</p>
+
                             <div className="form-group row d-flex align-content-flex-end mr-auto mb-auto mt-3">
                                 <button className="btn btn-user btn-block rounded-20 py-1 col-md-6" type="button" onClick={hideModal}>Cancel</button>
 
