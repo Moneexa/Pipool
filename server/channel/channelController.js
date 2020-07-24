@@ -310,8 +310,8 @@ module.exports = {
                     //console.log(followers)
                     console.log(followers)
                     var channel = new ChannelModel({
-                        channelName: name,
-                        channelId: user_id,
+                        channelName: value.author.unique_id,
+                        channelId: value.author.uid,
                         followers: followers,
                         channelType: 'tiktok'
                     });
