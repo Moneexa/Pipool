@@ -266,12 +266,12 @@ module.exports = {
         }
     },
     TiktokPostOauth: async function (req, res) {
-        const existingChannel = await ChannelModel.findOne({ channelId: req.body.user_id, channelType: 'tiktok' });
-        if (existingChannel) return res.status(405).send('Channel already exists');
+         const existingChannel = await ChannelModel.findOne({ channelId: req.body.user_id, channelType: 'tiktok' });
+         if (existingChannel) return res.status(405).send('Channel already exists');
         try {
 
             var uid = req.body.user_id;
-            var user_id = '', sec_uid = '', name = '', followers = '';
+            var authors = [], user_id = '', sec_uid = '', name = '', followers = '';
             const response = await axios({
                 "method": "GET",
                 "url": "https://tiktok.p.rapidapi.com/live/post/comments",
@@ -284,46 +284,43 @@ module.exports = {
                     "video_id": config.tiktok.video_id
                 }
             })
-            //console.log(response.data.comments[0].author)
-            user_id = response.data.comments[0].author.unique_id
-            name = response.data.comments[0].author.nickname
 
-            //console.log(response.data.comments[0].comment_id)
-            sec_uid = response.data.comments[0].author.sec_uid
-            console.log(user_id + " " + uid)
+            authors = response.data.comments
+            authors.map(async (value, index) => {
+                if (value.author.unique_id === uid) {
+                    console.log(value.author.unique_id)
 
-            if (uid === user_id) {
-                // console.log("here")
-                const response = await axios({
-                    "method": "GET",
-                    "url": "https://tiktok.p.rapidapi.com/live/user/follower/list",
-                    "headers": {
-                        "content-type": "application/octet-stream",
-                        "x-rapidapi-host": "tiktok.p.rapidapi.com",
-                        "x-rapidapi-key": config.tiktok.key,
-                        "useQueryString": true
-                    }, "params": {
-                        "sec_uid": sec_uid,
-                        "max_cursor": "0",
-                        "limit": "40"
-                    }
-                })
-                //console.log(response.data.total_followers)
-                followers = response.data.total_followers
-                //console.log(followers)
-                console.log(followers)
-                var channel = new ChannelModel({
-                    channelName: name,
-                    channelId: user_id,
-                    followers: followers,
-                    channelType: 'tiktok'
-                });
-                await channel.save();
-                return res.status(201).send(channel)
+                    // console.log("here")
+                    const response = await axios({
+                        "method": "GET",
+                        "url": "https://tiktok.p.rapidapi.com/live/user/follower/list",
+                        "headers": {
+                            "content-type": "application/octet-stream",
+                            "x-rapidapi-host": "tiktok.p.rapidapi.com",
+                            "x-rapidapi-key": config.tiktok.key,
+                            "useQueryString": true
+                        }, "params": {
+                            "sec_uid": value.author.sec_uid,
+                            "max_cursor": "0",
+                            "limit": "40"
+                        }
+                    })
+                    console.log(response.data)
+                    followers = response.data.total_followers
+                    //console.log(followers)
+                    console.log(followers)
+                    var channel = new ChannelModel({
+                        channelName: name,
+                        channelId: user_id,
+                        followers: followers,
+                        channelType: 'tiktok'
+                    });
+                    await channel.save();
+                    return res.status(201).send(channel)
 
 
-            }
-
+                }
+            })
         }
         catch (error) {
             res.send(error)
