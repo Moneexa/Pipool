@@ -83,10 +83,10 @@ function AddChannel() {
 
                             <div className="row">
                                 <div className="col-md-3 my-3"><InstagramVerify category={category} /> </div>
-                                <div className="col-md-2 my-3"><YoutubeVerify category={category} /> </div>
+                                <div className="col-md-2 my-3"><YoutubeVerify category={category}/> </div>
                                 <div className="col-md-3 my-3"><TwitterVerify category={category} /> </div>
                                 <div className="col-md-2 my-3"><TiktokVerify category={category} /> </div>
-                                <div className="col-md-2 my-3"><FacebookVerify category={category} /> </div>
+                                <div className="col-md-2 my-3"><FacebookVerify category={category}/> </div>
 
                             </div>
 

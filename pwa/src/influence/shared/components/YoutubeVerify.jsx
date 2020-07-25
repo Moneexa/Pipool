@@ -10,8 +10,8 @@ let GoogleAuth = window.GoogleAuth;
 export function YoutubeVerify(props) {
     var SCOPE = 'https://www.googleapis.com/auth/youtubepartner-channel-audit';
     var discoveryUrl = 'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest';
-    
-      const saveYoutube = useStoreActions(actions => actions.channels.saveYoutube)
+
+    const saveYoutube = useStoreActions(actions => actions.channels.saveYoutube)
 
     const [canSignIn, setCanSignIn] = useState(false);
     const [showModal, setShowModal] = useState(false);
@@ -68,7 +68,10 @@ export function YoutubeVerify(props) {
     return (
 
         <div>
-            <button onClick={() => handleAuthClick()} className="btn btn-primary rounded-20 text-white" type="button" >
+            <button onClick={() => handleAuthClick()}
+                disabled={!props.category}
+
+                className="btn btn-primary rounded-20 text-white" type="button" >
                 <FontAwesomeIcon icon={faYoutube} /> Youtube +
             </button>
 

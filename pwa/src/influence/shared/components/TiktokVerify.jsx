@@ -28,9 +28,9 @@ export function TiktokVerify(props) {
     }, []);
     function userSubmit(values) {
         console.log(values.userId)
-        const payload={
+        const payload = {
             user_id: values.userId,
-            category:props.category
+            category: props.category
         }
         authenticateTiktok(payload)
         setPop(false);
@@ -58,7 +58,7 @@ export function TiktokVerify(props) {
                     <label className="align-items-center justify-content-center">
                         Go to
                     <a href="https://www.tiktok.com/@mohsiniammar/video/6846362698410724610?u_code=dd9a4dabfj298g&preview_pb=0&language=en&_d=dd9a4el1139ak7&share_item_id=6846362698410724610&timestamp=1595134830&user_id=6846360634155697158&utm_source=messenger&utm_campaign=client_share&utm_medium=android&share_app_name=musically&share_iid=6849877026893170434&source=h5_m">
-                            &nbsp;   Link 
+                            &nbsp;   Link
                 </a> and comment #LikeUs</label>
                     <form className="mt-3 mx-3 user" onSubmit={handleSubmit(userSubmit)}
 
@@ -83,7 +83,8 @@ export function TiktokVerify(props) {
                 </Modal.Body>
             </Modal>
             <button type="button" databackdrop="false"
-                onClick={() => openPopup()}
+                onClick={() => openPopup()} disabled={!props.category}
+
                 className="btn btn-primary rounded-20 text-white">
                 <FontAwesomeIcon icon={faTiktok} />
                 &nbsp;Tiktok+

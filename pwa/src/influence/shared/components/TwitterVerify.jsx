@@ -10,12 +10,14 @@ export default function TwitterVerify(props) {
   const SCOPE = 'https://www.googleapis.com/auth/youtube.channel-memberships.creator';
 
   function handleClick() {
-    authenticateTwitter({category:props.category});
+    authenticateTwitter({ category: props.category });
   }
 
   return (
     <div>
-      <button className="btn btn-primary rounded-20 text-white" onClick={handleClick} type="button" >
+      <button className="btn btn-primary rounded-20 text-white" onClick={handleClick} type="button"
+        disabled={!props.category}
+      >
         <FontAwesomeIcon icon={faTwitter} /> Twitter+
       </button>
 

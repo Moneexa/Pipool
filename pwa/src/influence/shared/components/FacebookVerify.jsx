@@ -48,7 +48,7 @@ export function FacebookVerify(props) {
     function handleSubmit() {
         console.log(selectedAccount)
         console.log(accountsList)
-        authFacebook({ token: token, id: accountsList[selectedAccount].id , category:props.category})
+        authFacebook({ token: token, id: accountsList[selectedAccount].id, category: props.category })
 
         //console.log('here')
         setShowPopup(false)
@@ -94,7 +94,9 @@ export function FacebookVerify(props) {
             </Modal>
             <button type="button"
                 onClick={() => openPopup()}
-                className="btn btn-primary rounded-20 text-white">
+                className="btn btn-primary rounded-20 text-white"
+                disabled={!props.category}
+            >
                 <FontAwesomeIcon icon={faFacebook} />
             &nbsp; Facebook +
         </button>
