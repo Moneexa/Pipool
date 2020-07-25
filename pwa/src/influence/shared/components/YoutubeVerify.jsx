@@ -31,10 +31,13 @@ export function YoutubeVerify(props) {
             mine: true,
             part: 'id,statistics,snippet'
         });
+        
+        console.log(user.getAuthResponse().access_token)
+        console.log(user.getBasicProfile())
         setUser({
-            token: user.wc.access_token,
-            userId: user.Ea,
-            name: user.Qt.Bd
+            token: user.getAuthResponse().access_token,
+            userId: user.getBasicProfile().getId(),
+            name: user.getBasicProfile().getName()
         });
         setChannels(channels.result.items);
         setShowModal(true);
@@ -54,7 +57,7 @@ export function YoutubeVerify(props) {
     }
 
     function handleClose() {
-        debugger
+        
         setShowModal(false);
         const channel = channels[selectedChannelIndex];
         const body = {

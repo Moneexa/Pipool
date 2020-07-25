@@ -80,7 +80,7 @@ export const ChannelModel = {
         catch (error) {
             actions.toggleLoading(false);
 
-            debugger
+            
             toastr.error(error.response.status === 405 ? 'Account already exists' : 'Error while adding the channel')
         }
     }),
@@ -99,7 +99,7 @@ export const ChannelModel = {
         catch (error) {
             actions.toggleLoading(false);
 
-            debugger
+            
             console.log(error)
             toastr.error(error.response.status === 405 ? 'Account already exists' : 'Error while adding the channel')
         }
@@ -119,7 +119,7 @@ export const ChannelModel = {
         catch (error) {
             actions.toggleLoading(false);
 
-            debugger
+            
             console.log(error)
             toastr.error(error.response.status === 405 ? 'Account already exists' : 'Error while adding the channel')
         }
