@@ -49,6 +49,8 @@ export const ChannelModel = {
 
                     }
                 } catch (error) {
+                    actions.toggleLoading(false);
+
                     if (error.response && error.response.data)
                         toastr.error(error.response.data);
                     else
@@ -76,6 +78,8 @@ export const ChannelModel = {
             toastr.success('Successfully added channel')
         }
         catch (error) {
+            actions.toggleLoading(false);
+
             debugger
             toastr.error(error.response.status === 405 ? 'Account already exists' : 'Error while adding the channel')
         }
@@ -83,19 +87,18 @@ export const ChannelModel = {
     authenticateTiktok: thunk(async (actions, payload) => {
         try {
 
-            const body = {
-                user_id: payload.user_id,
-                category: payload.category
-            }
+            
             actions.toggleLoading(true);
 
-            const response = await axios.post(`${config.apiUrl}/influencers/channels/tiktok/oauth`, body)
+            const response = await axios.post(`${config.apiUrl}/influencers/channels/tiktok/oauth`, payload)
             actions.toggleLoading(false);
 
             console.log(response)
             toastr.success('Successfully added channel')
         }
         catch (error) {
+            actions.toggleLoading(false);
+
             debugger
             console.log(error)
             toastr.error(error.response.status === 405 ? 'Account already exists' : 'Error while adding the channel')
@@ -114,6 +117,8 @@ export const ChannelModel = {
             toastr.success('Successfully added channel')
         }
         catch (error) {
+            actions.toggleLoading(false);
+
             debugger
             console.log(error)
             toastr.error(error.response.status === 405 ? 'Account already exists' : 'Error while adding the channel')
@@ -129,6 +134,8 @@ export const ChannelModel = {
 
             toastr.success('Successfully added YouTube Channel')
         } catch (error) {
+            actions.toggleLoading(false);
+
             toastr.error("Something went wrong when adding the YouTube Channel")
         }
     })

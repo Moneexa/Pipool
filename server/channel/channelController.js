@@ -270,7 +270,7 @@ module.exports = {
         }
     },
     TiktokPostOauth: async function (req, res) {
-         const existingChannel = await ChannelModel.findOne({ channelId: req.body.user_id, channelType: 'tiktok' });
+         const existingChannel = await ChannelModel.findOne({ channelName: req.body.user_id, channelType: 'tiktok', category: req.body.category });
          if (existingChannel) return res.status(405).send('Channel already exists');
         try {
 
