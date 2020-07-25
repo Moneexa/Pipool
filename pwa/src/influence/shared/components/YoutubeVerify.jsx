@@ -7,7 +7,7 @@ import { Modal, Button } from 'react-bootstrap';
 
 const gapi = window.gapi;
 let GoogleAuth = window.GoogleAuth;
-export function YoutubeVerify() {
+export function YoutubeVerify(props) {
     var SCOPE = 'https://www.googleapis.com/auth/youtubepartner-channel-audit';
     var discoveryUrl = 'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest';
     
@@ -59,7 +59,8 @@ export function YoutubeVerify() {
         const channel = channels[selectedChannelIndex];
         const body = {
             id: channel.id,
-            token: user.token
+            token: user.token,
+            category: props.category
         }
         saveYoutube(body);
     };

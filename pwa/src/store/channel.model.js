@@ -20,7 +20,7 @@ export const ChannelModel = {
         const { data } = await axios.get(`${config.apiUrl}/influencers/channels`)
         actions.setChannels(data);
     }),
-    authenticateTwitter: thunk(async (actions, _, helpers) => {
+    authenticateTwitter: thunk(async (actions, _, helpers, payload) => {
         try {
             const res = await axios.post(`${config.apiUrl}/influencers/channels/twitter/oauth/request_token`);
 
@@ -37,7 +37,8 @@ export const ChannelModel = {
                         console.log(token, verifier);
                         const body = {
                             oauth_token: token,
-                            verifier: verifier
+                            verifier: verifier,
+                            category:payload.category
                         }
 
                         const res = await axios.post(`${config.apiUrl}/influencers/channels/twitter/oauth/`, body);
@@ -77,7 +78,8 @@ export const ChannelModel = {
     authenticateTiktok: thunk(async (actions, payload) => {
         try {
 
-            const body = { user_id: payload }
+            const body = { user_id: payload.user_id,
+            category:payload.category }
             const response = await axios.post(`${config.apiUrl}/influencers/channels/tiktok/oauth`, body)
             console.log(response)
             toastr.success('Successfully added channel')

@@ -4,13 +4,13 @@ import { useStoreActions } from 'easy-peasy'
 import React from 'react'
 
 
-export default function TwitterVerify() {
+export default function TwitterVerify(props) {
   const authenticateTwitter = useStoreActions(actions => actions.channels.authenticateTwitter)
   const discoveryUrl = 'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest';
   const SCOPE = 'https://www.googleapis.com/auth/youtube.channel-memberships.creator';
 
   function handleClick() {
-    authenticateTwitter();
+    authenticateTwitter({category:props.category});
   }
 
   return (

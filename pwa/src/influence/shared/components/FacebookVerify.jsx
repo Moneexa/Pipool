@@ -9,7 +9,7 @@ import { Modal, Button } from 'react-bootstrap'
 import { useState } from 'react';
 
 
-export function FacebookVerify() {
+export function FacebookVerify(props) {
     const authFacebook = useStoreActions(actions => actions.channels.authFacebook);
     const [showPopup, setShowPopup] = useState(false)
     const [token, setToken] = useState(false)
@@ -48,7 +48,7 @@ export function FacebookVerify() {
     function handleSubmit() {
         console.log(selectedAccount)
         console.log(accountsList)
-        authFacebook({ token: token, id: accountsList[selectedAccount].id })
+        authFacebook({ token: token, id: accountsList[selectedAccount].id , category:props.category})
 
         //console.log('here')
         setShowPopup(false)

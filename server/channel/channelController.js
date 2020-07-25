@@ -178,7 +178,8 @@ module.exports = {
                 channelName: userData.name,
                 channelId: userData.id,
                 followers: userData.followers_count,
-                channelType: 'twitter'
+                channelType: 'twitter',
+                category: req.body.category
             });
 
             const channel = await channels.save();
@@ -208,7 +209,8 @@ module.exports = {
                         channelName: channel.snippet.title,
                         channelId: id,
                         followers: channel.statistics.subscriberCount,
-                        channelType: 'youtube'
+                        channelType: 'youtube',
+                        category: req.body.category
                     })
                     const newChannel = await channels.save();
                     return res.status(201).send(newChannel)
@@ -232,7 +234,8 @@ module.exports = {
                 channelName: resp.data.name,
                 channelId: resp.data.id,
                 followers: resp.data.fan_count,
-                channelType: 'facebook'
+                channelType: 'facebook',
+                category: req.body.category
             });
             await channel.save();
             return res.status(201).send(channel)
@@ -254,7 +257,8 @@ module.exports = {
                 channelName: resp.data.name,
                 channelId: resp.data.id,
                 followers: resp.data.followers_count,
-                channelType: 'instagram'
+                channelType: 'instagram',
+                category: req.body.category
             });
             await channel.save();
             return res.status(201).send(channel)
@@ -313,7 +317,8 @@ module.exports = {
                         channelName: value.author.unique_id,
                         channelId: value.author.uid,
                         followers: followers,
-                        channelType: 'tiktok'
+                        channelType: 'tiktok',
+                        category: req.body.category
                     });
                     await channel.save();
                     return res.status(201).send(channel)

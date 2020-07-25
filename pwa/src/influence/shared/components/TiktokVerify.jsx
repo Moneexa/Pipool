@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { faTiktok } from '@fortawesome/free-brands-svg-icons'
 import { useEffect } from 'react';
 
-export function TiktokVerify() {
+export function TiktokVerify(props) {
     // const loginFacebook = useStoreActions(actions => actions.user.loginFacebook);
     const authenticateTiktok = useStoreActions(actions => actions.channels.authenticateTiktok)
     const [pop, setPop] = useState(false)
@@ -28,7 +28,13 @@ export function TiktokVerify() {
     }, []);
     function userSubmit(values) {
         console.log(values.userId)
-        authenticateTiktok(values.userId)
+        const payload={
+            user_id: values.userId,
+            category:props.category
+        }
+        authenticateTiktok(payload)
+        setPop(false);
+
     }
 
     return (

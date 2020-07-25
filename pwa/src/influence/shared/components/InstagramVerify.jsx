@@ -9,7 +9,7 @@ import { faTiktok } from '@fortawesome/free-brands-svg-icons'
 import { useState } from 'react';
 import axios from 'axios';
 
-export function InstagramVerify() {
+export function InstagramVerify(props) {
     const authInsta = useStoreActions(actions => actions.channels.authInsta)
     const [showPopup, setShowPopup] = useState(false)
     const [token, setToken] = useState(false)
@@ -49,7 +49,7 @@ export function InstagramVerify() {
     function handleSubmit() {
         console.log(selectedAccount)
         console.log(accountsList)
-        authInsta({token: token, id: accountsList[selectedAccount].instagram_business_account.id})
+        authInsta({token: token, id: accountsList[selectedAccount].instagram_business_account.id, category:props.category})
 
         //console.log('here')
         setShowPopup(false)
