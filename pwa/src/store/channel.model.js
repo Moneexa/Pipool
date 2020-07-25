@@ -38,10 +38,11 @@ export const ChannelModel = {
                         const body = {
                             oauth_token: token,
                             verifier: verifier,
-                            category:payload.category
+                            category: payload.category
                         }
-
+                        actions.toggleLoading(true);
                         const res = await axios.post(`${config.apiUrl}/influencers/channels/twitter/oauth/`, body);
+                        actions.toggleLoading(false);
 
                         actions.add(res.data);
                         toastr.success("Successfully Twitter Channel")
@@ -66,7 +67,11 @@ export const ChannelModel = {
     authInsta: thunk(async (actions, payload) => {
 
         try {
+            actions.toggleLoading(true);
+
             const res = await axios.post(`${config.apiUrl}/influencers/channels/instagram/oauth`, payload)
+            actions.toggleLoading(false);
+
             console.log(res)
             toastr.success('Successfully added channel')
         }
@@ -78,9 +83,15 @@ export const ChannelModel = {
     authenticateTiktok: thunk(async (actions, payload) => {
         try {
 
-            const body = { user_id: payload.user_id,
-            category:payload.category }
+            const body = {
+                user_id: payload.user_id,
+                category: payload.category
+            }
+            actions.toggleLoading(true);
+
             const response = await axios.post(`${config.apiUrl}/influencers/channels/tiktok/oauth`, body)
+            actions.toggleLoading(false);
+
             console.log(response)
             toastr.success('Successfully added channel')
         }
@@ -94,7 +105,11 @@ export const ChannelModel = {
     authFacebook: thunk(async (actions, payload) => {
 
         try {
+            actions.toggleLoading(true);
+
             const res = await axios.post(`${config.apiUrl}/influencers/channels/facebook/oauth`, payload)
+            actions.toggleLoading(false);
+
             console.log(res)
             toastr.success('Successfully added channel')
         }
@@ -107,7 +122,11 @@ export const ChannelModel = {
 
     saveYoutube: thunk(async (actions, payload) => {
         try {
+            actions.toggleLoading(true);
+
             await axios.post(`${config.apiUrl}/influencers/channels/youtube/oauth/`, payload);
+            actions.toggleLoading(false);
+
             toastr.success('Successfully added YouTube Channel')
         } catch (error) {
             toastr.error("Something went wrong when adding the YouTube Channel")
