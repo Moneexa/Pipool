@@ -20,7 +20,7 @@ export const ChannelModel = {
         const { data } = await axios.get(`${config.apiUrl}/influencers/channels`)
         actions.setChannels(data);
     }),
-    authenticateTwitter: thunk(async (actions, _, helpers, payload) => {
+    authenticateTwitter: thunk(async (actions,payload, helpers) => {
         try {
             const res = await axios.post(`${config.apiUrl}/influencers/channels/twitter/oauth/request_token`);
 
