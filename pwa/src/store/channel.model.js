@@ -138,6 +138,10 @@ export const ChannelModel = {
 
             toastr.error("Something went wrong when adding the YouTube Channel")
         }
+    }),
+    instaInsights: thunk(async (actions, payload)=>{
+     const res= await axios.post(`${config.apiUrl}/influencers/channels/instagram/insights`, payload)
+     console.log(res)
     })
 
 };

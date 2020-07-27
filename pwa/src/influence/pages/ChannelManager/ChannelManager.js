@@ -6,11 +6,16 @@ import './ChannelManager.css'
 import { useEffect } from 'react';
 function Channel() {
     const channels = useStoreState(state => state.channels.channels);
-    const listChannels = useStoreActions(actions => actions.channels.listChannels)
+    const listChannels = useStoreActions(actions => actions.channels.listChannels);
+    const insights =  useStoreActions(actions=> actions.channels.instaInsights)
     useEffect(() => {
         listChannels();
     }, [])
 
+    function instaInsights() {
+      insights({})
+
+    }
     return (
 
         <div className="channel">
@@ -35,7 +40,7 @@ function Channel() {
                                 <div className="text-center d-none d-md-inline">
                                     {
                                         value.channelType === "facebook" ?
-                                            <button className="btn btn-floating btn-lg btn-fb" type="button">
+                                            <button className="btn btn-floating btn-lg btn-fb" type="button" >
                                                 <FontAwesomeIcon icon={faFacebookF} />
                                             </button> : ''
                                     }
@@ -53,7 +58,7 @@ function Channel() {
                                     }
                                     {
                                         value.channelType === "instagram" ?
-                                            <button className="btn btn-floating btn-lg btn-ins" type="button">
+                                            <button className="btn btn-floating btn-lg btn-ins" type="button" onClick={instaInsights}>
                                                 < FontAwesomeIcon icon={faInstagram} />
                                             </button> : ''
                                     }

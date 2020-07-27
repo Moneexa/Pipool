@@ -270,8 +270,8 @@ module.exports = {
         }
     },
     TiktokPostOauth: async function (req, res) {
-         const existingChannel = await ChannelModel.findOne({ channelName: req.body.user_id, channelType: 'tiktok', category: req.body.category });
-         if (existingChannel) return res.status(405).send('Channel already exists');
+        const existingChannel = await ChannelModel.findOne({ channelName: req.body.user_id, channelType: 'tiktok', category: req.body.category });
+        if (existingChannel) return res.status(405).send('Channel already exists');
         try {
 
             var uid = req.body.user_id;
@@ -331,5 +331,9 @@ module.exports = {
             res.send(error)
 
         }
+    },
+    InstaInsights: async function (req, res) {
+        const resp= await axios.get(`https://graph.facebook.com/17841439120946319/insights?metric=impressions,reach,profile_views&period=day`)
+        console.log(resp)
     }
 };
