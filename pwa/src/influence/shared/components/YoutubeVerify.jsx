@@ -7,11 +7,11 @@ import { Modal, Button } from 'react-bootstrap';
 
 const gapi = window.gapi;
 let GoogleAuth = window.GoogleAuth;
-export function YoutubeVerify() {
+export function YoutubeVerify(props) {
     var SCOPE = 'https://www.googleapis.com/auth/youtubepartner-channel-audit';
     var discoveryUrl = 'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest';
-    
-      const saveYoutube = useStoreActions(actions => actions.channels.saveYoutube)
+
+    const saveYoutube = useStoreActions(actions => actions.channels.saveYoutube)
 
     const [canSignIn, setCanSignIn] = useState(false);
     const [showModal, setShowModal] = useState(false);
@@ -31,10 +31,13 @@ export function YoutubeVerify() {
             mine: true,
             part: 'id,statistics,snippet'
         });
+        
+        console.log(user.getAuthResponse().access_token)
+        console.log(user.getBasicProfile())
         setUser({
-            token: user.wc.access_token,
-            userId: user.Ea,
-            name: user.Qt.Bd
+            token: user.getAuthResponse().access_token,
+            userId: user.getBasicProfile().getId(),
+            name: user.getBasicProfile().getName()
         });
         setChannels(channels.result.items);
         setShowModal(true);
@@ -54,12 +57,13 @@ export function YoutubeVerify() {
     }
 
     function handleClose() {
-        debugger
+        
         setShowModal(false);
         const channel = channels[selectedChannelIndex];
         const body = {
             id: channel.id,
-            token: user.token
+            token: user.token,
+            category: props.category
         }
         saveYoutube(body);
     };
@@ -67,7 +71,10 @@ export function YoutubeVerify() {
     return (
 
         <div>
-            <button onClick={() => handleAuthClick()} className="btn btn-primary rounded-20 text-white" type="button" >
+            <button onClick={() => handleAuthClick()}
+                disabled={!props.category}
+
+                className="btn btn-primary rounded-20 text-white" type="button" >
                 <FontAwesomeIcon icon={faYoutube} /> Youtube +
             </button>
 

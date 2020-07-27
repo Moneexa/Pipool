@@ -9,7 +9,7 @@ import { faTiktok } from '@fortawesome/free-brands-svg-icons'
 import { useState } from 'react';
 import axios from 'axios';
 
-export function InstagramVerify() {
+export function InstagramVerify(props) {
     const authInsta = useStoreActions(actions => actions.channels.authInsta)
     const [showPopup, setShowPopup] = useState(false)
     const [token, setToken] = useState(false)
@@ -35,7 +35,7 @@ export function InstagramVerify() {
                 axios.get(`https://graph.facebook.com/v7.0/me/accounts?fields=instagram_business_account,name,id&access_token=${code}`)
                     .then(res => {
                         console.log(res)
-                        
+
                         setAccountsList(res.data.data)
                         setShowPopup(true);
                     })
@@ -49,7 +49,7 @@ export function InstagramVerify() {
     function handleSubmit() {
         console.log(selectedAccount)
         console.log(accountsList)
-        authInsta({token: token, id: accountsList[selectedAccount].instagram_business_account.id})
+        authInsta({ token: token, id: accountsList[selectedAccount].instagram_business_account.id, category: props.category })
 
         //console.log('here')
         setShowPopup(false)
@@ -64,7 +64,7 @@ export function InstagramVerify() {
         <>
             <Modal show={showPopup}
                 databackdrop="false"
-                onHide={()=>handleClose()}
+                onHide={() => handleClose()}
                 className="shadow-lg d-flex align-items-center"
                 style={{
                     position: "absolute",
@@ -95,7 +95,8 @@ export function InstagramVerify() {
                 </Modal.Footer>
             </Modal>
             <button
-                type="button"
+                type="button" disabled={!props.category}
+
                 onClick={() => openPopup()}
                 className="btn btn-primary rounded-20 text-white">
                 <FontAwesomeIcon icon={faInstagram} /> Instagram +

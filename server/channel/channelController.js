@@ -178,7 +178,8 @@ module.exports = {
                 channelName: userData.name,
                 channelId: userData.id,
                 followers: userData.followers_count,
-                channelType: 'twitter'
+                channelType: 'twitter',
+                category: req.body.category
             });
 
             const channel = await channels.save();
@@ -208,7 +209,8 @@ module.exports = {
                         channelName: channel.snippet.title,
                         channelId: id,
                         followers: channel.statistics.subscriberCount,
-                        channelType: 'youtube'
+                        channelType: 'youtube',
+                        category: req.body.category
                     })
                     const newChannel = await channels.save();
                     return res.status(201).send(newChannel)
@@ -225,23 +227,26 @@ module.exports = {
         const existingChannel = await ChannelModel.findOne({ channelId: req.body.id, channelType: 'facebook' });
         if (existingChannel) return res.status(405).send('Channel already exists');
         try {
-            const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.id}?fields=followers_count,name,username,profile_picture_url&access_token=${req.body.token}`)
-            res.status(200).send(resp.data)
+            const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.id}?fields=username,name,picture,fan_count&access_token=${req.body.token}`)
+            //res.status(200).send(resp.data.fan_count)
+            console.log(resp.data.fan_count)
             var channel = new ChannelModel({
                 channelName: resp.data.name,
                 channelId: resp.data.id,
-                followers: resp.data.followers_count,
-                channelType: 'facebook'
+                followers: resp.data.fan_count,
+                channelType: 'facebook',
+                category: req.body.category
             });
             await channel.save();
             return res.status(201).send(channel)
 
         }
         catch (error) {
+            console.log(error)
             res.status(500).send(error)
 
         }
-    },  
+    },
     InstaOAuth: async function (req, res) {
         const existingChannel = await ChannelModel.findOne({ channelId: req.body.id, channelType: 'instagram' });
         if (existingChannel) return res.status(405).send('Channel already exists');
@@ -252,63 +257,79 @@ module.exports = {
                 channelName: resp.data.name,
                 channelId: resp.data.id,
                 followers: resp.data.followers_count,
-                channelType: 'instagram'
+                channelType: 'instagram',
+                category: req.body.category
             });
             await channel.save();
             return res.status(201).send(channel)
 
         }
         catch (error) {
-            res.status(500).send(error)
+            res.send(error)
 
         }
     },
-    TiktokPostOauth: function (req, res) {
-        var uid = req.body.user_id;
-        var user_id, sec_uid;
-        axios({
-            "method": "GET",
-            "url": "https://tiktok.p.rapidapi.com/live/post/comments",
-            "headers": {
-                "content-type": "application/octet-stream",
-                "x-rapidapi-host": "tiktok.p.rapidapi.com",
-                "x-rapidapi-key": config.tiktok.key,
-                "useQueryString": true
-            }, "params": {
-                "video_id": config.tiktok.video_id
-            }
-        }).then(response => {
-            user_id = (response.data.comments[0].comment_id)
-            sec_uid = (response.data.comments[0].author.sec_uid)
-        }
+    TiktokPostOauth: async function (req, res) {
+         const existingChannel = await ChannelModel.findOne({ channelName: req.body.user_id, channelType: 'tiktok', category: req.body.category });
+         if (existingChannel) return res.status(405).send('Channel already exists');
+        try {
 
-        ).catch(error => console.log(error))
-
-        if (uid === user_id) {
-            axios({
+            var uid = req.body.user_id;
+            var authors = [], user_id = '', sec_uid = '', name = '', followers = '';
+            const response = await axios({
                 "method": "GET",
-                "url": "https://tiktok.p.rapidapi.com/live/user/follower/list",
+                "url": "https://tiktok.p.rapidapi.com/live/post/comments",
                 "headers": {
                     "content-type": "application/octet-stream",
                     "x-rapidapi-host": "tiktok.p.rapidapi.com",
                     "x-rapidapi-key": config.tiktok.key,
                     "useQueryString": true
                 }, "params": {
-                    "sec_uid": sec_uid,
-                    "max_cursor": "0",
-                    "limit": "40"
+                    "video_id": config.tiktok.video_id
                 }
             })
-                .then((response) => {
-                    console.log(response)
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
+
+            authors = response.data.comments
+            authors.map(async (value, index) => {
+                if (value.author.unique_id === uid) {
+                    console.log(value.author.unique_id)
+
+                    // console.log("here")
+                    const response = await axios({
+                        "method": "GET",
+                        "url": "https://tiktok.p.rapidapi.com/live/user/follower/list",
+                        "headers": {
+                            "content-type": "application/octet-stream",
+                            "x-rapidapi-host": "tiktok.p.rapidapi.com",
+                            "x-rapidapi-key": config.tiktok.key,
+                            "useQueryString": true
+                        }, "params": {
+                            "sec_uid": value.author.sec_uid,
+                            "max_cursor": "0",
+                            "limit": "40"
+                        }
+                    })
+                    console.log(response.data)
+                    followers = response.data.total_followers
+                    //console.log(followers)
+                    console.log(followers)
+                    var channel = new ChannelModel({
+                        channelName: value.author.unique_id,
+                        channelId: value.author.uid,
+                        followers: followers,
+                        channelType: 'tiktok',
+                        category: req.body.category
+                    });
+                    await channel.save();
+                    return res.status(201).send(channel)
+
+
+                }
+            })
+        }
+        catch (error) {
+            res.send(error)
 
         }
-
-
     }
-
 };

@@ -1,6 +1,7 @@
 const UsertModel = require('./user.model.js');
 const config = require('../config.json');
-const bcrypt = require('bcrypt');
+//const bcrypt = require('bcrypt');
+const crypto = require('crypto')
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const axios = require('axios');
@@ -62,7 +63,11 @@ async function login(req, res) {
 			}
 			else {
 
-				bcrypt.compare(req.body.password, user.password, function (err, passed) {
+				crypto.pbkdf2(req.body.password, 'salt', 100, 64, 'sha512', (err, derivedKey) => {
+					var passed=false;
+					if(derivedKey===user.password){
+                       passed=true
+					}
 					if (err || !passed) {
 						return res.status(401).send("Invalid credentials");
 					}

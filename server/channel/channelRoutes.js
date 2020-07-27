@@ -32,6 +32,7 @@ router.post('/twitter/oauth/', auth.verify, channelController.twitterPostOAuth);
 router.post('/youtube/oauth/', auth.verify, channelController.youtubeOAuth);
 router.post('/instagram/oauth/', auth.verify, channelController.InstaOAuth)
 router.post('/facebook/oauth/', auth.verify, channelController.FacebookOAuth)
+
 router.post('/tiktok/oauth/', auth.verify, channelController.TiktokPostOauth)
 
 
