@@ -64,6 +64,7 @@ async function login(req, res) {
 			else {
 
 				crypto.pbkdf2(req.body.password, 'salt', 100, 64, 'sha512', (err, derivedKey) => {
+					derivedKey = derivedKey.toString('hex');
 					var passed=false;
 					if(derivedKey===user.password){
                        passed=true

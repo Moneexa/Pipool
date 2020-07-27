@@ -92,17 +92,18 @@ function finishSignup(req, res) {
     const email = res.locals.user.email;
     //bcrypt.hash(req.body.password, 8)
     // .then((password) => {
-    crypto.pbkdf2(req.body.password, 'salt', 100, 64, 'sha512', (err, derivedKey) => {
+    crypto.pbkdf2(req.body.password, 'salt', 100, 64, 'sha512', async (err, password) => {
 
-        const user = UsertModel.updateOne(
+        password = password.toString('hex');
+
+        const user = await UsertModel.updateOne(
             { _id: id },
             {
-                email,
                 fullName,
                 phone,
                 company,
                 designation,
-                derivedKey,
+                password,
                 role
             },
             {
