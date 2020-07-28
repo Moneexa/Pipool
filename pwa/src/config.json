@@ -30,6 +30,7 @@
         "grant_type": "authorization_code"
     },
     "facebook": {
-        "clientId": "263197894950161"
+        "clientId": "263197894950161",
+        "scope":"read_insights, pages_read_engagement"
     }
 }
