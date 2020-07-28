@@ -36,5 +36,6 @@ router.post('/facebook/oauth/', auth.verify, channelController.FacebookOAuth)
 router.post('/tiktok/oauth/', auth.verify, channelController.TiktokPostOauth)
 
 router.post('/instagram/insights', auth.verify, channelController.InstaInsights)
+router.post('/facebook/insights', auth.verify, channelController.FaecbookInsights)
 
 module.exports = router;

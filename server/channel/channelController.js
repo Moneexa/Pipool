@@ -333,7 +333,29 @@ module.exports = {
         }
     },
     InstaInsights: async function (req, res) {
-        const resp= await axios.get(`https://graph.facebook.com/17841439120946319/insights?metric=impressions,reach,profile_views&period=day`)
-        console.log(resp)
+        try {
+            //console.log(req.body.token)
+            const resp = await axios.get(`https://graph.facebook.com/${req.body.channelId}/insights?metric=impressions,reach,profile_views,follower_count&period=day&access_token=${req.body.token}`)
+            console.log(resp.data)
+            res.send(resp.data);
+
+        }
+        catch (error) {
+            res.send(error)
+        }
+    },
+    FaecbookInsights: async function (req, res) {
+        try {
+            console.log(req.body.token)
+            const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.channelId}/insights?page_tab_views_login_top_unique&period=day&access_token=${req.body.token}`)
+            console.log(resp.data)
+            res.send(resp.data);
+
+        }
+        catch (error) {
+            console.log(error)
+            res.send(error)
+        }
     }
+
 };

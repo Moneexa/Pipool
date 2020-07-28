@@ -142,6 +142,10 @@ export const ChannelModel = {
     instaInsights: thunk(async (actions, payload)=>{
      const res= await axios.post(`${config.apiUrl}/influencers/channels/instagram/insights`, payload)
      console.log(res)
-    })
+    }),
+    fbInsights: thunk(async (actions, payload)=>{
+        const res= await axios.post(`${config.apiUrl}/influencers/channels/facebook/insights`, payload)
+        console.log(res)
+       })
 
 };

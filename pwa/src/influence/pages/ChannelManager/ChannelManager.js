@@ -3,17 +3,67 @@ import { useStoreActions, useStoreState } from 'easy-peasy';
 import { faFacebookF, faTwitter, faLinkedinIn, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './ChannelManager.css'
+import config from '../../../config.json';
+
 import { useEffect } from 'react';
 function Channel() {
     const channels = useStoreState(state => state.channels.channels);
     const listChannels = useStoreActions(actions => actions.channels.listChannels);
     const insights =  useStoreActions(actions=> actions.channels.instaInsights)
+    const fbinsights =  useStoreActions(actions=> actions.channels.fbInsights)
+
     useEffect(() => {
         listChannels();
     }, [])
 
-    function instaInsights() {
-      insights({})
+    const instaInsights=props=> {
+        
+        console.log(props)
+        const channelId=props
+        const host = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port;
+        const oauthWindow = window.open(encodeURI(`${config.instagram.uri}/?redirect_uri=${host}${config.instagram.redirectURI}&client_id=${config.instagram.appId}&scope=${config.instagram.scope}&response_type=token&state={"{st=state123abc,ds=123456789}"}`));
+
+        var timer = setInterval(function () {
+            if (oauthWindow.closed) {
+                clearInterval(timer);
+                const redirectUrl = new URL(localStorage.getItem('oAuthRedirectUrl').replace('?#', '?'));
+                const searchParams = redirectUrl.searchParams;
+                console.log(searchParams);
+
+                const code = searchParams.get('access_token');
+                console.log(code)
+                // setToken(code);
+                // const error = searchParams.get('error');
+                insights({token:code, channelId:channelId})
+                
+            }
+        }, 1000);
+
+
+    }
+    const fbInsights=props=> {
+        
+        console.log(props)
+        const channelId=props
+        const host = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port;
+        const oauthWindow = window.open(encodeURI(`${config.instagram.uri}/?redirect_uri=${host}${config.instagram.redirectURI}&client_id=${config.instagram.appId}&scope=${config.instagram.scope}&response_type=token&state={"{st=state123abc,ds=123456789}"}`));
+
+        var timer = setInterval(function () {
+            if (oauthWindow.closed) {
+                clearInterval(timer);
+                const redirectUrl = new URL(localStorage.getItem('oAuthRedirectUrl').replace('?#', '?'));
+                const searchParams = redirectUrl.searchParams;
+                console.log(searchParams);
+
+                const code = searchParams.get('access_token');
+                console.log(code)
+                // setToken(code);
+                // const error = searchParams.get('error');
+                fbinsights({token:code, channelId:channelId})
+                
+            }
+        }, 1000);
+
 
     }
     return (
@@ -40,7 +90,7 @@ function Channel() {
                                 <div className="text-center d-none d-md-inline">
                                     {
                                         value.channelType === "facebook" ?
-                                            <button className="btn btn-floating btn-lg btn-fb" type="button" >
+                                            <button className="btn btn-floating btn-lg btn-fb" type="button" onClick={()=>{fbInsights(value.channelId)}}>
                                                 <FontAwesomeIcon icon={faFacebookF} />
                                             </button> : ''
                                     }
@@ -58,7 +108,7 @@ function Channel() {
                                     }
                                     {
                                         value.channelType === "instagram" ?
-                                            <button className="btn btn-floating btn-lg btn-ins" type="button" onClick={instaInsights}>
+                                            <button className="btn btn-floating btn-lg btn-ins" type="button" onClick={()=>{instaInsights(value.channelId)}}>
                                                 < FontAwesomeIcon icon={faInstagram} />
                                             </button> : ''
                                     }
