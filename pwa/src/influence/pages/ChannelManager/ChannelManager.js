@@ -46,7 +46,7 @@ function Channel() {
         console.log(props)
         const channelId=props
         const host = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port;
-        const oauthWindow = window.open(encodeURI(`${config.instagram.uri}/?redirect_uri=${host}${config.instagram.redirectURI}&client_id=${config.instagram.appId}&scope=${config.instagram.scope}&response_type=token&state={"{st=state123abc,ds=123456789}"}`));
+        const oauthWindow = window.open(encodeURI(`${config.instagram.uri}/?redirect_uri=${host}${config.instagram.redirectURI}&client_id=${config.instagram.appId}&scope=${config.facebook.scope}&response_type=token&state={"{st=state123abc,ds=123456789}"}`));
 
         var timer = setInterval(function () {
             if (oauthWindow.closed) {
