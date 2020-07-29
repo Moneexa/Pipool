@@ -19,6 +19,7 @@
     "easy-peasy": "^3.3.0",
     "mdbreact": "^4.25.6",
     "react": "^16.13.1",
+    "react-bar-chart": "^0.1.2",
     "react-big-calendar": "^0.26.0",
     "react-bootstrap": "^1.0.0",
     "react-bottom-sheet": "^1.1.1",
