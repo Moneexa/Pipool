@@ -6,12 +6,12 @@ var auth = require('../auth/auth')
 /*
  * GET
  */
-router.get('/', auth.verify, channelController.list);
+router.get('/:id', auth.verify, channelController.list);
 
 /*
  * GET
  */
-router.get('/:id', auth.verify, channelController.show);
+router.get('/', auth.verify, channelController.show);
 
 /*
  * POST

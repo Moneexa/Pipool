@@ -123,7 +123,7 @@ module.exports = {
         });
     },
 
-    
+
     InstaInsights: async function (req, res) {
         try {
             //console.log(req.body.token)
@@ -147,6 +147,30 @@ module.exports = {
         }
         catch (error) {
             console.log(error)
+            res.send(error)
+        }
+    },
+    TiktokInsights: async function (req, res) {
+        try {
+            const response = await axios({
+                "method": "GET",
+                "url": "https://tiktok.p.rapidapi.com/live/user/follower/list",
+                "headers": {
+                    "content-type": "application/octet-stream",
+                    "x-rapidapi-host": "tiktok.p.rapidapi.com",
+                    "x-rapidapi-key": config.tiktok.key,
+                    "useQueryString": true
+                }, "params": {
+                    "username": req.body.Id,
+                    "max_cursor": "0",
+                    "limit": "40"
+                }
+            })
+            console.log(response)
+            res.send(response.data)
+
+        }
+        catch (error) {
             res.send(error)
         }
     }

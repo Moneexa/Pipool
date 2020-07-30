@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import { faFacebookF, faTwitter, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons'
+import { faFacebookF, faTwitter, faInstagram, faYoutube , faTiktok } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './ChannelManager.css'
 import { useEffect } from 'react';
@@ -12,6 +12,7 @@ function Channel() {
 
     useEffect(() => {
         listChannels();
+        console.log(channels)
     }, [])
 
     return (
@@ -43,6 +44,14 @@ function Channel() {
 
                                                 <button className="btn btn-floating btn-lg btn-tw" type="button">
                                                     <FontAwesomeIcon icon={faTwitter} />
+                                                </button></Link> : ''
+                                    }
+                                    {
+                                        value.channelType === "tiktok" ?
+                                            <Link to={`/influencer/channel-insights/${value.channelType}/${value.channelName}`}>
+
+                                                <button className="btn btn-floating btn-lg btn-tw" type="button">
+                                                    <FontAwesomeIcon icon={faTiktok} />
                                                 </button></Link> : ''
                                     }
 

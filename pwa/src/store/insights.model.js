@@ -6,45 +6,44 @@ import * as toastr from 'toastr';
 const { action, thunk } = require("easy-peasy");
 export const InsightsModel = {
     impressions: {},
+    InstaFollowers: {},
     setImpressions: action((state, payload) => {
         state.impressions = payload;
         console.log(state.impressions)
     }),
-    instaImpressionsInsights: thunk(async (actions, payload) => {
+    setInstaFollowers: action((state, payload) => {
+        state.InstaFollowers = payload;
+        console.log(state.instaFollowers)
+    }),
+    instaInsights: thunk(async (actions, payload) => {
         const res = await axios.post(`${config.apiUrl}/channels/insights/instagram/`, payload)
-        console.log(res.data)
-        const impressions = []//res.data.data[0].values;
-        const options = {
+        console.log(res.data.data[0].values)
+        const impressions = res.data.data[0].values;
+        const followers = res.data.data[3].values;
+        const impressionsOptions = {
+            animationEnabled: true,
+			theme: "light2",
             title: {
-                text: "Basic Column Chart in React"
+                text: "Unique Business Impressions"
             },
-            style: {
-                width: "100%"
-            },
+
             axisX: {
                 title: "Time Period",
             },
             axisY: {
                 title: "Impressions",
             },
-            data: [{
-                type: "column",
-                dataPoints: impressions
-            }]
+            data: impressions
         }
-        actions.setImpressions(options)
-    }),
-    instaFollowersInsights: thunk(async (actions, payload) => {
-        const res = await axios.post(`${config.apiUrl}/channels/insights/instagram/`, payload)
-        console.log(res.data)
-        const impressions = res.data.data[3].values;
-        const options = {
+        actions.setImpressions(impressionsOptions)
+
+        const followersOptions = {
+            animationEnabled: true,
+			theme: "light2",
             title: {
                 text: "Unique Followers insights"
             },
-            style: {
-                width: "100%"
-            },
+
             axisX: {
                 title: "Time Period",
             },
@@ -53,10 +52,10 @@ export const InsightsModel = {
             },
             data: [{
                 type: "column",
-                dataPoints: impressions
+                dataPoints: followers
             }]
         }
-        actions.setImpressions(options)
+        actions.setInstaFollowers(followersOptions)
     }),
 
     fbInsights: thunk(async (actions, payload) => {

@@ -6,9 +6,9 @@ var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 function ChannelInsights(props) {
     const impressions = useStoreState(state => state.insights.impressions);
-    const instainsights = useStoreActions(actions => actions.insights.instaImpressionsInsights)
+    const instaFollowers = useStoreState(state => state.insights.InstaFollowers);
+    const instainsights = useStoreActions(actions => actions.insights.instaInsights)
     const fbinsights = useStoreActions(actions => actions.insights.fbInsights)
-
     function handleClick() {
         const socialAcc = props.location.pathname.split('/')[3];
         const Id = props.location.pathname.split('/')[4];
@@ -18,6 +18,7 @@ function ChannelInsights(props) {
         else if (socialAcc === "facebook") {
             fbInsights(Id)
         }
+
     }
     const instaInsights = props => {
 
@@ -38,7 +39,6 @@ function ChannelInsights(props) {
                 // setToken(code);
                 // const error = searchParams.get('error');
                 instainsights({ token: code, channelId: channelId })
-
             }
         }, 1000);
 
@@ -68,14 +68,24 @@ function ChannelInsights(props) {
         }, 1000);
 
     }
-
     return (<div className="channel-insights">
         <div className="d-sm-flex align-items-center justify-content-between mb-4">
             <h2 className="m-0 font-weight-bold text-primary">Channel Insights</h2>
             <button type="button" onClick={handleClick}>Fetch insights</button>
         </div>
         <div className="row">
-            <CanvasJSChart option={impressions} />
+            {
+                props.location.pathname.split('/')[3] === "instagram" ?
+                    <>
+                        <div className="col-md-6">
+                            <CanvasJSChart options={instaFollowers} />
+                        </div>
+                        <div className="col-md-6">
+                            <CanvasJSChart options={impressions} />
+                        </div>
+                    </>
+                    : ''
+            }
         </div>
 
     </div>)

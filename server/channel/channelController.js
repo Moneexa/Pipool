@@ -14,7 +14,8 @@ module.exports = {
      * channelController.list()
      */
     list: function (req, res) {
-        ChannelModel.find(function (err, channels) {
+        var id = req.params.id;
+        ChannelModel.findOne({ _id: id }, function (err, channels) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting channel.',
@@ -29,8 +30,8 @@ module.exports = {
      * channelController.show()
      */
     show: function (req, res) {
-        var id = req.params.id;
-        ChannelModel.findOne({ createdBy: res.locals.user.id }, function (err, channel) {
+        // var id = req.params.id;
+        ChannelModel.find({ createdBy: res.locals.user.id }, function (err, channel) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting channel.',
@@ -179,7 +180,8 @@ module.exports = {
                 channelId: userData.id,
                 followers: userData.followers_count,
                 channelType: 'twitter',
-                category: req.body.category
+                category: req.body.category,
+                createdBy: res.locals.user.id
             });
 
             const channel = await channels.save();
@@ -210,7 +212,9 @@ module.exports = {
                         channelId: id,
                         followers: channel.statistics.subscriberCount,
                         channelType: 'youtube',
-                        category: req.body.category
+                        category: req.body.category,
+                        createdBy: res.locals.user.id
+
                     })
                     const newChannel = await channels.save();
                     return res.status(201).send(newChannel)
@@ -235,7 +239,9 @@ module.exports = {
                 channelId: resp.data.id,
                 followers: resp.data.fan_count,
                 channelType: 'facebook',
-                category: req.body.category
+                category: req.body.category,
+                createdBy: res.locals.user.id
+
             });
             await channel.save();
             return res.status(201).send(channel)
@@ -258,7 +264,9 @@ module.exports = {
                 channelId: resp.data.id,
                 followers: resp.data.followers_count,
                 channelType: 'instagram',
-                category: req.body.category
+                category: req.body.category,
+                createdBy: res.locals.user.id
+
             });
             await channel.save();
             return res.status(201).send(channel)
@@ -318,7 +326,9 @@ module.exports = {
                         channelId: value.author.uid,
                         followers: followers,
                         channelType: 'tiktok',
-                        category: req.body.category
+                        category: req.body.category,
+                        createdBy: res.locals.user.id
+
                     });
                     await channel.save();
                     return res.status(201).send(channel)
@@ -332,5 +342,5 @@ module.exports = {
 
         }
     },
-    
+
 };

@@ -7,7 +7,6 @@ const { action, thunk } = require("easy-peasy");
 export const ChannelModel = {
     channels: [],
     loading: false,
-    impressions: {},
     setChannels: action((state, payload) => {
         state.channels = payload;
     }),
@@ -17,12 +16,10 @@ export const ChannelModel = {
     toggleLoading: action((state, payload) => {
         state.loading = payload
     }),
-    setImpressions: action((state, payload) => {
-        state.impressions = payload;
-        console.log(state.impressions)
-    }),
+    
     listChannels: thunk(async (actions, payload) => {
         const { data } = await axios.get(`${config.apiUrl}/influencers/channels`)
+        console.log(data)
         actions.setChannels(data);
     }),
 
@@ -145,30 +142,5 @@ export const ChannelModel = {
             toastr.error("Something went wrong when adding the YouTube Channel")
         }
     }),
-    instaInsights: thunk(async (actions, payload) => {
-        const res = await axios.post(`${config.apiUrl}/influencers/channels/instagram/insights`, payload)
-          console.log(res.data)
-        const impressions = res.data.data[0].values;
-        const options = {
-            title: {
-                text: "Basic Column Chart in React"
-            },
-            axisX: {
-                title: "Time Period",
-            },
-            axisY: {
-                title: "Followers",
-            },
-            data: [{
-                type: "column",
-                dataPoints: impressions
-            }]
-        }
-        actions.setImpressions(options)
-    }),
-    fbInsights: thunk(async (actions, payload) => {
-        const res = await axios.post(`${config.apiUrl}/influencers/channels/facebook/insights`, payload)
-        console.log(res)
-    })
-
+    
 };
