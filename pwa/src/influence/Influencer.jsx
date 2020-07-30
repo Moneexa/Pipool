@@ -13,7 +13,7 @@ import Overview from './pages/Overview/Overview';
 import PendingRequests from './pages/PendingRequests/PendingRequests';
 import Help from './pages/Help/Help';
 import Payment from './pages/Payment/Payment';
-
+import ChannelInsights from './pages/ChannelManager/ChannelInsights'
 //import store from "./shared/store/store"
 
 export class Influencer extends React.Component {
@@ -168,6 +168,7 @@ export class Influencer extends React.Component {
                                         <Route path={`${this.props.match.path}/calender`} component={Calender} />
                                         <Route path={`${this.props.match.path}/payment`} component={Payment} />
                                         <Route path={`${this.props.match.path}/help`} component={Help} />
+                                        <Route path={`${this.props.match.path}/channel-insights`} component={ChannelInsights} />
                                     </Switch>
 
                                 </div>
