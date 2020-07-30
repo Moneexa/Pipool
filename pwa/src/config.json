@@ -7,7 +7,7 @@
     "instagram": {
         "appId": "263197894950161",
         "redirectURI": "/oauth-redirect",
-        "scope": "instagram_basic,instagram_manage_insights,pages_show_list,pages_manage_metadata,pages_read_engagement",
+        "scope": "instagram_basic,instagram_manage_insights,pages_show_list,pages_manage_metadata,pages_read_engagement,user_posts,user_videos",
         "uri": "https://www.facebook.com/v7.0/dialog/oauth"
     },
     "temp": {

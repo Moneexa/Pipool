@@ -185,6 +185,7 @@ export class Brand extends React.Component {
                                         <Route path={`${this.props.match.path}/calender`} exact component={Calender} />
                                         <Route path={`${this.props.match.path}/payment`} exact component={Payment} />
                                         <Route path={`${this.props.match.path}/help`} exact component={Help} />
+                                        
                                     </Switch>
                                 </div>
                             </div>

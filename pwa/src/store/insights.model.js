@@ -10,13 +10,37 @@ export const InsightsModel = {
         state.impressions = payload;
         console.log(state.impressions)
     }),
-    instaInsights: thunk(async (actions, payload) => {
-        const res = await axios.post(`${config.apiUrl}/influencers/instagram/insights`, payload)
+    instaImpressionsInsights: thunk(async (actions, payload) => {
+        const res = await axios.post(`${config.apiUrl}/channels/insights/instagram/`, payload)
         console.log(res.data)
-        const impressions = res.data.data[0].values;
+        const impressions = []//res.data.data[0].values;
         const options = {
             title: {
                 text: "Basic Column Chart in React"
+            },
+            style: {
+                width: "100%"
+            },
+            axisX: {
+                title: "Time Period",
+            },
+            axisY: {
+                title: "Impressions",
+            },
+            data: [{
+                type: "column",
+                dataPoints: impressions
+            }]
+        }
+        actions.setImpressions(options)
+    }),
+    instaFollowersInsights: thunk(async (actions, payload) => {
+        const res = await axios.post(`${config.apiUrl}/channels/insights/instagram/`, payload)
+        console.log(res.data)
+        const impressions = res.data.data[3].values;
+        const options = {
+            title: {
+                text: "Unique Followers insights"
             },
             style: {
                 width: "100%"
@@ -34,8 +58,9 @@ export const InsightsModel = {
         }
         actions.setImpressions(options)
     }),
+
     fbInsights: thunk(async (actions, payload) => {
-        const res = await axios.post(`${config.apiUrl}/influencers/facebook/insights`, payload)
+        const res = await axios.post(`${config.apiUrl}/channels/insights/facebook/`, payload)
         console.log(res)
     })
 

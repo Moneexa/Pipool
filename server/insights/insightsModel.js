@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var ChannelSchema = new Schema({
+var InsightsSchema = new Schema({
 	'channelName': String,
 	'followers': Number,
 	'channelType': String,
 	
 });
 
-module.exports = mongoose.model('Channel', ChannelSchema);
+module.exports = mongoose.model('Insights', InsightsSchema);

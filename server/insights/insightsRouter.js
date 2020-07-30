@@ -28,8 +28,8 @@ router.put('/:id', auth.verify, channelController.update);
  */
 router.delete('/:id', channelController.remove);
 
-router.post('/instagram/insights', auth.verify, channelController.InstaInsights)
-router.post('/facebook/insights', auth.verify, channelController.FaecbookInsights)
+router.post('/instagram/', auth.verify, channelController.InstaInsights)
+router.post('/facebook/', auth.verify, channelController.FaecbookInsights)
 
 
 module.exports = router;
