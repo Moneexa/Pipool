@@ -1,0 +1,19 @@
+{
+    "linkedin": {
+        "uri": "https://www.linkedin.com/oauth/v2/authorization",
+        "redirectURI": "/oauth-redirect",
+        "clientId": "865ntwzmhauy0w",
+        "scope": "r_liteprofile,r_emailaddress",
+        "responseType": "code",
+        "grant_type": "authorization_code"
+    },
+    "facebook": {
+        "clientId": "263197894950161"
+    },
+    "google": {
+        "clientId": "110053771767-189lvlqc6v89acs4lub3v62odqivt6g2.apps.googleusercontent.com",
+        "apiKey": "AIzaSyDe6galtm6BnVZE-8PfF7v8YtZzSeyO9S0"
+    }
+    
+    
+}
