@@ -1,62 +1,106 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './AddChannel.css'
-class AddChannel extends React.Component {
-    render() {
+import TwitterVerify from '../../shared/components/TwitterVerify'
+import { FacebookVerify } from '../../shared/components/FacebookVerify';
+import { YoutubeVerify } from '../../shared/components/YoutubeVerify';
+import { InstagramVerify } from '../../shared/components/InstagramVerify'
+import { TiktokVerify } from '../../shared/components/TiktokVerify'
+import { Spinner } from 'react-bootstrap';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 
-        return (
 
-            <div className="add-channel">
-                <div className="d-sm-flex align-items-center justify-content-between mb-4">
+function AddChannel() {
+    const [platform, setPlatform] = useState("");
+    const [category, setCategory] = useState("");
+    const loading = useStoreState(state => state.channels.loading)
 
-                    <h2 className="m-0 font-weight-bold text-primary">Add New Channel</h2>
+    function onPlatformChange(e) {
+        setPlatform(e.target.value)
+    }
+    function onCategoryChange(e) {
+        setCategory(e.target.value)
+    }
+
+    return (
+
+        <div className="add-channel">
+            <div className="col-md-12 p-0">
+                {
+                    !loading ? '' :
+                        <div className="loading-overlay d-flex align-items-center justify-content-center">
+
+                            <Spinner animation="border" variant="success" />
+                        </div>
+                }
+            </div>
+            <div className="d-sm-flex align-items-center justify-content-between mb-4">
+
+                <h2 className="m-0 font-weight-bold text-primary">Add New Channel</h2>
+
+
+
+            </div>
+
+            <form className="user">
+
+                <div className="form-group">
+
+
+                    <div className="form-group m-3 mb-sm-0">
+                        <div className="col-md-12">
+                            <label>Selelct Channel Category*</label>
+                            <select className="browser-default custom-select h-auto pad-12" id="category" name="category" value={category} onChange={onCategoryChange}>
+                                <option selected>Select</option>
+                                <option value="Animal">Animal</option>
+                                <option value="Art">Art</option>
+                                <option value="Beauty">Beauty</option>
+                                <option value="Books">Books</option>
+                                <option value="Business">Business</option>
+                                <option value="Causes">Causes</option>
+                                <option value="Comedy">Comedy</option>
+                                <option value="Dance">Dance</option>
+                                <option value="DIY">DIY</option>
+                                <option value="Education">Education</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Family">Family</option>
+                                <option value="Fashion">Fashion</option>
+                                <option value="Film">Film</option>
+                                <option value="Fitness">Fitness</option>
+                                <option value="Food">Food</option>
+                                <option value="Gaming">Gaming</option>
+                                <option value="Lifestyle">Lifestyle</option>
+                                <option value="Music">Music</option>
+                                <option value="News">News</option>
+                                <option value="Photograpy">Photograpy</option>
+                                <option value="Politics">Politics</option>
+                                <option value="Science">Science</option>
+                                <option value="Sports">Sports</option>
+                                <option value="Tech">Tech</option>
+                                <option value="Travel">Travel</option>
+                                <option value="TV">TV</option>
+
+                            </select>
+
+                            <div className="row">
+                                <div className="col-md-3 my-3"><InstagramVerify category={category} /> </div>
+                                <div className="col-md-2 my-3"><YoutubeVerify category={category}/> </div>
+                                <div className="col-md-3 my-3"><TwitterVerify category={category} /> </div>
+                                <div className="col-md-2 my-3"><TiktokVerify category={category} /> </div>
+                                <div className="col-md-2 my-3"><FacebookVerify category={category}/> </div>
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
 
 
                 </div>
-                <form className="user">
-
-                    <div className="form-group row">
-                        <div className="form-group col-sm-6 mb-3 mb-sm-0">
-                            <label>Your name *</label>
-                            <input type="text" className="form-control form-control-user" name="service" id="service" placeholder="Enter your name" />
-                        </div>
-
-                        <div className="form-group col-sm-6 mb-3 mb-sm-0">
-                            <label>Your Email *</label>
-                            <input type="text" className="form-control form-control-user" name="service" id="service" placeholder="Enter your email" />
-                        </div>
-
-                        <div className="form-group col-sm-6 mb-3 mb-sm-0">
-                            <label>Selelct Channel *</label>
-                            <select className="browser-default custom-select h-auto pad-12" id="category" name="category">
-                                <option selected>Select</option>
-                                <option value="1">Youtube</option>
-                                <option value="2">Twitter</option>
-                                <option value="3">Instagram</option>
-                                <option value="4">Linkdin</option>
-
-                            </select>
-                        </div>
-
-                        <div className="form-group col-sm-6 mb-3 mb-sm-0">
-                            <label>Upload the image *</label>
-                            {/* <input style={{border: "none", padding: "5px 21px"}} type="file" placeholder="Enter the name" className="form-control form-control-user" /> */}
-                            <div className="custom-file channel-logo">
-                                <input type="file" className="custom-file-input" id="inputGroupFile01" />
-                                <label className="custom-file-label mt-0" htmlFor="inputGroupFile01"></label>
-                            </div>
-                        </div>
-
-
-                        <div className="form-group col-sm-12 mb-3 mb-sm-0">
-                            <label>Message *</label>
-                            <textarea className="form-control form-control-user" name="S_service" id="S_service" placeholder="Description"></textarea>
-
-                        </div>
-                        <button className="btn btn-primary btn-user btn-block rounded-30"> SEND</button>
-                    </div>
-                </form>
-            </div>
-        )
-    }
+            </form>
+        </div>
+    )
 }
+
 export default AddChannel
