@@ -31,6 +31,12 @@
   overflow-y: auto;
   font-size: 0.85rem;
   transition: transform 250ms;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar .fill-space {
+  flex: 1;
 }
 .sidebar-content {
   flex: 1;
