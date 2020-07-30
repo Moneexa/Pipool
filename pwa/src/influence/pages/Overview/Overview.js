@@ -1,6 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import './Overview.css'
+import React from 'react';
+import './Overview.css';
 
 function Overview() {
     return (
