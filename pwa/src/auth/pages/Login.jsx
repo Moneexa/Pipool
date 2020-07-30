@@ -1,9 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useStoreActions, useStoreState } from 'easy-peasy';
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { faGoogle, faFacebook, faLinkedin } from '@fortawesome/free-brands-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import './Login.css'
-export function Login({ match }) {
+import { FacebookLoginWrapper } from '../shared/components/FacebookLoginWrapper';
+import { GoogleLoginWrapper } from '../shared/components/GoogleLoginWrapper';
+import { LinkedInWrapper } from '../shared/components/LinkedinWrapper';
+import './Login.css';
+import Loader from 'react-loader-spinner'
+import { Spinner } from 'react-bootstrap';
+
+
+
+
+export function Login() {
+    const { register, handleSubmit, watch, errors } = useForm();
+    const [signingup, setSigningup] = useState(false);
+    const signup = useStoreActions(actions => actions.user.signup);
+    const login = useStoreActions(actions => actions.user.login);
+    const loading = useStoreState(state => state.user.loading);
+    const loginErrorMessage = useStoreState(state => state.user.errors.loginErrorMessage);
+    function onSubmit(values) {
+        if (signingup) {
+            signup(values.email);
+        }
+        else {
+            login(values);
+        }
+
+    }
+
     return (
         <div className="login">
             <div className="bg-gradient-primary d-flex justify-content-center align-items-center">
@@ -23,63 +48,103 @@ export function Login({ match }) {
                                         }}>
 
                                         </div>
-                                        <div className="col-lg-6">
+                                        <div className="col-lg-6 p-0">
+                                            {
+                                                !loading ? '' :
+                                                    <div className="loading-overlay d-flex justify-content-center align-items-center">
+
+                                                        <Spinner size="bg" animation="grow" variant="success" />
+                                                    </div>
+                                            }
                                             <div className="p-5">
                                                 <div className="text-center">
-                                                    <h1 className="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                                    <h1 className="h4 text-gray-900 mb-4">{signingup ? 'Create an Account' : 'Welcome Back!'} </h1>
                                                 </div>
-                                                <form className="user" method="post">
+                                                {
+                                                    loginErrorMessage ?
+                                                        <div class="alert alert-danger" role="alert">
+                                                            {loginErrorMessage}
+                                                        </div>
+                                                        : ''
+                                                }
+                                                <form className="user" onSubmit={handleSubmit(onSubmit)}>
                                                     <div className="form-group">
-                                                        <input type="email" name="email" className="py-4 form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address..." />
-                                                        <p style={{ color: "red" }}> </p>
+                                                        <input
+                                                            ref={register({
+                                                                required: true,
+                                                                pattern: {
+                                                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                                                                    message: "invalid email address"
+                                                                }
+                                                            })}
+                                                            type="email"
+                                                            name="email"
+                                                            className="py-4 form-control form-control-user"
+                                                            aria-describedby="emailHelp"
+                                                            placeholder="Enter Email Address..." />
+                                                        <p className="form-error px-3 text-danger h6">{errors.email && errors.email.message}</p>
                                                     </div>
 
-                                                    <div className="form-group">
-                                                        <input type="password" name="password" className="py-4 form-control form-control-user" id="exampleInputPassword" placeholder="Password" />
-                                                        <p style={{ color: "red" }}> </p>
-                                                    </div>
-                                                    <div className="form-group remember-me">
-                                                        <div className="custom-control custom-checkbox small d-flex align-items-center">
-                                                            <input type="checkbox" name="checkbox" className="py-4 custom-control-input" id="customCheck" />
-                                                            <label className="custom-control-label" htmlFor="customCheck">Remember Me</label>
-                                                        </div>
-                                                    </div>
-                                                    <Link to="/brand" className="btn btn-user btn-block text-white no-focus-effects">Login</Link>
+                                                    {
+                                                        signingup ? '' :
+                                                            <div>
+                                                                <div className="form-group">
+                                                                    <input
+                                                                        required
+                                                                        ref={register}
+                                                                        type="password" name="password"
+                                                                        className="py-4 form-control form-control-user"
+                                                                        placeholder="Password" />
+                                                                    {errors.password && <span className="form-error px-3 text-danger h6">This field is required</span>}
+                                                                </div>
+                                                                <div className="form-group remember-me">
+                                                                    <div className="custom-control custom-checkbox small d-flex align-items-center">
+                                                                        <input type="checkbox" name="checkbox" className="py-4 custom-control-input" id="customCheck" />
+                                                                        <label className="custom-control-label" htmlFor="customCheck">Remember Me</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                    }
+
+                                                    <button type="submit" to="/brand" className="btn btn-user btn-block text-white no-focus-effects">
+                                                        {signingup ? 'Register Account' : 'Login'}
+                                                    </button>
 
                                                 </form>
                                                 <hr />
-                                                <Link to="/" className="btn btn-google btn-user btn-block no-focus-effects d-flex justify-content-center align-items-center">
-                                                    <FontAwesomeIcon className="social-icon" icon={faGoogle} />
-                                                    Login with Google
-                                                </Link>
-                                                <Link to="/" className="btn btn-facebook btn-user btn-block no-focus-effects d-flex justify-content-center align-items-center">
-                                                    <FontAwesomeIcon className="social-icon" icon={faFacebook} />
-                                                    Login with Facebook
-                                                </Link>
-                                                <Link to="/" className="btn btn-linkedin btn-block no-focus-effects d-flex justify-content-center align-items-center">
-                                                    <FontAwesomeIcon className="social-icon" icon={faLinkedin} />
-                                                    Login with LinkedIn
-                                                </Link>
+                                                <GoogleLoginWrapper />
+                                                <FacebookLoginWrapper />
+                                                <LinkedInWrapper />
+
                                                 <hr />
-                                                <div className="text-center">
-                                                    <Link className="small text-dark-blue" to="/">Forgot Password?</Link>
-                                                </div>
-                                                <div className="text-center">
-                                                    <Link className="small text-dark-blue" to="/auth/signup">Create an Account!</Link>
-                                                </div>
+
+                                                {
+                                                    !signingup ?
+                                                        <div className="text-center">
+                                                            <Link className="small text-dark-blue" to="/">Forgot Password?</Link>
+                                                        </div> :
+                                                        ''
+                                                }
+
+                                                {
+                                                    !signingup ?
+                                                        <Link className="text-center">
+                                                            <div className="small text-dark-blue" onClick={() => setSigningup(true)}>Create an Account!</div>
+                                                        </Link> :
+                                                        <Link className="text-center" >
+                                                            <div className="small text-dark-blue" onClick={() => setSigningup(false)}>Already have an account? Login!</div>
+                                                        </Link>
+                                                }
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
         </div>
     );
+
 }
