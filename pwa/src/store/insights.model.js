@@ -61,6 +61,10 @@ export const InsightsModel = {
     fbInsights: thunk(async (actions, payload) => {
         const res = await axios.post(`${config.apiUrl}/channels/insights/facebook/`, payload)
         console.log(res)
+    }),
+    youtubeInsights: thunk(async (actions, payload)=>{
+        const res= await axios.post(`${config.apiUrl}/channels/insights/youtube`, payload)
+        console.log(res);
     })
 
 };

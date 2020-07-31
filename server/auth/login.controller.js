@@ -13,7 +13,7 @@ module.exports = {
 	loginFacebook,
 	loginGoogle,
 	loginLinkedin,
-	
+
 	verify
 };
 
@@ -55,19 +55,17 @@ const client = new OAuth2Client("529379787978-sgjjt3qpl23ivkp2boh1s3q03m3k5a8n.a
 async function login(req, res) {
 
 	if (req.body.email && req.body.password) {
-		UsertModel.findOne({
-			"email": req.body.email,
-		}).exec(function (err, user) {
+		UsertModel.findOne({ "email": req.body.email }, function (err, user) {
 			if (err || !user) {
-				return res.sendStatus(400);
+				console.log(err)
+				return res.send(err);
 			}
 			else {
-
 				crypto.pbkdf2(req.body.password, 'salt', 100, 64, 'sha512', (err, derivedKey) => {
 					derivedKey = derivedKey.toString('hex');
-					var passed=false;
-					if(derivedKey===user.password){
-                       passed=true
+					var passed = false;
+					if (derivedKey === user.password) {
+						passed = true
 					}
 					if (err || !passed) {
 						return res.status(401).send("Invalid credentials");
@@ -101,13 +99,14 @@ async function login(req, res) {
 
 				})
 			}
-		});
+		}
+		)
 	}
 	else {
 		res.sendStatus(400);
 	}
-}
 
+}
 async function loginLinkedin(req, res) {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {

@@ -173,6 +173,18 @@ module.exports = {
         catch (error) {
             res.send(error)
         }
+    },
+    YoutubeInsights: async function (req, res) {
+        var access_token = req.body.token
+        try {
+
+            const response = await axios.get(`https://youtubeanalytics.googleapis.com/v2/reports?access_token=${access_token}&dimensions=day&metric=views,redViews,comments,likes&startDate=2020-01-01&endDate=2020-07-09`)
+            res.send(response.data);
+        }
+        catch (error) {
+            console.log(error)
+            res.send(error)
+        }
     }
 
 };

@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import config from '../../../config.json';
 import CanvasJSReact from '../../../lib/Chart 2.3.2 GA - Stable/canvasjs.react';
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
+const gapi = window.gapi;
+let GoogleAuth = window.GoogleAuth;
+
 function ChannelInsights(props) {
+    var SCOPE = 'https://www.googleapis.com/auth/youtube.force-ssl';
+    var discoveryUrl = 'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest';
+    const youtube_Insights= useStoreActions(actions => actions.insights.youtubeInsights);
     const impressions = useStoreState(state => state.insights.impressions);
     const instaFollowers = useStoreState(state => state.insights.InstaFollowers);
     const instainsights = useStoreActions(actions => actions.insights.instaInsights)
@@ -18,8 +25,36 @@ function ChannelInsights(props) {
         else if (socialAcc === "facebook") {
             fbInsights(Id)
         }
-
+       else if(socialAcc === "youtube"){
+           youtubeInsights(Id)
+       }
     }
+    useEffect(() => {
+        gapi.load('client:auth2', initClient);
+    }, []);
+    function initClient() {
+        gapi.client.init({
+            'apiKey': config.google.apiKey,
+            'clientId': config.google.clientId,
+            'discoveryDocs': [discoveryUrl],
+            'scope': SCOPE
+        }).then(function () {
+            GoogleAuth = gapi.auth2.getAuthInstance();
+            //setCanSignIn(true)
+        });
+    }
+    async function youtubeInsights(props) {
+        const user = await GoogleAuth.signIn();
+        gapi.client.setApiKey(config.google.apiKey);
+        const channels = await gapi.client.youtube.channels.list({
+            mine: true,
+            part: 'id,statistics,snippet'
+        });
+        
+        console.log(user.getAuthResponse().access_token)
+        youtube_Insights({token:user.getAuthResponse().access_token , Id: props})
+    }
+
     const instaInsights = props => {
 
         console.log(props)
