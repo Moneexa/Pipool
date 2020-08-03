@@ -32,7 +32,7 @@ function Channel() {
                                 <div className="text-center d-none d-md-inline">
                                     {
                                         value.channelType === "facebook" ?
-                                            <Link to={`/influencer/channel-insights/${value.channelType}/${value.channelId}`}>
+                                            <Link to={`/influencer/channels/${value.channelId}/insights?ctype=${value.channelType}`}>
 
                                                 <button className="btn btn-floating btn-lg btn-fb" type="button" >
                                                     <FontAwesomeIcon icon={faFacebookF} />
@@ -40,7 +40,7 @@ function Channel() {
                                     }
                                     {
                                         value.channelType === "twitter" ?
-                                            <Link to={`/influencer/channel-insights/${value.channelType}/${value.channelId}`}>
+                                            <Link to={`/influencer/channels/${value.channelId}/insights?ctype=${value.channelType}`}>
 
                                                 <button className="btn btn-floating btn-lg btn-tw" type="button">
                                                     <FontAwesomeIcon icon={faTwitter} />
@@ -48,7 +48,7 @@ function Channel() {
                                     }
                                     {
                                         value.channelType === "tiktok" ?
-                                            <Link to={`/influencer/channel-insights/${value.channelType}/${value.channelName}`}>
+                                            <Link to={`/influencer/channels/${value.channelName}/insights?ctype=${value.channelType}`}>
 
                                                 <button className="btn btn-floating btn-lg btn-tw" type="button">
                                                     <FontAwesomeIcon icon={faTiktok} />
@@ -57,14 +57,14 @@ function Channel() {
 
                                     {
                                         value.channelType === "instagram" ?
-                                            <Link to={`/influencer/channel-insights/${value.channelType}/${value.channelId}`}>
+                                            <Link to={`/influencer/channels/${value.channelId}/insights?ctype=${value.channelType}`}>
                                                 <button className="btn btn-floating btn-lg btn-ins" type="button">
                                                     < FontAwesomeIcon icon={faInstagram} />
                                                 </button></Link> : ''
                                     }
                                     {
                                         value.channelType === "youtube" ?
-                                            <Link to={`/influencer/channel-insights/${value.channelType}/${value.channelId}`}>
+                                            <Link to={`/influencer/channels/${value.channelId}/insights?ctype=${value.channelType}`}>
 
                                                 <button className="btn btn-floating btn-lg btn-ins" type="button">
                                                     < FontAwesomeIcon icon={faYoutube} />
