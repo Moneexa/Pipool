@@ -17,7 +17,7 @@ export function FacebookVerify(props) {
     const [accountsList, setAccountsList] = useState([])
     function openPopup() {
         const host = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port;
-        const oauthWindow = window.open(encodeURI(`${config.instagram.uri}/?redirect_uri=${host}${config.instagram.redirectURI}&client_id=${config.instagram.appId}&scope=${config.instagram.scope}&response_type=token&state={"{st=state123abc,ds=123456789}"}`));
+        const oauthWindow = window.open(encodeURI(`${config.facebookPages.uri}/?redirect_uri=${host}${config.facebookPages.redirectURI}&client_id=${config.facebookPages.appId}&scope=${config.facebookPages.scope}&response_type=token&state={"{st=state123abc,ds=123456789}"}`));
 
         var timer = setInterval(function () {
             console.log("here")
