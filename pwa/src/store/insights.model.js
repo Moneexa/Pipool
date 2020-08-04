@@ -6,8 +6,13 @@ import * as toastr from 'toastr';
 const { action, thunk } = require("easy-peasy");
 export const InsightsModel = {
     instagram: [],
+    facebook: [],
     setInstagram: action((state, payload) => {
         state.instagram = payload;
+        console.log(state.impressions)
+    }),
+    setFacebook: action((state, payload) => {
+        state.facebook = payload;
         console.log(state.impressions)
     }),
     instaInsights: thunk(async (actions, payload) => {
@@ -54,8 +59,28 @@ export const InsightsModel = {
     }),
 
     fbInsights: thunk(async (actions, payload) => {
+        const insights = []
         const res = await axios.post(`${config.apiUrl}/channels/insights/facebook/`, payload)
-        console.log(res)
+        console.log(res.data)
+        for (let insight of res.data.data) {
+            insights.push({
+                animationEnabled: true,
+                theme: "light2",
+                axisX: {
+                    title: "Time Period",
+                },
+                axisY: {
+                    title: insight.title,
+                },
+                data: [{
+                    type: "column",
+                    dataPoints: insight.values.map((data => {
+                        return { y: data.value, label: data.end_time.substring(0, 10) }
+                    }))
+                }]
+            });
+        }
+        actions.setFacebook(insights);
     }),
     youtubeInsights: thunk(async (actions, payload) => {
         const res = await axios.post(`${config.apiUrl}/channels/insights/youtube`, payload)

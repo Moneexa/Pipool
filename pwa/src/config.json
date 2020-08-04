@@ -44,5 +44,11 @@
         "redirectURI": "/oauth-redirect",
         "scope": "pages_show_list,pages_read_engagement",
         "uri": "https://www.facebook.com/v7.0/dialog/oauth"
+    },
+    "facebookPagesInsights": {
+        "appId": "263197894950161",
+        "redirectURI": "/oauth-redirect",
+        "scope": "pages_show_list, read_insights, pages_read_engagement",
+        "uri": "https://www.facebook.com/v7.0/dialog/oauth"
     }
 }

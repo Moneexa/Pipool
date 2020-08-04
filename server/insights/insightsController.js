@@ -134,20 +134,22 @@ module.exports = {
         }
         catch (error) {
             console.log(error)
-            res.send(error)
+            res.status(400).send(error)
         }
     },
     FaecbookInsights: async function (req, res) {
         try {
             console.log(req.body.token)
-            const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.channelId}/insights?page_tab_views_login_top_unique&period=day&access_token=${req.body.token}`)
+            //We need to fetch a separate access token for the page first
+            const respForAccessToken = await axios.get(`https://graph.facebook.com/v7.0/${req.body.channelId}?fields=access_token&access_token=${req.body.token}`)
+            const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.channelId}/insights?metric=page_impressions_unique&access_token=${respForAccessToken.data.access_token}`)
             console.log(resp.data)
             res.send(resp.data);
 
         }
         catch (error) {
             console.log(error)
-            res.send(error)
+            res.status(400).send(error)
         }
     },
     TiktokInsights: async function (req, res) {

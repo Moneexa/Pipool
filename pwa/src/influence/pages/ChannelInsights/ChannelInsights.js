@@ -116,9 +116,9 @@ function ChannelInsights({ match, location }) {
             case 'instagram':
                 return <InstagramInsights channelId={id}/>
             case 'youtube':
-                return <YoutubeInsights />;
+                return <YoutubeInsights channelId={id}/>;
             case 'facebook':
-                return <FacebookInsights />
+                return <FacebookInsights channelId={id}/>
         }
     }
     return (
