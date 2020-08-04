@@ -5,65 +5,85 @@ import * as toastr from 'toastr';
 
 const { action, thunk } = require("easy-peasy");
 export const InsightsModel = {
-    impressions: {},
-    InstaFollowers: {},
-    setImpressions: action((state, payload) => {
-        state.impressions = payload;
+    instagram: [],
+    facebook: [],
+    setInstagram: action((state, payload) => {
+        state.instagram = payload;
         console.log(state.impressions)
     }),
-    setInstaFollowers: action((state, payload) => {
-        state.InstaFollowers = payload;
-        console.log(state.instaFollowers)
+    setFacebook: action((state, payload) => {
+        state.facebook = payload;
+        console.log(state.impressions)
     }),
     instaInsights: thunk(async (actions, payload) => {
+        const insights = []
         const res = await axios.post(`${config.apiUrl}/channels/insights/instagram/`, payload)
-        console.log(res.data.data[0].values)
-        const impressions = res.data.data[0].values;
-        const followers = res.data.data[3].values;
-        const impressionsOptions = {
-            animationEnabled: true,
-			theme: "light2",
-            title: {
-                text: "Unique Business Impressions"
-            },
-
-            axisX: {
-                title: "Time Period",
-            },
-            axisY: {
-                title: "Impressions",
-            },
-            data: impressions
+        console.log(res.data)
+        for (let insight of res.data.data) {
+            insights.push({
+                animationEnabled: true,
+                theme: "light2",
+                axisX: {
+                    title: "Time Period",
+                },
+                axisY: {
+                    title: insight.title,
+                },
+                data: [{
+                    type: "column",
+                    dataPoints: insight.values.map((data => {
+                        return { y: data.value, label: data.end_time.substring(0, 10) }
+                    }))
+                }]
+            });
         }
-        actions.setImpressions(impressionsOptions)
+        console.log(insights);
+        // const impressions = res.data.data[0].values;
+        // const followers = res.data.data[3].values;
+        // const impressionsOptions = {
+        //     animationEnabled: true,
+        //     theme: "light2",
+        //     title: {
+        //         text: "Unique Business Impressions"
+        //     },
 
-        const followersOptions = {
-            animationEnabled: true,
-			theme: "light2",
-            title: {
-                text: "Unique Followers insights"
-            },
-
-            axisX: {
-                title: "Time Period",
-            },
-            axisY: {
-                title: "Followers",
-            },
-            data: [{
-                type: "column",
-                dataPoints: followers
-            }]
-        }
-        actions.setInstaFollowers(followersOptions)
+        //     axisX: {
+        //         title: "Time Period",
+        //     },
+        //     axisY: {
+        //         title: "Impressions",
+        //     },
+        //     data: impressions
+        // }
+        actions.setInstagram(insights);
     }),
 
     fbInsights: thunk(async (actions, payload) => {
+        const insights = []
         const res = await axios.post(`${config.apiUrl}/channels/insights/facebook/`, payload)
-        console.log(res)
+        console.log(res.data)
+        for (let insight of res.data.data) {
+            insights.push({
+                animationEnabled: true,
+                theme: "light2",
+                axisX: {
+                    title: "Time Period",
+                },
+                axisY: {
+                    title: insight.title,
+                },
+                data: [{
+                    type: "column",
+                    dataPoints: insight.values.map((data => {
+                        return { y: data.value, label: data.end_time.substring(0, 10) }
+                    }))
+                }]
+            });
+        }
+        actions.setFacebook(insights);
     }),
-    youtubeInsights: thunk(async (actions, payload)=>{
-        const res= await axios.post(`${config.apiUrl}/channels/insights/youtube`, payload)
+    youtubeInsights: thunk(async (actions, payload) => {
+        const res = await axios.post(`${config.apiUrl}/channels/insights/youtube`, payload)
         console.log(res);
     })
 

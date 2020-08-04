@@ -13,7 +13,7 @@ import Overview from './pages/Overview/Overview';
 import PendingRequests from './pages/PendingRequests/PendingRequests';
 import Help from './pages/Help/Help';
 import Payment from './pages/Payment/Payment';
-import ChannelInsights from './pages/ChannelManager/ChannelInsights'
+import ChannelInsights from './pages/ChannelInsights/ChannelInsights'
 //import store from "./shared/store/store"
 
 export class Influencer extends React.Component {
@@ -162,13 +162,13 @@ export class Influencer extends React.Component {
                                         <Route path={`${this.props.match.path}/overview`} component={Overview} />
                                         <Route path={`${this.props.match.path}/campaigns`} component={CampaignManager} />
                                         <Route path={`${this.props.match.path}/pending-requests`} component={PendingRequests} />
-                                        <Route path={`${this.props.match.path}/channels`} component={ChannelManager} />
+                                        <Route path={`${this.props.match.path}/channels`} exact={true} component={ChannelManager} />
                                         <Route path={`${this.props.match.path}/add-channels`} component={AddChannel} />
                                         <Route path={`${this.props.match.path}/campaign-feedbacks`} component={PastCampaignFeedback} />
                                         <Route path={`${this.props.match.path}/calender`} component={Calender} />
                                         <Route path={`${this.props.match.path}/payment`} component={Payment} />
                                         <Route path={`${this.props.match.path}/help`} component={Help} />
-                                        <Route path={`${this.props.match.path}/channel-insights`} component={ChannelInsights} />
+                                        <Route path={`${this.props.match.path}/channels/:id/insights`} exact={true} component={ChannelInsights} />
                                     </Switch>
 
                                 </div>

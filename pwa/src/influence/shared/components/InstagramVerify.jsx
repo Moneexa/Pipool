@@ -18,7 +18,7 @@ export function InstagramVerify(props) {
     function openPopup() {
         //   authenticateInsta();
         const host = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port;
-        const oauthWindow = window.open(encodeURI(`${config.instagram.uri}/?redirect_uri=${host}${config.instagram.redirectURI}&client_id=${config.instagram.appId}&scope=${config.instagram.scope}&response_type=token&state={"{st=state123abc,ds=123456789}"}`));
+        const oauthWindow = window.open(encodeURI(`${config.instagramBasic.uri}/?redirect_uri=${host}${config.instagramBasic.redirectURI}&client_id=${config.instagramBasic.appId}&scope=${config.instagramBasic.scope}&response_type=token&state={"{st=state123abc,ds=123456789}"}`));
 
         var timer = setInterval(function () {
             console.log("here")

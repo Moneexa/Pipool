@@ -4,10 +4,16 @@
         "clientId": "110053771767-189lvlqc6v89acs4lub3v62odqivt6g2.apps.googleusercontent.com",
         "apiKey": "AIzaSyDe6galtm6BnVZE-8PfF7v8YtZzSeyO9S0"
     },
-    "instagram": {
+    "instagramBasic": {
         "appId": "263197894950161",
         "redirectURI": "/oauth-redirect",
-        "scope": "instagram_basic,instagram_manage_insights,pages_show_list,pages_manage_metadata,pages_read_engagement,user_posts,user_videos",
+        "scope": "instagram_basic",
+        "uri": "https://www.facebook.com/v7.0/dialog/oauth"
+    },
+    "instagramInsights": {
+        "appId": "263197894950161",
+        "redirectURI": "/oauth-redirect",
+        "scope": "instagram_basic,instagram_manage_insights",
         "uri": "https://www.facebook.com/v7.0/dialog/oauth"
     },
     "temp": {
@@ -32,5 +38,17 @@
     "facebook": {
         "clientId": "263197894950161",
         "scope":"read_insights, pages_read_engagement"
+    },
+    "facebookPages": {
+        "appId": "263197894950161",
+        "redirectURI": "/oauth-redirect",
+        "scope": "pages_show_list,pages_read_engagement",
+        "uri": "https://www.facebook.com/v7.0/dialog/oauth"
+    },
+    "facebookPagesInsights": {
+        "appId": "263197894950161",
+        "redirectURI": "/oauth-redirect",
+        "scope": "pages_show_list, read_insights, pages_read_engagement",
+        "uri": "https://www.facebook.com/v7.0/dialog/oauth"
     }
 }
