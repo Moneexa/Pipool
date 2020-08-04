@@ -180,7 +180,7 @@ module.exports = {
         var access_token = req.body.token
         try {
 
-            const response = await axios.get(`https://youtubeanalytics.googleapis.com/v2/reports?access_token=${access_token}&dimensions=insightTrafficSourceType&metrics=views,estimatedMinutesWatched,subscribersGained`)
+            const response = await axios.get(`https://youtubeanalytics.googleapis.com/v2/reports?access_token=${access_token}&dimensions=day&metrics=views,estimatedMinutesWatched,subscribersGained&ids=channel==${req.body.Id}&startDate=2020-01-01&endDate=2020-08-04`)
             res.send(response.data);
         }
         catch (error) {

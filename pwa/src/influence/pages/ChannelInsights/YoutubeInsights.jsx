@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 import config from '../../../config.json';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import CanvasJSReact from '../../../lib/Chart 2.3.2 GA - Stable/canvasjs.react';
@@ -7,11 +7,14 @@ var gapi = window.gapi;
 var GoogleAuth = window.GoogleAuth;
 export function YoutubeInsights({ channelId }) {
 
-    var SCOPE = 'https://www.googleapis.com/auth/yt-analytics.readonly';
+    var SCOPE = 'https://www.googleapis.com/auth/youtube.readonly';
     var discoveryUrl = 'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest';
 
     const youtube_Insights = useStoreActions(actions => actions.insights.youtubeInsights);
-    const insights =  useStoreState(state => state.insights.youtube);
+    const viewInsights = useStoreState(state => state.insights.youtubeViews);
+    const subscribers = useStoreState(state => state.insights.youtubeSubscribers);
+    const esTime = useStoreState(state => state.insights.youtubeEstTime)
+
     useEffect(() => {
         gapi.load('client:auth2', initClient);
     }, []);
@@ -40,11 +43,29 @@ export function YoutubeInsights({ channelId }) {
 
     return (
         <div className="channel-insights">
-            <button onClick={()=>fetchInsights()} className="btn btn-primary rounded-30 text-white">Fetch Insights</button>
+            <button onClick={() => fetchInsights()} className="btn btn-primary rounded-30 text-white">Fetch Insights</button>
             <div className="row">
                 {
-                    insights.map((value, index) => {
-                        return <CanvasJSChart key={index} options={value} />
+                    viewInsights.map((value, index) => {
+                        return (<>
+                            <CanvasJSChart key={index} options={value} />
+                        </>)
+                    })
+
+                }
+                {
+                    subscribers.map((value, index) => {
+                        return (<>
+                            <CanvasJSChart key={index} options={value} />
+                        </>)
+                    })
+
+                }
+                {
+                    esTime.map((value, index) => {
+                        return (<>
+                            <CanvasJSChart key={index} options={value} />
+                        </>)
                     })
                 }
             </div>
