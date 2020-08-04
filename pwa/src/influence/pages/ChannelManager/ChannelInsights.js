@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import config from '../../../config.json';
+import './ChannelManager.css'
+
 import CanvasJSReact from '../../../lib/Chart 2.3.2 GA - Stable/canvasjs.react';
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
@@ -9,7 +11,7 @@ const gapi = window.gapi;
 let GoogleAuth = window.GoogleAuth;
 
 function ChannelInsights(props) {
-    var SCOPE = 'https://www.googleapis.com/auth/youtube.force-ssl';
+    var SCOPE = 'https://www.googleapis.com/auth/youtube';
     var discoveryUrl = 'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest';
     const youtube_Insights= useStoreActions(actions => actions.insights.youtubeInsights);
     const impressions = useStoreState(state => state.insights.impressions);
@@ -106,7 +108,7 @@ function ChannelInsights(props) {
     return (<div className="channel-insights">
         <div className="d-sm-flex align-items-center justify-content-between mb-4">
             <h2 className="m-0 font-weight-bold text-primary">Channel Insights</h2>
-            <button type="button" onClick={handleClick}>Fetch insights</button>
+            <button type="button" className="btn btn-primary rounded-20 text-white" onClick={handleClick}>Fetch insights</button>
         </div>
         <div className="row">
             {

@@ -140,7 +140,9 @@ module.exports = {
     FaecbookInsights: async function (req, res) {
         try {
             console.log(req.body.token)
-            const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.channelId}/insights?page_tab_views_login_top_unique&period=day&access_token=${req.body.token}`)
+            const resp1= await axios.get(`https://graph.facebook.com/${req.body.channelId}?fields=access_token&access_token=${req.body.token}`)
+            console.log(resp1);
+            const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.channelId}/insights?metric=page_tab_views_login_top_unique&period=day&access_token=${resp1.data.access_token}`)
             console.log(resp.data)
             res.send(resp.data);
 
@@ -178,7 +180,7 @@ module.exports = {
         var access_token = req.body.token
         try {
 
-            const response = await axios.get(`https://youtubeanalytics.googleapis.com/v2/reports?access_token=${access_token}&dimensions=day&metric=views,redViews,comments,likes&startDate=2020-01-01&endDate=2020-07-09`)
+            const response = await axios.get(`https://youtubeanalytics.googleapis.com/v2/reports?access_token=${access_token}&metric=views,redViews,comments,likes&ids=channel%3D%3DMINE&startDate=2020-06-10&endDate=2020-07-09&startDate=2020-01-01&endDate=2020-07-09`)
             res.send(response.data);
         }
         catch (error) {
