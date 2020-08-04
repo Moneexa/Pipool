@@ -7,13 +7,15 @@ const { action, thunk } = require("easy-peasy");
 export const InsightsModel = {
     instagram: [],
     facebook: [],
+    youtube : [],
     setInstagram: action((state, payload) => {
         state.instagram = payload;
-        console.log(state.impressions)
     }),
     setFacebook: action((state, payload) => {
         state.facebook = payload;
-        console.log(state.impressions)
+    }),
+    setYoutube: action((state,payload)=>{
+        state.youtube=payload;
     }),
     instaInsights: thunk(async (actions, payload) => {
         const insights = []
@@ -83,6 +85,7 @@ export const InsightsModel = {
         actions.setFacebook(insights);
     }),
     youtubeInsights: thunk(async (actions, payload) => {
+        const insights=[];
         const res = await axios.post(`${config.apiUrl}/channels/insights/youtube`, payload)
         console.log(res);
     })

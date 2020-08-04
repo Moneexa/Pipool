@@ -4,7 +4,6 @@ import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useStoreActions, useStoreState, debug } from 'easy-peasy';
 import { Modal, Button } from 'react-bootstrap';
-
 const gapi = window.gapi;
 let GoogleAuth = window.GoogleAuth;
 export function YoutubeVerify(props) {
