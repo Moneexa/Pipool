@@ -134,7 +134,7 @@ module.exports = {
         }
         catch (error) {
             console.log(error)
-            res.status(400).send(error)
+            res.send(error).status(445);
         }
     },
     FaecbookInsights: async function (req, res) {
@@ -149,7 +149,7 @@ module.exports = {
         }
         catch (error) {
             console.log(error)
-            res.status(400).send(error)
+            res.send(error).status(445);
         }
     },
     TiktokInsights: async function (req, res) {
@@ -185,7 +185,7 @@ module.exports = {
         }
         catch (error) {
             console.log(error)
-            res.send(error)
+            res.send(error).status(445);
         }
     }
 

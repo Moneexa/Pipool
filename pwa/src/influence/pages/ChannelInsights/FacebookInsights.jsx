@@ -21,8 +21,7 @@ export function FacebookInsights({ channelId }) {
 
                 const code = searchParams.get('access_token');
                 console.log(code)
-                // setToken(code);
-                // const error = searchParams.get('error');
+
                 fbInsights({ token: code, channelId: channelId })
             }
         }, 1000);

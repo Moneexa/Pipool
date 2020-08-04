@@ -21,8 +21,6 @@ export function InstagramInsights({ channelId }) {
 
                 const code = searchParams.get('access_token');
                 console.log(code)
-                // setToken(code);
-                // const error = searchParams.get('error');
                 instaInsights({ token: code, channelId: channelId })
             }
         }, 1000);

@@ -7,7 +7,7 @@ const { action, thunk } = require("easy-peasy");
 export const InsightsModel = {
     instagram: [],
     facebook: [],
-    youtubeViews: [], youtubeSubscribers: [], youtubeEstTime:[],
+    youtubeViews: [], youtubeSubscribers: [], youtubeEstTime: [],
     setInstagram: action((state, payload) => {
         state.instagram = payload;
     }),
@@ -27,6 +27,9 @@ export const InsightsModel = {
         const insights = []
         const res = await axios.post(`${config.apiUrl}/channels/insights/instagram/`, payload)
         console.log(res.data)
+        if (res.status != "200") {
+            toastr.error("Something went wrong")
+        }
         for (let insight of res.data.data) {
             insights.push({
                 animationEnabled: true,
@@ -46,23 +49,6 @@ export const InsightsModel = {
             });
         }
         console.log(insights);
-        // const impressions = res.data.data[0].values;
-        // const followers = res.data.data[3].values;
-        // const impressionsOptions = {
-        //     animationEnabled: true,
-        //     theme: "light2",
-        //     title: {
-        //         text: "Unique Business Impressions"
-        //     },
-
-        //     axisX: {
-        //         title: "Time Period",
-        //     },
-        //     axisY: {
-        //         title: "Impressions",
-        //     },
-        //     data: impressions
-        // }
         actions.setInstagram(insights);
     }),
 
@@ -70,6 +56,9 @@ export const InsightsModel = {
         const insights = []
         const res = await axios.post(`${config.apiUrl}/channels/insights/facebook/`, payload)
         console.log(res.data)
+        if (res.status != "200") {
+            toastr.error("Something went wrong")
+        }
         for (let insight of res.data.data) {
             insights.push({
                 animationEnabled: true,
@@ -91,10 +80,13 @@ export const InsightsModel = {
         actions.setFacebook(insights);
     }),
     youtubeInsights: thunk(async (actions, payload) => {
-        const viewinsights = [], estTime = [], subscribersGained=[];
+        const viewinsights = [], estTime = [], subscribersGained = [];
         const res = await axios.post(`${config.apiUrl}/channels/insights/youtube`, payload)
         console.log(res.data.columnHeaders)
-        const viewdataPoints = [], estTimedataPoints = [], subsdataPoints=[];
+        if (res.status != "200") {
+            toastr.error("something went wrong")
+        }
+        const viewdataPoints = [], estTimedataPoints = [], subsdataPoints = [];
         for (let insight of res.data.rows) {
             viewdataPoints.push({ date: insight[0], views: insight[1] });
             subsdataPoints.push({ date: insight[0], subs: insight[3] });
@@ -137,7 +129,7 @@ export const InsightsModel = {
                 })
             }]
         });
-       subscribersGained.push({
+        subscribersGained.push({
             animationEnabled: true,
             theme: "light2",
             axisX: {
@@ -154,7 +146,7 @@ export const InsightsModel = {
                 })
             }]
         });
-        
+
         actions.setYoutubeViews(viewinsights);
         actions.setYoutubeEstTime(estTime);
         actions.setYoutubeSubscribers(subscribersGained);
