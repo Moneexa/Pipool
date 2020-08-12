@@ -6,7 +6,7 @@ var auth = require('../auth/auth')
 /*
  * GET
  */
-router.get('/', auth.verify, channelController.list);
+router.get('/:channelId/:channelName', auth.verify, channelController.list);
 
 /*
  * GET
