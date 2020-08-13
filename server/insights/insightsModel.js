@@ -6,14 +6,14 @@ var InsightsSchema = new Schema({
 	'followers': Number,
 	'channelId': String,
 	'channelType': String,
-	'Gender': {
+	'gender': {
 		type: Array,
 		value: {
 			"gender": String,
 			"genderCount": Number
 		}
 	},
-	'AgeGroup': {
+	'ageGroup': {
 		type: Array,
 		value: {
 			"ageGroup": String,
@@ -21,7 +21,7 @@ var InsightsSchema = new Schema({
 		}
 
 	},
-	'Cities': {
+	'cities': {
 		type: Array,
 		value: {
 			"cityName": String,
@@ -29,7 +29,7 @@ var InsightsSchema = new Schema({
 			
 		}
 	},
-	'Countries': {
+	'countries': {
 		type: Array,
 		value: {
 			"countryName": String,

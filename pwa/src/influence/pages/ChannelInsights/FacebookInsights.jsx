@@ -1,13 +1,18 @@
 import React, { useEffect } from 'react';
 import config from '../../../config.json';
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import CanvasJSReact from '../../../lib/Chart 2.3.2 GA - Stable/canvasjs.react';
-var CanvasJS = CanvasJSReact.CanvasJS;
-var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+import { Pie, Bar, Line } from 'react-chartjs-2';
+
 
 export function FacebookInsights({ channelId }) {
-    const fbInsights = useStoreActions(actions => actions.insights.fbInsights)
+    const instaInsights = useStoreActions(actions => actions.insights.fbInsights)
+    const cities = useStoreState(state => state.insights.fbCities)
+    const countries = useStoreState(state => state.insights.fbCountries)
+    const response = useStoreState(state => state.insights.fbResponse)
+
+    const age = useStoreState(state => state.insights.fbAge)
     const insights = useStoreState(state => state.insights.facebook);
+    const lastFetched = useStoreState(state => state.insights.lastFetched);
     function fetchInsights() {
         const host = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port;
         const oauthWindow = window.open(encodeURI(`${config.facebookPagesInsights.uri}/?redirect_uri=${host}${config.facebookPagesInsights.redirectURI}&client_id=${config.facebookPagesInsights.appId}&scope=${config.facebookPagesInsights.scope}&response_type=token&state={"{st=state123abc,ds=123456789}"}`));
@@ -22,21 +27,97 @@ export function FacebookInsights({ channelId }) {
                 const code = searchParams.get('access_token');
                 console.log(code)
 
-                fbInsights({ token: code, channelId: channelId })
+                instaInsights({ token: code, channelId: channelId })
             }
         }, 1000);
 
 
     }
+    useEffect(() => { instaInsights({ channelId: channelId }) }, [])
+
     return (
         <div className="channel-insights">
-            <button onClick={() => fetchInsights()} className="btn btn-primary rounded-30 text-white">Fetch Insights</button>
+            <div className="row d-flex justify-content-between">
+
+                <button onClick={() => fetchInsights()} className="btn btn-primary rounded-30 text-white">Fetch Insights</button>
+                <p className="col-md-6 float-right">{lastFetched}</p>
+            </div>
             <div className="row">
-                {
-                    insights.map((value, index) => {
-                        return <CanvasJSChart key={index} options={value} />
-                    })
-                }
+                <Pie
+                    data={insights}
+                    options={{
+                        title: {
+                            display: true,
+                            text: 'Gender distribution',
+                            fontSize: 20
+                        },
+                        legend: {
+                            display: true,
+                            position: 'left'
+                        }
+                    }}
+                />
+
+
+                <Bar
+                    data={age}
+                    options={{
+                        title: {
+                            display: true,
+                            text: 'Age distribution',
+                            fontSize: 20
+                        },
+                        legend: {
+                            display: true,
+                            position: 'bottom'
+                        }
+                    }}
+                />
+                <Bar
+                    data={cities}
+                    options={{
+                        title: {
+                            display: true,
+                            text: 'City distribution',
+                            fontSize: 20
+                        },
+                        legend: {
+                            display: true,
+                            position: 'bottom'
+                        }
+                    }}
+                />
+                <Bar
+                    data={countries}
+                    options={{
+                        title: {
+                            display: true,
+                            text: 'Countries distribution',
+                            fontSize: 20
+                        },
+                        legend: {
+                            display: true,
+                            position: 'bottom'
+                        }
+                    }}
+                />
+                <Line
+                    data={response}
+                    options={{
+                        title: {
+                            display: true,
+                            text: 'Estimated Response',
+                            fontSize: 20
+                        },
+                        legend: {
+                            display: true,
+                            position: 'right'
+                        }
+                    }}
+                />
+
+
+
             </div>
 
         </div>

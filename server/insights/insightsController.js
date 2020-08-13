@@ -169,29 +169,29 @@ module.exports = {
             for (let val of resp.data.data) {
                 if (val.name.includes("impressions")) {
                     val.values.map(_val => {
-                        imp.push({count:_val.value,date:_val.end_time});
+                        imp.push({ count: _val.value, date: _val.end_time.replace("T07:00:00+0000", "") });
                     })
                 }
                 else if (val.name.includes("reach")) {
                     val.values.map(_val => {
-                        reaches.push({count:_val.value,date:_val.end_time});
+                        reaches.push({ count: _val.value, date: _val.end_time.replace("T07:00:00+0000", "") });
                     })
                 }
                 else if (val.name.includes("follower_count")) {
                     val.values.map(_val => {
                         console.log(_val)
-                        foll.push({count:_val.value,date:_val.end_time});
+                        foll.push({ count: _val.value, date: _val.end_time.replace("T07:00:00+0000", "") });
                     })
                 }
             }
             imp = imp.map(value => {
-                return ({ "responseType": "impression", "count": value.count, "date":value.date })
+                return ({ "responseType": "impression", "count": value.count, "date": value.date })
             })
             reaches = reaches.map(value => {
-                return ({ "responseType": "reach", "count": value.count, "date":value.date })
+                return ({ "responseType": "reach", "count": value.count, "date": value.date })
             })
             foll = foll.map(value => {
-                return ({ "responseType": "followers", "count": value.count, "date":value.date })
+                return ({ "responseType": "followers", "count": value.count, "date": value.date })
             })
             var ageGroup1 = 0, ageGroup2 = 0, ageGroup3 = 0, ageGroup4 = 0, ageGroup5 = 0, ageGroup6 = 0, ageGroup7 = 0
 
@@ -274,12 +274,12 @@ module.exports = {
                 if (channel) {
                     channel.channelName = "instagram";
                     channel.channelId = req.body.channelId ? req.body.channelId : channel.channelId;
-                    channel.Gender = _gender
-                    channel.AgeGroup = _ageGroup
-                    channel.Cites = city
-                    channel.Countries = country
+                    channel.gender = _gender
+                    channel.ageGroup = _ageGroup
+                    channel.cites = city
+                    channel.countries = country
                     channel.response = imp.concat(foll).concat(reaches)
-                    channel.lastFetched = new Date()
+                    channel.lastFetched = (new Date())
 
 
 
@@ -302,12 +302,12 @@ module.exports = {
                         channelId: req.body.channelId,
 
                         createdBy: res.locals.user.id,
-                        Gender: _gender,
-                        AgeGroup: _ageGroup,
-                        Cities: city,
-                        Countries: country,
+                        gender: _gender,
+                        ageGroup: _ageGroup,
+                        cities: city,
+                        countries: country,
                         response: imp.concat(foll).concat(reaches),
-                        lastFetched: new Date(),
+                        lastFetched: (new Date()),
 
 
 
@@ -334,7 +334,7 @@ module.exports = {
         }
         catch (error) {
             console.log(error)
-            res.send(error).status(445);
+            res.status(445).send(error);
         }
     },
     FaecbookInsights: async function (req, res) {
@@ -342,16 +342,185 @@ module.exports = {
             console.log(req.body.token)
             //We need to fetch a separate access token for the page first
             const respForAccessToken = await axios.get(`https://graph.facebook.com/v7.0/${req.body.channelId}?fields=access_token&access_token=${req.body.token}`)
-            const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.channelId}/insights?metric=page_fans_gender_age&period=day&access_token=${respForAccessToken.data.access_token}`)
-            var gender = {}
+            const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.channelId}/insights?metric=page_fans_gender_age,page_fans_city,page_fans_country,page_impressions,page_fans&period=day&access_token=${respForAccessToken.data.access_token}`)
+            var gender = {}, _gender = [], _ageGroup = [], cities = [], countries = [], impressions = [], fans = []
             resp.data.data.map(value => {
                 if (value.name.includes("gender")) {
                     value.values.map(_value => {
                         gender = _value.value
                     })
                 }
+                else if (value.name.includes("city")) {
+                    value.values.map(_value => {
+                        cities = Object.entries(_value.value)
+
+                    })
+                }
+                else if (value.name.includes("country")) {
+                    value.values.map(_value => {
+                        countries = Object.entries(_value.value)
+
+                    })
+                }
+                else if (value.name.includes("impressions")) {
+                    value.values.map(_value => {
+                        impressions.push({ count: _value.value, date: _value.end_time.replace("T07:00:00+0000", "") });
+
+                    })
+                }
+                else if (value.name.includes("fans")) {
+                    value.values.map(_value => {
+                        impressions.push({ count: _value.value, date: _value.end_time.replace("T07:00:00+0000", "") });
+
+                    })
+                }
+
             })
-            console.log(gender)
+            impressions = impressions.map(value => {
+                return ({ "responseType": "impression", "count": value.count, "date": value.date })
+            })
+            fans = impressions.map(value => {
+                return ({ "responseType": "fans", "count": value.count, "date": value.date })
+            })
+             console.log(fans)
+            countries = countries.map(([key, val]) => ({ "countryName": key, "noOfAudience": val }))
+            cities = cities.map(([key, value]) => ({ "cityName": key, "noOfAudience": value }))
+            var females = 0, males = 0, unidentified = 0;
+            for (prop in gender) {
+                if (prop.includes("F")) {
+                    females = females + gender[prop]
+                }
+                if (prop.includes("M")) {
+                    males = males + gender[prop]
+                }
+                if (prop.includes("U")) {
+                    unidentified = unidentified + gender[prop]
+                }
+
+            }
+            _gender = [{ "gender": "female", "genderCount": females }, { "gender": "male", "genderCount": males }, { "gender": "unidentified", "genderCount": unidentified }]
+            var ageGroup1 = 0, ageGroup2 = 0, ageGroup3 = 0, ageGroup4 = 0, ageGroup5 = 0, ageGroup6 = 0, ageGroup7 = 0
+
+            for (prop in gender) {
+                if (prop.includes("13-17")) {
+                    ageGroup1 = ageGroup1 + gender[prop]
+
+                }
+                else if (prop.includes("18-24")) {
+                    ageGroup2 = ageGroup2 + gender[prop]
+                }
+                else if (prop.includes("25-34")) {
+                    ageGroup3 = ageGroup3 + gender[prop]
+
+                }
+                else if (prop.includes("35-44")) {
+                    ageGroup4 = ageGroup4 + gender[prop]
+
+                }
+                else if (prop.includes("45-54")) {
+                    ageGroup5 = ageGroup5 + gender[prop]
+
+                }
+                else if (prop.includes("55-64")) {
+                    ageGroup6 = ageGroup6 + gender[prop]
+
+                }
+                else if (prop.includes("65+")) {
+                    ageGroup7 = ageGroup7 + gender[prop]
+
+                }
+            }
+            _ageGroup = [
+                {
+                    "ageGroup": "13-17",
+
+                    "ageGroupCount": ageGroup1
+                },
+                {
+                    "ageGroup": "18-24",
+                    "ageGroupCount": ageGroup2
+                },
+                {
+                    "ageGroup": "25-34",
+                    "ageGroupCount": ageGroup3
+                },
+                {
+                    "ageGroup": "35-44",
+                    "ageGroupCount": ageGroup4
+                },
+                {
+                    "ageGroup": "45-54",
+                    "ageGroupCount": ageGroup5
+                },
+                {
+                    "ageGroup": "55-64",
+                    "ageGroupCount": ageGroup6
+                },
+                {
+                    "ageGroup": "65+",
+                    "ageGroupCount": ageGroup7
+                }
+            ]
+            ChannelModel.findOne({ channelId: req.body.channelId, channelName: "facebook", createdBy: res.locals.user.id }, function (err, channel) {
+
+                if (channel) {
+                    channel.channelName = "instagram";
+                    channel.channelId = req.body.channelId ? req.body.channelId : channel.channelId;
+                    channel.gender = _gender
+                    channel.ageGroup = _ageGroup
+                    channel.cites = cities
+                    channel.countries = countries
+                    channel.response= impressons.concat(fans)
+                    channel.lastFetched = (new Date())
+
+
+
+                    channel.save(function (err, channel) {
+                        if (err) {
+                            console.log(err)
+                            return res.status(500).json({
+                                message: 'Error when updating channel.',
+                                error: err
+                            });
+                        }
+
+                        return res.json(channel);
+
+                    });
+                }
+                else if (!channel) {
+                    var _channel = new ChannelModel({
+                        channelName: "instagram",
+                        channelId: req.body.channelId,
+
+                        createdBy: res.locals.user.id,
+                        gender: _gender,
+                        ageGroup: _ageGroup,
+                        cities: cities,
+                        countries: countries,
+                        response:  impressions.concat(fans),
+                        lastFetched: (new Date()),
+
+
+
+                    });
+
+                    _channel.save(function (err, __channel) {
+                        if (err) {
+                            console.log(err)
+                            return res.status(500).json({
+                                message: 'Error when creating channel',
+                                error: err
+                            });
+                        }
+                        return res.status(200).json(__channel);
+                    });
+
+
+
+                }
+            });
+
 
         }
         catch (error) {
