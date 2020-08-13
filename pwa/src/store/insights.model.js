@@ -56,14 +56,14 @@ export const InsightsModel = {
             console.log("this is new array"+" "+gender)
             var ageGroup = res.data.AgeGroup
             ageGroup=ageGroup.map(value=>{return(value.ageGroupCount)})
-            var cities = res.data.Cities, cityNames=[]
-            cities=cities.map(value=>{return(value.noOfAudience)})
-            cityNames= cities.map(value=>{return(value.cityName)})
-            var countries = res.data.Countries, countryNames=[]
-            countries=countries.map(value=>{return(value.noOfAudience)})
-            countryNames=countries.map(value=>{return(value.countryName)})
+            var cities =[], cityNames=[]
+            cities= res.data.Cities.map(value=>{return(value.noOfAudience)})
+            cityNames=  res.data.Cities.map(value=>{return(value.cityName)})
+            var countries = [], countryNames=[]
+            countries=res.data.Countries.map(value=>{return(value.noOfAudience)})
+            countryNames=res.data.Countries.map(value=>{return(value.countryName)})
             var response=res.data.response
-
+            console.log(countries)
             const impressions = response.map(value=>{
                 if(value.responseType==="impression"){
                     return(value.count)
