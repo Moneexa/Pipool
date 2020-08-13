@@ -25,7 +25,8 @@ var InsightsSchema = new Schema({
 		type: Array,
 		value: {
 			"cityName": String,
-			"noOfAudience": Number
+			"noOfAudience": Number,
+			
 		}
 	},
 	'Countries': {
@@ -40,6 +41,7 @@ var InsightsSchema = new Schema({
 		type:Array,
 		value:{
 			"responseType" :String,
+			"date":String,
 			"count" : Number
 		}
 	},

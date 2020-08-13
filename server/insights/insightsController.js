@@ -169,27 +169,29 @@ module.exports = {
             for (let val of resp.data.data) {
                 if (val.name.includes("impressions")) {
                     val.values.map(_val => {
-                        imp.push(_val.value);
+                        imp.push({count:_val.value,date:_val.end_time});
                     })
                 }
                 else if (val.name.includes("reach")) {
                     val.values.map(_val => {
-                        reaches.push(_val.value);
+                        reaches.push({count:_val.value,date:_val.end_time});
                     })
                 }
                 else if (val.name.includes("follower_count")) {
                     val.values.map(_val => {
-                        foll.push(_val.value);
+                        console.log(_val)
+                        foll.push({count:_val.value,date:_val.end_time});
                     })
                 }
             }
-           imp= imp.map(value => {return({ "responseType": "impression", "count": value })
+            imp = imp.map(value => {
+                return ({ "responseType": "impression", "count": value.count, "date":value.date })
             })
-           reaches= reaches.map(value => {
-                return({ "responseType": "reach", "count": value })
+            reaches = reaches.map(value => {
+                return ({ "responseType": "reach", "count": value.count, "date":value.date })
             })
-            foll=foll.map(value => {
-                return ({ "responseType": "followers", "count": value })
+            foll = foll.map(value => {
+                return ({ "responseType": "followers", "count": value.count, "date":value.date })
             })
             var ageGroup1 = 0, ageGroup2 = 0, ageGroup3 = 0, ageGroup4 = 0, ageGroup5 = 0, ageGroup6 = 0, ageGroup7 = 0
 
@@ -272,11 +274,11 @@ module.exports = {
                 if (channel) {
                     channel.channelName = "instagram";
                     channel.channelId = req.body.channelId ? req.body.channelId : channel.channelId;
-                     channel.Gender = _gender
+                    channel.Gender = _gender
                     channel.AgeGroup = _ageGroup
                     channel.Cites = city
                     channel.Countries = country
-                    channel.response=imp.concat(foll).concat(reaches)
+                    channel.response = imp.concat(foll).concat(reaches)
                     channel.lastFetched = new Date()
 
 
@@ -340,9 +342,16 @@ module.exports = {
             console.log(req.body.token)
             //We need to fetch a separate access token for the page first
             const respForAccessToken = await axios.get(`https://graph.facebook.com/v7.0/${req.body.channelId}?fields=access_token&access_token=${req.body.token}`)
-            const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.channelId}/insights?metric=page_impressions_unique&access_token=${respForAccessToken.data.access_token}`)
-            console.log(resp.data)
-            res.send(resp.data);
+            const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.channelId}/insights?metric=page_fans_gender_age&period=day&access_token=${respForAccessToken.data.access_token}`)
+            var gender = {}
+            resp.data.data.map(value => {
+                if (value.name.includes("gender")) {
+                    value.values.map(_value => {
+                        gender = _value.value
+                    })
+                }
+            })
+            console.log(gender)
 
         }
         catch (error) {
