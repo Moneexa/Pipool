@@ -136,27 +136,60 @@ module.exports = {
     InstaInsights: async function (req, res) {
         try {
             //console.log(req.body.token)
-            const resp_array = []
             const resp = await axios.get(`https://graph.facebook.com/${req.body.channelId}/insights?metric=impressions,reach,profile_views,follower_count&period=day&access_token=${req.body.token}`)
             // console.log(resp.data)
-            resp_array.push(resp.data);
             const resp1 = await axios.get(`https://graph.facebook.com/${req.body.channelId}/insights?metric=audience_country,audience_city,audience_gender_age&period=lifetime&access_token=${req.body.token}`)
-            //console.log(resp1)
-            resp_array.push(resp1.data);
-            const city = resp_array[1].data[1].values[0].value
-            const country=resp_array[1].data[0].values[0].value
-            const gender = resp_array[1].data[2].values[0].value
-            const impressions=resp_array[0].data[0].values, imp=[]
-            impressions.map((values,index)=>{
-                imp.push(values.value)
+            var gender = {};
+            var _ageGroup = [], country = [], city = [], _gender = []
+            //    console.log(resp1.data.data)
+            for (let val of resp1.data.data) {
+                if (val.name.includes("country")) {
+                    val.values.map(_value =>
+                        country = Object.entries(_value.value)
+                    )
+                }
+                else if (val.name.includes("city")) {
+                    val.values.map(_value =>
+                        city = Object.entries(_value.value)
+                    )
+                }
+                else if (val.name.includes("gender")) {
+                    val.values.map(_val => {
+                        gender = _val.value
+                    })
+                }
+
+
+            }
+            country = country.map(([key, val]) => ({ "countryName": key, "noOfAudience": val }))
+            city = city.map(([key, value]) => ({ "cityName": key, "noOfAudience": value }))
+            console.log(city)
+            imp = [], reaches = [], foll = []
+
+            for (let val of resp.data.data) {
+                if (val.name.includes("impressions")) {
+                    val.values.map(_val => {
+                        imp.push(_val.value);
+                    })
+                }
+                else if (val.name.includes("reach")) {
+                    val.values.map(_val => {
+                        reaches.push(_val.value);
+                    })
+                }
+                else if (val.name.includes("follower_count")) {
+                    val.values.map(_val => {
+                        foll.push(_val.value);
+                    })
+                }
+            }
+           imp= imp.map(value => {return({ "responseType": "impression", "count": value })
             })
-            const reach=resp_array[0].data[1].values, reaches=[]
-            reach.map((values, index)=>{
-                reaches.push(values.value)
+           reaches= reaches.map(value => {
+                return({ "responseType": "reach", "count": value })
             })
-            const followers_count=resp_array[0].data[2].values , foll=[]
-            followers_count.map((values, index)=>{
-                foll.push(values.value)
+            foll=foll.map(value => {
+                return ({ "responseType": "followers", "count": value })
             })
             var ageGroup1 = 0, ageGroup2 = 0, ageGroup3 = 0, ageGroup4 = 0, ageGroup5 = 0, ageGroup6 = 0, ageGroup7 = 0
 
@@ -189,6 +222,37 @@ module.exports = {
 
                 }
             }
+            _ageGroup = [
+                {
+                    "ageGroup": "13-17",
+
+                    "ageGroupCount": ageGroup1
+                },
+                {
+                    "ageGroup": "18-24",
+                    "ageGroupCount": ageGroup2
+                },
+                {
+                    "ageGroup": "25-34",
+                    "ageGroupCount": ageGroup3
+                },
+                {
+                    "ageGroup": "35-44",
+                    "ageGroupCount": ageGroup4
+                },
+                {
+                    "ageGroup": "45-54",
+                    "ageGroupCount": ageGroup5
+                },
+                {
+                    "ageGroup": "55-64",
+                    "ageGroupCount": ageGroup6
+                },
+                {
+                    "ageGroup": "65+",
+                    "ageGroupCount": ageGroup7
+                }
+            ]
             var females = 0, males = 0, unidentified = 0;
             for (prop in gender) {
                 if (prop.includes("F")) {
@@ -202,26 +266,17 @@ module.exports = {
                 }
 
             }
-            ChannelModel.findOne({ channelId: req.body.channelId, channelName: req.body.channelName }, function (err, channel) {
-                if (err) {
-                    console.log(err)
-                    return res.status(500).json({
-                        message: 'Error when getting channel',
-                        error: err
-                    });
-                }
+            _gender = [{ "gender": "female", "genderCount": females }, { "gender": "male", "genderCount": males }, { "gender": "unidentified", "genderCount": unidentified }]
+            ChannelModel.findOne({ channelId: req.body.channelId, channelName: "instagram", createdBy: res.locals.user.id }, function (err, channel) {
+
                 if (channel) {
                     channel.channelName = "instagram";
                     channel.channelId = req.body.channelId ? req.body.channelId : channel.channelId;
-                    channel.Gender = [females, males, unidentified];
-                    channel.AgeGroup=[ageGroup1,ageGroup2,ageGroup3,ageGroup4,ageGroup5,ageGroup6,ageGroup7]
-                    channel.Cites=Object.values(city)
-                    channel.CityNames=Object.keys(city)
-                    channel.Countries=Object.values(country)
-                    channel.CountryNames=Object.keys(country)
-                    channel.impressions=imp
-                    channel.reach=reaches
-                    channel.followers=foll
+                     channel.Gender = _gender
+                    channel.AgeGroup = _ageGroup
+                    channel.Cites = city
+                    channel.Countries = country
+                    channel.response=imp.concat(foll).concat(reaches)
                     channel.lastFetched = new Date()
 
 
@@ -245,16 +300,13 @@ module.exports = {
                         channelId: req.body.channelId,
 
                         createdBy: res.locals.user.id,
-                        Gender: [females, males, unidentified],
-                        AgeGroup:[ageGroup1,ageGroup2,ageGroup3,ageGroup4,ageGroup5,ageGroup6,ageGroup7],
-                        Cities: Object.values(city),
-                        CityNames: Object.keys(city),
-                        Countries: Object.values(country),
-                        CountryNames: Object.keys(country),  
+                        Gender: _gender,
+                        AgeGroup: _ageGroup,
+                        Cities: city,
+                        Countries: country,
+                        response: imp.concat(foll).concat(reaches),
                         lastFetched: new Date(),
-                        impressions:imp,
-                        reach:reaches,
-                        followers:foll
+
 
 
                     });

@@ -6,16 +6,43 @@ var InsightsSchema = new Schema({
 	'followers': Number,
 	'channelId': String,
 	'channelType': String,
-	'Gender': Array,
-	'AgeGroup': Array,
-	'Cities':Array,
-	'CityNames':Array,
-	'Countries':Array,
-	'CountryNames':Array,
+	'Gender': {
+		type: Array,
+		value: {
+			"gender": String,
+			"genderCount": Number
+		}
+	},
+	'AgeGroup': {
+		type: Array,
+		value: {
+			"ageGroup": String,
+			"ageGroupCount": Number
+		}
+
+	},
+	'Cities': {
+		type: Array,
+		value: {
+			"cityName": String,
+			"noOfAudience": Number
+		}
+	},
+	'Countries': {
+		type: Array,
+		value: {
+			"countryName": String,
+			"noOfAudience": Number
+		}
+	},
 	'lastFetched': Date,
-	'impressions': Array,
-	'followers': Array,
-	'reach': Array,
+	'response':{
+		type:Array,
+		value:{
+			"responseType" :String,
+			"count" : Number
+		}
+	},
 	'createdBy': {
 		type: Schema.Types.ObjectId,
 		ref: 'User'

@@ -228,7 +228,7 @@ module.exports = {
         }
     },
     FacebookOAuth: async function (req, res) {
-        const existingChannel = await ChannelModel.findOne({ channelId: req.body.id, channelType: 'facebook' });
+        const existingChannel = await ChannelModel.findOne({ channelId: req.body.id, channelType: 'facebook' , createdBy: res.locals.user.id });
         if (existingChannel) return res.status(405).send('Channel already exists');
         try {
             const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.id}?fields=username,name,picture,fan_count&access_token=${req.body.token}`)
@@ -254,7 +254,7 @@ module.exports = {
         }
     },
     InstaOAuth: async function (req, res) {
-        const existingChannel = await ChannelModel.findOne({ channelId: req.body.id, channelType: 'instagram' });
+        const existingChannel = await ChannelModel.findOne({ channelId: req.body.id, channelType: 'instagram', createdBy: res.locals.user.id });
         if (existingChannel) return res.status(405).send('Channel already exists');
         try {
             const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.id}?fields=followers_count,name,username,profile_picture_url&access_token=${req.body.token}`)

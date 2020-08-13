@@ -44,14 +44,41 @@ export const InsightsModel = {
     }),
     instaInsights: thunk(async (actions, payload) => {
         if (payload.hasOwnProperty("token")) {
-            const res = await axios.post(`${config.apiUrl}/channels/insights/instagram/`, payload)
-            const gender = res.data.Gender
-            const ageGroup = res.data.AgeGroup
-            const cities = res.data.Cities
-            const countries = res.data.Countries
-            const impressions = res.data.impressions
-            const reach = res.data.reach
-            const followers = res.data.followers
+            var res = await axios.post(`${config.apiUrl}/channels/insights/instagram/`, payload)
+        }
+        else {
+            var res = await axios.get(`${config.apiUrl}/channels/insights/${payload.channelId}/instagram`)
+
+        }
+            var gender = res.data.Gender
+
+            gender=gender.map(value=>{return(value.genderCount)})
+            console.log("this is new array"+" "+gender)
+            var ageGroup = res.data.AgeGroup
+            ageGroup=ageGroup.map(value=>{return(value.ageGroupCount)})
+            var cities = res.data.Cities, cityNames=[]
+            cities=cities.map(value=>{return(value.noOfAudience)})
+            cityNames= cities.map(value=>{return(value.cityNames)})
+            var countries = res.data.Countries, countryNames=[]
+            countries=countries.map(value=>{return(value.noOfAudience)})
+            countryNames=countries.map(value=>{return(value.countryNames)})
+            var response=res.data.response
+
+            const impressions = response.map(value=>{
+                if(value.responseType==="impression"){
+                    return(value.count)
+                }
+            })
+            const reach = response.map(value=>{
+                if(value.responseType==="reach"){
+                    return(value.count)
+                }
+            })
+            const followers = response.map(value=>{
+                if(value.responseType==="followers"){
+                    return(value.count)
+                }
+            })
             actions.setLastFetched(res.data.lastFetched);
             if (res.status != "200") {
                 toastr.error("Something went wrong")
@@ -114,7 +141,7 @@ export const InsightsModel = {
             console.log(insightsGender);
             actions.setInstagramAge(insightsGender);
             const insightsCities = {
-                labels: res.data.CityNames,
+                labels: cityNames,
                 datasets: [
                     {
                         label: 'City Distribution',
@@ -129,7 +156,7 @@ export const InsightsModel = {
             console.log(insightsCities);
             actions.setInstagramCities(insightsCities);
             const insightsCountries = {
-                labels: res.data.CountryNames,
+                labels: countryNames,
                 datasets: [
                     {
                         label: 'Country Distribution',
@@ -173,139 +200,7 @@ export const InsightsModel = {
             }
             actions.setInstagramResponse(insightsImp);
 
-        }
-        else {
-            const res = await axios.get(`${config.apiUrl}/channels/insights/${payload.channelId}/instagram`)
-            const gender = res.data.Gender
-            const ageGroup = res.data.AgeGroup
-            const cities = res.data.Cities
-            const countries = res.data.Countries
-            const impressions = res.data.impressions
-            const reach = res.data.reach
-            const followers = res.data.followers
-            actions.setLastFetched(res.data.lastFetched);
-            if (res.status != "200") {
-                toastr.error("Something went wrong")
-            }
-            const insights = {
-                labels: ['Female', 'Male', 'Inidentified'],
-                datasets: [
-                    {
-                        label: 'Gender Distribution',
-                        backgroundColor: [
-                            '#3390FF',
-                            '#33E0FF',
-                            '#9FE2F8',
-
-                        ],
-                        hoverBackgroundColor: [
-                            '#A0C2F9',
-                            '#91C9F5',
-                            '#B5F8EE',
-
-                        ],
-                        data: gender
-                    }
-                ]
-            }
-            console.log(insights);
-            actions.setInstagram(insights);
-            const insightsGender = {
-                labels: ['13-17', '18-24', '25-34', '35-44', '45-54', '55-64'],
-                datasets: [
-                    {
-                        label: 'Age Distribution',
-                        backgroundColor: [
-                            '#3390FF',
-                            '#33E0FF',
-                            '#9FE2F8',
-                            '#3390FF',
-                            '#33E0FF',
-                            '#9FE2F8',
-                            '#33E0FF',
-
-
-                        ],
-                        hoverBackgroundColor: [
-                            '#A0C2F9',
-                            '#91C9F5',
-                            '#B5F8EE',
-                            '#A0C2F9',
-                            '#91C9F5',
-                            '#B5F8EE',
-                            '#91C9F5',
-
-
-                        ],
-                        data: ageGroup
-                    }
-                ]
-            }
-
-            console.log(insightsGender);
-            actions.setInstagramAge(insightsGender);
-            const insightsCities = {
-                labels: res.data.CityNames,
-                datasets: [
-                    {
-                        label: 'City Distribution',
-                        data: cities,
-                        backgroundColor: 'rgb(138, 177, 226 )',
-                        hoverBackgroundColor: 'rgb(25, 10, 132)',
-                    }
-                ]
-            }
-
-            console.log(insightsCities);
-            actions.setInstagramCities(insightsCities);
-            const insightsCountries = {
-                labels: res.data.CountryNames,
-                datasets: [
-                    {
-                        label: 'CountryDistribution',
-                        data: countries,
-                        backgroundColor: 'rgb(138, 177, 226 )',
-                        hoverBackgroundColor: 'rgb(13, 0, 132)',
-                    }
-                ]
-            }
-
-            console.log(insightsCountries);
-            actions.setInstagramCountries(insightsCountries);
-            const insightsImp = {
-                labels: 'Response',
-                datasets: [
-                    {
-                        label: 'Impressions',
-                        data: impressions,
-                        fill: false,
-                        lineTension: 0.5,
-                        backgroundColor: 'rgb(138, 177, 226 )',
-                        hoverBackgroundColor: 'rgb(255, 99, 132)',
-                    },
-                    {
-                        label: 'Followers',
-                        data: followers,
-                        backgroundColor: 'rgb(12, 17, 230 )',
-                        fill: false,
-                        lineTension: 0.5,
-                        hoverBackgroundColor: 'rgb(255, 99, 132)',
-                    },
-                    {
-                        label: 'Reach',
-                        data: reach,
-                        fill: false,
-                        lineTension: 0.5,
-                        backgroundColor: 'rgb(17, 15, 240 )',
-                        hoverBackgroundColor: 'rgb(255, 99, 132)',
-                    },
-                ]
-            }
-            actions.setInstagramResponse(insightsImp);
-
-
-        }
-
+       
     }),
 
     fbInsights: thunk(async (actions, payload) => {
