@@ -58,10 +58,10 @@ export const InsightsModel = {
             ageGroup=ageGroup.map(value=>{return(value.ageGroupCount)})
             var cities = res.data.Cities, cityNames=[]
             cities=cities.map(value=>{return(value.noOfAudience)})
-            cityNames= cities.map(value=>{return(value.cityNames)})
+            cityNames= cities.map(value=>{return(value.cityName)})
             var countries = res.data.Countries, countryNames=[]
             countries=countries.map(value=>{return(value.noOfAudience)})
-            countryNames=countries.map(value=>{return(value.countryNames)})
+            countryNames=countries.map(value=>{return(value.countryName)})
             var response=res.data.response
 
             const impressions = response.map(value=>{
