@@ -382,6 +382,14 @@ export const InsightsModel = {
                     backgroundColor: 'rgb(12, 17, 230 )',
                     hoverBackgroundColor: 'rgb(255, 99, 132)',
                 },
+                {
+                    label: 'Reach',
+                    data: reach,
+                    fill: false,
+                    lineTension: 0.5,
+                    backgroundColor: 'rgb(12, 17, 230 )',
+                    hoverBackgroundColor: 'rgb(255, 99, 132)',
+                },
                
             ]
         }

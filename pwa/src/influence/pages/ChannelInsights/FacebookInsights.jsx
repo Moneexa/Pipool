@@ -39,83 +39,138 @@ export function FacebookInsights({ channelId }) {
         <div className="channel-insights">
             <div className="row d-flex justify-content-between">
 
-                <button onClick={() => fetchInsights()} className="btn btn-primary rounded-30 text-white">Fetch Insights</button>
+                <button onClick={() => fetchInsights()} className="btn btn-primary rounded-30 text-white ml-2">Fetch Insights</button>
                 <p className="col-md-6 float-right">{lastFetched}</p>
             </div>
             <div className="row">
-                <Pie
-                    data={insights}
-                    options={{
-                        title: {
-                            display: true,
-                            text: 'Gender distribution',
-                            fontSize: 20
-                        },
-                        legend: {
-                            display: true,
-                            position: 'left'
-                        }
-                    }}
-                />
-
-
-                <Bar
-                    data={age}
-                    options={{
-                        title: {
-                            display: true,
-                            text: 'Age distribution',
-                            fontSize: 20
-                        },
-                        legend: {
-                            display: true,
-                            position: 'bottom'
-                        }
-                    }}
-                />
-                <Bar
-                    data={cities}
-                    options={{
-                        title: {
-                            display: true,
-                            text: 'City distribution',
-                            fontSize: 20
-                        },
-                        legend: {
-                            display: true,
-                            position: 'bottom'
-                        }
-                    }}
-                />
-                <Bar
-                    data={countries}
-                    options={{
-                        title: {
-                            display: true,
-                            text: 'Countries distribution',
-                            fontSize: 20
-                        },
-                        legend: {
-                            display: true,
-                            position: 'bottom'
-                        }
-                    }}
-                />
-                <Line
-                    data={response}
-                    options={{
-                        title: {
-                            display: true,
-                            text: 'Estimated Response',
-                            fontSize: 20
-                        },
-                        legend: {
-                            display: true,
-                            position: 'right'
-                        }
-                    }}
-                />
-
+                <div className="col-md-6">
+                    <Pie
+                        data={insights}
+                        options={{
+                            title: {
+                                display: true,
+                                text: 'Gender distribution',
+                                fontSize: 20
+                            },
+                            legend: {
+                                display: true,
+                                position: 'left'
+                            }
+                        }}
+                    />
+                </div>
+                <div className="col-md-6">
+                    <Bar
+                        data={age}
+                        options={{
+                            title: {
+                                display: true,
+                                text: 'Age distribution',
+                                fontSize: 20
+                            },
+                            legend: {
+                                display: true,
+                                position: 'bottom'
+                            },
+                            scales: {
+                                xAxes: [{
+                                    gridLines: {
+                                        display: false
+                                    }
+                                }],
+                                yAxes: [{
+                                    gridLines: {
+                                        display: false
+                                    }
+                                }]
+                            }
+                        }}
+                    />
+                </div>
+                <div className="col-md-6">
+                    <Bar
+                        data={cities}
+                        options={{
+                            title: {
+                                display: true,
+                                text: 'City distribution',
+                                fontSize: 20
+                            },
+                            legend: {
+                                display: true,
+                                position: 'bottom'
+                            },
+                            scales: {
+                                xAxes: [{
+                                    gridLines: {
+                                        display: false
+                                    }
+                                }],
+                                yAxes: [{
+                                    gridLines: {
+                                        display: false
+                                    }
+                                }]
+                            }
+                        }}
+                    />
+                </div>
+                <div className="col-md-6">
+                    <Bar
+                        data={countries}
+                        options={{
+                            title: {
+                                display: true,
+                                text: 'Countries distribution',
+                                fontSize: 20
+                            },
+                            legend: {
+                                display: true,
+                                position: 'bottom'
+                            },
+                            scales: {
+                                xAxes: [{
+                                    gridLines: {
+                                        display: false
+                                    }
+                                }],
+                                yAxes: [{
+                                    gridLines: {
+                                        display: false
+                                    }
+                                }]
+                            }
+                        }}
+                    />
+                </div>
+                <div className="col-md-6">
+                    <Line
+                        data={response}
+                        options={{
+                            title: {
+                                display: true,
+                                text: 'Estimated Response',
+                                fontSize: 20
+                            },
+                            legend: {
+                                display: true,
+                                position: 'right'
+                            },
+                            scales: {
+                                xAxes: [{
+                                    gridLines: {
+                                        display: false
+                                    }
+                                }],
+                                yAxes: [{
+                                    gridLines: {
+                                        display: false
+                                    }
+                                }]
+                            }
+                        }}
+                    />
+                </div>
 
 
             </div>

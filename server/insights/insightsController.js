@@ -342,8 +342,9 @@ module.exports = {
             console.log(req.body.token)
             //We need to fetch a separate access token for the page first
             const respForAccessToken = await axios.get(`https://graph.facebook.com/v7.0/${req.body.channelId}?fields=access_token&access_token=${req.body.token}`)
-            const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.channelId}/insights?metric=page_fans_gender_age,page_fans_city,page_fans_country,page_impressions,page_fans&period=day&access_token=${respForAccessToken.data.access_token}`)
-            var gender = {}, _gender = [], _ageGroup = [], cities = [], countries = [], impressions = [], fans = []
+            console.log(respForAccessToken.data.access_token)
+            const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.channelId}/insights?metric=page_fans_gender_age,page_fans_city,page_fans_country,page_impressions,page_fans,page_impressions_frequency_distribution&period=day&access_token=${respForAccessToken.data.access_token}`)
+            var gender = {}, _gender = [], _ageGroup = [], cities = [], countries = [], impressions = [], fans = [], reach = []
             resp.data.data.map(value => {
                 if (value.name.includes("gender")) {
                     value.values.map(_value => {
@@ -370,19 +371,30 @@ module.exports = {
                 }
                 else if (value.name.includes("fans")) {
                     value.values.map(_value => {
-                        impressions.push({ count: _value.value, date: _value.end_time.replace("T07:00:00+0000", "") });
+                        fans.push({ count: _value.value, date: _value.end_time.replace("T07:00:00+0000", "") });
 
                     })
                 }
+                // console.log(value)
+                else if (value.name.includes("page_impressions_frequency_distribution")) {
+                    // console.log(value.values)
+                      value.values.map(_value => {
+                     reach.push({ count: _value.value, date: _value.end_time.replace("T07:00:00+0000", "") });
+
+                     })
+                 }
 
             })
             impressions = impressions.map(value => {
                 return ({ "responseType": "impression", "count": value.count, "date": value.date })
             })
-            fans = impressions.map(value => {
+            fans = fans.map(value => {
                 return ({ "responseType": "fans", "count": value.count, "date": value.date })
             })
-             console.log(fans)
+            reach = reach.map(value => {
+                return ({ "responseType": "reach", "count": value.count, "date": value.date })
+            })
+            // console.log(reach)
             countries = countries.map(([key, val]) => ({ "countryName": key, "noOfAudience": val }))
             cities = cities.map(([key, value]) => ({ "cityName": key, "noOfAudience": value }))
             var females = 0, males = 0, unidentified = 0;
@@ -464,13 +476,13 @@ module.exports = {
             ChannelModel.findOne({ channelId: req.body.channelId, channelName: "facebook", createdBy: res.locals.user.id }, function (err, channel) {
 
                 if (channel) {
-                    channel.channelName = "instagram";
+                    channel.channelName = "facebook";
                     channel.channelId = req.body.channelId ? req.body.channelId : channel.channelId;
                     channel.gender = _gender
                     channel.ageGroup = _ageGroup
                     channel.cites = cities
                     channel.countries = countries
-                    channel.response= impressons.concat(fans)
+                    channel.response = impressions.concat(fans).concat(reach)
                     channel.lastFetched = (new Date())
 
 
@@ -490,7 +502,7 @@ module.exports = {
                 }
                 else if (!channel) {
                     var _channel = new ChannelModel({
-                        channelName: "instagram",
+                        channelName: "facebook",
                         channelId: req.body.channelId,
 
                         createdBy: res.locals.user.id,
@@ -498,7 +510,7 @@ module.exports = {
                         ageGroup: _ageGroup,
                         cities: cities,
                         countries: countries,
-                        response:  impressions.concat(fans),
+                        response: impressions.concat(fans).concat(reach),
                         lastFetched: (new Date()),
 
 
@@ -556,8 +568,9 @@ module.exports = {
         var access_token = req.body.token
         try {
 
-            const response = await axios.get(`https://youtubeanalytics.googleapis.com/v2/reports?access_token=${access_token}&dimensions=day,ageGroup&metrics=views,estimatedMinutesWatched,subscribersGained&ids=channel==${req.body.Id}&startDate=2020-01-01&endDate=2020-08-04`)
-            res.send(response.data);
+            const response = await axios.get(`https://youtubeanalytics.googleapis.com/v2/reports?access_token=${access_token}&dimensions=ageGroup,gender,country&metrics=viewerPercentage&ids=channel==${req.body.Id}`)
+            console.log(response.data)
+            //res.send(response.data);
         }
         catch (error) {
             console.log(error)
