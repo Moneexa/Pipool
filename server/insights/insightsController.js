@@ -568,7 +568,7 @@ module.exports = {
         var access_token = req.body.token
         try {
 
-            const response = await axios.get(`https://youtubeanalytics.googleapis.com/v2/reports?access_token=${access_token}&dimensions=ageGroup,gender,country&metrics=viewerPercentage&ids=channel==${req.body.Id}`)
+            const response = await axios.get(`https://youtubeanalytics.googleapis.com/v2/reports?access_token=${access_token}&dimensions=ageGroup,gender,country&metrics=views&ids=channel==${req.body.Id}&startDate=2020-01-01&endDate=2020-08-08`)
             console.log(response.data)
             //res.send(response.data);
         }
@@ -577,5 +577,6 @@ module.exports = {
             res.send(error).status(445);
         }
     }
+    
 
 };
