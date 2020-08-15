@@ -342,8 +342,11 @@ module.exports = {
             console.log(req.body.token)
             //We need to fetch a separate access token for the page first
             const respForAccessToken = await axios.get(`https://graph.facebook.com/v7.0/${req.body.channelId}?fields=access_token&access_token=${req.body.token}`)
-            console.log(respForAccessToken.data.access_token)
-            const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.channelId}/insights?metric=page_fans_gender_age,page_fans_city,page_fans_country,page_impressions,page_fans,page_impressions_frequency_distribution&period=day&access_token=${respForAccessToken.data.access_token}`)
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 90);
+            const since = parseInt(yesterday.getTime() / 1000);
+            const until = parseInt(new Date().getTime() / 1000);
+            const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.channelId}/insights?metric=page_fans_gender_age,page_fans_city,page_fans_country,page_impressions,page_fans,page_impressions_frequency_distribution&since=${since}&until=${until}&period=day&access_token=${respForAccessToken.data.access_token}`)
             var gender = {}, _gender = [], _ageGroup = [], cities = [], countries = [], impressions = [], fans = [], reach = []
             resp.data.data.map(value => {
                 if (value.name.includes("gender")) {
@@ -378,11 +381,11 @@ module.exports = {
                 // console.log(value)
                 else if (value.name.includes("page_impressions_frequency_distribution")) {
                     // console.log(value.values)
-                      value.values.map(_value => {
-                     reach.push({ count: _value.value, date: _value.end_time.replace("T07:00:00+0000", "") });
+                    value.values.map(_value => {
+                        reach.push({ count: _value.value, date: _value.end_time.replace("T07:00:00+0000", "") });
 
-                     })
-                 }
+                    })
+                }
 
             })
             impressions = impressions.map(value => {
@@ -577,6 +580,6 @@ module.exports = {
             res.send(error).status(445);
         }
     }
-    
+
 
 };
