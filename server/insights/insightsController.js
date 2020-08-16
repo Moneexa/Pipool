@@ -16,7 +16,7 @@ module.exports = {
      */
     list: function (req, res) {
         console.log(req.params.channelId);
-        ChannelModel.findOne({ channelId: req.params.channelId, channelName: req.params.channelName, createdBy:res.locals.user.id }, function (err, channel) {
+        ChannelModel.findOne({ channelId: req.params.channelId, channelName: req.params.channelName, createdBy: res.locals.user.id }, function (err, channel) {
             if (err) {
                 console.log("this is the error" + err)
                 return res.status(500).json({
@@ -172,18 +172,18 @@ module.exports = {
 
             for (let val of resp.data.data) {
                 if (val.name.includes("impressions")) {
-                    imp=val.values.map(_val => {
-                        return({ count: _val.value, date: _val.end_time.slice(0,10) });
+                    imp = val.values.map(_val => {
+                        return ({ count: _val.value, date: _val.end_time.slice(0, 10) });
                     })
                 }
                 else if (val.name.includes("reach")) {
-                   reaches= val.values.map(_val => {
-                        return ({ count: _val.value, date: _val.end_time.slice(0,10) });
+                    reaches = val.values.map(_val => {
+                        return ({ count: _val.value, date: _val.end_time.slice(0, 10) });
                     })
                 }
-               
+
             }
-           
+
             var ageGroup1 = 0, ageGroup2 = 0, ageGroup3 = 0, ageGroup4 = 0, ageGroup5 = 0, ageGroup6 = 0, ageGroup7 = 0
 
             for (prop in gender) {
@@ -270,7 +270,7 @@ module.exports = {
                     channel.cites = city
                     channel.countries = country
                     channel.impressions = imp
-                    channel.reach=reaches
+                    channel.reach = reaches
                     channel.lastFetched = (new Date())
 
 
@@ -503,9 +503,85 @@ module.exports = {
         var access_token = req.body.token
         try {
 
-            const response = await axios.get(`https://youtubeanalytics.googleapis.com/v2/reports?access_token=${access_token}&dimensions=ageGroup,gender,country&metrics=views&ids=channel==${req.body.Id}&startDate=2020-01-01&endDate=2020-08-08`)
-            console.log(response.data)
-            //res.send(response.data);
+            const response = await axios.get(`https://youtubeanalytics.googleapis.com/v2/reports?access_token=${access_token}&dimensions=ageGroup,gender&metrics=viewerPercentage&ids=channel==${req.body.channelId}&startDate=2020-01-01&endDate=2020-08-08`)
+            console.log(response.data.rows)
+            var responseRows = [], gender = [], ageGroup = [], male = 0, female = 0, age1 = 0, age2 = 0
+            console.log("come here")
+            responseRows = [["25-30", "male", 20], ["35-40", "female", 80], ["25-30", "male", 50], ["35-40", "female", 50]]
+            for (value of responseRows) {
+                if (value[1] === "male") {
+                    male += value[2]
+                }
+                else if (value[1] === "female") {
+                    female += value[2]
+                }
+            }
+            gender = [{ "gender": "male", "genderCount": male }, { "gender": "female", "genderCount": female }]
+            for (value of responseRows) {
+                if (value[0] === "25-30")
+                    age1 += value[2]
+                else if (value[0] === "35-40") {
+                    age2 += value[2]
+                }
+            }
+            ageGroup = [{ "ageGroup": "25-30", "ageGroupCount": age1 }, { "ageGroup": "35-40", "ageGroupCount": age2 }]
+            ChannelModel.findOne({ channelId: req.body.channelId, channelName: "youtube", createdBy: res.locals.user.id }, function (err, channel) {
+
+                if (channel) {
+                    channel.channelName = "youtube";
+                    channel.channelId = req.body.channelId ? req.body.channelId : channel.channelId;
+                    channel.gender = gender
+                    channel.ageGroup = ageGroup
+                    channel.cities=[{"cityName":"kalrusche","noOfAudience":10}, {"cityName":"Amserfoort","noOfAudience":11}]
+                    channel.countries=[{"countryName":"Germany","noOfAudience":10}, {"countryName":"Amsterdam","noOfAudience":11}]
+                    channel.impressions=[{"count":30,"date":"2020-01-01"}, {"count":11,"date":"2020-03-29"}]
+                    channel.reach=[{"count":10,"date":"2020-01-01"},{"count":21,"date":"2020-03-29"}]
+                    channel.lastFetched = (new Date())
+
+                    channel.save(function (err, channel) {
+                        if (err) {
+                            console.log(err)
+                            return res.status(500).json({
+                                message: 'Error when updating channel.',
+                                error: err
+                            });
+                        }
+
+                        return res.json(channel);
+
+                    });
+                }
+                else if (!channel) {
+                    var _channel = new ChannelModel({
+                        channelName: "youtube",
+                        channelId: req.body.channelId,
+                        createdBy: res.locals.user.id,
+                        gender: gender,
+                        ageGroup: ageGroup,
+                        cities:[{"cityName":"kalrusche","noOfAudience":10}, {"cityName":"Amserfoort","noOfAudience":11}],
+                        countries:[{"cityName":"Germany","noOfAudience":10}, {"cityName":"Amsterdam","noOfAudience":11}],
+                        impressions:[{"value":30,"end_time":"2020-01-01"}, {"value":11,"end_time":"2020-03-29"}],
+                        reach:[{"value":10,"end_time":"2020-01-01"},{"value":21,"end_time":"2020-03-29"}],
+                        lastFetched: (new Date()),
+                    });
+
+                    _channel.save(function (err, __channel) {
+                        if (err) {
+                            console.log(err)
+                            return res.status(500).json({
+                                message: 'Error when creating channel',
+                                error: err
+                            });
+                        }
+                        return res.status(200).json(__channel);
+                    });
+
+                }
+            });
+
+
+
+
         }
         catch (error) {
             console.log(error)

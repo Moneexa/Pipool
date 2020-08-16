@@ -8,7 +8,7 @@ export const InsightsModel = {
     instagram: {}, instagramAge: {}, instagramCities: {}, instagramCountries: {},
     instagramResponse: {},
     facebook: {}, fbAge: {}, fbCities: {}, fbCountries: {},
-    fbResponse: {},
+    fbResponse: {}, youtubeAge: {}, youtubeGender: {},
     lastFetched: "",
     youtubeViews: [], youtubeSubscribers: [], youtubeEstTime: [],
     setInstagram: action((state, payload) => {
@@ -46,11 +46,11 @@ export const InsightsModel = {
         state.fbResponse = payload;
     }),
 
-    setYoutubeViews: action((state, payload) => {
-        state.youtubeViews = payload;
+    setYoutubeGender: action((state, payload) => {
+        state.youtubeGender = payload;
     }),
-    setYoutubeSubscribers: action((state, payload) => {
-        state.youtubeSubscribers = payload;
+    setYoutubeAge: action((state, payload) => {
+        state.youtubeAge = payload;
     }),
 
     setYoutubeEstTime: action((state, payload) => {
@@ -361,7 +361,7 @@ export const InsightsModel = {
                     label: 'Reach',
                     data: reach,
                     fill: true,
-                    lineTension: 0.5,
+                    //                   lineTension: 0.5,
                     backgroundColor: 'rgb(12, 17, 230 )',
                     hoverBackgroundColor: 'rgb(255, 99, 132)',
                 },
@@ -373,76 +373,151 @@ export const InsightsModel = {
 
     }),
     youtubeInsights: thunk(async (actions, payload) => {
-        const viewinsights = [], estTime = [], subscribersGained = [];
-        const res = await axios.post(`${config.apiUrl}/channels/insights/youtube`, payload)
-        console.log(res.data.columnHeaders)
+        if (payload.hasOwnProperty("token")) {
+            var res = await axios.post(`${config.apiUrl}/channels/insights/youtube/`, payload)
+        }
+        else {
+            var res = await axios.get(`${config.apiUrl}/channels/insights/${payload.channelId}/youtube`)
+
+        }
+        var gender = res.data.gender
+
+        gender = gender.map(value => { return (value.genderCount) })
+        console.log("this is new array" + " " + gender)
+        var ageGroup = res.data.ageGroup, _ageGroup = [], _labels = []
+        _ageGroup = ageGroup.map(value => { return (value.ageGroupCount) })
+        _labels = ageGroup.map(value => { return (value.ageGroup) })
+        var cities = [], cityNames = []
+        cities = res.data.cities.map(value => { return (value.noOfAudience) })
+        cityNames = res.data.cities.map(value => { return (value.cityName) })
+        var countries = [], countryNames = []
+        countries = res.data.countries.map(value => { return (value.noOfAudience) })
+        countryNames = res.data.countries.map(value => { return (value.countryName) })
+        var impressions = res.data.impressions,
+            reach = res.data.reach,
+            dates = []
+        dates = res.data.impressions.map(value => {
+
+            return (value.date)
+
+
+
+        })
+        console.log(countries)
+        impressions = impressions.map(value => {
+            return (value.count)
+
+        })
+        reach = reach.map(value => {
+            return (value.count)
+
+        })
+
+        actions.setLastFetched(res.data.lastFetched);
         if (res.status != "200") {
-            toastr.error("something went wrong")
+            toastr.error("Something went wrong")
         }
-        const viewdataPoints = [], estTimedataPoints = [], subsdataPoints = [];
-        for (let insight of res.data.rows) {
-            viewdataPoints.push({ date: insight[0], views: insight[1] });
-            subsdataPoints.push({ date: insight[0], subs: insight[3] });
-            estTimedataPoints.push({ date: insight[0], est: insight[2] });
+        const insights = {
+            labels: ['Female', 'Male', 'Unidentified'],
+            datasets: [
+                {
+                    label: 'Gender Distribution',
+                    backgroundColor: [
+                        '#3390FF',
+                        '#33E0FF',
+                        '#9FE2F8',
+
+                    ],
+                    hoverBackgroundColor: [
+                        '#A0C2F9',
+                        '#91C9F5',
+                        '#B5F8EE',
+
+                    ],
+                    data: gender
+                }
+            ]
+        }
+        actions.setYoutubeGender(insights);
+
+        const insightsGender = {
+            labels: _labels,
+            datasets: [
+                {
+                    label: 'Age Distribution',
+                    backgroundColor: [
+                        '#3390FF',
+                        '#33E0FF',
 
 
+
+                    ],
+                    hoverBackgroundColor: [
+                        '#A0C2F9',
+                        '#91C9F5',
+
+
+                    ],
+                    data: _ageGroup
+                }
+            ]
         }
 
-        viewinsights.push({
-            animationEnabled: true,
-            theme: "light2",
-            axisX: {
-                title: "Time Period",
-            },
-            axisY: {
-                title: "Views",
-            },
-            data: [{
-                type: "column",
-                dataPoints: viewdataPoints.map((data, index) => {
-                    console.log(data)
-                    return { y: index, label: data.date, x: data.views }
-                })
-            }]
-        });
-        estTime.push({
-            animationEnabled: true,
-            theme: "light2",
-            axisX: {
-                title: "Time Period",
-            },
-            axisY: {
-                title: "Estimated Minutes Watched",
-            },
-            data: [{
-                type: "column",
-                dataPoints: estTimedataPoints.map((data, index) => {
-                    console.log(data)
-                    return { y: index, label: data.date, x: data.est }
-                })
-            }]
-        });
-        subscribersGained.push({
-            animationEnabled: true,
-            theme: "light2",
-            axisX: {
-                title: "Time Period",
-            },
-            axisY: {
-                title: "Subscribers Gained",
-            },
-            data: [{
-                type: "column",
-                dataPoints: subsdataPoints.map((data, index) => {
-                    console.log(data)
-                    return { y: index, label: data.date, x: data.subs }
-                })
-            }]
-        });
+        console.log(insightsGender);
+        actions.setYoutubeAge(insightsGender);
+        const insightsCities = {
+            labels: cityNames,
+            datasets: [
+                {
+                    label: 'City Distribution',
+                    data: cities,
+                    backgroundColor: 'rgb(138, 177, 226 )',
+                    hoverBackgroundColor: 'rgb(255, 99, 132)'
 
-        actions.setYoutubeViews(viewinsights);
-        actions.setYoutubeEstTime(estTime);
-        actions.setYoutubeSubscribers(subscribersGained);
+                }
+            ]
+        }
+
+        console.log(insightsCities);
+        actions.setFbCities(insightsCities);
+        const insightsCountries = {
+            labels: countryNames,
+            datasets: [
+                {
+                    label: 'Country Distribution',
+                    data: countries,
+                    backgroundColor: 'rgb(138, 177, 226 )',
+                    hoverBackgroundColor: 'rgb(255, 99, 132)',
+                }
+            ]
+        }
+
+        console.log(insightsCountries);
+        actions.setFbCountries(insightsCountries);
+        const insightsImp = {
+            labels: dates,
+            datasets: [
+                {
+                    label: 'Impressions',
+                    data: impressions,
+                    fill: true,
+                    lineTension: 0.5,
+                    backgroundColor: 'rgb(138, 177, 226 )',
+                    hoverBackgroundColor: 'rgb(255, 99, 132)',
+                },
+                {
+                    label: 'Reach',
+                    data: reach,
+                    fill: true,
+                    //                   lineTension: 0.5,
+                    backgroundColor: 'rgb(12, 17, 230 )',
+                    hoverBackgroundColor: 'rgb(255, 99, 132)',
+                },
+
+            ]
+        }
+        actions.setFbResponse(insightsImp);
+
 
     })
 
