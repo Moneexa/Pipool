@@ -16,7 +16,7 @@ module.exports = {
      */
     list: function (req, res) {
         console.log(req.params.channelId);
-        ChannelModel.findOne({ channelId: req.params.channelId, channelName: req.params.channelName }, function (err, channel) {
+        ChannelModel.findOne({ channelId: req.params.channelId, channelName: req.params.channelName, createdBy:res.locals.user.id }, function (err, channel) {
             if (err) {
                 console.log("this is the error" + err)
                 return res.status(500).json({
@@ -577,6 +577,6 @@ module.exports = {
             res.send(error).status(445);
         }
     }
-    
+
 
 };
