@@ -346,149 +346,92 @@ module.exports = {
             yesterday.setDate(yesterday.getDate() - 90);
             const since = parseInt(yesterday.getTime() / 1000);
             const until = parseInt(new Date().getTime() / 1000);
-            const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.channelId}/insights?metric=page_fans_gender_age,page_fans_city,page_fans_country,page_impressions,page_fans,page_impressions_frequency_distribution&since=${since}&until=${until}&period=day&access_token=${respForAccessToken.data.access_token}`)
-            var gender = {}, _gender = [], _ageGroup = [], cities = [], countries = [], impressions = [], fans = [], reach = []
-            resp.data.data.map(value => {
-                if (value.name.includes("gender")) {
-                    value.values.map(_value => {
-                        gender = _value.value
-                    })
-                }
-                else if (value.name.includes("city")) {
-                    value.values.map(_value => {
-                        cities = Object.entries(_value.value)
+            const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.channelId}/insights?metric=page_fans_gender_age,page_fans_city,page_fans_country,page_impressions,page_fans,page_impressions_unique&since=${since}&until=${until}&period=day&access_token=${respForAccessToken.data.access_token}`)
+            genders = [], ageGroup = [], cities = [], countries = [], impressions = [], fans = [], reach = []
+            const gendersMap = {};
+            const ageGroupMap = {};
 
-                    })
-                }
-                else if (value.name.includes("country")) {
-                    value.values.map(_value => {
-                        countries = Object.entries(_value.value)
+            // generating maps
+            for (let matrix of resp.data.data) {
+                switch (matrix.name) {
+                    case 'page_fans_gender_age':
+                        if (!matrix.values || matrix.values.length <= 0) throw new Error("Invalid matrix received from the API");
+                        const groups = matrix.values[matrix.values.length - 1].value;
+                        for (let key in groups) {
+                            let [gender, age] = key.split('.');
+                            // Converting keywords to actual values
+                            gender = gender === 'M' ? 'male' : gender === 'F' ? 'female' : 'unidentified';
 
-                    })
-                }
-                else if (value.name.includes("impressions")) {
-                    value.values.map(_value => {
-                        impressions.push({ count: _value.value, date: _value.end_time.replace("T07:00:00+0000", "") });
+                            if (!gendersMap[gender]) {
+                                gendersMap[gender] = 0;
+                            }
+                            gendersMap[gender] += groups[key];
 
-                    })
-                }
-                else if (value.name.includes("fans")) {
-                    value.values.map(_value => {
-                        fans.push({ count: _value.value, date: _value.end_time.replace("T07:00:00+0000", "") });
-
-                    })
-                }
-                // console.log(value)
-                else if (value.name.includes("page_impressions_frequency_distribution")) {
-                    // console.log(value.values)
-                    value.values.map(_value => {
-                        reach.push({ count: _value.value, date: _value.end_time.replace("T07:00:00+0000", "") });
-
-                    })
-                }
-
-            })
-            impressions = impressions.map(value => {
-                return ({ "responseType": "impression", "count": value.count, "date": value.date })
-            })
-            fans = fans.map(value => {
-                return ({ "responseType": "fans", "count": value.count, "date": value.date })
-            })
-            reach = reach.map(value => {
-                return ({ "responseType": "reach", "count": value.count, "date": value.date })
-            })
-            // console.log(reach)
-            countries = countries.map(([key, val]) => ({ "countryName": key, "noOfAudience": val }))
-            cities = cities.map(([key, value]) => ({ "cityName": key, "noOfAudience": value }))
-            var females = 0, males = 0, unidentified = 0;
-            for (prop in gender) {
-                if (prop.includes("F")) {
-                    females = females + gender[prop]
-                }
-                if (prop.includes("M")) {
-                    males = males + gender[prop]
-                }
-                if (prop.includes("U")) {
-                    unidentified = unidentified + gender[prop]
-                }
-
-            }
-            _gender = [{ "gender": "female", "genderCount": females }, { "gender": "male", "genderCount": males }, { "gender": "unidentified", "genderCount": unidentified }]
-            var ageGroup1 = 0, ageGroup2 = 0, ageGroup3 = 0, ageGroup4 = 0, ageGroup5 = 0, ageGroup6 = 0, ageGroup7 = 0
-
-            for (prop in gender) {
-                if (prop.includes("13-17")) {
-                    ageGroup1 = ageGroup1 + gender[prop]
-
-                }
-                else if (prop.includes("18-24")) {
-                    ageGroup2 = ageGroup2 + gender[prop]
-                }
-                else if (prop.includes("25-34")) {
-                    ageGroup3 = ageGroup3 + gender[prop]
-
-                }
-                else if (prop.includes("35-44")) {
-                    ageGroup4 = ageGroup4 + gender[prop]
-
-                }
-                else if (prop.includes("45-54")) {
-                    ageGroup5 = ageGroup5 + gender[prop]
-
-                }
-                else if (prop.includes("55-64")) {
-                    ageGroup6 = ageGroup6 + gender[prop]
-
-                }
-                else if (prop.includes("65+")) {
-                    ageGroup7 = ageGroup7 + gender[prop]
-
+                            if (!ageGroupMap[age]) {
+                                ageGroupMap[age] = 0;
+                            }
+                            ageGroupMap[age] += groups[key];
+                            console.log(gender, age);
+                        }
+                        for (let value in gendersMap) {
+                            genders.push({
+                                "gender": value,
+                                "genderCount": gendersMap[value] || 0
+                            })
+                        }
+                        for (let group in ageGroupMap) {
+                            ageGroup.push({
+                                "ageGroup": group,
+                                "ageGroupCount": ageGroupMap[group] || 0
+                            })
+                        }
+                        break;
+                    case 'page_fans_city':
+                        if (!matrix.values || matrix.values.length <= 0) throw new Error("Invalid matrix received from the API");
+                        const citiesMap = matrix.values[matrix.values.length - 1].value;
+                        for (let key in citiesMap) {
+                            cities.push({
+                                "cityName": key,
+                                "noOfAudience": citiesMap[key] || 0
+                            })
+                        }
+                        break;
+                    case 'page_fans_country':
+                        if (!matrix.values || matrix.values.length <= 0) throw new Error("Invalid matrix received from the API");
+                        const countriesMap = matrix.values[matrix.values.length - 1].value;
+                        for (let key in countriesMap) {
+                            countries.push({
+                                "countryName": key,
+                                "noOfAudience": countriesMap[key] || 0
+                            })
+                        }
+                        break;
+                    case 'page_impressions':
+                        console.log(matrix.values)
+                        impressions = matrix.values.map(impression => {
+                            return { count: impression.value, date: impression.end_time.slice(0, 10) };
+                        })
+                        break;
+                    case 'page_impressions_unique':
+                        console.log(matrix.values)
+                        reach = matrix.values.map(reach => {
+                            return { count: reach.value, date: reach.end_time.slice(0, 10) };
+                        })
+                        break;
                 }
             }
-            _ageGroup = [
-                {
-                    "ageGroup": "13-17",
-
-                    "ageGroupCount": ageGroup1
-                },
-                {
-                    "ageGroup": "18-24",
-                    "ageGroupCount": ageGroup2
-                },
-                {
-                    "ageGroup": "25-34",
-                    "ageGroupCount": ageGroup3
-                },
-                {
-                    "ageGroup": "35-44",
-                    "ageGroupCount": ageGroup4
-                },
-                {
-                    "ageGroup": "45-54",
-                    "ageGroupCount": ageGroup5
-                },
-                {
-                    "ageGroup": "55-64",
-                    "ageGroupCount": ageGroup6
-                },
-                {
-                    "ageGroup": "65+",
-                    "ageGroupCount": ageGroup7
-                }
-            ]
             ChannelModel.findOne({ channelId: req.body.channelId, channelName: "facebook", createdBy: res.locals.user.id }, function (err, channel) {
 
                 if (channel) {
                     channel.channelName = "facebook";
                     channel.channelId = req.body.channelId ? req.body.channelId : channel.channelId;
-                    channel.gender = _gender
-                    channel.ageGroup = _ageGroup
+                    channel.gender = genders
+                    channel.ageGroup = ageGroup
                     channel.cites = cities
                     channel.countries = countries
-                    channel.response = impressions.concat(fans).concat(reach)
+                    channel.impressions = impressions
+                    channel.reach = reach
                     channel.lastFetched = (new Date())
-
-
 
                     channel.save(function (err, channel) {
                         if (err) {
@@ -509,15 +452,13 @@ module.exports = {
                         channelId: req.body.channelId,
 
                         createdBy: res.locals.user.id,
-                        gender: _gender,
-                        ageGroup: _ageGroup,
+                        gender: genders,
+                        ageGroup: ageGroup,
                         cities: cities,
                         countries: countries,
-                        response: impressions.concat(fans).concat(reach),
+                        impressions: impressions,
+                        reach: reach,
                         lastFetched: (new Date()),
-
-
-
                     });
 
                     _channel.save(function (err, __channel) {
@@ -531,8 +472,6 @@ module.exports = {
                         return res.status(200).json(__channel);
                     });
 
-
-
                 }
             });
 
@@ -540,7 +479,7 @@ module.exports = {
         }
         catch (error) {
             console.log(error)
-            res.send(error).status(445);
+            res.status(445).send(error);
         }
     },
     TiktokInsights: async function (req, res) {
