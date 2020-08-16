@@ -168,31 +168,18 @@ module.exports = {
 
             for (let val of resp.data.data) {
                 if (val.name.includes("impressions")) {
-                    val.values.map(_val => {
-                        imp.push({ count: _val.value, date: _val.end_time.replace("T07:00:00+0000", "") });
+                    imp=val.values.map(_val => {
+                        return({ count: _val.value, date: _val.end_time.slice(0,10) });
                     })
                 }
                 else if (val.name.includes("reach")) {
-                    val.values.map(_val => {
-                        reaches.push({ count: _val.value, date: _val.end_time.replace("T07:00:00+0000", "") });
+                   reaches= val.values.map(_val => {
+                        return ({ count: _val.value, date: _val.end_time.slice(0,10) });
                     })
                 }
-                else if (val.name.includes("follower_count")) {
-                    val.values.map(_val => {
-                        console.log(_val)
-                        foll.push({ count: _val.value, date: _val.end_time.replace("T07:00:00+0000", "") });
-                    })
-                }
+               
             }
-            imp = imp.map(value => {
-                return ({ "responseType": "impression", "count": value.count, "date": value.date })
-            })
-            reaches = reaches.map(value => {
-                return ({ "responseType": "reach", "count": value.count, "date": value.date })
-            })
-            foll = foll.map(value => {
-                return ({ "responseType": "followers", "count": value.count, "date": value.date })
-            })
+           
             var ageGroup1 = 0, ageGroup2 = 0, ageGroup3 = 0, ageGroup4 = 0, ageGroup5 = 0, ageGroup6 = 0, ageGroup7 = 0
 
             for (prop in gender) {
@@ -278,7 +265,8 @@ module.exports = {
                     channel.ageGroup = _ageGroup
                     channel.cites = city
                     channel.countries = country
-                    channel.response = imp.concat(foll).concat(reaches)
+                    channel.impressions = imp
+                    channel.reach=reaches
                     channel.lastFetched = (new Date())
 
 
@@ -306,7 +294,8 @@ module.exports = {
                         ageGroup: _ageGroup,
                         cities: city,
                         countries: country,
-                        response: imp.concat(foll).concat(reaches),
+                        impressions: imp,
+                        reach: reaches,
                         lastFetched: (new Date()),
 
 
