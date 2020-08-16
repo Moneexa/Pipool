@@ -136,7 +136,11 @@ module.exports = {
     InstaInsights: async function (req, res) {
         try {
             //console.log(req.body.token)
-            const resp = await axios.get(`https://graph.facebook.com/${req.body.channelId}/insights?metric=impressions,reach,profile_views,follower_count&period=day&access_token=${req.body.token}`)
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 30);
+            const since = parseInt(yesterday.getTime() / 1000);
+            const until = parseInt(new Date().getTime() / 1000);
+            const resp = await axios.get(`https://graph.facebook.com/${req.body.channelId}/insights?metric=impressions,reach,profile_views,follower_count&since=${since}&until=${until}&period=day&access_token=${req.body.token}`)
             // console.log(resp.data)
             const resp1 = await axios.get(`https://graph.facebook.com/${req.body.channelId}/insights?metric=audience_country,audience_city,audience_gender_age&period=lifetime&access_token=${req.body.token}`)
             var gender = {};
