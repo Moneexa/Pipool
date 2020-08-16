@@ -37,10 +37,16 @@ var InsightsSchema = new Schema({
 		}
 	},
 	'lastFetched': Date,
-	'response':{
+	'impressions':{
 		type:Array,
 		value:{
-			"responseType" :String,
+			"date":String,
+			"count" : Number
+		}
+	},
+	'reach':{
+		type:Array,
+		value:{
 			"date":String,
 			"count" : Number
 		}
