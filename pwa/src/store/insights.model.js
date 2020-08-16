@@ -7,7 +7,7 @@ const { action, thunk } = require("easy-peasy");
 export const InsightsModel = {
     instagram: {}, instagramAge: {}, instagramCities: {}, instagramCountries: {},
     instagramResponse: {},
-    facebook:{},fbAge: {}, fbCities: {}, fbCountries: {},
+    facebook: {}, fbAge: {}, fbCities: {}, fbCountries: {},
     fbResponse: {},
     lastFetched: "",
     youtubeViews: [], youtubeSubscribers: [], youtubeEstTime: [],
@@ -45,7 +45,7 @@ export const InsightsModel = {
     setFbResponse: action((state, payload) => {
         state.fbResponse = payload;
     }),
-    
+
     setYoutubeViews: action((state, payload) => {
         state.youtubeViews = payload;
     }),
@@ -76,8 +76,10 @@ export const InsightsModel = {
         var countries = [], countryNames = []
         countries = res.data.countries.map(value => { return (value.noOfAudience) })
         countryNames = res.data.countries.map(value => { return (value.countryName) })
-        var response = res.data.response, dates = []
-        dates = res.data.response.map(value => {
+        var impressions = res.data.impressions,
+            reach = res.data.reach,
+            dates = []
+        dates = res.data.impressions.map(value => {
 
             return (value.date)
 
@@ -85,23 +87,16 @@ export const InsightsModel = {
 
         })
         console.log(countries)
-        const impressions = response.map(value => {
-            if (value.responseType === "impression") {
-                return (value.count)
-            }
+        impressions = impressions.map(value => {
+            return (value.count)
+
         })
-        const reach = response.map(value => {
-            if (value.responseType === "reach") {
-                return (value.count)
-            }
+        reach = reach.map(value => {
+            return (value.count)
+
         })
-        const followers = response.map(value => {
-            if (value.responseType === "followers") {
-                return (value.count)
-            }
-        })
+
         console.log(impressions)
-        console.log(followers)
         console.log(reach)
         actions.setLastFetched(res.data.lastFetched);
         if (res.status != "200") {
@@ -204,14 +199,7 @@ export const InsightsModel = {
                     backgroundColor: 'rgb(138, 177, 226 )',
                     hoverBackgroundColor: 'rgb(255, 99, 132)',
                 },
-                {
-                    label: 'Followers',
-                    data: followers,
-                    fill: false,
-                    lineTension: 0.5,
-                    backgroundColor: 'rgb(12, 17, 230 )',
-                    hoverBackgroundColor: 'rgb(255, 99, 132)',
-                },
+
                 {
                     label: 'Reach',
                     data: reach,
@@ -248,7 +236,7 @@ export const InsightsModel = {
         countries = res.data.countries.map(value => { return (value.noOfAudience) })
         countryNames = res.data.countries.map(value => { return (value.countryName) })
         var impressions = res.data.impressions,
-         reach = res.data.reach, dates = []
+            reach = res.data.reach, dates = []
         dates = res.data.impressions.map(value => {
 
             return (value.date)
@@ -258,14 +246,14 @@ export const InsightsModel = {
         })
         console.log(countries)
         reach = reach.map(value => {
-                return (value.count)
-            
+            return (value.count)
+
         })
         impressions = impressions.map(value => {
             return (value.count)
-        
-    })
-        
+
+        })
+
         console.log(impressions)
         console.log(reach)
         actions.setLastFetched(res.data.lastFetched);
@@ -377,7 +365,7 @@ export const InsightsModel = {
                     backgroundColor: 'rgb(12, 17, 230 )',
                     hoverBackgroundColor: 'rgb(255, 99, 132)',
                 },
-               
+
             ]
         }
         actions.setFbResponse(insightsImp);
