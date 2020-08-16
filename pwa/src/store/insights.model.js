@@ -194,7 +194,7 @@ export const InsightsModel = {
                 {
                     label: 'Impressions',
                     data: impressions,
-                    fill: false,
+                    fill: true,
                     lineTension: 0.5,
                     backgroundColor: 'rgb(138, 177, 226 )',
                     hoverBackgroundColor: 'rgb(255, 99, 132)',
@@ -203,7 +203,7 @@ export const InsightsModel = {
                 {
                     label: 'Reach',
                     data: reach,
-                    fill: false,
+                    fill: true,
                     lineTension: 0.5,
                     backgroundColor: 'rgb(17, 15, 240 )',
                     hoverBackgroundColor: 'rgb(255, 99, 132)',
