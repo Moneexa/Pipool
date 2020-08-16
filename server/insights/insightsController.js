@@ -532,10 +532,10 @@ module.exports = {
                     channel.channelId = req.body.channelId ? req.body.channelId : channel.channelId;
                     channel.gender = gender
                     channel.ageGroup = ageGroup
-                    channel.cities=[{"cityName":"kalrusche","noOfAudience":10}, {"cityName":"Amserfoort","noOfAudience":11}]
-                    channel.countries=[{"countryName":"Germany","noOfAudience":10}, {"countryName":"Amsterdam","noOfAudience":11}]
-                    channel.impressions=[{"count":30,"date":"2020-01-01"}, {"count":11,"date":"2020-03-29"}]
-                    channel.reach=[{"count":10,"date":"2020-01-01"},{"count":21,"date":"2020-03-29"}]
+                    channel.cities=[{"cityName":"kalrusche","noOfAudience":10}, {"cityName":"Amserfoort","noOfAudience":10.5}]
+                    channel.countries=[{"countryName":"Germany","noOfAudience":10}, {"countryName":"Amsterdam","noOfAudience":10.5}]
+                    channel.impressions=[{"count":30,"date":"2020-01-01"}, {"count":10.5,"date":"2020-03-29"}]
+                    channel.reach=[{"count":10,"date":"2020-01-01"},{"count":10.1,"date":"2020-03-29"}]
                     channel.lastFetched = (new Date())
 
                     channel.save(function (err, channel) {
