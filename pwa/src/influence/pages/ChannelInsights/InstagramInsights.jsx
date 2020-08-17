@@ -3,57 +3,46 @@ import config from '../../../config.json';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { Pie, Bar, Line } from 'react-chartjs-2';
 
-var gapi = window.gapi;
-var GoogleAuth = window.GoogleAuth;
-export function YoutubeInsights({ channelId }) {
 
-    var SCOPE = 'https://www.googleapis.com/auth/youtube.readonly';
-    var discoveryUrl = 'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest';
+export function InstagramInsights({ channelId }) {
+    const instaInsights = useStoreActions(actions => actions.insights.instaInsights)
+    const cities = useStoreState(state => state.insights.instagramCities)
+    const countries = useStoreState(state => state.insights.instagramCountries)
+    const response = useStoreState(state => state.insights.instagramResponse)
 
-    const youtube_Insights = useStoreActions(actions => actions.insights.youtubeInsights);
-    const age = useStoreState(state => state.insights.youtubeAge)
-    const insights = useStoreState(state => state.insights.youtubeGender);
+    const age = useStoreState(state => state.insights.instagramAge)
+    const insights = useStoreState(state => state.insights.instagram);
     const lastFetched = useStoreState(state => state.insights.lastFetched);
-    const cities = useStoreState(state => state.insights.fbCities)
-    const countries = useStoreState(state => state.insights.fbCountries)
-    const response = useStoreState(state => state.insights.fbResponse)
+    function fetchInsights() {
+        ;
+        const host = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port;
+        const oauthWindow = window.open(encodeURI(`${config.instagramInsights.uri}/?redirect_uri=${host}${config.instagramInsights.redirectURI}&client_id=${config.instagramInsights.appId}&scope=${config.instagramInsights.scope}&response_type=token&state={"{st=state123abc,ds=123456789}"}`));
 
-    useEffect(() => {
-        gapi.load('client:auth2', initClient);
-        youtube_Insights({ channelId: channelId })
-    }, []);
-    async function fetchInsights() {
-        const user = await GoogleAuth.signIn();
-        gapi.client.setApiKey(config.google.apiKey);
-        const channels = await gapi.client.youtube.channels.list({
-            mine: true,
-            part: 'id,statistics,snippet'
-        });
+        var timer = setInterval(function () {
+            if (oauthWindow.closed) {
+                clearInterval(timer);
+                const redirectUrl = new URL(localStorage.getItem('oAuthRedirectUrl').replace('?#', '?'));
+                const searchParams = redirectUrl.searchParams;
+                console.log(searchParams);
 
-        console.log(user.getAuthResponse().access_token)
-        youtube_Insights({ token: user.getAuthResponse().access_token, channelId: channelId })
+                const code = searchParams.get('access_token');
+                console.log(code)
+                instaInsights({ token: code, channelId: channelId })
+            }
+        }, 1000);
+
+
     }
-    function initClient() {
-        gapi.client.init({
-            'apiKey': config.google.apiKey,
-            'clientId': config.google.clientId,
-            'discoveryDocs': [discoveryUrl],
-            'scope': SCOPE
-        }).then(function () {
-            GoogleAuth = gapi.auth2.getAuthInstance();
-        });
-    }
-
-
+    useEffect(() => { instaInsights({ channelId: channelId }) }, [])
     return (
         <div className="channel-insights">
             <div className="row d-flex justify-content-between">
-
                 <button onClick={() => fetchInsights()} className="btn btn-primary rounded-30 text-white ml-2">Fetch Insights</button>
                 <p className="col-md-6 float-right">{lastFetched}</p>
             </div>
             <div className="row">
                 <div className="col-md-6">
+
                     <Pie
                         data={insights}
                         options={{
@@ -70,6 +59,7 @@ export function YoutubeInsights({ channelId }) {
                     />
                 </div>
                 <div className="col-md-6">
+
                     <Bar
                         data={age}
                         options={{
@@ -98,6 +88,7 @@ export function YoutubeInsights({ channelId }) {
                     />
                 </div>
                 <div className="col-md-6">
+
                     <Bar
                         data={cities}
                         options={{
@@ -126,6 +117,7 @@ export function YoutubeInsights({ channelId }) {
                     />
                 </div>
                 <div className="col-md-6">
+
                     <Bar
                         data={countries}
                         options={{
@@ -154,6 +146,7 @@ export function YoutubeInsights({ channelId }) {
                     />
                 </div>
                 <div className="col-md-6">
+
                     <Line
                         data={response}
                         options={{
@@ -169,17 +162,18 @@ export function YoutubeInsights({ channelId }) {
                             scales: {
                                 xAxes: [{
                                     gridLines: {
-                                        display: false
+                                        display:false
                                     }
                                 }],
                                 yAxes: [{
                                     gridLines: {
-                                        display: false
-                                    }
+                                        display:false
+                                    }   
                                 }]
                             }
                         }}
                     />
+
                 </div>
 
 
