@@ -514,37 +514,36 @@ module.exports = {
                 ageGroup5 = 0, ageGroup6 = 0,
                 male = 0, female = 0, unid = 0
             for (let value of response.data.rows) {
-                    if (value[0] === "age13-17") {
-                        ageGroup1 += value[2]
-                    }
-                    else if (value[0] === "age18-24") {
-                        ageGroup2 += value[2]
-                    }
-                    else if (value[0] === "age25-34") {
-                        ageGroup3 += value[2]
-                    }
-                    else if (value[0] === "age35-44") {
-                        ageGroup4 += value[2]
-                    }
-                    else if (value[0] === "age45-54") {
-                        ageGroup5 += value[2]
-                    }
-                    else if (value[0] === "age55-64") {
-                        ageGroup6 += value[2]
-                    }
-                
+                if (value[0] === "age13-17") {
+                    ageGroup1 += value[2]
+                }
+                else if (value[0] === "age18-24") {
+                    ageGroup2 += value[2]
+                }
+                else if (value[0] === "age25-34") {
+                    ageGroup3 += value[2]
+                }
+                else if (value[0] === "age35-44") {
+                    ageGroup4 += value[2]
+                }
+                else if (value[0] === "age45-54") {
+                    ageGroup5 += value[2]
+                }
+                else if (value[0] === "age55-64") {
+                    ageGroup6 += value[2]
+                }
             }
             for (let value of response.data.rows) {
-                    if (value[1] === "female") {
-                        female += value[2]
-                    }
-                    else if (value[1] === "male") {
-                        male += value[2]
-                    }
-                    else if (value[1] === "unidentified") {
-                        unid += value[2]
-                    }
-                
+
+                if (value[1] === "female") {
+                    female += value[2]
+                }
+                else if (value[1] === "male") {
+                    male += value[2]
+                }
+                else if (value[1] === "unidentified") {
+                    unid += value[2]
+                }
             }
             gender = [{ "gender": "female", "genderCount": female }, { "gender": "male", "genderCount": male }, { "gender": "unidentified", "genderCount": unid }]
             ageGroup = [{ "ageGroup": "13-17", "ageGroupCount": ageGroup1 },
