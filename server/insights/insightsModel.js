@@ -44,6 +44,27 @@ var InsightsSchema = new Schema({
 			"count" : Number
 		}
 	},
+	'likes':{
+		type:Array,
+		value:{
+			"date":String,
+			"count" : Number
+		}
+	},
+	'views':{
+		type:Array,
+		value:{
+			"date":String,
+			"count" : Number
+		}
+	},
+	'comments':{
+		type:Array,
+		value:{
+			"date":String,
+			"count" : Number
+		}
+	},
 	'reach':{
 		type:Array,
 		value:{

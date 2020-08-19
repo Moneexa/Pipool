@@ -99,34 +99,6 @@ export function YoutubeInsights({ channelId }) {
                 </div>
                 <div className="col-md-6">
                     <Bar
-                        data={cities}
-                        options={{
-                            title: {
-                                display: true,
-                                text: 'City distribution',
-                                fontSize: 20
-                            },
-                            legend: {
-                                display: true,
-                                position: 'bottom'
-                            },
-                            scales: {
-                                xAxes: [{
-                                    gridLines: {
-                                        display: false
-                                    }
-                                }],
-                                yAxes: [{
-                                    gridLines: {
-                                        display: false
-                                    }
-                                }]
-                            }
-                        }}
-                    />
-                </div>
-                <div className="col-md-6">
-                    <Bar
                         data={countries}
                         options={{
                             title: {

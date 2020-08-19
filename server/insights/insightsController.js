@@ -17,6 +17,8 @@ module.exports = {
     list: function (req, res) {
         console.log(req.params.channelId);
         ChannelModel.findOne({ channelId: req.params.channelId, channelName: req.params.channelName, createdBy: res.locals.user.id }, function (err, channel) {
+            //console.log(channel)
+
             if (err) {
                 console.log("this is the error" + err)
                 return res.status(500).json({
@@ -30,7 +32,7 @@ module.exports = {
                     message: 'No such channel'
                 });
             }
-            return res.json(channel);
+            else { return res.status(200).json(channel) };
         });
     },
 
@@ -284,7 +286,7 @@ module.exports = {
                             });
                         }
 
-                        return res.json(channel);
+                        return res.status(200).json(channel);
 
                     });
                 }
@@ -435,7 +437,7 @@ module.exports = {
                             });
                         }
 
-                        return res.json(channel);
+                        return res.status(200).json(channel);
 
                     });
                 }
@@ -504,27 +506,73 @@ module.exports = {
         try {
 
             const response = await axios.get(`https://youtubeanalytics.googleapis.com/v2/reports?access_token=${access_token}&dimensions=ageGroup,gender&metrics=viewerPercentage&ids=channel==${req.body.channelId}&startDate=2020-01-01&endDate=2020-08-08`)
-            console.log(response.data.rows)
-            var responseRows = [], gender = [], ageGroup = [], male = 0, female = 0, age1 = 0, age2 = 0
-            console.log("come here")
-            responseRows = [["25-30", "male", 20], ["35-40", "female", 80], ["25-30", "male", 50], ["35-40", "female", 50]]
-            for (value of responseRows) {
-                if (value[1] === "male") {
-                    male += value[2]
-                }
-                else if (value[1] === "female") {
-                    female += value[2]
+            const response1 = await axios.get(`https://youtubeanalytics.googleapis.com/v2/reports?access_token=${access_token}&dimensions=country&metrics=views&ids=channel==${req.body.channelId}&startDate=2020-01-01&endDate=2020-08-08`)
+            const response2 = await axios.get(`https://youtubeanalytics.googleapis.com/v2/reports?access_token=${access_token}&metrics=likes,comments,views&ids=channel==${req.body.channelId}&dimensions=day&startDate=2020-01-01&endDate=2020-08-08`)
+
+            // console.log(response.data.rows)
+            var gender = [], ageGroup = [], ageGroup1 = 0, ageGroup2 = 0, ageGroup3 = 0, ageGroup4 = 0,
+                ageGroup5 = 0, ageGroup6 = 0,
+                male = 0, female = 0, unid = 0
+            for (let value of response.data.rows) {
+                for (let _value of value) {
+                    if (_value[0] === "age13-17") {
+                        ageGroup1 += _value[2]
+                    }
+                    else if (_value[0] === "age18-24") {
+                        ageGroup2 += _value[2]
+                    }
+                    else if (_value[0] === "age25-34") {
+                        ageGroup3 += _value[2]
+                    }
+                    else if (_value[0] === "age35-44") {
+                        ageGroup4 += _value[2]
+                    }
+                    else if (_value[0] === "age45-54") {
+                        ageGroup5 += _value[2]
+                    }
+                    else if (_value[0] === "age55-64") {
+                        ageGroup6 += _value[2]
+                    }
                 }
             }
-            gender = [{ "gender": "male", "genderCount": male }, { "gender": "female", "genderCount": female }]
-            for (value of responseRows) {
-                if (value[0] === "25-30")
-                    age1 += value[2]
-                else if (value[0] === "35-40") {
-                    age2 += value[2]
+            for (let value of response.data.rows) {
+                for (let _value of value) {
+                    if (_value[1] === "female") {
+                        female += _value[2]
+                    }
+                    else if (_value[1] === "male") {
+                        male += _value[2]
+                    }
+                    else if (_value[1] === "unidentified") {
+                        unid += _value[2]
+                    }
                 }
             }
-            ageGroup = [{ "ageGroup": "25-30", "ageGroupCount": age1 }, { "ageGroup": "35-40", "ageGroupCount": age2 }]
+            gender = [{ "gender": "female", "genderCount": female }, { "gender": "male", "genderCount": male }, { "gender": "unidentified", "genderCount": unid }]
+            ageGroup = [{ "ageGroup": "13-17", "ageGroupCount": ageGroup1 },
+            { "ageGroup": "18-24", "ageGroupCount": ageGroup2 },
+            { "ageGroup": "25-34", "ageGroupCount": ageGroup3 },
+            { "ageGroup": "35-44", "ageGroupCount": ageGroup4 },
+            { "ageGroup": "45-54", "ageGroupCount": ageGroup5 },
+            { "ageGroup": "55-64", "ageGroupCount": ageGroup6 }
+
+            ]
+            console.log(response1.data)
+            var country = [], likes = [], comments = [], views = []
+            country = response1.data.rows.map(value => {
+                return ({ "countryName": value[0], "noOfAudience": value[1] })
+            })
+
+            likes = response2.data.rows.map(value => {
+                return ({ "date": value[0], "count": value[1] })
+            })
+            comments = response2.data.rows.map(value => {
+                return ({ "date": value[0], "count": value[2] })
+            })
+            views = response2.data.rows.map(value => {
+                return ({ "date": value[0], "count": value[3] })
+            })
+            console.log(views)
             ChannelModel.findOne({ channelId: req.body.channelId, channelName: "youtube", createdBy: res.locals.user.id }, function (err, channel) {
 
                 if (channel) {
@@ -532,10 +580,10 @@ module.exports = {
                     channel.channelId = req.body.channelId ? req.body.channelId : channel.channelId;
                     channel.gender = gender
                     channel.ageGroup = ageGroup
-                    channel.cities=[{"cityName":"kalrusche","noOfAudience":10}, {"cityName":"Amserfoort","noOfAudience":10.5}]
-                    channel.countries=[{"countryName":"Germany","noOfAudience":10}, {"countryName":"Amsterdam","noOfAudience":10.5}]
-                    channel.impressions=[{"count":30,"date":"2020-01-01"}, {"count":10.5,"date":"2020-03-29"}]
-                    channel.reach=[{"count":10,"date":"2020-01-01"},{"count":10.1,"date":"2020-03-29"}]
+                    channel.countries = country
+                    channel.likes = likes
+                    channel.comments = comments
+                    channel.views = views
                     channel.lastFetched = (new Date())
 
                     channel.save(function (err, channel) {
@@ -547,7 +595,7 @@ module.exports = {
                             });
                         }
 
-                        return res.json(channel);
+                        return res.status(200).json(channel);
 
                     });
                 }
@@ -555,13 +603,14 @@ module.exports = {
                     var _channel = new ChannelModel({
                         channelName: "youtube",
                         channelId: req.body.channelId,
+
                         createdBy: res.locals.user.id,
                         gender: gender,
                         ageGroup: ageGroup,
-                        cities:[{"cityName":"kalrusche","noOfAudience":10}, {"cityName":"Amserfoort","noOfAudience":11}],
-                        countries:[{"cityName":"Germany","noOfAudience":10}, {"cityName":"Amsterdam","noOfAudience":11}],
-                        impressions:[{"value":30,"end_time":"2020-01-01"}, {"value":11,"end_time":"2020-03-29"}],
-                        reach:[{"value":10,"end_time":"2020-01-01"},{"value":21,"end_time":"2020-03-29"}],
+                        countries: country,
+                        likes: likes,
+                        comments: comments,
+                        views: views,
                         lastFetched: (new Date()),
                     });
 
@@ -581,11 +630,10 @@ module.exports = {
 
 
 
-
         }
         catch (error) {
             console.log(error)
-            res.send(error).status(445);
+            res.status(445).send(error);
         }
     }
 

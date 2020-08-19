@@ -169,7 +169,7 @@ module.exports = {
                 access_token_secret: fetchedCredentials.oauth_token_secret
             });
 
-            const existingChannel = await ChannelModel.findOne({ channelId: fetchedCredentials.user_id, channelType: 'twitter' });
+            const existingChannel = await ChannelModel.findOne({ channelId: fetchedCredentials.user_id, channelType: 'twitter', createdBy: res.locals.user.id  });
             if (existingChannel) return res.status(405).send('Channel already exists');
             const userData = await client.get("users/show", {
                 user_id: fetchedCredentials.user_id
@@ -196,7 +196,7 @@ module.exports = {
     youtubeOAuth: async function (req, res) {
         try {
             const { token, id } = req.body;
-            const existingChannel = await ChannelModel.findOne({ channelId: id, channelType: 'youtube' });
+            const existingChannel = await ChannelModel.findOne({ channelId: id, channelType: 'youtube', createdBy: res.locals.user.id });
             if (existingChannel) return res.status(405).send('Channel already exists');
             const { data } = await axios.get(`https://www.googleapis.com/youtube/v3/channels?part=id,statistics,snippet&mine=true&key=AIzaSyDe6galtm6BnVZE-8PfF7v8YtZzSeyO9S0`,
                 {
@@ -278,7 +278,7 @@ module.exports = {
         }
     },
     TiktokPostOauth: async function (req, res) {
-        const existingChannel = await ChannelModel.findOne({ channelName: req.body.user_id, channelType: 'tiktok', category: req.body.category });
+        const existingChannel = await ChannelModel.findOne({ channelName: req.body.user_id, channelType: 'tiktok', category: req.body.category, createdBy: res.locals.user.id });
         if (existingChannel) return res.status(405).send('Channel already exists');
         try {
 
