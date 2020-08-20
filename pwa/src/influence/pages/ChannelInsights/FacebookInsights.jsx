@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import config from '../../../config.json';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { Pie, Bar, Line } from 'react-chartjs-2';
+import { Spinner } from 'react-bootstrap';
 
 
 export function FacebookInsights({ channelId }) {
@@ -9,6 +10,7 @@ export function FacebookInsights({ channelId }) {
     const cities = useStoreState(state => state.insights.fbCities)
     const countries = useStoreState(state => state.insights.fbCountries)
     const response = useStoreState(state => state.insights.fbResponse)
+    const loading = useStoreState(state => state.insights.loading);
 
     const age = useStoreState(state => state.insights.fbAge)
     const insights = useStoreState(state => state.insights.facebook);
@@ -37,6 +39,21 @@ export function FacebookInsights({ channelId }) {
 
     return (
         <div className="channel-insights">
+            <div className="col-md-12">
+                {
+                    !loading ? '' :
+                        <div className="loading-overlay d-flex justify-content-center align-items-center" style={{
+                            position: "absolute",
+                            width: "100%",
+                            height: "100vh",
+                            backgroundColor: "rgba(0, 0, 0, 0.3)",
+                            zIndex: "1"
+
+                        }}>
+                            <Spinner size="bg" animation="border" variant="success" />
+                        </div>
+                }
+            </div>
             <div className="row d-flex justify-content-between">
 
                 <button onClick={() => fetchInsights()} className="btn btn-primary rounded-30 text-white ml-2">Fetch Insights</button>

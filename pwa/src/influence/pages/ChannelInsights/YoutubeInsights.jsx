@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import config from '../../../config.json';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { Pie, Bar, Line } from 'react-chartjs-2';
+import { Spinner } from 'react-bootstrap';
 
 var gapi = window.gapi;
 var GoogleAuth = window.GoogleAuth;
@@ -9,6 +10,7 @@ export function YoutubeInsights({ channelId }) {
 
     var SCOPE = 'https://www.googleapis.com/auth/youtube.readonly';
     var discoveryUrl = 'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest';
+    const loading = useStoreState(state => state.insights.loading);
 
     const youtube_Insights = useStoreActions(actions => actions.insights.youtubeInsights);
     const age = useStoreState(state => state.insights.youtubeAge)
@@ -47,6 +49,21 @@ export function YoutubeInsights({ channelId }) {
 
     return (
         <div className="channel-insights">
+            <div className="col-md-12">
+                {
+                    !loading ? '' :
+                        <div className="loading-overlay d-flex justify-content-center align-items-center" style={{
+                            position: "absolute",
+                            width: "100%",
+                            height: "100vh",
+                            backgroundColor: "rgba(0, 0, 0, 0.3)",
+                            zIndex: "1"
+
+                        }}>
+                            <Spinner size="bg" animation="border" variant="success" />
+                        </div>
+                }
+            </div>
             <div className="row d-flex justify-content-between">
 
                 <button onClick={() => fetchInsights()} className="btn btn-primary rounded-30 text-white ml-2">Fetch Insights</button>
@@ -157,7 +174,7 @@ export function YoutubeInsights({ channelId }) {
 
             </div>
 
-        </div>
+        </div >
 
     )
 }

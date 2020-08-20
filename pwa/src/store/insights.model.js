@@ -6,7 +6,7 @@ import * as toastr from 'toastr';
 const { action, thunk } = require("easy-peasy");
 export const InsightsModel = {
     instagram: {}, instagramAge: {}, instagramCities: {}, instagramCountries: {},
-    instagramResponse: {},
+    instagramResponse: {}, loading: false,
     facebook: {}, fbAge: {}, fbCities: {}, fbCountries: {},
     fbResponse: {}, youtubeAge: {}, youtubeGender: {},
     lastFetched: "",
@@ -29,6 +29,9 @@ export const InsightsModel = {
     }),
     setLastFetched: action((state, payload) => {
         state.lastFetched = payload;
+    }),
+    setLoading: action((state, payload) => {
+        state.loading = payload;
     }),
     setFacebook: action((state, payload) => {
         state.facebook = payload;
@@ -64,13 +67,19 @@ export const InsightsModel = {
     }),
     instaInsights: thunk(async (actions, payload) => {
         try {
+            actions.setLoading(true);
+
             if (payload.hasOwnProperty("token")) {
                 var res = await axios.post(`${config.apiUrl}/channels/insights/instagram/`, payload)
+
             }
             else {
+
                 var res = await axios.get(`${config.apiUrl}/channels/insights/${payload.channelId}/instagram`)
 
             }
+            actions.setLoading(false);
+
             var gender = res.data.gender
 
             gender = gender.map(value => { return (value.genderCount) })
@@ -105,7 +114,7 @@ export const InsightsModel = {
 
             console.log(impressions)
             console.log(reach)
-            actions.setLastFetched(res.data.lastFetched);
+            actions.setLastFetched((res.data.lastFetched).slice(0,10)+" "+res.data.lastFetched.slice(12,23));
 
             const insights = {
                 labels: ['Female', 'Male', 'Inidentified'],
@@ -218,6 +227,13 @@ export const InsightsModel = {
             actions.setInstagramResponse(insightsImp);
         }
         catch (error) {
+            actions.setLoading(false);
+             actions.setInstagram({});
+            actions.setLastFetched("");
+             actions.setInstagramAge({});
+             actions.setInstagramCities({});
+             actions.setInstagramCountries({});
+             actions.setInstagramResponse({});
             if (error.message.slice(32, 35) === "404") {
                 toastr.error("try to fetch insights")
             }
@@ -230,13 +246,21 @@ export const InsightsModel = {
 
     fbInsights: thunk(async (actions, payload) => {
         try {
+            actions.setLoading(true);
+
             if (payload.hasOwnProperty("token")) {
+
                 var res = await axios.post(`${config.apiUrl}/channels/insights/facebook/`, payload)
-            }
-            else {
-                var res = await axios.get(`${config.apiUrl}/channels/insights/${payload.channelId}/facebook`)
 
             }
+            else {
+
+                var res = await axios.get(`${config.apiUrl}/channels/insights/${payload.channelId}/facebook`)
+
+
+            }
+            actions.setLoading(false);
+
             var gender = res.data.gender
 
             gender = gender.map(value => { return (value.genderCount) })
@@ -270,7 +294,7 @@ export const InsightsModel = {
 
             console.log(impressions)
             console.log(reach)
-            actions.setLastFetched(res.data.lastFetched);
+            actions.setLastFetched((res.data.lastFetched).slice(0,10)+" "+res.data.lastFetched.slice(12,23));
 
             const insights = {
                 labels: ['Female', 'Male', 'Inidentified'],
@@ -383,6 +407,14 @@ export const InsightsModel = {
             actions.setFbResponse(insightsImp);
         }
         catch (error) {
+            actions.setLoading(false);
+            actions.setFacebook({});
+            actions.setLastFetched("");
+
+            actions.setFbAge({});
+            actions.setFbCities({});
+            actions.setFbCountries({});
+            actions.setFbResponse({})
             if (error.message.slice(32, 35) === "404") {
                 toastr.error("try to fetch insights")
             }
@@ -394,13 +426,18 @@ export const InsightsModel = {
     }),
     youtubeInsights: thunk(async (actions, payload) => {
         try {
+            actions.setLoading(true);
+
             if (payload.hasOwnProperty("token")) {
+
                 var res = await axios.post(`${config.apiUrl}/channels/insights/youtube/`, payload)
             }
             else {
-                var res = await axios.get(`${config.apiUrl}/channels/insights/${payload.channelId}/youtube`)
 
+                var res = await axios.get(`${config.apiUrl}/channels/insights/${payload.channelId}/youtube`)
             }
+            actions.setLoading(false);
+
             console.log(res)
 
             var gender = res.data.gender
@@ -437,7 +474,7 @@ export const InsightsModel = {
 
             })
 
-            actions.setLastFetched(res.data.lastFetched);
+            actions.setLastFetched((res.data.lastFetched).slice(0,10)+" "+res.data.lastFetched.slice(12,23));
 
             const insights = {
                 labels: ['Female', 'Male', 'Unidentified'],
@@ -534,6 +571,13 @@ export const InsightsModel = {
             }
             actions.setFbResponse(insightsImp);
         } catch (error) {
+            actions.setLoading(false)
+            actions.setYoutubeGender({});
+            actions.setLastFetched("");
+
+            actions.setYoutubeAge({});
+            actions.setFbCountries({});
+            actions.setFbResponse({})
             if (error.message.slice(32, 35) === "404") {
                 toastr.error("try to fetch insights")
             }

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import config from '../../../config.json';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { Pie, Bar, Line } from 'react-chartjs-2';
+import { Spinner } from 'react-bootstrap';
 
 
 export function InstagramInsights({ channelId }) {
@@ -9,6 +10,7 @@ export function InstagramInsights({ channelId }) {
     const cities = useStoreState(state => state.insights.instagramCities)
     const countries = useStoreState(state => state.insights.instagramCountries)
     const response = useStoreState(state => state.insights.instagramResponse)
+    const loading = useStoreState(state => state.insights.loading);
 
     const age = useStoreState(state => state.insights.instagramAge)
     const insights = useStoreState(state => state.insights.instagram);
@@ -36,6 +38,21 @@ export function InstagramInsights({ channelId }) {
     useEffect(() => { instaInsights({ channelId: channelId }) }, [])
     return (
         <div className="channel-insights">
+            <div className="col-md-12">
+                {
+                    !loading ? '' :
+                        <div className="loading-overlay d-flex justify-content-center align-items-center" style={{
+                            position: "absolute",
+                            width: "100%",
+                            height: "100vh",
+                            backgroundColor: "rgba(0, 0, 0, 0.3)",
+                            zIndex: "1"
+
+                        }}>
+                            <Spinner size="bg" animation="border" variant="success" />
+                        </div>
+                }
+            </div>
             <div className="row d-flex justify-content-between">
                 <button onClick={() => fetchInsights()} className="btn btn-primary rounded-30 text-white ml-2">Fetch Insights</button>
                 <p className="col-md-6 float-right">{lastFetched}</p>
@@ -162,13 +179,13 @@ export function InstagramInsights({ channelId }) {
                             scales: {
                                 xAxes: [{
                                     gridLines: {
-                                        display:false
+                                        display: false
                                     }
                                 }],
                                 yAxes: [{
                                     gridLines: {
-                                        display:false
-                                    }   
+                                        display: false
+                                    }
                                 }]
                             }
                         }}
