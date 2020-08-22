@@ -1,4 +1,5 @@
 var ChannelModel = require('./channelModel.js');
+var CampaignModel = require('../campaign/campaignModel.js');
 const Twitter = require('twitter-lite')
 const config = require('../config.json')
 const fetch = require("node-fetch");
@@ -13,7 +14,7 @@ module.exports = {
     /**
      * channelController.list()
      */
-    list: function (req, res) {
+    /*list: function (req, res) {
         var id = req.params.id;
         ChannelModel.findOne({ _id: id }, function (err, channels) {
             if (err) {
@@ -24,7 +25,7 @@ module.exports = {
             }
             return res.json(channels);
         });
-    },
+    },*/
 
     /**
      * channelController.show()
@@ -169,7 +170,7 @@ module.exports = {
                 access_token_secret: fetchedCredentials.oauth_token_secret
             });
 
-            const existingChannel = await ChannelModel.findOne({ channelId: fetchedCredentials.user_id, channelType: 'twitter', createdBy: res.locals.user.id  });
+            const existingChannel = await ChannelModel.findOne({ channelId: fetchedCredentials.user_id, channelType: 'twitter', createdBy: res.locals.user.id });
             if (existingChannel) return res.status(405).send('Channel already exists');
             const userData = await client.get("users/show", {
                 user_id: fetchedCredentials.user_id
@@ -228,7 +229,7 @@ module.exports = {
         }
     },
     FacebookOAuth: async function (req, res) {
-        const existingChannel = await ChannelModel.findOne({ channelId: req.body.id, channelType: 'facebook' , createdBy: res.locals.user.id });
+        const existingChannel = await ChannelModel.findOne({ channelId: req.body.id, channelType: 'facebook', createdBy: res.locals.user.id });
         if (existingChannel) return res.status(405).send('Channel already exists');
         try {
             const resp = await axios.get(`https://graph.facebook.com/v7.0/${req.body.id}?fields=username,name,picture,fan_count&access_token=${req.body.token}`)
@@ -342,5 +343,61 @@ module.exports = {
 
         }
     },
+    showInfluencers: async function (req, res) {
+        console.log("came here")
+        try {
+            var campaign_id = req.params.campaign_id
+            console.log(campaign_id);
+            var inf = [], age = 0, foll = 0
+            let campaign = await CampaignModel.findOne({ _id: campaign_id }, function (err, campaign) {
+                if (err) {
+                    return ({ "message": "error finding campaign" })
+                }
+                if (!campaign) {
+                    return ({ "message": "no such campaign" })
+                }
+                else {
+                    return (campaign)
+
+                }
+
+            })
+            inf = campaign.influencers
+            age = campaign.age
+            foll = campaign.minFollowers
+            const _result=[]
+            console.log(inf + " " + age + " " + foll)
+            const mapLoop = async _ => {
+                const result = inf.map(async function (value) {
+
+                    let channel = await ChannelModel.find({ category: value.charAt(0).toUpperCase() + value.slice(1), followers: foll })
+                    if (channel) {
+                        return channel
+                    }
+
+
+                })
+                //console.log(result)
+                const actualResult = await Promise.all(result)
+                //_result = actualResult
+                console.log(actualResult)
+
+            }
+
+            //console.log(mapLoop)
+             mapLoop()
+             
+            res.status(200).send(_result)
+
+
+
+
+        }
+        catch (error) {
+            console.log(error)
+            res.status(500).send(error)
+        }
+
+    }
 
 };

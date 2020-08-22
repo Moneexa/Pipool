@@ -7,6 +7,11 @@
     min-height: 240px;
     background-position: bottom
 }
+.slider .w-100 .tooltip-inner{
+background-color: #fafafa;
+  border-radius: 15px;
+  color: black
+}
 .new-campaign .next-button {
     border: 0;
     font-size: .8rem;

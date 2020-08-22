@@ -22,6 +22,7 @@
     "react-bar-chart": "^0.1.2",
     "react-big-calendar": "^0.26.0",
     "react-bootstrap": "^1.0.0",
+    "react-bootstrap-range-slider": "^1.1.4",
     "react-bottom-sheet": "^1.1.1",
     "react-chartjs-2": "^2.10.0",
     "react-dom": "^16.13.1",

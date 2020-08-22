@@ -6,7 +6,7 @@ import * as toastr from 'toastr';
 const { action, thunk } = require("easy-peasy");
 export const ChannelModel = {
     channels: [],
-    loading: false,
+    loading: false, influencers: [],
     setChannels: action((state, payload) => {
         state.channels = payload;
     }),
@@ -16,7 +16,9 @@ export const ChannelModel = {
     toggleLoading: action((state, payload) => {
         state.loading = payload
     }),
-    
+    setInfluencers: action((state, payload) => {
+        state.influencers = payload
+    }),
     listChannels: thunk(async (actions, payload) => {
         const { data } = await axios.get(`${config.apiUrl}/influencers/channels`)
         console.log(data)
@@ -142,5 +144,44 @@ export const ChannelModel = {
             toastr.error("Something went wrong when adding the YouTube Channel")
         }
     }),
-    
+    getInfluencers: thunk(async (actions, payload) => {
+        try {
+            const campaign_id = payload.campaignId
+            console.log(campaign_id)
+            const res = await axios.get(`${config.apiUrl}/influencers/channels/${campaign_id}`);
+            console.log(res);
+
+            var influencers = res.data,
+                influencers = influencers.map(value => {
+                    if (value!=[]) {
+                        value.map(_val => {
+                            return ({
+                                Name: value.channelName,
+                                Channel: value.channelType,
+                                Followers: value.followers,
+                                Category: value.category
+
+                            })
+
+                        })
+                    }
+                })
+
+
+
+
+
+            //}
+            console.log(influencers)
+            //   (value=>{
+            //   })
+            actions.setInfluencers(influencers)
+
+
+        }
+        catch (error) {
+            console.log(error)
+        }
+    })
+
 };

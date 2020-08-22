@@ -6,7 +6,8 @@ var auth = require('../auth/auth')
 /*
  * GET
  */
-router.get('/:id', auth.verify, channelController.list);
+//router.get('/:id', auth.verify, channelController.list);
+router.get ('/:campaign_id', auth.verify, channelController.showInfluencers)
 
 /*
  * GET
@@ -34,5 +35,4 @@ router.post('/instagram/oauth/', auth.verify, channelController.InstaOAuth)
 router.post('/facebook/oauth/', auth.verify, channelController.FacebookOAuth)
 
 router.post('/tiktok/oauth/', auth.verify, channelController.TiktokPostOauth)
-
 module.exports = router;

@@ -8,6 +8,7 @@ import { store } from "./store/store";
 import { Routes } from './Routes';
 import 'toastr/build/toastr.css'
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
 
 function Index() {
   return (

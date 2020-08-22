@@ -135,7 +135,7 @@ export const CampaignModel = {
         actions.updateLoading(false);
 
     }),
-
+    
     postCampaign: thunk(async (actions, payload) => {
         const obj = {
             serviceName: payload.serviceName,

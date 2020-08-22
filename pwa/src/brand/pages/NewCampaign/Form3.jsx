@@ -4,11 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { Spinner } from 'react-bootstrap'
 import { useStoreActions, useStoreState } from 'easy-peasy';
+import RangeSlider from 'react-bootstrap-range-slider';
 
 export function Form3({ onFinish, onPrevious }) {
     const { register, handleSubmit, watch, errors } = useForm();
     const [interests, setInterests] = useState(interestVals);
     const loading = useStoreState(state => state.campaign.loading)
+    const [value, setValue] = useState(0);
 
     function toggleInterest(index) {
         const list = JSON.parse(JSON.stringify(interests));
@@ -87,7 +89,13 @@ export function Form3({ onFinish, onPrevious }) {
             <div className="form-group row" >
                 <div className="form-group col-sm-6 col-12">
                     <label>Minimum number of followers </label><br />
-                    <input ref={register({ required: true })} name="minFollowers" type="range" min="1" max="100" className="slider w-100" id="minFollowers" />
+                    <RangeSlider
+                        ref={register({required:true})}
+                        value={value}
+                        onChange={changeEvent => setValue(changeEvent.target.value)}
+                        
+                    />
+                    <input ref={register({ required: true })} name="minFollowers" type="range" min="1" max="100" className="slider w-100" id="minFollowers" data-slider-tooltip="show" />
                 </div>
             </div>
 

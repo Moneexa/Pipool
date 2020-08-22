@@ -47,6 +47,7 @@ module.exports = {
      * campaignController.create()
      */
     create: function (req, res) {
+        
         var campaign = new campaignModel({
 			serviceName : req.body.serviceName,
 			serviceDescription : req.body.serviceDescription,

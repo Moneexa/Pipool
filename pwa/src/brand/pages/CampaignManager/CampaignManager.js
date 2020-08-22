@@ -4,7 +4,7 @@ import { useStoreActions, useStoreState } from 'easy-peasy';
 import { Table } from 'react-bootstrap'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
+import { Link } from 'react-router-dom'
 export default function CompaignManager() {
     const listCampaigns = useStoreActions(actions => actions.campaign.listCampaign);
     const list = useStoreState(state => state.campaign.campaignList);
@@ -22,7 +22,7 @@ export default function CompaignManager() {
             </div>
 
             <Table striped bordered hover>
-                <thead style={{backgroundColor:"grey", color:"white"}}>
+                <thead style={{ backgroundColor: "grey", color: "white" }}>
                     <tr >
                         <th>Service Name</th>
                         <th>Total Reach</th>
@@ -39,7 +39,9 @@ export default function CompaignManager() {
                     {list.map((element, index, array) => {
 
                         return (<tr key={index} >
-                            <td style={{color:"#ffc809"}}>{element.serviceName}</td>
+                            <td style={{ color: "#ffc809" }}>
+                                <Link to={`/brand/campaigns/${element._id}/campaign-invite`}>{element.serviceName}</Link>
+                            </td>
                             <td>0</td>
                             <td>0</td>
                             <td><span>0</span></td>
