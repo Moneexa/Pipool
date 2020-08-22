@@ -349,44 +349,30 @@ module.exports = {
             var campaign_id = req.params.campaign_id
             console.log(campaign_id);
             var inf = [], age = 0, foll = 0
-            let campaign = await CampaignModel.findOne({ _id: campaign_id }, function (err, campaign) {
-                if (err) {
-                    return ({ "message": "error finding campaign" })
-                }
-                if (!campaign) {
-                    return ({ "message": "no such campaign" })
-                }
-                else {
-                    return (campaign)
-
-                }
-
-            })
-            inf = campaign.influencers
-            age = campaign.age
-            foll = campaign.minFollowers
-            const _result=[]
-            console.log(inf + " " + age + " " + foll)
-            const mapLoop = async _ => {
-                const result = inf.map(async function (value) {
-
-                    let channel = await ChannelModel.find({ category: value.charAt(0).toUpperCase() + value.slice(1), followers: foll })
-                    if (channel) {
-                        return channel
-                    }
+            let campaign = await CampaignModel.findOne({ _id: campaign_id })
 
 
-                })
-                //console.log(result)
-                const actualResult = await Promise.all(result)
-                //_result = actualResult
-                console.log(actualResult)
 
+            if (campaign) {
+                inf = campaign.influencers
+                age = campaign.age
+                foll = campaign.minFollowers
             }
+            inf=inf.map(value=>{
+                return value.charAt(0).toUpperCase() + value.slice(1)
+            })
+            console.log(inf + " " + age + " " + foll)
+            const _result = await ChannelModel.find({
+                'category': {
+                    '$in': inf
+                },
+                'followers': foll
+            })
+            if (_result) { console.log(_result) }
 
             //console.log(mapLoop)
-             mapLoop()
-             
+
+
             res.status(200).send(_result)
 
 

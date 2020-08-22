@@ -153,19 +153,18 @@ export const ChannelModel = {
 
             var influencers = res.data,
                 influencers = influencers.map(value => {
-                    if (value!=[]) {
-                        value.map(_val => {
-                            return ({
-                                Name: value.channelName,
-                                Channel: value.channelType,
-                                Followers: value.followers,
-                                Category: value.category
 
-                            })
+                    return ({
+                        Name: value.channelName,
+                        Channel: value.channelType,
+                        Followers: value.followers,
+                        Category: value.category
 
-                        })
-                    }
+                    })
+
                 })
+
+
 
 
 
