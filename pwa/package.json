@@ -50,6 +50,16 @@
     "twitter-lite": "^0.14.0",
     "use-force-update": "^1.0.7"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "./src/*.{js,jsx,ts,tsx}": [
+      "eslint src/*.js --fix-dry-run"
+    ]
+  },
   "scripts": {
     "start": "react-scripts start --no-cach",
     "build": "react-scripts build",
