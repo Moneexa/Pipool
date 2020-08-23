@@ -343,37 +343,26 @@ module.exports = {
 
         }
     },
-    showInfluencers: async function (req, res) {
-        console.log("came here")
+    suggestedInfluencers: async function (req, res) {
         try {
-            var campaign_id = req.params.campaign_id
-            console.log(campaign_id);
-            var inf = [], age = 0, foll = 0
-            let campaign = await CampaignModel.findOne({ _id: campaign_id })
-
-
-
-            if (campaign) {
-                inf = campaign.influencers
-                age = campaign.age
-                foll = campaign.minFollowers
+            var id = req.params.id
+            console.log(req.body);
+            let campaign = await CampaignModel.findOne({ _id: id })
+            if (!campaign) {
+                return res.status(404).send('Campaign not found')
             }
-            inf=inf.map(value=>{
-                return value.charAt(0).toUpperCase() + value.slice(1)
-            })
-            console.log(inf + " " + age + " " + foll)
-            const _result = await ChannelModel.find({
+            const suggestedChannels = await ChannelModel.find({
                 'category': {
-                    '$in': inf
+                    '$in': campaign.interests
                 },
-                'followers': foll
+                'followers': {
+                    '$gt': campaign.minFollowers
+                },
+
             })
-            if (_result) { console.log(_result) }
+            if (suggestedChannels) { console.log(suggestedChannels) }
 
-            //console.log(mapLoop)
-
-
-            res.status(200).send(_result)
+            res.status(200).send(suggestedChannels)
 
 
 

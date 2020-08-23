@@ -51,33 +51,33 @@ function AddChannel() {
                             <label>Selelct Channel Category*</label>
                             <select className="browser-default custom-select h-auto pad-12" id="category" name="category" value={category} onChange={onCategoryChange}>
                                 <option selected>Select</option>
-                                <option value="Animal">Animal</option>
-                                <option value="Art">Art</option>
-                                <option value="Beauty">Beauty</option>
-                                <option value="Books">Books</option>
-                                <option value="Business">Business</option>
-                                <option value="Causes">Causes</option>
-                                <option value="Comedy">Comedy</option>
-                                <option value="Dance">Dance</option>
-                                <option value="DIY">DIY</option>
-                                <option value="Education">Education</option>
-                                <option value="Entertainment">Entertainment</option>
-                                <option value="Family">Family</option>
-                                <option value="Fashion">Fashion</option>
-                                <option value="Film">Film</option>
-                                <option value="Fitness">Fitness</option>
-                                <option value="Food">Food</option>
-                                <option value="Gaming">Gaming</option>
-                                <option value="Lifestyle">Lifestyle</option>
-                                <option value="Music">Music</option>
-                                <option value="News">News</option>
-                                <option value="Photograpy">Photograpy</option>
-                                <option value="Politics">Politics</option>
-                                <option value="Science">Science</option>
-                                <option value="Sports">Sports</option>
-                                <option value="Tech">Tech</option>
-                                <option value="Travel">Travel</option>
-                                <option value="TV">TV</option>
+                                <option value="animal">Animal</option>
+                                <option value="art">Art</option>
+                                <option value="beauty">Beauty</option>
+                                <option value="books">Books</option>
+                                <option value="business">Business</option>
+                                <option value="causes">Causes</option>
+                                <option value="comedy">Comedy</option>
+                                <option value="dance">Dance</option>
+                                <option value="diy">DIY</option>
+                                <option value="education">Education</option>
+                                <option value="entertainment">Entertainment</option>
+                                <option value="family">Family</option>
+                                <option value="fashion">Fashion</option>
+                                <option value="film">Film</option>
+                                <option value="fitness">Fitness</option>
+                                <option value="food">Food</option>
+                                <option value="gaming">Gaming</option>
+                                <option value="lifestyle">Lifestyle</option>
+                                <option value="music">Music</option>
+                                <option value="news">News</option>
+                                <option value="photograpy">Photograpy</option>
+                                <option value="politics">Politics</option>
+                                <option value="science">Science</option>
+                                <option value="sports">Sports</option>
+                                <option value="tech">Tech</option>
+                                <option value="travel">Travel</option>
+                                <option value="tv">TV</option>
 
                             </select>
 

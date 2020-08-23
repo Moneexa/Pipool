@@ -20,7 +20,7 @@ let campaign = {
     age: "",
     minFollowers: "",
     postingLanguages: "",
-    influencers: "",
+    interests: "",
 
 };
 export const CampaignModel = {
@@ -43,7 +43,7 @@ export const CampaignModel = {
         age: campaign.age,
         minFollowers: campaign.minFollowers,
         postingLanguages: campaign.postingLanguages,
-        influencers: campaign.influencers,
+        interests: campaign.interests,
     },
     errors: {
         postErrorMessage: "",
@@ -71,7 +71,7 @@ export const CampaignModel = {
         state.actv.age = payload.age || state.actv.age;
         state.actv.minFollowers = payload.minFollowers || state.actv.minFollowers;
         state.actv.postingLanguages = payload.postingLanguages || state.actv.postingLanguages;
-        state.actv.influencers = payload.influencers || state.actv.influencers;
+        state.actv.interests = payload.interests || state.actv.interests;
     }),
 
     postError: action((state, payload) => {
@@ -115,7 +115,7 @@ export const CampaignModel = {
             age: payload.age,
             minFollowers: payload.minFollowers,
             postingLanguages: payload.postingLanguages,
-            influencers: payload.influencers,
+            interests: payload.interests,
         }
         try {
             actions.updateLoading(true);
@@ -153,7 +153,7 @@ export const CampaignModel = {
             age: payload.age,
             minFollowers: payload.minFollowers,
             postingLanguages: payload.postingLanguages,
-            influencers: payload.interests,
+            interests: payload.interests,
         }
         try {
             actions.updateLoading(true);

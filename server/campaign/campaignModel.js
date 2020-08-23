@@ -17,7 +17,7 @@ var campaignSchema = new Schema({
 	'age': String,
 	'minFollowers': String,
 	'postingLanguages': String,
-	'influencers': Array,
+	'interests': Array,
 	'createdBy': [
 		{ type: Schema.Types.ObjectId, ref: 'User' }
 	]

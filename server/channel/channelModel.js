@@ -10,8 +10,7 @@ var ChannelSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'User'
 	},
-	'category'
-		: String
+	'category' : String
 });
 
 module.exports = mongoose.model('Channel', ChannelSchema);

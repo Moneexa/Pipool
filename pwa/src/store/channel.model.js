@@ -148,7 +148,7 @@ export const ChannelModel = {
         try {
             const campaign_id = payload.campaignId
             console.log(campaign_id)
-            const res = await axios.get(`${config.apiUrl}/influencers/channels/${campaign_id}`);
+            const res = await axios.get(`${config.apiUrl}/influencers/channels/${campaign_id}/suggested-influencers`);
             console.log(res);
 
             var influencers = res.data,

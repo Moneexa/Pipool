@@ -7,7 +7,7 @@ var auth = require('../auth/auth')
  * GET
  */
 //router.get('/:id', auth.verify, channelController.list);
-router.get ('/:campaign_id', auth.verify, channelController.showInfluencers)
+router.get ('/:id/suggested-influencers', auth.verify, channelController.suggestedInfluencers)
 
 /*
  * GET

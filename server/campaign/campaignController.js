@@ -64,7 +64,7 @@ module.exports = {
 			age : req.body.age,
 			minFollowers : req.body.minFollowers,
 			postingLanguages : req.body.postingLanguages,
-            influencers : req.body.influencers,
+            interests : req.body.interests,
             createdBy: res.locals.user.id
 
 
@@ -114,7 +114,7 @@ module.exports = {
 			campaign.age = req.body.age ? req.body.age : campaign.age;
 			campaign.minFollowers = req.body.minFollowers ? req.body.minFollowers : campaign.minFollowers;
 			campaign.postingLanguages = req.body.postingLanguages ? req.body.postingLanguages : campaign.postingLanguages;
-			campaign.influencers = req.body.influencers ? req.body.influencers : campaign.influencers;
+			campaign.interests = req.body.interests ? req.body.interests : campaign.interests;
 			
             campaign.save(function (err, campaign) {
                 if (err) {
