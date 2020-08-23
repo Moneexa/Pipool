@@ -41,7 +41,7 @@ export const ChannelModel = {
 
                         console.log(token, verifier);
                         const body = {
-                            oauth_token: token,
+                            oAuthToken: token,
                             verifier: verifier,
                             category: payload.category
                         }
@@ -146,9 +146,9 @@ export const ChannelModel = {
     }),
     getInfluencers: thunk(async (actions, payload) => {
         try {
-            const campaign_id = payload.campaignId
-            console.log(campaign_id)
-            const res = await axios.get(`${config.apiUrl}/influencers/channels/${campaign_id}/suggested-influencers`);
+            const campaignId = payload.campaignId
+            console.log(campaignId)
+            const res = await axios.get(`${config.apiUrl}/influencers/channels/${campaignId}/suggested-influencers`);
             console.log(res);
 
             var influencers = res.data;

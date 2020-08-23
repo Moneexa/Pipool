@@ -160,7 +160,7 @@ module.exports = {
 
             const fetchedCredentials = await client.getAccessToken({
                 oauth_verifier: req.body.verifier,
-                oauth_token: req.body.oauth_token
+                oauth_token: req.body.oAuthToken
             })
 
             client = new Twitter({
