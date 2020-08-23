@@ -1,18 +1,9 @@
-import React, { useEffect } from 'react';
-import './BrandManager.css'
-import axios from 'axios';
-import config from '../../../config.json'
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    useParams
-} from "react-router-dom";
-import AddBrand from '../AddBrand/AddBrand'
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useStoreActions, useStoreState } from 'easy-peasy';
+import React, { useEffect } from 'react';
+import { Link } from "react-router-dom";
+import './BrandManager.css';
 
 
 export default function BrandManager() {
@@ -22,7 +13,7 @@ export default function BrandManager() {
 
     useEffect(() => {
         listBrands();
-    }, []);
+    }, [listBrands]);
 
     console.log(list);
         return (

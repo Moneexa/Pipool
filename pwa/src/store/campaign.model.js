@@ -93,7 +93,7 @@ export const CampaignModel = {
         );
         console.log(res)
         const { data } = await res;
-        actions.updateCampaign(res.data);
+        actions.updateCampaign(data);
 
     }),
     putCampaign: thunk(async (actions, payload) => {

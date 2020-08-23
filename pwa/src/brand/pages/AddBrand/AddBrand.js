@@ -1,21 +1,16 @@
-import React from 'react'
-import './AddBrand.css'
-import axios from 'axios'
-import config from '../../../config.json'
-import { useForm } from "react-hook-form";
-import { matchPath } from 'react-router';
-import { BrowserRouter as Router, useParams } from "react-router-dom";
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import { Spinner } from 'react-bootstrap'
+import React from 'react';
+import { Spinner } from 'react-bootstrap';
+import { useForm } from "react-hook-form";
+import './AddBrand.css';
 export default function AddBrand({ match }) {
     //const [updateRequired, setUpdateRequired] = useState(false);
-    const { register, handleSubmit, watch, errors } = useForm()
+    const { register, handleSubmit } = useForm()
     const active = useStoreState(state => state.brand.active);
     const put = useStoreActions(actions => actions.brand.put);
     const post = useStoreActions(actions => actions.brand.post);
     const obj = useStoreActions(actions => actions.brand.get);
     const loading = useStoreState(state => state.brand.loading)
-    var success, update, message = ""
     let id;
     if (match) {
         id = match.params.id;
@@ -48,8 +43,6 @@ export default function AddBrand({ match }) {
             values.id = id;
 
             put(values)
-            update = true;
-            success = true;
 
 
 
@@ -58,9 +51,6 @@ export default function AddBrand({ match }) {
         }
         else {
             post(values)
-
-            success = true
-
 
             // console.log(notification);
 

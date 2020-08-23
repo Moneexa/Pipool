@@ -82,7 +82,7 @@ export const BrandModel = {
         );
         console.log(res)
         const { data } = await res;
-        actions.updateBrand(res.data);
+        actions.updateBrand(data);
 
     }),
     put: thunk(async (actions, payload) => {

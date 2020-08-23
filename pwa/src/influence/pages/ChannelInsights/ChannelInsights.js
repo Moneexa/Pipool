@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useStoreActions, useStoreState } from 'easy-peasy';
-import config from '../../../config.json';
+import React from 'react';
 import '../ChannelManager/ChannelManager.css'
 
 import { InstagramInsights } from './InstagramInsights';

@@ -1,18 +1,16 @@
+import { faTiktok } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useStoreActions } from 'easy-peasy';
-import React, { useState } from 'react';
-import config from '../../../config.json';
-import { Modal } from 'react-bootstrap'
+import React, { useEffect, useState } from 'react';
+import { Modal } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 
-import { faTiktok } from '@fortawesome/free-brands-svg-icons'
-import { useEffect } from 'react';
 
 export function TiktokVerify(props) {
     // const loginFacebook = useStoreActions(actions => actions.user.loginFacebook);
     const authenticateTiktok = useStoreActions(actions => actions.channels.authenticateTiktok)
     const [pop, setPop] = useState(false)
-    const { register, handleSubmit, watch, errors } = useForm()
+    const { register, handleSubmit } = useForm()
 
     function openPopup() {
 

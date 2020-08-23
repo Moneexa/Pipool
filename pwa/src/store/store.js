@@ -1,4 +1,4 @@
-import { createStore, action, thunk } from 'easy-peasy';
+import { createStore } from 'easy-peasy';
 import { ChannelModel } from './channel.model'
 import { UserModel } from './user.model';
 import { BrandModel } from './brand.model';

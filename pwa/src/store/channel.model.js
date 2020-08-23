@@ -151,18 +151,18 @@ export const ChannelModel = {
             const res = await axios.get(`${config.apiUrl}/influencers/channels/${campaign_id}/suggested-influencers`);
             console.log(res);
 
-            var influencers = res.data,
-                influencers = influencers.map(value => {
+            var influencers = res.data;
+            influencers = influencers.map(value => {
 
-                    return ({
-                        Name: value.channelName,
-                        Channel: value.channelType,
-                        Followers: value.followers,
-                        Category: value.category
-
-                    })
+                return ({
+                    Name: value.channelName,
+                    Channel: value.channelType,
+                    Followers: value.followers,
+                    Category: value.category
 
                 })
+
+            })
 
 
 

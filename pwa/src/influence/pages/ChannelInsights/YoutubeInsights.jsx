@@ -16,7 +16,6 @@ export function YoutubeInsights({ channelId }) {
     const age = useStoreState(state => state.insights.youtubeAge)
     const insights = useStoreState(state => state.insights.youtubeGender);
     const lastFetched = useStoreState(state => state.insights.lastFetched);
-    const cities = useStoreState(state => state.insights.fbCities)
     const countries = useStoreState(state => state.insights.fbCountries)
     const response = useStoreState(state => state.insights.fbResponse)
 

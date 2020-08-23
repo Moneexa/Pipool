@@ -68,14 +68,14 @@ export const InsightsModel = {
     instaInsights: thunk(async (actions, payload) => {
         try {
             actions.setLoading(true);
-
+            let res
             if (payload.hasOwnProperty("token")) {
-                var res = await axios.post(`${config.apiUrl}/channels/insights/instagram/`, payload)
+                res = await axios.post(`${config.apiUrl}/channels/insights/instagram/`, payload)
 
             }
             else {
 
-                var res = await axios.get(`${config.apiUrl}/channels/insights/${payload.channelId}/instagram`)
+                res = await axios.get(`${config.apiUrl}/channels/insights/${payload.channelId}/instagram`)
 
             }
             actions.setLoading(false);
@@ -83,7 +83,7 @@ export const InsightsModel = {
             var gender = res.data.gender
 
             gender = gender.map(value => { return (value.genderCount) })
-            console.log("this is new array" + " " + gender)
+            console.log("this is new array " + gender)
             var ageGroup = res.data.ageGroup
             ageGroup = ageGroup.map(value => { return (value.ageGroupCount) })
             var cities = [], cityNames = []
@@ -247,15 +247,17 @@ export const InsightsModel = {
     fbInsights: thunk(async (actions, payload) => {
         try {
             actions.setLoading(true);
+            
+            let res;
 
             if (payload.hasOwnProperty("token")) {
 
-                var res = await axios.post(`${config.apiUrl}/channels/insights/facebook/`, payload)
+                res = await axios.post(`${config.apiUrl}/channels/insights/facebook/`, payload)
 
             }
             else {
 
-                var res = await axios.get(`${config.apiUrl}/channels/insights/${payload.channelId}/facebook`)
+                res = await axios.get(`${config.apiUrl}/channels/insights/${payload.channelId}/facebook`)
 
 
             }
@@ -264,7 +266,7 @@ export const InsightsModel = {
             var gender = res.data.gender
 
             gender = gender.map(value => { return (value.genderCount) })
-            console.log("this is new array" + " " + gender)
+            console.log("this is new array " + gender)
             var ageGroup = res.data.ageGroup
             ageGroup = ageGroup.map(value => { return (value.ageGroupCount) })
             var cities = [], cityNames = []
@@ -428,13 +430,14 @@ export const InsightsModel = {
         try {
             actions.setLoading(true);
 
+            let res
             if (payload.hasOwnProperty("token")) {
 
-                var res = await axios.post(`${config.apiUrl}/channels/insights/youtube/`, payload)
+                res = await axios.post(`${config.apiUrl}/channels/insights/youtube/`, payload)
             }
             else {
 
-                var res = await axios.get(`${config.apiUrl}/channels/insights/${payload.channelId}/youtube`)
+                res = await axios.get(`${config.apiUrl}/channels/insights/${payload.channelId}/youtube`)
             }
             actions.setLoading(false);
 
@@ -443,7 +446,7 @@ export const InsightsModel = {
             var gender = res.data.gender
 
             gender = gender.map(value => { return (value.genderCount) })
-            console.log("this is new array" + " " + gender)
+            console.log("this is new array " + gender)
             var ageGroup = res.data.ageGroup, _ageGroup = [], _labels = []
             _ageGroup = ageGroup.map(value => { return (value.ageGroupCount) })
             _labels = ageGroup.map(value => { return (value.ageGroup) })

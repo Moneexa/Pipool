@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 export function Form2({ onNext, onPrevious }) {
-    const { register, handleSubmit, watch, errors } = useForm();
+    const { register, handleSubmit, errors } = useForm();
     const [dos, setDos] = useState([]);
     const [donts, setDonts] = useState([]);
     const [doVal, setDoVal] = useState('');

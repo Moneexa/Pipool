@@ -6,14 +6,13 @@ import { FacebookLoginWrapper } from '../shared/components/FacebookLoginWrapper'
 import { GoogleLoginWrapper } from '../shared/components/GoogleLoginWrapper';
 import { LinkedInWrapper } from '../shared/components/LinkedinWrapper';
 import './Login.css';
-import Loader from 'react-loader-spinner'
 import { Spinner } from 'react-bootstrap';
 
 
 
 
 export function Login() {
-    const { register, handleSubmit, watch, errors } = useForm();
+    const { register, handleSubmit, errors } = useForm();
     const [signingup, setSigningup] = useState(false);
     const signup = useStoreActions(actions => actions.user.signup);
     const login = useStoreActions(actions => actions.user.login);

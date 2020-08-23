@@ -12,7 +12,7 @@ export default function CompaignManager() {
 
     useEffect(() => {
         listCampaigns();
-    }, []);
+    }, [listCampaigns]);
 
 
     return (

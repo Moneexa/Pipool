@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-import { useStyles } from 'react-styles-hook'
-import { Tab, Nav } from 'react-bootstrap';
+import { Tab } from 'react-bootstrap';
 import { Form1 } from './Form1';
 import './NewCampaign.css'
 import { Form2 } from './Form2';
 import { Form3 } from './Form3';
-import { useStoreActions, useStoreState } from 'easy-peasy';
+import { useStoreActions } from 'easy-peasy';
 
 function NewCampaign() {
 
@@ -13,9 +12,7 @@ function NewCampaign() {
     const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
     let [formData, setFormData] = useState({});
-    const active = useStoreState(state => state.campaign.actv);
     const post = useStoreActions(actions => actions.campaign.postCampaign);
-    const obj = useStoreActions(actions => actions.campaign.getCampaign);
 
     function saveForm(values) {
         setFormData(Object.assign({}, formData, values))

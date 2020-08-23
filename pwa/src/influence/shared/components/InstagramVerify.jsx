@@ -5,7 +5,6 @@ import React from 'react';
 import config from '../../../config.json';
 import { Modal, Button } from 'react-bootstrap'
 
-import { faTiktok } from '@fortawesome/free-brands-svg-icons'
 import { useState } from 'react';
 import axios from 'axios';
 

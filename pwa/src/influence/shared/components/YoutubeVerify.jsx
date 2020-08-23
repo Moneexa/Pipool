@@ -1,8 +1,8 @@
-import React, { Component, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import config from '../../../config.json'
 import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useStoreActions, useStoreState, debug } from 'easy-peasy';
+import { useStoreActions } from 'easy-peasy';
 import { Modal, Button } from 'react-bootstrap';
 const gapi = window.gapi;
 let GoogleAuth = window.GoogleAuth;
@@ -71,7 +71,7 @@ export function YoutubeVerify(props) {
 
         <div>
             <button onClick={() => handleAuthClick()}
-                disabled={!props.category}
+                disabled={!props.category || !canSignIn}
 
                 className="btn btn-primary rounded-20 text-white" type="button" >
                 <FontAwesomeIcon icon={faYoutube} /> Youtube +

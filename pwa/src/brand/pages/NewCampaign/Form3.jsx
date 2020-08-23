@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { useForm } from "react-hook-form";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import { Spinner } from 'react-bootstrap'
-import { useStoreActions, useStoreState } from 'easy-peasy';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useStoreState } from 'easy-peasy';
+import React, { useState } from 'react';
+import { Spinner } from 'react-bootstrap';
 import RangeSlider from 'react-bootstrap-range-slider';
+import { useForm } from "react-hook-form";
 
 export function Form3({ onFinish, onPrevious }) {
-    const { register, handleSubmit, watch, errors } = useForm();
+    const { register, handleSubmit } = useForm();
     const [interests, setInterests] = useState(interestVals);
     const loading = useStoreState(state => state.campaign.loading)
     const [value, setValue] = useState(0);

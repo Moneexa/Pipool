@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import './AddChannel.css'
 import TwitterVerify from '../../shared/components/TwitterVerify'
 import { FacebookVerify } from '../../shared/components/FacebookVerify';
@@ -6,17 +6,13 @@ import { YoutubeVerify } from '../../shared/components/YoutubeVerify';
 import { InstagramVerify } from '../../shared/components/InstagramVerify'
 import { TiktokVerify } from '../../shared/components/TiktokVerify'
 import { Spinner } from 'react-bootstrap';
-import { useStoreActions, useStoreState } from 'easy-peasy';
+import { useStoreState } from 'easy-peasy';
 
 
 function AddChannel() {
-    const [platform, setPlatform] = useState("");
     const [category, setCategory] = useState("");
     const loading = useStoreState(state => state.channels.loading)
 
-    function onPlatformChange(e) {
-        setPlatform(e.target.value)
-    }
     function onCategoryChange(e) {
         setCategory(e.target.value)
     }

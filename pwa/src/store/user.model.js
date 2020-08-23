@@ -136,7 +136,7 @@ export const UserModel = {
         const email = payload;
         try {
             actions.toggleLoading(true);
-            const res = await axios.post(`${config.apiUrl}/auth/signup`, { email })
+            await axios.post(`${config.apiUrl}/auth/signup`, { email })
             //console.log(res)
             toastr.success("check your email")
         } catch (error) {

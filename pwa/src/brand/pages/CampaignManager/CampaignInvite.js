@@ -12,7 +12,7 @@ export default function CampaignInvite({ match, location }) {
         
     }, [])
     return (<div className="campaign-invite">
-        <h1>Influencer Suggestions</h1>
+        <h1>Suggested Influencers</h1>
         <div className="row">
             {
                 influencers.map((value,index) => {
