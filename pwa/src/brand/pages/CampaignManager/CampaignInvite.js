@@ -10,13 +10,14 @@ export default function CampaignInvite({ match, location }) {
     useEffect(() => {
         getInfluencers({ campaignId: campaign_id })
         
-    }, [])
+    }, [getInfluencers, campaign_id])
     return (<div className="campaign-invite">
         <h1>Suggested Influencers</h1>
         <div className="row">
             {
                 influencers.map((value,index) => {
-                    return (<><div className="col-md-8 col-sm-8" key={index}>
+                    return (<>
+                    <div className="col-md-8 col-sm-8" key={index}>
                         <p>Name: {value.Name} </p>
                         <p>Followers:  {value.Followers} </p>
                         <p>ChannelType: {value.Channel} </p>

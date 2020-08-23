@@ -12,8 +12,7 @@ function Channel() {
 
     useEffect(() => {
         listChannels();
-        console.log(channels)
-    }, [])
+    }, [listChannels])
 
     return (
         <div className="channel">

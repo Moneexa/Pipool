@@ -35,7 +35,7 @@ export function FacebookInsights({ channelId }) {
 
 
     }
-    useEffect(() => { instaInsights({ channelId: channelId }) }, [])
+    useEffect(() => { instaInsights({ channelId: channelId }) }, [instaInsights, channelId])
 
     return (
         <div className="channel-insights">

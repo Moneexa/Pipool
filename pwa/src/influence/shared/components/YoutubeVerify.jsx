@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import config from '../../../config.json'
 import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -18,10 +18,22 @@ export function YoutubeVerify(props) {
     const [selectedChannelIndex, setSelectedChannelIndex] = useState(0);
     const [user, setUser] = useState(undefined);
 
+    const initClient = useCallback(() => {
+        gapi.client.init({
+            'apiKey': config.google.apiKey,
+            'clientId': config.google.clientId,
+            'discoveryDocs': [discoveryUrl],
+            'scope': SCOPE
+        }).then(function () {
+            GoogleAuth = gapi.auth2.getAuthInstance();
+            setCanSignIn(true)
+        });
+    }, [SCOPE, discoveryUrl]);
+
 
     useEffect(() => {
         gapi.load('client:auth2', initClient);
-    }, []);
+    }, [initClient]);
 
     async function handleAuthClick() {
         const user = await GoogleAuth.signIn();
@@ -40,19 +52,6 @@ export function YoutubeVerify(props) {
         });
         setChannels(channels.result.items);
         setShowModal(true);
-    }
-
-
-    function initClient() {
-        gapi.client.init({
-            'apiKey': config.google.apiKey,
-            'clientId': config.google.clientId,
-            'discoveryDocs': [discoveryUrl],
-            'scope': SCOPE
-        }).then(function () {
-            GoogleAuth = gapi.auth2.getAuthInstance();
-            setCanSignIn(true)
-        });
     }
 
     function handleClose() {

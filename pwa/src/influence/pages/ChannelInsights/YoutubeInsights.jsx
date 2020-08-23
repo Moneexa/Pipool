@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import config from '../../../config.json';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { Pie, Bar, Line } from 'react-chartjs-2';
@@ -19,22 +19,7 @@ export function YoutubeInsights({ channelId }) {
     const countries = useStoreState(state => state.insights.fbCountries)
     const response = useStoreState(state => state.insights.fbResponse)
 
-    useEffect(() => {
-        gapi.load('client:auth2', initClient);
-        youtube_Insights({ channelId: channelId })
-    }, []);
-    async function fetchInsights() {
-        const user = await GoogleAuth.signIn();
-        gapi.client.setApiKey(config.google.apiKey);
-        const channels = await gapi.client.youtube.channels.list({
-            mine: true,
-            part: 'id,statistics,snippet'
-        });
-
-        console.log(user.getAuthResponse().access_token)
-        youtube_Insights({ token: user.getAuthResponse().access_token, channelId: channelId })
-    }
-    function initClient() {
+    const initClient = useCallback(() => {
         gapi.client.init({
             'apiKey': config.google.apiKey,
             'clientId': config.google.clientId,
@@ -43,6 +28,22 @@ export function YoutubeInsights({ channelId }) {
         }).then(function () {
             GoogleAuth = gapi.auth2.getAuthInstance();
         });
+    }, [SCOPE, discoveryUrl]);
+
+    useEffect(() => {
+        gapi.load('client:auth2', initClient);
+        youtube_Insights({ channelId: channelId })
+    }, [initClient, channelId, youtube_Insights]);
+    async function fetchInsights() {
+        const user = await GoogleAuth.signIn();
+        gapi.client.setApiKey(config.google.apiKey);
+        await gapi.client.youtube.channels.list({
+            mine: true,
+            part: 'id,statistics,snippet'
+        });
+
+        console.log(user.getAuthResponse().access_token)
+        youtube_Insights({ token: user.getAuthResponse().access_token, channelId: channelId })
     }
 
 
