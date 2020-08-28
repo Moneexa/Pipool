@@ -7,7 +7,7 @@ var auth= require('../auth/auth');
 /*
  * GET
  */
-router.get('/', auth.verify, campaignController.list);
+//router.get('/', auth.verify, campaignController.list);
 
 /*
  * GET
@@ -28,5 +28,5 @@ router.put('/:id', auth.verify, campaignController.update);
  * DELETE
  */
 router.delete('/:id', auth.verify, campaignController.remove);
-
+router.get('/', auth.verify, campaignController.suggestedCampaigns);
 module.exports = router;

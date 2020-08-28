@@ -18,7 +18,7 @@ export default function CampaignInvite({ match, location }) {
                 influencers.map((value, index) => {
                     return (
                         <>
-                            <div key={index} className="w-100 mx-5 ">
+                            <div key={index} className="w-100 m-5 ">
                                 <div className="d-flex">
                                     {value.Name}
                                     {value.Followers}

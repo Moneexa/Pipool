@@ -354,7 +354,7 @@ module.exports = {
             const suggestedChannels = await ChannelModel.find({
                 'category': {
                     '$in': campaign.interests
-                },
+                },  
                 'followers': {
                     '$gt': campaign.minFollowers
                 },
@@ -373,6 +373,6 @@ module.exports = {
             res.status(500).send(error)
         }
 
-    }
+    },
 
 };

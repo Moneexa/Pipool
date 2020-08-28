@@ -135,7 +135,7 @@ export const CampaignModel = {
         actions.updateLoading(false);
 
     }),
-    
+
     postCampaign: thunk(async (actions, payload) => {
         const obj = {
             serviceName: payload.serviceName,
@@ -174,6 +174,20 @@ export const CampaignModel = {
 
         }
         actions.updateLoading(false);
+
+    }),
+    influencersCampaign: thunk(async function (actions, payload) {
+        try {
+            const res = await axios.get(`${config.apiUrl}/campaigns/`)
+            actions.updateCampaignList(res.data);
+           
+
+        }
+        catch (error) {
+            console.log(error)
+
+        }
+
 
     }),
 };
