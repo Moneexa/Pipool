@@ -11,8 +11,8 @@ let campaign = {
     coverImage: "",
     callForAction: "",
     briefInfluencers: "",
-    do: "",
-    dont: "",
+    do: [],
+    dont: [],
     caption: "",
     productNeed: "",
     gender: "",
@@ -20,7 +20,7 @@ let campaign = {
     age: "",
     minFollowers: "",
     postingLanguages: "",
-    interests: "",
+    interests: [],
 
 };
 export const CampaignModel = {

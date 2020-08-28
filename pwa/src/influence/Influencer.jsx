@@ -161,7 +161,7 @@ export class Influencer extends React.Component {
                                     <Switch>
                                         <Redirect from={`${this.props.match.path}/`} exact to={`${this.props.match.path}/overview`} />
                                         <Route path={`${this.props.match.path}/overview`} component={Overview} />
-                                        <Route path={`${this.props.match.path}/campaigns`} component={CampaignManager} />
+                                        <Route path={`${this.props.match.path}/campaigns`} exact={true} component={CampaignManager} />
                                         <Route path={`${this.props.match.path}/pending-requests`} component={PendingRequests} />
                                         <Route path={`${this.props.match.path}/channels`} exact={true} component={ChannelManager} />
                                         <Route path={`${this.props.match.path}/add-channels`} component={AddChannel} />
@@ -170,7 +170,7 @@ export class Influencer extends React.Component {
                                         <Route path={`${this.props.match.path}/payment`} component={Payment} />
                                         <Route path={`${this.props.match.path}/help`} component={Help} />
                                         <Route path={`${this.props.match.path}/channels/:id/insights`} exact={true} component={ChannelInsights} />
-                                        <Route path={`${this.props.match.path}/campaigns/:id/campaign-inv`} exact={false} component={CampInv} />
+                                        <Route path={`${this.props.match.path}/campaigns/:id/campaign-inv`} exact={true} component={CampInv} />
 
                                     </Switch>
 
