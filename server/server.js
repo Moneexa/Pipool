@@ -10,7 +10,7 @@ const loginRoute = require('./auth/login.router'); // Imports routes for the pro
 const signupRoute = require('./auth/signup.router'); // Imports routes for the products
 const insightsRoute = require('./insights/insightsRouter')
 const brandRoute = require('./brand/brandRoutes')
-
+const proposalRoute = require('./proposals/proposalRoutes')
 const campaignRoute = require('./campaign/campaignRoutes')
 const twitter= require('./channel/channelRoutes');
 
@@ -26,6 +26,7 @@ app.use('/api/auth/signup', signupRoute);
 app.use('/api/brands', brandRoute);
 app.use('/api/campaigns', campaignRoute);
 app.use('/api/influencers/channels', twitter);
-app.use('/api/channels/insights', insightsRoute )
+app.use('/api/channels/insights', insightsRoute );
+app.use('/api/proposals' , proposalRoute);
 
 app.listen(port, () => console.log('Server running on port 4242!'))
