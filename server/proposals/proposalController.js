@@ -48,13 +48,18 @@ module.exports = {
      * campaignController.create()
      */
     create: function (req, res) {
+        console.log(req.body.proposal)
+        console.log(req.body.cost)
+        console.log(req.body.dateOfSubmission)
+        console.log(req.body.campaignId)
+
 
         var proposal = new proposalModel({
             proposal: req.body.proposal,
             cost: req.body.cost,
             dateOfSubmission: req.body.dateOfSubmission,
-            channelId: req.body.channelId,
-            campaignlId: req.body.campaignlId,
+            // channelId: req.body.channelId,
+            campaignlId: req.body.campaignId,
 
             createdBy: res.locals.user.id
 

@@ -11,12 +11,15 @@ export default function CampInv({ match }) {
     const campaignId = match.params.id;
     const actv = useStoreState(state => state.campaign.actv)
     const getCampaign = useStoreActions(actions => actions.campaign.getCampaign)
+    const postProposals = useStoreActions(actions => actions.proposals.postProposals);
+    const proposals = useStoreState(state => state.proposals.actv)
     useEffect(() => {
         console.log(campaignId)
         getCampaign(campaignId)
     }, [getCampaign, campaignId])
     function onNext(values) {
-    
+        postProposals({ campaignId: campaignId, proposal: values.serviceDescription, cost: "", dateOfSubmission: "" })
+
     }
     return (<div className="camp-inv">
         <div className="d-sm-flex align-items-center justify-content-between mb-4">
@@ -83,6 +86,8 @@ export default function CampInv({ match }) {
 
                 className="form-control form-control-user first-form p-3 m-3"
                 rows="30"
+                ref={register({ required: true })}
+
                 name="serviceDescription"
                 placeholder="Describe your product or service as if your audience is new to it. On the next steps, you'll be able to describe the content you'd like from our influencers. ">
             </textarea>
