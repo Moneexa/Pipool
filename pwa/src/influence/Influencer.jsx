@@ -14,7 +14,7 @@ import PendingRequests from './pages/PendingRequests/PendingRequests';
 import Help from './pages/Help/Help';
 import Payment from './pages/Payment/Payment';
 import ChannelInsights from './pages/ChannelInsights/ChannelInsights'
-import CampInv from './pages/CampaignManager/CampInv'
+import CampaignInfo from './pages/CampaignInfo/CampaignpInfo'
 //import store from "./shared/store/store"
 
 export class Influencer extends React.Component {
@@ -170,7 +170,7 @@ export class Influencer extends React.Component {
                                         <Route path={`${this.props.match.path}/payment`} component={Payment} />
                                         <Route path={`${this.props.match.path}/help`} component={Help} />
                                         <Route path={`${this.props.match.path}/channels/:id/insights`} exact={true} component={ChannelInsights} />
-                                        <Route path={`${this.props.match.path}/campaigns/:id/campaign-inv`} exact={true} component={CampInv} />
+                                        <Route path={`${this.props.match.path}/campaigns/:id`} exact={true} component={CampaignInfo} />
 
                                     </Switch>
 

@@ -1,0 +1,41 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.infoContainer {
+    width: 100%;
+    max-width: 1020px;
+    
+}
+
+.title{
+    font-weight: 500;
+}
+
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.card .description {
+    border-right: 1px solid #E0E0E0;
+}
+
+.card .details {
+
+}
+
+.card .bold {
+    font-weight: 600;
+}
+
+.card .heading {
+    background-color: #F9F9F9;
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.card .buttons {
+    background-color: #F9F9F9;
+}

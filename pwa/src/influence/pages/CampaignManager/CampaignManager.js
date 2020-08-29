@@ -21,7 +21,7 @@ function CampaignManager() {
                                 <div className="card shadow mb-4 campaign-item">
                                     <div className="card-body">
                                         <h4 className="font-weight-bold">
-                                          <Link to={`/influencer/campaigns/${value._id}/campaign-inv`}>
+                                          <Link to={`/influencer/campaigns/${value._id}`}>
                                             {value.serviceName}
                                             </Link>
                                             </h4>
