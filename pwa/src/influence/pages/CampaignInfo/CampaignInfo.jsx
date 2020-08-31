@@ -39,7 +39,6 @@ function Donts({ list }) {
 }
 
 export default function CampaignInfo({ match }) {
-    const { register, handleSubmit, errors } = useForm()
 
     const campaignId = match.params.id;
     const actv = useStoreState(state => state.campaign.actv)
@@ -95,7 +94,6 @@ export default function CampaignInfo({ match }) {
                                             </div>
                                         ) : null}
                                     </div>
-                                    <hr />
                                     {/* <div >
                                         <p>{actv.productNeed}</p>
                                     </div>
@@ -143,8 +141,8 @@ export default function CampaignInfo({ match }) {
                             </form> */}
                         </div>
                         <div className={`p-4 d-flex flex-column ${styles.buttons}`}>
-                            <button type="submit" className="btn btn-primary px-5 text-white mb-2">Submit Proposal</button>
-                            <button type="button" className="btn btn-outline-secondary px-5">Save Campagin</button>
+                            <button type="submit" className={`btn btn-primary px-5 text-white mb-2 ${styles.noWrap}`}>Submit Proposal</button>
+                            <button type="button" className={`btn btn-outline-secondary px-5 ${styles.noWrap}`}>Save Campagin</button>
                         </div>
                     </div>
                 </div>
