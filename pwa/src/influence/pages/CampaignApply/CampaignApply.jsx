@@ -4,7 +4,6 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useForm } from "react-hook-form";
 import styles from './CampaignApply.module.css';
-
 export default function CampaignInfo({ match }) {
     const { register, handleSubmit, errors, watch } = useForm({ mode: "onBlur", reValidateMode: "onBlur" })
 
@@ -14,12 +13,14 @@ export default function CampaignInfo({ match }) {
     const postProposals = useStoreActions(actions => actions.proposals.postProposals);
     const [proposalDoc, setProposalDoc] = useState('');
     const proposals = useStoreState(state => state.proposals.actv)
+
     useEffect(() => {
         console.log(campaignId)
         getCampaign(campaignId)
     }, [getCampaign, campaignId])
     function onNext(values) {
-        postProposals({ campaignId: campaignId, proposal: values.serviceDescription, cost: "", dateOfSubmission: "" })
+        console.log(proposalDoc)
+        postProposals({ campaignId: campaignId, proposal: proposalDoc, cost: "", dateOfSubmission: "" })
 
     }
     return (
@@ -43,7 +44,7 @@ export default function CampaignInfo({ match }) {
                         </div>
                     </div>
                 </div>
-                <div className={`mb-5 ${styles.card}`} onSubmit={handleSubmit((values) => { console.log("Submit is working") })}>
+                <form className={`mb-5 ${styles.card}`} onSubmit={handleSubmit((values) => { onNext(values) })}>
                     <div className="d-xs-none d-sm-flex">
                         <div className={`flex-grow-1 ${styles.description}`}>
                             <div className="d-flex flex-column">
@@ -51,10 +52,26 @@ export default function CampaignInfo({ match }) {
                                     <h4 className="m-4">Terms</h4>
                                 </div>
                                 <div className="p-4">
-                                    <ReactQuill theme="snow" value={proposalDoc} onChange={setProposalDoc}/>
+                                    <ReactQuill theme="snow" value={proposalDoc} onChange={(e) => { setProposalDoc(e) }}
+                                        name="proposal"
+                                        // ref={register({required:true})}
+                                        modules={{
+                                            toolbar: {
+                                                container: [
+                                                    [{ size: [] }],
+                                                    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                                                    [{ list: 'ordered' }, { list: 'bullet' }],
+                                                    ['link', 'image', 'video'],
+                                                    ['clean'],
+                                                    ['code-block']
+                                                ],
+
+                                            }
+                                        }}
+                                    />
                                 </div>
                             </div>
-                            <button>test</button>
+                            <button type="submit" className="btn btn-primary px-5 text-white m-2">test</button>
                             {/* <form className="row m-3" >
 
                                 <label>Write Proposal</label>
@@ -72,7 +89,7 @@ export default function CampaignInfo({ match }) {
                             </form> */}
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>)
 }
