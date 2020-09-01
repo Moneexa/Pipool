@@ -7,12 +7,12 @@ var auth = require('../auth/auth');
 /*
  * GET
  */
-router.get('/', auth.verify, proposalController.list);
+//router.get('/', auth.verify, proposalController.list);
 
 /*
  * GET
  */
-router.get('/:id', auth.verify, proposalController.show);
+router.get('/:campaignId', auth.verify, proposalController.show);
 
 /*
  * POST

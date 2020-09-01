@@ -8,7 +8,7 @@ var ProposalSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Channel'
     },
-    'campaignlId':
+    'campaignId':
     {
         type: Schema.Types.ObjectId,
         ref: 'Campaign'

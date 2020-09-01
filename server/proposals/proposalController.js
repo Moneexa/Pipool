@@ -26,22 +26,18 @@ module.exports = {
     /**
      * campaignController.show()
      */
-    show: function (req, res) {
-        var id = req.params.id;
-        proposalModel.findOne({ _id: id }, function (err, proposal) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting campaign.',
-                    error: err
-                });
-            }
+    show: async function (req, res) {
+        var id = req.params.campaignId;
+        console.log(id)
+        const proposal=await proposalModel.findOne({ campaignId: id }) 
+            
             if (!proposal) {
-                return res.status(404).json({
+                res.status(404).json({
                     message: 'No such campaign'
                 });
             }
             return res.json(proposal);
-        });
+        
     },
 
     /**
@@ -53,28 +49,44 @@ module.exports = {
         console.log(req.body.dateOfSubmission)
         console.log(req.body.campaignId)
 
-
-        var proposal = new proposalModel({
-            proposal: req.body.proposal,
-            cost: req.body.cost,
-            dateOfSubmission: req.body.dateOfSubmission,
-            // channelId: req.body.channelId,
-            campaignlId: req.body.campaignId,
-
-            createdBy: res.locals.user.id
-
-
-        });
-
-        proposal.save(function (err, proposal) {
+        const props = proposalModel.findOne({ createdBy: res.locals.user.id }, function (err, proposal) {
             if (err) {
                 return res.status(500).json({
-                    message: 'Error when creating campaign',
+                    message: 'Error when getting such proposal.',
                     error: err
                 });
             }
-            return res.status(201).json(proposal);
-        });
+            if (!proposal) {
+                var proposal = new proposalModel({
+                    proposal: req.body.proposal,
+                    cost: req.body.cost,
+                    dateOfSubmission: req.body.dateOfSubmission,
+                    // channelId: req.body.channelId,
+                    campaignlId: req.body.campaignId,
+        
+                    createdBy: res.locals.user.id
+        
+        
+                });
+        
+                proposal.save(function (err, proposal) {
+                    if (err) {
+                        return res.status(500).json({
+                            message: 'Error when creating campaign',
+                            error: err
+                        });
+                    }
+                    return res.status(201).json(proposal);
+                });
+            }
+            else{
+                return res.status(405).send({"message": "can't submit proposal,alread exists"});
+            }
+        
+        
+        })
+
+       
     },
 
     /**

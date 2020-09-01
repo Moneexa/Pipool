@@ -26,6 +26,7 @@ export const proposalModel = {
     },
     updateProposalsList: action((state, payload) => {
         state.proposalsList = payload;
+        console.log(state.proposalsList)
     }),
     updateLoading: action((state, payload) => {
         state.loading = payload
@@ -58,7 +59,8 @@ export const proposalModel = {
         );
         console.log(res)
         const { data } = await res;
-        actions.updateCampaign(data);
+        console.log(data)
+        actions.updateProposalsList(data);
 
     }),
     putProposals: thunk(async (actions, payload) => {
@@ -112,7 +114,9 @@ export const proposalModel = {
         } catch (error) {
             console.log(error)
             actions.postError("Failed to create brand.")
-            toastr.error("There was problem saving you data")
+            if (error.message.slice(32, 35) === "405") {
+                toastr.error("you have already submitted the proposal")
+            }
 
 
         }
