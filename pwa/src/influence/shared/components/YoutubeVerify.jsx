@@ -26,6 +26,7 @@ export function YoutubeVerify(props) {
             'scope': SCOPE
         }).then(function () {
             GoogleAuth = gapi.auth2.getAuthInstance();
+
             setCanSignIn(true)
         });
     }, [SCOPE, discoveryUrl]);

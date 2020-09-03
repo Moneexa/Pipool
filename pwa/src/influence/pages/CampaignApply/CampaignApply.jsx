@@ -1,10 +1,12 @@
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useForm } from "react-hook-form";
 import styles from './CampaignApply.module.css';
 import { useRef } from 'react';
+import { Modal, Button } from 'react-bootstrap'
+
 
 // const Video = Quill.import('formats/video');
 // const Link = Quill.import('formats/link');
@@ -32,7 +34,6 @@ import { useRef } from 'react';
 
 // Quill.register('formats/video', CoustomVideo);
 
-
 export default function CampaignInfo({ match }) {
     const { register, handleSubmit, errors, watch } = useForm({ mode: "onBlur", reValidateMode: "onBlur" })
 
@@ -42,7 +43,9 @@ export default function CampaignInfo({ match }) {
     const postProposals = useStoreActions(actions => actions.proposals.postProposals);
     const [proposalDoc, setProposalDoc] = useState('');
     const proposals = useStoreState(state => state.proposals.actv)
-
+    const [pop, setPop] = useState(false)
+    const videosList = useStoreState(state => state.videos.videosList)
+    const listVideos = useStoreActions(actions => actions.videos.listVideos)
     const [config, _] = useState({
         toolbar: {
             container: [
@@ -57,27 +60,72 @@ export default function CampaignInfo({ match }) {
                 video: async () => {
                     uploadVideoClicked()
                 }
-              }
+            }
         },
     })
     let reactQuillRef = useRef(null);
 
+
     useEffect(() => {
         console.log(campaignId)
         getCampaign(campaignId)
-    }, [getCampaign, campaignId])
+
+    }, [campaignId, getCampaign])
     function onNext(values) {
         console.log(proposalDoc)
         postProposals({ campaignId: campaignId, proposal: proposalDoc, cost: "", dateOfSubmission: "" })
 
     }
-    function uploadVideoClicked() {
-        debugger
-        const selection = reactQuillRef.current.getEditorSelection();
-        reactQuillRef.current.editor.insertEmbed(selection.index, 'video', "https://www.youtube.com/embed/GRFrVX3ghFo")
-        console.log("Upload video")
+    function handleClose() {
+       setPop(false)
     }
-    return (
+   
+    function uploadVideoClicked() {
+        setPop(true)
+        listVideos();
+        //debugger
+        //const selection = reactQuillRef.current.getEditorSelection();
+        //console.log(selection)
+        //reactQuillRef.current.editor.insertEmbed(selection.index, 'video', "https://www.youtube.com/embed/GRFrVX3ghFo")
+        //console.log("Upload video")
+    }
+    return (<>
+        <Modal show={pop}
+            databackdrop="false"
+            onHide={() => handleClose()}
+            className="shadow-lg d-flex align-items-center"
+            style={{
+                position: "absolute",
+
+            }}
+
+        >
+            <Modal.Header closeButton>
+            </Modal.Header>
+            <Modal.Body>
+                {
+                    videosList.map(value =>
+                        <div>
+                            {value.fileName}
+
+                        </div>
+                    )
+
+
+
+                }
+                <button className="btn btn-primary px-5 text-white m-2" type="button">Upload Video</button>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={() => handleClose()}>
+                    Close
+                    </Button>
+                <Button variant="primary" onClick={() => handleSubmit()}>
+                    Save Changes
+                    </Button>
+            </Modal.Footer>
+        </Modal>
+
         <div className={styles.container}>
             <div className={styles.infoContainer}>
                 <h4 className={`mt-2 mx-4 mb-4 ${styles.title}`}>Submit a proposal</h4>
@@ -106,8 +154,8 @@ export default function CampaignInfo({ match }) {
                                     <h4 className="m-4">Terms</h4>
                                 </div>
                                 <div className="p-4">
-                                    <ReactQuill theme="snow" 
-                                        value={proposalDoc} 
+                                    <ReactQuill theme="snow"
+                                        value={proposalDoc}
                                         onChange={(e) => { setProposalDoc(e) }}
                                         name="proposal"
                                         ref={reactQuillRef}
@@ -136,5 +184,5 @@ export default function CampaignInfo({ match }) {
                     </div>
                 </form>
             </div>
-        </div>)
+        </div></>)
 }

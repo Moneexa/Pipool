@@ -13,6 +13,7 @@ const brandRoute = require('./brand/brandRoutes')
 const proposalRoute = require('./proposals/proposalRoutes')
 const campaignRoute = require('./campaign/campaignRoutes')
 const twitter = require('./channel/channelRoutes');
+const videos =  require('./videos/videosRoutes');
 
 var port = process.env.PORT || 4242;
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
@@ -29,5 +30,6 @@ app.use('/api/campaigns', campaignRoute);
 app.use('/api/influencers/channels', twitter);
 app.use('/api/channels/insights', insightsRoute);
 app.use('/api/proposals', proposalRoute);
+app.use('/api/videos', videos)
 
 app.listen(port, () => console.log('Server running on port 4242!'))
