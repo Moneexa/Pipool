@@ -1,4 +1,5 @@
 var videosModel = require('./videosModel');
+const mongoose = require('mongoose');
 
 
 /**
@@ -12,7 +13,7 @@ module.exports = {
      * campaignController.list()
      */
     list: function (req, res) {
-        proposalModel.find({ createdBy: res.locals.user.id }, function (err, videos) {
+        videosModel.find({ createdBy: res.locals.user.id }, function (err, videos) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting videos.',
@@ -36,7 +37,7 @@ module.exports = {
                 message: 'No such video'
             });
         }
-        return res.json(proposal);
+        
 
     },
 
@@ -44,27 +45,41 @@ module.exports = {
      * campaignController.create()
      */
     create: function (req, res) {
+        try {
+            if (!req.files) {
+                return res.status(400).send('No file uploaded');
+            } else {
+                //Use the name of the input field (i.e. "file") to retrieve the uploaded file
+                let file = req.files.file;
 
-        var video = new videosModel({
-            name: req.body.name,
-            fileName: req.body.fileName,
+                const id = mongoose.Types.ObjectId();
 
+                const re = /(?:\.([^.]+))?$/;
+                const fileExtension = re.exec(file.name)[1] || "";
+                const saveId = id.toHexString() + "." + fileExtension;
 
-            createdBy: res.locals.user.id
+                //Use the mv() method to place the file in upload directory (i.e. "uploads")
+                file.mv(__dirname + '/data/' + saveId);
+                var video = new videosModel({
+                    name: file.name,
+                    fileName: saveId,
+                    _id: id,
+                    createdBy: res.locals.user.id
+                });
 
-
-        });
-
-        video.save(function (err, video) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when creating campaign',
-                    error: err
+                video.save(function (err, video) {
+                    if (err) {
+                        return res.status(500).json({
+                            message: 'Error when creating campaign',
+                            error: err
+                        });
+                    }
+                    return res.status(201).json(video);
                 });
             }
-            return res.status(201).json(video);
-        });
-
+        } catch (err) {
+            res.status(500).send(err);
+        }
 
     },
 
@@ -86,10 +101,10 @@ module.exports = {
                 });
             }
             videos.name = req.body.name,
-            videos.fileName = req.body.fileName,
+                videos.fileName = req.body.fileName,
 
 
-            videos.save(function (err, video) {
+                videos.save(function (err, video) {
                     if (err) {
                         return res.status(500).json({
                             message: 'Error when updating campaign.',

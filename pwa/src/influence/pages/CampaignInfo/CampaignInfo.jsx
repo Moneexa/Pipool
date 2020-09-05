@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { useEffect } from 'react';
 import { faMapMarker } from '@fortawesome/free-solid-svg-icons'
@@ -44,21 +44,24 @@ export default function CampaignInfo({ match }) {
     const actv = useStoreState(state => state.campaign.actv)
     const getCampaign = useStoreActions(actions => actions.campaign.getCampaign)
     const postProposals = useStoreActions(actions => actions.proposals.postProposals);
+    const proposalSubmitted = useStoreState(state => state.proposals.proposalSubmitted);
+    const checkIfAlreadySubmitted = useStoreActions(actions => actions.proposals.checkIfAlreadySubmitted)
     const proposals = useStoreState(state => state.proposals.actv)
-    const [flag, setFlag ] = useState(false)
+    const [flag, setFlag] = useState(false)
     useEffect(() => {
         //setFlag(false)
         console.log(campaignId)
         getCampaign(campaignId)
+        checkIfAlreadySubmitted({campaignId})
     }, [getCampaign, campaignId])
     function onNext(values) {
         postProposals({ campaignId: campaignId, proposal: values.serviceDescription, cost: "", dateOfSubmission: "" })
-
     }
     function handleClick() {
         console.log(flag)
-       setFlag(true);
+        setFlag(true);
     }
+    console.log(proposalSubmitted)
     return (
         <>
             <div className={styles.container}>
@@ -148,17 +151,27 @@ export default function CampaignInfo({ match }) {
                             </form> */}
                             </div>
                             <div className={`p-4 d-flex flex-column ${styles.buttons}`}>
-                                <Link className={`btn btn-primary px-5 text-white mb-2 ${styles.noWrap}`}
-                                   to={`/influencer/campaigns/${campaignId}/apply`}
-                                >
+                                {
+                                    proposalSubmitted ? (
+                                        <button className={`btn btn-primary px-5 text-white mb-2 ${styles.noWrap}`} disabled>Proposal Submitted</button>
+                                    ) :
+                                        (
+                                            <>
+                                                <Link className={`btn btn-primary px-5 text-white mb-2 ${styles.noWrap}`}
+                                                    to={`/influencer/campaigns/${campaignId}/apply`}
+                                                >
 
-                                    Submit Proposal </Link>
-                                <button type="button" className={`btn btn-outline-secondary px-5 ${styles.noWrap}`}>Save Campagin</button>
+                                                    Submit Proposal </Link>
+
+                                                <button type="button" className={`btn btn-outline-secondary px-5 ${styles.noWrap}`}>Save Campagin</button>
+                                            </>
+                                        )
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
         </>)
 }

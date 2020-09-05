@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var proposalController = require('./proposalController.js');
+var proposalController = require('./brandProposalController.js');
 var auth = require('../auth/auth');
 //const { verify } = require('jsonwebtoken');
 

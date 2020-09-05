@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from '../config.json';
 import * as toastr from 'toastr';
 
-const { action, thunk } = require("easy-peasy");
+const { action, thunk, debug } = require("easy-peasy");
 let proposals = {
     id: "",
     proposal: "",
@@ -14,6 +14,7 @@ let proposals = {
 export const proposalModel = {
     loading: false,
     proposalsList: [],
+    proposalSubmitted: false,
     actv: {
         id: proposals.id,
         proposal: proposals.proposal,
@@ -21,6 +22,9 @@ export const proposalModel = {
         dateOfSubmission: proposals.dateOfSubmission,
         campaignId: proposals.campaignId
     },
+    setProposalSubmitted: action((state, payload) => {
+        return { proposalSubmitted: payload }
+    }),
     errors: {
         postErrorMessage: "",
     },
@@ -36,8 +40,6 @@ export const proposalModel = {
         state.actv.proposal = payload.proposal || state.actv.proposal;
         state.actv.cost = payload.cost || state.actv.cost;
         state.actv.dateOfSubmission = payload.dateOfSubmission || state.actv.dateOfSubmission;
-
-
     }),
 
     postError: action((state, payload) => {
@@ -52,16 +54,22 @@ export const proposalModel = {
 
     }),
     getProposals: thunk(async (actions, payload) => {
-
         const id = payload
-        const res = await axios.get(`${config.apiUrl}/proposals/${id}`,
-
-        );
+        const res = await axios.get(`${config.apiUrl}/proposals/${id}`);
         console.log(res)
         const { data } = await res;
         console.log(data)
         actions.updateProposalsList(data);
-
+    }),
+    checkIfAlreadySubmitted: thunk(async (actions, { campaignId }) => {
+        try {
+            const res = await axios.get(`${config.apiUrl}/influencers/proposals/${campaignId}`);
+            if (res.data) {
+                actions.setProposalSubmitted(true);
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }),
     putProposals: thunk(async (actions, payload) => {
         const id = payload.id
@@ -91,7 +99,7 @@ export const proposalModel = {
 
     }),
 
-    postProposals: thunk(async (actions, payload) => {
+    postProposals: thunk(async (actions, payload, helpers) => {
         const obj = {
             proposal: payload.proposal,
             cost: payload.cost,
@@ -103,10 +111,10 @@ export const proposalModel = {
         try {
             actions.updateLoading(true);
 
-            const res = await axios.post(`${config.apiUrl}/proposals/`, obj)
+            const res = await axios.post(`${config.apiUrl}/influencers/proposals/`, obj)
 
             actions.updateProposals(res.data);
-
+            actions.setProposalSubmitted(true);
             toastr.success("Successfully  data has been sent");
 
 

@@ -23,4 +23,4 @@ var campaignSchema = new Schema({
 	]
 });
 
-module.exports = mongoose.model('campaign', campaignSchema);
+module.exports = mongoose.model('Campaign', campaignSchema);

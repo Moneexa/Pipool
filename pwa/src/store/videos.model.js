@@ -17,13 +17,16 @@ export const videosModel = {
         id: videos.id,
         name: videos.name,
         fileName: videos.fileName,
-
     },
     errors: {
         postErrorMessage: "",
     },
     updateVideosList: action((state, payload) => {
         state.videosList = payload;
+        console.log(state.videosList)
+    }),
+    pushVideosList: action((state, payload) => {
+        state.videosList = [...state.videosList, payload];
         console.log(state.videosList)
     }),
     updateLoading: action((state, payload) => {
@@ -33,8 +36,6 @@ export const videosModel = {
         state.actv.id = payload._id || state.actv.id;
         state.actv.name = payload.name || state.actv.name;
         state.actv.fileName = payload.fileName || state.actv.fileName;
-
-
     }),
 
     postError: action((state, payload) => {
@@ -49,10 +50,8 @@ export const videosModel = {
 
     }),
     getVideos: thunk(async (actions, payload) => {
-
         const id = payload
         const res = await axios.get(`${config.apiUrl}/videos/${id}`,
-
         );
         console.log(res)
         const { data } = await res;
@@ -87,31 +86,18 @@ export const videosModel = {
 
     }),
 
-    postVideos: thunk(async (actions, payload) => {
-        const obj = {
-            name: payload.name,
-            fileName: payload.fileName,
-            
-
-        }
-        console.log(obj)
+    postVideo: thunk(async (actions, payload) => {
         try {
             actions.updateLoading(true);
 
-            const res = await axios.post(`${config.apiUrl}/videos/`, obj)
+            const res = await axios.post(`${config.apiUrl}/videos/`, payload)
 
-            actions.updateVideos(res.data);
-
-            toastr.success("Successfully  data has been sent");
-
-
+            actions.pushVideosList(res.data);
+            toastr.success("File uploaded successfully");
 
         } catch (error) {
             console.log(error)
-            actions.postError("Failed to create brand.")
-            if (error.message.slice(32, 35) === "405") {
-                toastr.error("you have already submitted the proposal")
-            }
+            toastr.error("you have already submitted the proposal")
 
 
         }

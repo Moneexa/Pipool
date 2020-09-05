@@ -1,7 +1,9 @@
 var express = require('express');
+var path = require('path')
 var router = express.Router();
 var videosController = require('./videosController.js');
 var auth = require('../auth/auth');
+
 //const { verify } = require('jsonwebtoken');
 
 /*
@@ -12,7 +14,7 @@ router.get('/', auth.verify, videosController.list);
 /*
  * GET
  */
-router.get('/:id', auth.verify, videosController.show);
+router.get('/:id', express.static(path.join(__dirname, '/data/')));
 
 /*
  * POST

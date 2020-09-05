@@ -1,12 +1,11 @@
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import React, { useEffect, useState, useCallback } from 'react';
-import ReactQuill, { Quill } from 'react-quill';
+import React, { useEffect, useRef, useState } from 'react';
+import { Button, ListGroup, Modal } from 'react-bootstrap';
+import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useForm } from "react-hook-form";
+import config from '../../../config.json';
 import styles from './CampaignApply.module.css';
-import { useRef } from 'react';
-import { Modal, Button } from 'react-bootstrap'
-
+import { Redirect } from 'react-router-dom';
 
 // const Video = Quill.import('formats/video');
 // const Link = Quill.import('formats/link');
@@ -34,19 +33,23 @@ import { Modal, Button } from 'react-bootstrap'
 
 // Quill.register('formats/video', CoustomVideo);
 
-export default function CampaignInfo({ match }) {
-    const { register, handleSubmit, errors, watch } = useForm({ mode: "onBlur", reValidateMode: "onBlur" })
-
+export default function CampaignInfo({ match, history }) {
+    const proposalSubmitted = useStoreState(state => state.proposals.proposalSubmitted);
     const campaignId = match.params.id;
     const actv = useStoreState(state => state.campaign.actv)
     const getCampaign = useStoreActions(actions => actions.campaign.getCampaign)
+    const checkIfAlreadySubmitted = useStoreActions(actions => actions.proposals.checkIfAlreadySubmitted)
     const postProposals = useStoreActions(actions => actions.proposals.postProposals);
     const [proposalDoc, setProposalDoc] = useState('');
     const proposals = useStoreState(state => state.proposals.actv)
     const [pop, setPop] = useState(false)
+    const [deadline, setDeadline] = useState(null)
     const videosList = useStoreState(state => state.videos.videosList)
     const listVideos = useStoreActions(actions => actions.videos.listVideos)
-    const [config, _] = useState({
+    const postVideo = useStoreActions(actions => actions.videos.postVideo)
+    let [cursorIndex, setCursorIndex] = useState(0);
+    let fileInput = null;
+    const [editorConfig, _] = useState({
         toolbar: {
             container: [
                 [{ size: [] }],
@@ -58,7 +61,7 @@ export default function CampaignInfo({ match }) {
             ],
             handlers: {
                 video: async () => {
-                    uploadVideoClicked()
+                    openVideoUploadDialog()
                 }
             }
         },
@@ -69,59 +72,76 @@ export default function CampaignInfo({ match }) {
     useEffect(() => {
         console.log(campaignId)
         getCampaign(campaignId)
+        checkIfAlreadySubmitted({campaignId});
+        // if(proposalSubmitted)
+        //     history.goBack()
 
-    }, [campaignId, getCampaign])
-    function onNext(values) {
+    }, [campaignId, getCampaign, checkIfAlreadySubmitted])
+    debugger
+    if (proposalSubmitted) {
+        return (<Redirect to='../'/>)
+    }
+    function submit(values) {
         console.log(proposalDoc)
-        postProposals({ campaignId: campaignId, proposal: proposalDoc, cost: "", dateOfSubmission: "" })
+        postProposals({ campaignId: campaignId, proposal: proposalDoc, dateOfSubmission: deadline })
 
     }
     function handleClose() {
-       setPop(false)
+        setPop(false)
     }
-   
-    function uploadVideoClicked() {
+
+    function embedVideo(value) {
+        setPop(false);
+        reactQuillRef.current.editor.insertEmbed(cursorIndex || 0, 'video', value)
+    }
+
+    function openVideoUploadDialog() {
+        const selection = reactQuillRef.current.getEditorSelection();
+        if (selection) setCursorIndex(selection.index);
         setPop(true)
         listVideos();
-        //debugger
-        //const selection = reactQuillRef.current.getEditorSelection();
-        //console.log(selection)
-        //reactQuillRef.current.editor.insertEmbed(selection.index, 'video', "https://www.youtube.com/embed/GRFrVX3ghFo")
-        //console.log("Upload video")
     }
+    function onUploadButtonClick() {
+        console.log(fileInput.click());
+    }
+    function onFileChangeHandler(event) {
+        console.log(event.target.files[0])
+        const data = new FormData()
+        data.append('file', event.target.files[0]);
+        postVideo(data)
+    }
+
     return (<>
         <Modal show={pop}
+            size="lg"
+            centered
             databackdrop="false"
             onHide={() => handleClose()}
-            className="shadow-lg d-flex align-items-center"
+            dialogClassName={styles.dialog}
             style={{
                 position: "absolute",
-
             }}
-
         >
             <Modal.Header closeButton>
             </Modal.Header>
-            <Modal.Body>
+            <Modal.Body className={styles.dialogBody}>
+                <input onChange={onFileChangeHandler} type="file" style={{ display: 'none' }} ref={ref => fileInput = ref} />
                 {
-                    videosList.map(value =>
-                        <div>
-                            {value.fileName}
+                    <ListGroup>
+                        {videosList.map((value, index) =>
+                            // <video src={`${config.apiUrl}/videos/${value.fileName}`} controls></video>
+                            <ListGroup.Item onClick={() => embedVideo(`${config.apiUrl}/videos/${value.fileName}`)} key={index}>{value.name}</ListGroup.Item>
 
-                        </div>
-                    )
-
-
-
+                        )}
+                    </ListGroup>
                 }
-                <button className="btn btn-primary px-5 text-white m-2" type="button">Upload Video</button>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={() => handleClose()}>
                     Close
                     </Button>
-                <Button variant="primary" onClick={() => handleSubmit()}>
-                    Save Changes
+                <Button variant="primary" className="text-white px-5" onClick={() => onUploadButtonClick()}>
+                    Upload Video
                     </Button>
             </Modal.Footer>
         </Modal>
@@ -146,7 +166,7 @@ export default function CampaignInfo({ match }) {
                         </div>
                     </div>
                 </div>
-                <form className={`mb-5 ${styles.card}`} onSubmit={handleSubmit((values) => { onNext(values) })}>
+                <div className={`mb-5 ${styles.card}`}>
                     <div className="d-xs-none d-sm-flex">
                         <div className={`flex-grow-1 ${styles.description}`}>
                             <div className="d-flex flex-column">
@@ -154,35 +174,25 @@ export default function CampaignInfo({ match }) {
                                     <h4 className="m-4">Terms</h4>
                                 </div>
                                 <div className="p-4">
-                                    <ReactQuill theme="snow"
-                                        value={proposalDoc}
-                                        onChange={(e) => { setProposalDoc(e) }}
-                                        name="proposal"
-                                        ref={reactQuillRef}
-                                        // ref={register({required:true})}
-                                        modules={config}
-                                    />
+                                    <div className={`form-group ${styles.deadline}`}>
+                                        <input onChange={(ev) => setDeadline(ev.target.value)} placeholder="Date of complition" className="form-control rounded-0" type="date" />
+                                    </div>
+                                    <div style={{}}>
+                                        <ReactQuill theme="snow" className="mb-4" style={{ height: '500px' }}
+                                            value={proposalDoc}
+                                            onChange={(e) => { setProposalDoc(e) }}
+                                            name="proposal"
+                                            ref={reactQuillRef}
+                                            // ref={register({required:true})}
+                                            modules={editorConfig}
+                                        />
+                                    </div>
                                 </div>
                             </div>
-                            <button type="submit" className="btn btn-primary px-5 text-white m-2">test</button>
-                            {/* <form className="row m-3" >
-
-                                <label>Write Proposal</label>
-                                <textarea
-
-                                    className="form-control form-control-user first-form p-3 m-3"
-                                    rows="30"
-                                    ref={register({ required: true })}
-
-                                    name="serviceDescription"
-                                    placeholder="Describe your product or service as if your audience is new to it. On the next steps, you'll be able to describe the content you'd like from our influencers. ">
-                                </textarea>
-                                <button type="submit" className="btn btn-primary btn-user text-white next-button m-3">Submit Proposal</button>
-
-                            </form> */}
+                            <button disabled={!deadline || !proposalDoc} onClick={submit} type="submit" className="btn btn-primary px-5 text-white m-2">Submit</button>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div></>)
 }
