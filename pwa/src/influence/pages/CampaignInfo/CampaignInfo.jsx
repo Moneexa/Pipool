@@ -43,10 +43,8 @@ export default function CampaignInfo({ match }) {
     const campaignId = match.params.id;
     const actv = useStoreState(state => state.campaign.actv)
     const getCampaign = useStoreActions(actions => actions.campaign.getCampaign)
-    const postProposals = useStoreActions(actions => actions.proposals.postProposals);
-    const proposalSubmitted = useStoreState(state => state.proposals.proposalSubmitted);
-    const checkIfAlreadySubmitted = useStoreActions(actions => actions.proposals.checkIfAlreadySubmitted)
-    const proposals = useStoreState(state => state.proposals.actv)
+    const proposalSubmitted = useStoreState(state => state.influencersProposals.proposalSubmitted);
+    const checkIfAlreadySubmitted = useStoreActions(actions => actions.influencersProposals.checkIfAlreadySubmitted)
     const [flag, setFlag] = useState(false)
     useEffect(() => {
         //setFlag(false)
@@ -54,9 +52,6 @@ export default function CampaignInfo({ match }) {
         getCampaign(campaignId)
         checkIfAlreadySubmitted({campaignId})
     }, [getCampaign, campaignId])
-    function onNext(values) {
-        postProposals({ campaignId: campaignId, proposal: values.serviceDescription, cost: "", dateOfSubmission: "" })
-    }
     function handleClick() {
         console.log(flag)
         setFlag(true);

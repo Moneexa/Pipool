@@ -4,8 +4,8 @@ import { useStoreActions, useStoreState } from 'easy-peasy';
 import './Overview.css'
 
 function Overview() {
-    const proposals = useStoreState(state => state.proposals.proposalsList);
-    const getProposals = useStoreActions(actions => actions.proposals.getProposals)
+    const proposals = useStoreState(state => state.brandsProposals.proposalsList);
+    const getProposals = useStoreActions(actions => actions.brandsProposals.listProposals)
     useEffect(() => {
         getProposals("5f41460e22061315c7374c1f")
         console.log(proposals)

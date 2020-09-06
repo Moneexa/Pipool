@@ -12,8 +12,9 @@ import Overview from './pages/Overview/Overview';
 import PendingRequests from './pages/PendingRequests/PendingRequests';
 import Help from './pages/Help/Help';
 import Payment from './pages/Payment/Payment';
-import CampaignInvite from './pages/CampaignManager/CampaignInvite'
+import CampaignInvite from './pages/CampaignInfo/CampaignInvite/CampaignInvite'
 import './Brand.css';
+import CampaignInfo from './pages/CampaignInfo/CampaignInfo';
 
 //import store from "./shared/store/store"
 
@@ -186,6 +187,7 @@ export class Brand extends React.Component {
                                         <Route path={`${this.props.match.path}/calender`} exact component={Calender} />
                                         <Route path={`${this.props.match.path}/payment`} exact component={Payment} />
                                         <Route path={`${this.props.match.path}/help`} exact component={Help} />
+                                        <Route path={`${this.props.match.path}/campaigns/:id`} exact={true} component={CampaignInfo} />
                                         <Route path={`${this.props.match.path}/campaigns/:id/campaign-invite`} exact={true} component={CampaignInvite} />
 
                                     </Switch>

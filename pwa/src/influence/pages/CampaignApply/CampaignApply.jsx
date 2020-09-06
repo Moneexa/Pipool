@@ -7,41 +7,14 @@ import config from '../../../config.json';
 import styles from './CampaignApply.module.css';
 import { Redirect } from 'react-router-dom';
 
-// const Video = Quill.import('formats/video');
-// const Link = Quill.import('formats/link');
-// class CoustomVideo extends Video {
-//     static create(value) {
-//         const node = super.create(value);
-
-//         const video = document.createElement('video')
-//         video.setAttribute('controls', true);
-//         video.setAttribute('type', "video/mp4");
-//         video.setAttribute('style', "height: 200px; width: 100%");
-//         video.setAttribute('src', this.sanitize(value));
-//         node.appendChild(video);
-
-//         return node;
-//     }
-
-//     static sanitize(url) {
-//         return Link.sanitize(url);
-//     }
-// };
-// CoustomVideo.blotName = 'video';
-// CoustomVideo.className = 'ql-video';
-// CoustomVideo.tagName = 'DIV';
-
-// Quill.register('formats/video', CoustomVideo);
-
 export default function CampaignInfo({ match, history }) {
-    const proposalSubmitted = useStoreState(state => state.proposals.proposalSubmitted);
+    const proposalSubmitted = useStoreState(state => state.influencersProposals.proposalSubmitted);
     const campaignId = match.params.id;
     const actv = useStoreState(state => state.campaign.actv)
     const getCampaign = useStoreActions(actions => actions.campaign.getCampaign)
-    const checkIfAlreadySubmitted = useStoreActions(actions => actions.proposals.checkIfAlreadySubmitted)
-    const postProposals = useStoreActions(actions => actions.proposals.postProposals);
+    const checkIfAlreadySubmitted = useStoreActions(actions => actions.influencersProposals.checkIfAlreadySubmitted)
+    const postProposals = useStoreActions(actions => actions.influencersProposals.postProposals);
     const [proposalDoc, setProposalDoc] = useState('');
-    const proposals = useStoreState(state => state.proposals.actv)
     const [pop, setPop] = useState(false)
     const [deadline, setDeadline] = useState(null)
     const videosList = useStoreState(state => state.videos.videosList)
@@ -77,9 +50,8 @@ export default function CampaignInfo({ match, history }) {
         //     history.goBack()
 
     }, [campaignId, getCampaign, checkIfAlreadySubmitted])
-    debugger
     if (proposalSubmitted) {
-        return (<Redirect to='../'/>)
+        return (<Redirect to='../' />)
     }
     function submit(values) {
         console.log(proposalDoc)

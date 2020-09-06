@@ -11,7 +11,7 @@ let proposals = {
     campaignId: ""
 
 };
-export const proposalModel = {
+export const influencersProposalModel = {
     loading: false,
     proposalsList: [],
     proposalSubmitted: false,
@@ -70,33 +70,6 @@ export const proposalModel = {
         } catch (error) {
             console.log(error)
         }
-    }),
-    putProposals: thunk(async (actions, payload) => {
-        const id = payload.id
-
-        const obj = {
-            proposal: payload.proposal,
-            cost: payload.cost,
-            dateOfSubmission: payload.dateOfSubmission,
-
-        }
-        try {
-            actions.updateLoading(true);
-
-            const res = await axios.put(`${config.apiUrl}/proposals/${id}`, obj,)
-            actions.updateProposals(res.data);
-
-            toastr.success("Successfully updated data");
-
-        } catch (error) {
-
-            actions.postError("Form values are not correct.")
-            toastr.error("There was problem saving you data")
-
-
-        }
-        actions.updateLoading(false);
-
     }),
 
     postProposals: thunk(async (actions, payload, helpers) => {

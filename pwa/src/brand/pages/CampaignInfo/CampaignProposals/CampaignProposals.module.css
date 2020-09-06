@@ -1,0 +1,8 @@
+.campaign-invite .influencer-container{
+    border: 1px solid lightgrey;
+    padding: 10px;
+    border-radius: 5px;
+}
+.campaign-invite .influencer-sub-heading{
+    max-width: 450px;
+}

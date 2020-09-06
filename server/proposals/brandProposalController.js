@@ -29,15 +29,15 @@ module.exports = {
     show: async function (req, res) {
         var id = req.params.campaignId;
         console.log(id)
-        const proposal=await proposalModel.findOne({ campaignId: id }) 
-            
-            if (!proposal) {
-                res.status(404).json({
-                    message: 'No such campaign'
-                });
-            }
-            return res.json(proposal);
-        
+        const proposals = await proposalModel.find({ campaignId: id }).populate({path: 'createdBy', select: 'fullName'});
+
+        if (!proposals) {
+            res.status(404).json({
+                message: 'No such campaign'
+            });
+        }
+        return res.json(proposals);
+
     },
 
     /**
@@ -63,12 +63,12 @@ module.exports = {
                     dateOfSubmission: req.body.dateOfSubmission,
                     // channelId: req.body.channelId,
                     campaignlId: req.body.campaignId,
-        
+
                     createdBy: res.locals.user.id
-        
-        
+
+
                 });
-        
+
                 proposal.save(function (err, proposal) {
                     if (err) {
                         return res.status(500).json({
@@ -79,14 +79,14 @@ module.exports = {
                     return res.status(201).json(proposal);
                 });
             }
-            else{
-                return res.status(405).send({"message": "can't submit proposal,alread exists"});
+            else {
+                return res.status(405).send({ "message": "can't submit proposal,alread exists" });
             }
-        
-        
+
+
         })
 
-       
+
     },
 
     /**
