@@ -2,9 +2,10 @@ import React from 'react';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { useEffect } from 'react';
 
-export default function CampaignProposals({campaignId}) {
+export default function CampaignProposals({ campaignId }) {
     const proposalsList = useStoreState(state => state.brandsProposals.campaignProposals);
     const getCampaignProposals = useStoreActions(actions => actions.brandsProposals.getCampaignProposals);
+    const createChat = useStoreActions(actions => actions.chats.createChat);
     useEffect(() => {
         getCampaignProposals(campaignId)
     }, [getCampaignProposals, campaignId])
@@ -24,7 +25,7 @@ export default function CampaignProposals({campaignId}) {
                                     </div>
                                 </div>
                                 <div className="d-flex align-items-center">
-                                    <button type="button" className="btn btn-primary rounded-30 text-white ml-2 px-4">Chat</button>
+                                    <button onClick={() => createChat({ campaignId, channelId: value.createdBy._id })} type="button" className="btn btn-primary rounded-30 text-white ml-2 px-4">Chat</button>
                                 </div>
                             </div>
                         </div>

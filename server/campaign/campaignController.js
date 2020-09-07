@@ -157,7 +157,7 @@ module.exports = {
                 return (value.category)
             })
             console.log(category)
-            const suggestedCampaigns = await campaignModel.find({"interests":{$all:category}})
+            const suggestedCampaigns = await campaignModel.find({"interests":{$in:category}})
     // const suggestedCampaigns = await campaignModel.find({interests:category.category})
     if(suggestedCampaigns) { console.log(suggestedCampaigns) }
 
