@@ -73,12 +73,16 @@ export const influencersProposalModel = {
     }),
 
     postProposals: thunk(async (actions, payload, helpers) => {
+        const channelId = helpers.getStoreState().channels.activeChannelId;
+        if (!channelId) {
+            throw "No channel selected";
+        }
         const obj = {
             proposal: payload.proposal,
             cost: payload.cost,
             dateOfSubmission: payload.dateOfSubmission,
-            campaignId: payload.campaignId
-
+            campaignId: payload.campaignId,
+            channelId
         }
         console.log(obj)
         try {

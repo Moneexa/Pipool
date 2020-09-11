@@ -2,11 +2,14 @@ import axios from 'axios';
 import config from '../config.json';
 import * as toastr from 'toastr';
 
+const cachedChannelId = localStorage.getItem('activeChannelId') || "";
+
 
 const { action, thunk } = require("easy-peasy");
 export const ChannelModel = {
     channels: [],
     loading: false, influencers: [],
+    activeChannelId: cachedChannelId,
     setChannels: action((state, payload) => {
         state.channels = payload;
     }),
@@ -16,6 +19,10 @@ export const ChannelModel = {
     toggleLoading: action((state, payload) => {
         state.loading = payload
     }),
+    setActiveChannelId: action((state, payload) => {
+        localStorage.setItem('activeChannelId', payload);
+        state.activeChannelId = payload;
+    }),
     setInfluencers: action((state, payload) => {
         state.influencers = payload
     }),
@@ -24,7 +31,6 @@ export const ChannelModel = {
         console.log(data)
         actions.setChannels(data);
     }),
-
     authenticateTwitter: thunk(async (actions, payload, helpers) => {
         try {
             const res = await axios.post(`${config.apiUrl}/influencers/channels/twitter/oauth/request_token`);
@@ -163,20 +169,8 @@ export const ChannelModel = {
                 })
 
             })
-
-
-
-
-
-
-
-            //}
             console.log(influencers)
-            //   (value=>{
-            //   })
             actions.setInfluencers(influencers)
-
-
         }
         catch (error) {
             console.log(error)

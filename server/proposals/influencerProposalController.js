@@ -63,7 +63,7 @@ module.exports = {
                     dateOfSubmission: req.body.dateOfSubmission,
                     // channelId: req.body.channelId,
                     campaignId: req.body.campaignId,
-        
+                    channelId: req.body.channelId,
                     createdBy: res.locals.user.id
         
         
