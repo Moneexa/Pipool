@@ -7,6 +7,7 @@ import { InsightsModel } from './insights.model'
 import { influencersProposalModel } from './influencers-proposals.model'
 import { brandsProposalModel } from './brands-proposals.model'
 import { videosModel } from './videos.model'
+import {chatModel} from './chat.model'
 export const store = createStore({
     channels: ChannelModel,
     user: UserModel,
@@ -15,6 +16,7 @@ export const store = createStore({
     insights: InsightsModel,
     influencersProposals: influencersProposalModel,
     brandsProposals: brandsProposalModel,
-    videos: videosModel
+    videos: videosModel,
+    chat: chatModel
     //notifications: thunk(notificationsReducer())
 });

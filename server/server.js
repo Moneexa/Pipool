@@ -16,6 +16,7 @@ const influencerProposalRoute = require('./proposals/influencerProposalRoutes')
 const campaignRoute = require('./campaign/campaignRoutes')
 const twitter = require('./channel/channelRoutes');
 const videos =  require('./videos/videosRoutes');
+const campaignInfluencer = require('./campaign/campaignInfluencerRoutes');
 
 var port = process.env.PORT || 4242;
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
@@ -36,6 +37,7 @@ app.use('/api/influencers/channels', twitter);
 app.use('/api/channels/insights', insightsRoute);
 app.use('/api/brands/proposals', brandProposalRoutes);
 app.use('/api/influencers/proposals', influencerProposalRoute);
+app.use('/api/influencers/_campaigns' , campaignInfluencer);
 app.use('/api/videos', videos)
 
 app.listen(port, () => console.log('Server running on port 4242!'))

@@ -157,6 +157,11 @@ export default function CampaignInfo({ match }) {
                                                 >
 
                                                     Submit Proposal </Link>
+                                                    <Link className={`btn btn-primary px-5 text-white mb-2 ${styles.noWrap}`}
+                                                    to={`/influencer/campaigns/${campaignId}/chat`}
+                                                >
+
+                                                    Chat with the client </Link>
 
                                                 <button type="button" className={`btn btn-outline-secondary px-5 ${styles.noWrap}`}>Save Campagin</button>
                                             </>
