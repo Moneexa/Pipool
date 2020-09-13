@@ -148,26 +148,26 @@ module.exports = {
     },
     suggestedCampaigns: async function (req, res) {
         try {
-            var category = await channelModel.find({ createdBy: res.locals.user.id })
-            if (!category) {
-                return res.status(404).send("not found")
-            }
+            // var category = await channelModel.find({ createdBy: res.locals.user.id })
+            // if (!category) {
+            //     return res.status(404).send("not found")
+            // }
+            // // console.log(category)
+            // category = category.map(value => {
+            //     return (value.category)
+            // })
             // console.log(category)
-            category = category.map(value => {
-                return (value.category)
-            })
-            console.log(category)
-            const suggestedCampaigns = await campaignModel.find({"interests":{$in:category}})
-    // const suggestedCampaigns = await campaignModel.find({interests:category.category})
-    if(suggestedCampaigns) { console.log(suggestedCampaigns) }
+            const suggestedCampaigns = await campaignModel.find()
+            // const suggestedCampaigns = await campaignModel.find({interests:category.category})
+            if (suggestedCampaigns) { console.log(suggestedCampaigns) }
 
             res.status(200).send(suggestedCampaigns)
 
-}
+        }
         catch (error) {
-    console.log(error)
-    res.status(500).send(error)
-}
+            console.log(error)
+            res.status(500).send(error)
+        }
 
 
 

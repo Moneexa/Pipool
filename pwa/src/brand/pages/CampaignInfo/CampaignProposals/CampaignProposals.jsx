@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 
 export default function CampaignProposals({ campaignId }) {
     const proposalsList = useStoreState(state => state.brandsProposals.campaignProposals);
+    const activeBrandId = useStoreState(state => state.brand.activeBrandId);
     const getCampaignProposals = useStoreActions(actions => actions.brandsProposals.getCampaignProposals);
     const createChat = useStoreActions(actions => actions.chats.createChat);
     useEffect(() => {
@@ -25,7 +26,7 @@ export default function CampaignProposals({ campaignId }) {
                                     </div>
                                 </div>
                                 <div className="d-flex align-items-center">
-                                    <button onClick={() => createChat({ campaignId, channelId: value.createdBy._id })} type="button" className="btn btn-primary rounded-30 text-white ml-2 px-4">Chat</button>
+                                    <button onClick={() => createChat({ campaignId, channelId: value.channelId, brandId: activeBrandId })} type="button" className="btn btn-primary rounded-30 text-white ml-2 px-4">Chat</button>
                                 </div>
                             </div>
                         </div>

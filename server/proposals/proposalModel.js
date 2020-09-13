@@ -13,6 +13,11 @@ var ProposalSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Campaign'
     },
+    'brandId':
+    {
+        type: Schema.Types.ObjectId,
+        ref: 'Brand'
+    },
     'cost': String,
     'dateOfSubmission': String,
     'createdBy': {

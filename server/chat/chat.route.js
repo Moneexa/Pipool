@@ -18,6 +18,7 @@ var auth= require('../auth/auth');
  * POST
  */
 router.post('/', auth.verify, chatController.create);
+router.get('/:id', auth.verify, chatController.listMessages);
 
 /*
  * PUT
