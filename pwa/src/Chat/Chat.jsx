@@ -27,10 +27,14 @@ export function Chat() {
         <div className="h-100 w-100 position-absolute d-flex">
             <div className={`m-2 flex-grow-1 d-flex shadow-sm ${styles.container}`}>
                 <div className={`${styles.sidebar}`}>
-                    <div className={`${styles.header}`}></div>
+                    <div className={`${styles.header} d-flex justify-content-center align-items-center`}>
+                        Messages
+                    </div>
                 </div>
                 <div className={`flex-grow-1 d-flex flex-column ${styles.messagesContainer}`}>
-                    <div className={`${styles.header}`}>This would be the title</div>
+                    <div className={`${styles.header} d-flex justify-content-center align-items-center`}>
+                        This would be the title
+                    </div>
                     <div className={`flex-grow-1 ${styles.messages}`}>
                         {
                             messages.map((message, index) => (
