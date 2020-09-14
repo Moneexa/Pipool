@@ -2,6 +2,8 @@ import axios from 'axios';
 import config from '../config.json';
 import * as toastr from 'toastr';
 
+const cachedBrandId = localStorage.getItem('activeBrandId') || "";
+
 const { action, thunk } = require("easy-peasy");
 let brand = {
     id: "",
@@ -21,6 +23,7 @@ let brand = {
 export const BrandModel = {
     loading: false,
     list: [],
+    activeBrandId: cachedBrandId,
     active: {
         id: brand.id,
         name: brand.name,
@@ -45,6 +48,11 @@ export const BrandModel = {
     }),
     updateLoading: action((state, payload) => {
         state.loading = payload
+    }),
+
+    setActiveBrandId: action((state, payload) => {
+        localStorage.setItem('activeBrandId', payload);
+        state.activeBrandId = payload;
     }),
 
     updateBrand: action((state, payload) => {

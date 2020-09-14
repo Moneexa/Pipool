@@ -1,5 +1,6 @@
 {
     "apiUrl": "http://localhost:4242/api",
+    "socketHost": "http://localhost:4242",
     "google": {
         "clientId": "110053771767-189lvlqc6v89acs4lub3v62odqivt6g2.apps.googleusercontent.com",
         "apiKey": "AIzaSyDe6galtm6BnVZE-8PfF7v8YtZzSeyO9S0"
