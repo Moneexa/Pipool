@@ -1,7 +1,8 @@
 import React from 'react'
-import styles from '../CampaignApply/CampaignApply.module.css';
+import styles from '../../../influence/pages/CampaignApply/CampaignApply.module.css';
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import { useEffect, useState } from 'react';
+import { useEffect, useState , useRef} from 'react';
+import io from 'socket.io-client'
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 export default function CampaignChat({ match }) {
@@ -9,6 +10,8 @@ export default function CampaignChat({ match }) {
     const [messages, setMessages] = useState([])
     const [indMessage, setIndMessages] = useState({})
     const [text, setText] = useState("")
+    const [id, setId]=useState();
+    const socketRef = useRef();
     const [namesArray, setNamesArray] = useState([{ name: "Name1", 
     lastConv:"fucking conv",
     date: "date" }, { name: "Name2",
@@ -22,10 +25,16 @@ export default function CampaignChat({ match }) {
     useEffect(() => {
         getCampaignOwnerName(campaignId)
         setMessages(chatArray);
+        socketRef.current = io.connect('/');
+        socketRef.current.on('your id', id=>{setId(id)});
+        socketRef.current.on('message', message=>{receivedMsgs(message)})
 
     }, [getCampaignOwnerName, campaignOwnerName, campaignId])
+    function receivedMsgs(messages){
+        setMessages(messages)
+    }
     function messagesOnChange(event) {
-
+       event.preventDefault();
         if (event.key === "Enter") {
             console.log(typeof messages)
             let arr = messages.concat(indMessage)
