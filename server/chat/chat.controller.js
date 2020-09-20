@@ -1,4 +1,5 @@
 var ChatModel = require('./chat.model.js');
+var ProposalModel = require('../proposals/proposalModel');
 const config = require('../config.json')
 const axios = require('axios')
 
@@ -16,6 +17,12 @@ async function create(req, res) {
     try {
         const { campaignId, channelId, brandId } = req.body;
 
+        const proposal = await ProposalModel.findOne({ campaign: campaignId, channel: channelId });
+
+        if(!proposal) res.status(400).send("Proposal not submitted yet");
+
+        let initialChat = proposal.proposal;
+
         let existingChat = await ChatModel.findOne({ brand: brandId, campaign: campaignId, channel: channelId });
         if (existingChat) {
             return res.status(400).send('Chat already exists you cannot create again');
@@ -24,7 +31,12 @@ async function create(req, res) {
         var chat = new ChatModel({
             brand: brandId,
             campaign: campaignId,
-            channel: channelId
+            channel: channelId,
+            texts: [{
+                date: new Date(),
+                fromBrand: false,
+                value: initialChat
+            }]
         });
 
         await chat.save();

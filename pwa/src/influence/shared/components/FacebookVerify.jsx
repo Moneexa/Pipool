@@ -9,12 +9,21 @@ import { Modal, Button } from 'react-bootstrap'
 import { useState } from 'react';
 
 
-export function FacebookVerify(props) {
+export function FacebookVerify({
+    category,
+    basicPrice,
+    basicDescription,
+    standardPrice,
+    standardDescription,
+    premiumPrice,
+    premiumDescription
+}) {
     const authFacebook = useStoreActions(actions => actions.channels.authFacebook);
     const [showPopup, setShowPopup] = useState(false)
     const [token, setToken] = useState(false)
     const [selectedAccount, setSelectedAccount] = useState(0)
     const [accountsList, setAccountsList] = useState([])
+    const formValid = (category && basicPrice && basicDescription && standardPrice && standardDescription && premiumPrice && premiumDescription);
     function openPopup() {
         const host = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port;
         const oauthWindow = window.open(encodeURI(`${config.facebookPages.uri}/?redirect_uri=${host}${config.facebookPages.redirectURI}&client_id=${config.facebookPages.appId}&scope=${config.facebookPages.scope}&response_type=token&state={"{st=state123abc,ds=123456789}"}`));
@@ -48,7 +57,15 @@ export function FacebookVerify(props) {
     function handleSubmit() {
         console.log(selectedAccount)
         console.log(accountsList)
-        authFacebook({ token: token, id: accountsList[selectedAccount].id, category: props.category })
+        authFacebook({
+            token: token, id: accountsList[selectedAccount].id, category: category,
+            basicPrice,
+            basicDescription,
+            standardPrice,
+            standardDescription,
+            premiumPrice,
+            premiumDescription
+        })
 
         //console.log('here')
         setShowPopup(false)
@@ -95,7 +112,7 @@ export function FacebookVerify(props) {
             <button type="button"
                 onClick={() => openPopup()}
                 className="btn btn-primary rounded-20 text-white"
-                disabled={!props.category}
+                disabled={!formValid}
             >
                 <FontAwesomeIcon icon={faFacebook} />
             &nbsp; Facebook +

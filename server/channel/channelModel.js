@@ -10,7 +10,31 @@ var ChannelSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'User'
 	},
-	'category' : String
+	'category' : String,
+	basicPrice: {
+		type: Number,
+		required: true
+	},
+	basicDescription: {
+		type: String,
+		required: true
+	},
+	standardPrice: {
+		type: Number,
+		required: true
+	},
+	standardDescription: {
+		type: String,
+		required: true
+	},
+	premiumPrice: {
+		type: Number,
+		required: true
+	},
+	premiumDescription: {
+		type: String,
+		required: true
+	}
 });
 
 module.exports = mongoose.model('Channel', ChannelSchema);

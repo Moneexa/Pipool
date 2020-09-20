@@ -40,7 +40,7 @@ export default function CompaignManager() {
 
                         return (<tr key={index} >
                             <td style={{ color: "#ffc809" }}>
-                                <Link to={`/brand/campaigns/${element._id}/campaign-invite`}>{element.serviceName}</Link>
+                                <Link to={`/brand/campaigns/${element._id}`}>{element.serviceName}</Link>
                             </td>
                             <td>0</td>
                             <td>0</td>

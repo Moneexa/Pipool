@@ -214,8 +214,13 @@ module.exports = {
                         followers: channel.statistics.subscriberCount,
                         channelType: 'youtube',
                         category: req.body.category,
+                        basicPrice: req.body.basicPrice,
+                        basicDescription: req.body.basicDescription,
+                        standardPrice: req.body.standardPrice,
+                        standardDescription: req.body.standardDescription,
+                        premiumPrice: req.body.premiumPrice,
+                        premiumDescription: req.body.premiumDescription,
                         createdBy: res.locals.user.id
-
                     })
                     const newChannel = await channels.save();
                     return res.status(201).send(newChannel)
@@ -241,6 +246,12 @@ module.exports = {
                 followers: resp.data.fan_count,
                 channelType: 'facebook',
                 category: req.body.category,
+                basicPrice: req.body.basicPrice,
+                basicDescription: req.body.basicDescription,
+                standardPrice: req.body.standardPrice,
+                standardDescription: req.body.standardDescription,
+                premiumPrice: req.body.premiumPrice,
+                premiumDescription: req.body.premiumDescription,
                 createdBy: res.locals.user.id
 
             });
@@ -266,8 +277,13 @@ module.exports = {
                 followers: resp.data.followers_count,
                 channelType: 'instagram',
                 category: req.body.category,
+                basicPrice: req.body.basicPrice,
+                basicDescription: req.body.basicDescription,
+                standardPrice: req.body.standardPrice,
+                standardDescription: req.body.standardDescription,
+                premiumPrice: req.body.premiumPrice,
+                premiumDescription: req.body.premiumDescription,
                 createdBy: res.locals.user.id
-
             });
             await channel.save();
             return res.status(201).send(channel)
@@ -354,7 +370,7 @@ module.exports = {
             const suggestedChannels = await ChannelModel.find({
                 'category': {
                     '$in': campaign.interests
-                },  
+                },
                 'followers': {
                     '$gt': campaign.minFollowers
                 },
