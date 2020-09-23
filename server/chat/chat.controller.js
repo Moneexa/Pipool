@@ -17,9 +17,9 @@ async function create(req, res) {
     try {
         const { campaignId, channelId, brandId } = req.body;
 
-        const proposal = await ProposalModel.findOne({ campaign: campaignId, channel: channelId });
+        const proposal = await ProposalModel.findOne({ campaignId: campaignId, channelId: channelId });
 
-        if(!proposal) res.status(400).send("Proposal not submitted yet");
+        if(!proposal) return res.status(400).send("Proposal not submitted yet");
 
         let initialChat = proposal.proposal;
 
@@ -40,10 +40,10 @@ async function create(req, res) {
         });
 
         await chat.save();
-        return res.status(201).json(chat);
+        return res.status(201).send(chat);
     }
     catch (error) {
-        return res.status(500).json({
+        return res.status(500).send({
             message: 'Error when creating chat',
             error: err
         });

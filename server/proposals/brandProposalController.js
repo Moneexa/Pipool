@@ -29,7 +29,8 @@ module.exports = {
     show: async function (req, res) {
         var id = req.params.campaignId;
         console.log(id)
-        const proposals = await proposalModel.find({ campaignId: id }).populate({path: 'createdBy', select: 'fullName'});
+        const proposals = await proposalModel.find({ campaignId: id }).populate({path: 'channelId', select: 'channelName'});
+        console.log(proposals)
 
         if (!proposals) {
             res.status(404).json({

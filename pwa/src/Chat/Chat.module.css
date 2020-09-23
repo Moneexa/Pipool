@@ -7,6 +7,25 @@
     border: solid 1px #e0e0e0;
 }
 
+.sidebar .room {
+    padding: 11px;
+    border-bottom: solid 1px #f2f2f2;
+}
+
+.sidebar .room.active {
+    border-right: solid 4px #37a000;
+    background-color: #f9f9f9;
+}
+
+.sidebar .room:hover {
+    background-color: #f2f2f2;
+}
+
+.sidebar .subTitle {
+    color: #a0a0a0!important;
+    font-size: 12px;
+}
+
 .messagesContainer {
     border: solid 1px #e0e0e0;
     border-left: 0px;
@@ -24,7 +43,7 @@
 }
 
 .messages .message {
-    padding: 15px 30px 5px;
+    padding: 15px 30px 0px;
 }
 
 .messages .message:hover {
@@ -50,7 +69,11 @@
 }
 
 .messages .message .nameAndText .text{
-    padding-top: 10px;
+    padding-bottom: 15px;
+}
+
+.messages .message .nameAndText .text p {
+    margin-bottom: 0;
 }
 
 .messageInputContainer {
@@ -61,4 +84,9 @@
 .messageInputContainer input {
     border: solid 1px #e0e0e0;
     padding: 10px 12px;
+}
+
+.borderBottom {
+    height: 1px;
+    background-color: #e0e0e0;
 }

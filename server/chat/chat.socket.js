@@ -17,12 +17,19 @@ function init(socket) {
 
 async function joinChannelRooms(socket, { channelId }) {
     try {
-        const rooms = await ChatModel.find({ channel: channelId });
+        const rooms = await ChatModel
+            .find({ channel: channelId })
+            .populate('campaign')
+            .populate('channel', 'channelName')
+            .populate('brand', 'name');
         const parsedRooms = [];
         for (let room of rooms) {
             socket.join(room.id)
             parsedRooms.push({
                 id: room.id,
+                title: room.campaign.serviceName,
+                channel: room.channel,
+                brand: room.brand
             });
         }
         if (parsedRooms.length > 0) {
@@ -40,12 +47,20 @@ async function joinChannelRooms(socket, { channelId }) {
 
 async function joinBrandRooms(socket, { brandId }) {
     try {
-        const rooms = await ChatModel.find({ brand: brandId });
+        const rooms = await ChatModel
+            .find({ brand: brandId })
+            .populate('campaign')
+            .populate('channel', 'channelName')
+            .populate('brand', 'name')
+        // .execPopulate();
         const parsedRooms = [];
         for (let room of rooms) {
             socket.join(room.id)
             parsedRooms.push({
                 id: room.id,
+                title: room.campaign.serviceName,
+                channel: room.channel,
+                brand: room.brand
             });
         }
         if (parsedRooms.length > 0) {
