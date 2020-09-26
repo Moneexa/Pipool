@@ -18,6 +18,8 @@ const campaignRoute = require('./campaign/campaignRoutes')
 const twitter = require('./channel/channelRoutes');
 const videos =  require('./videos/videosRoutes');
 const chats =  require('./chat/chat.route');
+const bankAccounts = require('./bank-accounts/bank-accounts.route');
+const customers = require('./customers/customers.route');
 const chatsSocket =  require('./chat/chat.socket');
 
 
@@ -40,7 +42,9 @@ app.use('/api/influencers/channels', twitter);
 app.use('/api/channels/insights', insightsRoute);
 app.use('/api/brands/proposals', brandProposalRoutes);
 app.use('/api/influencers/proposals', influencerProposalRoute);
-app.use('/api/chats', chats)
+app.use('/api/chats', chats);
+app.use('/api/bank-accounts', bankAccounts)
+app.use('/api/customers', customers)
 
 
 

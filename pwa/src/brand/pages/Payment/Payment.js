@@ -4,15 +4,54 @@ import { faCreditCard, faQuestionCircle } from '@fortawesome/free-regular-svg-ic
 import { faUniversity } from '@fortawesome/free-solid-svg-icons';
 import { faPaypal, faCcVisa, faCcMastercard, faCcAmex } from '@fortawesome/free-brands-svg-icons'
 import { Nav, InputGroup, FormControl, Button, Form, Row } from 'react-bootstrap';
-
+import axios from 'axios';
+import config from '../../../config.json';
+import { loadStripe } from '@stripe/stripe-js';
 import './Payment.css'
+import { debug } from 'easy-peasy';
+// Make sure to call `loadStripe` outside of a component’s render to avoid
+// recreating the `Stripe` object on every render.
+const stripePromise = loadStripe('pk_test_51HUsxfF8ao4ESfFgbwsKhUh3bJ4HUkeZbdrubMhGFCaSZYDFxaavzi11p2XUS48r5knWnhOARRgpK7G36DMtRrIJ008GzBLwN8');
+
 class Payment extends React.Component {
+
+    addBankAccount() {
+        // createAccount();
+        const { data } = axios.post(config.apiUrl + '/bank-accounts');
+        console.log(data);
+    }
+
+    // addCardInformation() {
+    //     const { data } = axios.post(config.apiUrl + '/customers/session');
+    //     console.log(data);
+    // }
+
+    addCardInformation = async (event) => {
+        // Call your backend to create the Checkout session.
+        const { data } = await axios.post(config.apiUrl+'/customers/session');
+        // When the customer clicks on the button, redirect them to Checkout.
+        const stripe = await stripePromise;
+        const { error } = await stripe.redirectToCheckout({
+            sessionId: data.sessionId,
+        });
+        // If `redirectToCheckout` fails due to a browser or network
+        // error, display the localized error message to your customer
+        // using `error.message`.
+      };
+
+
     render() {
 
 
         return (
 
             <div className="payment">
+                <button onClick={() => this.addBankAccount()} type="button" className="btn btn-primary">
+                    <FontAwesomeIcon icon={faPaypal} />Log in my Paypal
+                </button>
+                <button onClick={() => this.addCardInformation()} type="button" className="btn btn-primary">
+                    <FontAwesomeIcon icon={faPaypal} />Add Credit Card
+                </button>
                 <div className="card-body p-5">
                     <Nav variant="pills" defaultActiveKey="#nav-tab-card" className="nav bg-light nav-pills rounded nav-fill mb-3" role="tablist">
                         <Nav.Item className="nav-item">
@@ -72,21 +111,21 @@ class Payment extends React.Component {
                                     </InputGroup>
                                 </Form.Group>
                                 <Row>
-                                <Form.Group controlId="expiration" className="col-md-8">
-                                    <Form.Label>Expiration</Form.Label>
-                                    <InputGroup className="mb-3">
-                                        <Form.Control placeholder="MM" name="" type="number" />
-                                        <Form.Control placeholder="YY" name="" type="number" />
+                                    <Form.Group controlId="expiration" className="col-md-8">
+                                        <Form.Label>Expiration</Form.Label>
+                                        <InputGroup className="mb-3">
+                                            <Form.Control placeholder="MM" name="" type="number" />
+                                            <Form.Control placeholder="YY" name="" type="number" />
 
-                                    </InputGroup>
+                                        </InputGroup>
 
-                                </Form.Group>
-                                <Form.Group controlId="cVV" className="col-md-4">
-                                    <Form.Label>CVV</Form.Label>
-                                    <FontAwesomeIcon icon={faQuestionCircle} />
-                                    <Form.Control type="number" placeholder="" required="" />
+                                    </Form.Group>
+                                    <Form.Group controlId="cVV" className="col-md-4">
+                                        <Form.Label>CVV</Form.Label>
+                                        <FontAwesomeIcon icon={faQuestionCircle} />
+                                        <Form.Control type="number" placeholder="" required="" />
 
-                                </Form.Group>
+                                    </Form.Group>
                                 </Row>
                                 <Button className="subscribe btn btn-primary btn-block" type="submit" value="submit"> Confirm  </Button>
 
@@ -101,14 +140,10 @@ class Payment extends React.Component {
                             <p>
                                 <button type="button" className="btn btn-primary">
                                     <FontAwesomeIcon icon={faPaypal} />
-
-
                                         Log in my Paypal
-
-                                         </button>
+                                </button>
                             </p>
-                            <p><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. </p>
+                            <p><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
                         </div>
                         <div className="tab-pane fade" id="nav-tab-bank">
                             <p>Bank accaunt details</p>
@@ -124,42 +159,16 @@ tempor incididunt ut labore et dolore magna aliqua. </p>
                                 <dt>IBAN: </dt>
                                 <dd> 123456789</dd>
                             </dl>
-                            <p><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. </p>
+                            <p><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
                         </div>
                     </div>
 
                 </div>
-
-
-
-
-
-
-
-
             </div>
 
         )
 
-
-
-
-
-
-
-
-
-
     }
-
-
-
-
-
-
-
-
 }
 
 export default Payment
