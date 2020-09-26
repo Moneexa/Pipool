@@ -4,21 +4,26 @@ import * as toastr from 'toastr';
 
 const { action, thunk } = require("easy-peasy");
 
-export const customerModel = {
+export const CustomerModel = {
     loading: false,
-    account: null,
-    secret: null,
-    customerSaved: false,
-    fetchSecret: thunk(async (actions, payload) => {
+    paymentVerified: false,
+    setLoading: action((state, { value }) => {
+        state.loading = value;
+    }),
+    setPaymentVerified: action((state, { value }) => {
+        state.paymentVerified = value;
+    }),
+    verifyPayment: thunk(async (actions, payload) => {
         try {
-            const { data } = axios.post(config.apiUrl + '/bank-accounts');
+            actions.setLoading(true);
+            const { data } = axios.get(config.apiUrl + '/customers/verify-payment-setup');
+            actions.setPaymentVerified(true)
             console.log(data);
 
         } catch (error) {
             console.log(error)
-            toastr.error("you have already submitted the proposal")
+        } finally {
+            actions.setLoading(false);
         }
-        actions.updateLoading(false);
-    }),
-
+    })
 };
