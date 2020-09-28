@@ -6,7 +6,15 @@ import { useStoreActions } from 'easy-peasy';
 import { Modal, Button } from 'react-bootstrap';
 const gapi = window.gapi;
 let GoogleAuth = window.GoogleAuth;
-export function YoutubeVerify(props) {
+export function YoutubeVerify({
+    category,
+    basicPrice,
+    basicDescription,
+    standardPrice,
+    standardDescription,
+    premiumPrice,
+    premiumDescription
+}) {
     var SCOPE = 'https://www.googleapis.com/auth/youtubepartner-channel-audit';
     var discoveryUrl = 'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest';
 
@@ -17,6 +25,8 @@ export function YoutubeVerify(props) {
     const [channels, setChannels] = useState([]);
     const [selectedChannelIndex, setSelectedChannelIndex] = useState(0);
     const [user, setUser] = useState(undefined);
+
+    const formValid = (category && basicPrice && basicDescription && standardPrice && standardDescription && premiumPrice && premiumDescription);
 
     const initClient = useCallback(() => {
         gapi.client.init({
@@ -62,7 +72,13 @@ export function YoutubeVerify(props) {
         const body = {
             id: channel.id,
             token: user.token,
-            category: props.category
+            category: category,
+            basicPrice,
+            basicDescription,
+            standardPrice,
+            standardDescription,
+            premiumPrice,
+            premiumDescription
         }
         saveYoutube(body);
     };
@@ -71,7 +87,7 @@ export function YoutubeVerify(props) {
 
         <div>
             <button onClick={() => handleAuthClick()}
-                disabled={!props.category || !canSignIn}
+                disabled={!formValid || !canSignIn}
 
                 className="btn btn-primary rounded-20 text-white" type="button" >
                 <FontAwesomeIcon icon={faYoutube} /> Youtube +

@@ -7,11 +7,29 @@ import { InstagramVerify } from '../../shared/components/InstagramVerify'
 import { TiktokVerify } from '../../shared/components/TiktokVerify'
 import { Spinner } from 'react-bootstrap';
 import { useStoreState } from 'easy-peasy';
+import ReactQuill from 'react-quill';
 
 
 function AddChannel() {
     const [category, setCategory] = useState("");
+    const [basicPrice, setBasicPrice] = useState("");
+    const [basicDescription, setBasicDescription] = useState("");
+    const [standardPrice, setStandardPrice] = useState("");
+    const [standardDescription, setStandardDescription] = useState("");
+    const [premiumPrice, setPremiumPrice] = useState("");
+    const [premiumDescription, setPremiumDescription] = useState("");
     const loading = useStoreState(state => state.channels.loading)
+
+    const [editorConfig, _] = useState({
+        toolbar: {
+            container: [
+                [{ size: [] }],
+                ['bold', 'italic', 'underline'],
+                [{ list: 'ordered' }, { list: 'bullet' }],
+                ['link']
+            ]
+        },
+    })
 
     function onCategoryChange(e) {
         setCategory(e.target.value)
@@ -32,20 +50,14 @@ function AddChannel() {
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
 
                 <h2 className="m-0 font-weight-bold text-primary">Add New Channel</h2>
-
-
-
             </div>
-
             <form className="user">
 
                 <div className="form-group">
-
-
                     <div className="form-group m-3 mb-sm-0">
                         <div className="col-md-12">
                             <label>Selelct Channel Category*</label>
-                            <select className="browser-default custom-select h-auto pad-12" id="category" name="category" value={category} onChange={onCategoryChange}>
+                            <select className="browser-default custom-select rounded-sm h-auto pad-12" id="category" name="category" value={category} onChange={onCategoryChange}>
                                 <option selected>Select</option>
                                 <option value="animal">Animal</option>
                                 <option value="art">Art</option>
@@ -74,20 +86,128 @@ function AddChannel() {
                                 <option value="tech">Tech</option>
                                 <option value="travel">Travel</option>
                                 <option value="tv">TV</option>
-
                             </select>
 
-                            <div className="row">
-                                <div className="col-md-3 my-3"><InstagramVerify category={category} /> </div>
-                                <div className="col-md-2 my-3"><YoutubeVerify category={category}/> </div>
-                                <div className="col-md-3 my-3"><TwitterVerify category={category} /> </div>
-                                <div className="col-md-2 my-3"><TiktokVerify category={category} /> </div>
-                                <div className="col-md-2 my-3"><FacebookVerify category={category}/> </div>
+                            <div className="d-flex package-container mt-3">
+                                <div className="package mb-3">
+                                    <div className="package-header border border-right-0 border-top-left d-flex align-items-center justify-content-center">
+                                        Basic
+                                    </div>
+                                    <div className="package-body p-3 border border-right-0 border-top-0">
+                                        <div className="form-group">
+                                            <input onChange={(event) => setBasicPrice(event.target.value)} type="number" className="form-control rounded-sm" placeholder="Price" />
+                                        </div>
+                                        <div className="desc-container">
+                                            <ReactQuill
+                                                theme="snow"
+                                                className=""
+                                                style={{ height: '300px' }}
+                                                value={basicDescription}
+                                                onChange={(e) => { setBasicDescription(e) }}
+                                                name="proposal"
+                                                modules={editorConfig}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
 
+                                <div className="package mb-3">
+                                    <div className="package-header border border-right-0 d-flex align-items-center justify-content-center">
+                                        Standard
+                                    </div>
+                                    <div className="package-body p-3 border border-right-0 border-top-0">
+                                        <div className="form-group">
+                                            <input onChange={(event) => setStandardPrice(event.target.value)} type="number" className="form-control rounded-sm" placeholder="Price" />
+                                        </div>
+                                        <div className="desc-container">
+                                            <ReactQuill
+                                                theme="snow"
+                                                className=""
+                                                style={{ height: '300px' }}
+                                                value={standardDescription}
+                                                onChange={(e) => { setStandardDescription(e) }}
+                                                name="proposal"
+                                                modules={editorConfig}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="package mb-3">
+                                    <div className="package-header border border-top-right d-flex align-items-center justify-content-center">
+                                        Premium
+                                    </div>
+                                    <div className="package-body p-3 border border-top-0">
+                                        <div className="form-group">
+                                            <input onChange={(event) => setPremiumPrice(event.target.value)} type="number" className="form-control rounded-sm" placeholder="Price" />
+                                        </div>
+                                        <div className="desc-container">
+                                            <ReactQuill
+                                                theme="snow"
+                                                className=""
+                                                style={{ height: '300px' }}
+                                                value={premiumDescription}
+                                                onChange={(e) => { setPremiumDescription(e) }}
+                                                name="proposal"
+                                                modules={editorConfig}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
-
-
+                            <div className="row">
+                                <div className="col-md-3 my-3">
+                                    <InstagramVerify
+                                        category={category}
+                                        basicPrice={basicPrice}
+                                        basicDescription={basicDescription}
+                                        standardPrice={standardPrice}
+                                        standardDescription={standardDescription}
+                                        premiumPrice={premiumPrice}
+                                        premiumDescription={premiumDescription} />
+                                </div>
+                                <div className="col-md-2 my-3">
+                                    <YoutubeVerify
+                                        category={category}
+                                        basicPrice={basicPrice}
+                                        basicDescription={basicDescription}
+                                        standardPrice={standardPrice}
+                                        standardDescription={standardDescription}
+                                        premiumPrice={premiumPrice}
+                                        premiumDescription={premiumDescription} />
+                                </div>
+                                <div className="col-md-2 my-3">
+                                    <FacebookVerify
+                                        category={category}
+                                        basicPrice={basicPrice}
+                                        basicDescription={basicDescription}
+                                        standardPrice={standardPrice}
+                                        standardDescription={standardDescription}
+                                        premiumPrice={premiumPrice}
+                                        premiumDescription={premiumDescription} />
+                                </div>
+                                {/* <div className="col-md-3 my-3">
+                                    <TwitterVerify
+                                        category={category}
+                                        basicPrice={basicPrice}
+                                        basicDescription={basicDescription}
+                                        standardPrice={standardPrice}
+                                        standardDescription={standardDescription}
+                                        premiumPrice={premiumPrice}
+                                        premiumDescription={premiumDescription} />
+                                </div>
+                                <div className="col-md-2 my-3">
+                                    <TiktokVerify
+                                        category={category}
+                                        basicPrice={basicPrice}
+                                        basicDescription={basicDescription}
+                                        standardPrice={standardPrice}
+                                        standardDescription={standardDescription}
+                                        premiumPrice={premiumPrice}
+                                        premiumDescription={premiumDescription} />
+                                </div> */}
+                            </div>
                         </div>
                     </div>
 

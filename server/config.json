@@ -16,31 +16,32 @@
         "clientId": "865ntwzmhauy0w",
         "scope": "r_liteprofile,r_emailaddress",
         "responseType": "code",
-        "grant_type" : "authorization_code",
+        "grant_type": "authorization_code",
         "client_secret": "pONWp2pvkJrrJg7I"
     },
-    "tiktok":{
+    "tiktok": {
         "username": "doomed96",
         "key": "059b94221dmsh387d8c69d69c540p1b7ba5jsn7620540538d5",
-        "video_id" : "6852694931270618370"
+        "video_id": "6852694931270618370"
     },
     "instagram": {
         "appId": "2362555797382454",
         "redirectURI": "https://localhost:3000/oauth-redirect",
         "scope": "user_profile,user_media",
-        "secret" : "eea55b63024a65c2dde528fb379a16dd"
-        
+        "secret": "eea55b63024a65c2dde528fb379a16dd"
     },
-    "twitter":{
-            "api_key":"ZrY5mHYxKKd8TDTOh0ZNk8ex1",
-            "api_secret": "F8peao6czqDaQFDbQncNeH4C3T1MVtxP0UyJJvPaBdoER7pJrf",
-            "redirectUri": "http://127.0.0.1:3000/oauth-redirect"
-        },
-    
+    "twitter": {
+        "api_key": "ZrY5mHYxKKd8TDTOh0ZNk8ex1",
+        "api_secret": "F8peao6czqDaQFDbQncNeH4C3T1MVtxP0UyJJvPaBdoER7pJrf",
+        "redirectUri": "http://127.0.0.1:3000/oauth-redirect"
+    },
     "smtp": {
         "email": "mohsin.studysmarter@gmail.com",
         "password": "v3RX-%RST>n!qbb"
     },
-    "domain": "http://localhost:3000"
-    
+    "domain": "http://localhost:3000",
+    "stripe": {
+        "publicKey": "pk_test_51HUsxfF8ao4ESfFgbwsKhUh3bJ4HUkeZbdrubMhGFCaSZYDFxaavzi11p2XUS48r5knWnhOARRgpK7G36DMtRrIJ008GzBLwN8",
+        "privateKey": "sk_test_51HUsxfF8ao4ESfFgORFPrBcf9dk26iuDHFsyEYr0Y0OJ8oxliy1AJNGRw9hzjEsQcy80lGcaa9bpUs5855CJtYOz00BgTjY5is"
+    }
 }

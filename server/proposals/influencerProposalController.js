@@ -49,7 +49,7 @@ module.exports = {
         console.log(req.body.dateOfSubmission)
         console.log(req.body.campaignId)
 
-        const props = proposalModel.findOne({ createdBy: res.locals.user.id }, function (err, proposal) {
+        const props = proposalModel.findOne({ channelId: req.body.channelId,  campaignId: req.body.campaignId}, function (err, proposal) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting such proposal.',

@@ -8,12 +8,21 @@ import { Modal, Button } from 'react-bootstrap'
 import { useState } from 'react';
 import axios from 'axios';
 
-export function InstagramVerify(props) {
+export function InstagramVerify({
+    category,
+    basicPrice,
+    basicDescription,
+    standardPrice,
+    standardDescription,
+    premiumPrice,
+    premiumDescription
+}) {
     const authInsta = useStoreActions(actions => actions.channels.authInsta)
     const [showPopup, setShowPopup] = useState(false)
     const [token, setToken] = useState(false)
     const [selectedAccount, setSelectedAccount] = useState(0)
     const [accountsList, setAccountsList] = useState([])
+    const formValid = (category && basicPrice && basicDescription && standardPrice && standardDescription && premiumPrice && premiumDescription);
     function openPopup() {
         //   authenticateInsta();
         const host = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port;
@@ -48,7 +57,17 @@ export function InstagramVerify(props) {
     function handleSubmit() {
         console.log(selectedAccount)
         console.log(accountsList)
-        authInsta({ token: token, id: accountsList[selectedAccount].instagram_business_account.id, category: props.category })
+        authInsta({
+            token: token, 
+            id: accountsList[selectedAccount].instagram_business_account.id,
+            category: category,
+            basicPrice,
+            basicDescription,
+            standardPrice,
+            standardDescription,
+            premiumPrice,
+            premiumDescription
+        })
 
         //console.log('here')
         setShowPopup(false)
@@ -94,7 +113,7 @@ export function InstagramVerify(props) {
                 </Modal.Footer>
             </Modal>
             <button
-                type="button" disabled={!props.category}
+                type="button" disabled={!formValid}
 
                 onClick={() => openPopup()}
                 className="btn btn-primary rounded-20 text-white">
