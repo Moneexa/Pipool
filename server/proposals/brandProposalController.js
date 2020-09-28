@@ -29,7 +29,7 @@ module.exports = {
     show: async function (req, res) {
         var id = req.params.campaignId;
         console.log(id)
-        const proposals = await proposalModel.find({ campaignId: id }).populate({path: 'channelId', select: 'channelName'});
+        const proposals = await proposalModel.find({ campaignId: id }).populate({path: 'channelId'});
         console.log(proposals)
 
         if (!proposals) {

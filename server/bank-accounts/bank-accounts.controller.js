@@ -14,9 +14,8 @@ async function create(req, res) {
         let accountId;
         if (!bankAccount) {
             const account = await stripe.accounts.create({
-                type: 'custom',
+                type: 'express',
                 capabilities: {
-                    card_payments: { requested: true },
                     transfers: { requested: true },
                 }
             });
@@ -30,13 +29,32 @@ async function create(req, res) {
             accountId = bankAccount.stripeAccountId;
         }
 
-        const accountLinks = await stripe.accountLinks.create({
-            account: accountId,
-            refresh_url: 'http://localhost:3000/brand/payment',
-            return_url: 'http://localhost:3000/brand/payment',
-            type: 'account_onboarding',
-        });
-        res.status(201).send(accountLinks);
+        const stripeAccount = await stripe.accounts.retrieve(
+            accountId
+        );
+
+        console.log(stripeAccount);
+        if (stripeAccount.requirements && (stripeAccount.requirements.errors.length > 0 || stripeAccount.requirements.disabled_reason)) {
+            const accountLinks = await stripe.accountLinks.create({
+                account: accountId,
+                refresh_url: 'http://localhost:3000/brand/payment',
+                return_url: 'http://localhost:3000/brand/payment',
+                type: 'account_onboarding',
+            });
+            return res.status(201).send({
+                status: false,
+                url: accountLinks.url
+            });
+        } else {
+            const loginLink = await stripe.accounts.createLoginLink(
+                accountId
+            );
+            return res.status(200).send({
+                status: true,
+                url: loginLink
+            });
+        }
+
     } catch (error) {
         return res.status(500).send('Unable to add an account');
     }

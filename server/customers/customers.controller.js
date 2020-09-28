@@ -25,8 +25,8 @@ async function create(req, res) {
             payment_method_types: ['card'],
             mode: 'setup',
             customer: customer.customerId,
-            success_url: 'http://localhost:3000/influencer/payment?session_id={CHECKOUT_SESSION_ID}',
-            cancel_url: 'http://localhost:3000/influencer/payment',
+            success_url: 'http://localhost:4242/api/customers/verify-session?session_id={CHECKOUT_SESSION_ID}',
+            cancel_url: 'http://localhost:4242/api/customers/verify-session',
         });
         return res.status(201).send({ sessionId: session.id })
     } catch (error) {

@@ -22,10 +22,13 @@ function Payment() {
         verifyPayment();
     }, [])
 
-    function addBankAccount() {
+    async function addBankAccount() {
         // createAccount();
-        const { data } = axios.post(config.apiUrl + '/bank-accounts');
+        const { data } = await axios.post(config.apiUrl + '/bank-accounts');
         console.log(data);
+        if (data && !data.status) {
+            window.open(data.url, '_blank');
+        }
     }
 
     // addCardInformation() {
@@ -48,12 +51,9 @@ function Payment() {
     return (
 
         <div className="payment">
-            <button onClick={() => addBankAccount()} type="button" className="btn btn-primary">
-                <FontAwesomeIcon icon={faPaypal} />Log in my Paypal
-                </button>
             <button disabled={!paymentVerified || loading} onClick={() => addCardInformation()} type="button" className="btn btn-primary">
                 <FontAwesomeIcon icon={faPaypal} />Add Credit Card
-                </button>
+            </button>
             <div className="card-body p-5">
                 <Nav variant="pills" defaultActiveKey="#nav-tab-card" className="nav bg-light nav-pills rounded nav-fill mb-3" role="tablist">
                     <Nav.Item className="nav-item">
