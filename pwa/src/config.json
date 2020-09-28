@@ -5,6 +5,8 @@
         "clientId": "110053771767-189lvlqc6v89acs4lub3v62odqivt6g2.apps.googleusercontent.com",
         "apiKey": "AIzaSyDe6galtm6BnVZE-8PfF7v8YtZzSeyO9S0"
     },
+    "STRIPE_PUBLIC_KEY":"pk_test_IeMtAWS6vRhN63uJlWsUC8bw00l2M6Vubf",
+
     "instagramBasic": {
         "appId": "263197894950161",
         "redirectURI": "/oauth-redirect",

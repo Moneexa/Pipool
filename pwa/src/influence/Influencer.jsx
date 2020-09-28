@@ -16,11 +16,7 @@ import Payment from './pages/Payment/Payment';
 import ChannelInsights from './pages/ChannelInsights/ChannelInsights'
 import CampaignInfo from './pages/CampaignInfo/CampaignInfo'
 import CampaignApply from './pages/CampaignApply/CampaignApply'
-<<<<<<< HEAD
-import CampaignChat from './pages/CampaignChat/CampaignChat'
-=======
 import { useStoreActions, useStoreState } from 'easy-peasy';
->>>>>>> ab519ba091b5951c82685426c424b0dd52ca90cd
 //import store from "./shared/store/store"
 
 export function Influencer({ match }) {

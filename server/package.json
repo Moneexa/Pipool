@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "\u001b[A\u001b[C\u001b[C\u001b[C\u001bserver.js)"
+    "test": "\u001b[A\u001b[C\u001b[C\u001b[C\u001bserver.js)" ,
+    "start" : "nodemon server.js"
   },
   "author": "",
   "license": "ISC",
@@ -25,11 +26,14 @@
     "mongoose": "^5.9.18",
     "node-fetch": "^2.6.0",
     "nodemailer": "^6.4.8",
+    "nodemon": "^2.0.4",
     "react-google-login": "^5.1.20",
     "smtp": "^0.1.4",
     "socket.io": "^2.3.0",
+    "stripe": "^8.96.0",
     "tiktok-api": "^0.4.1",
     "twitter-lite": "^0.14.0",
-    "unirest": "^0.6.0"
+    "unirest": "^0.6.0",
+    "uuid": "^8.3.0"
   }
 }
