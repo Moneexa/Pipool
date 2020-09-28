@@ -17,13 +17,9 @@ const influencerProposalRoute = require('./proposals/influencerProposalRoutes')
 const campaignRoute = require('./campaign/campaignRoutes')
 const twitter = require('./channel/channelRoutes');
 const videos =  require('./videos/videosRoutes');
-<<<<<<< HEAD
-const campaignInfluencer = require('./campaign/campaignInfluencerRoutes');
-=======
 const chats =  require('./chat/chat.route');
 const chatsSocket =  require('./chat/chat.socket');
 
->>>>>>> ab519ba091b5951c82685426c424b0dd52ca90cd
 
 var port = process.env.PORT || 4242;
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
@@ -44,10 +40,6 @@ app.use('/api/influencers/channels', twitter);
 app.use('/api/channels/insights', insightsRoute);
 app.use('/api/brands/proposals', brandProposalRoutes);
 app.use('/api/influencers/proposals', influencerProposalRoute);
-<<<<<<< HEAD
-app.use('/api/influencers/_campaigns' , campaignInfluencer);
-app.use('/api/videos', videos)
-=======
 app.use('/api/chats', chats)
 
 
@@ -58,6 +50,5 @@ const io = require('socket.io')(server, options);
 io.on('connection', socket => {
     chatsSocket.init(socket);
 })
->>>>>>> ab519ba091b5951c82685426c424b0dd52ca90cd
 
 server.listen(port, () => console.log('Server running on port 4242!'))
