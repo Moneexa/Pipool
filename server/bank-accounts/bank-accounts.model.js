@@ -7,7 +7,7 @@ var BankAccountSchema = new Schema({
         required: true,
         ref: 'User'
     },
-    'stripeAccountId': {
+    'paypalId': {
         type: String,
         required: true
     }

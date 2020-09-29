@@ -13,20 +13,35 @@ import './Payment.css'
 function Payment() {
 
     const [loading, setLoading] = useState(false);
-    const [accountEnabled, setAccountEnabled] = useState(false);
-    const [accountUrl, setAccountUrl] = useState(null);
+    const [paypalId, setPaypalId] = useState("");
+    // const [accountEnabled, setAccountEnabled] = useState(false);
+    // const [accountUrl, setAccountUrl] = useState(null);
+
+    // this code is for future implementation
+    // useEffect(async () => {
+    //     setLoading(true);
+    //     try {
+    //         const { data } = await axios.post(config.apiUrl + '/bank-accounts');
+    //         console.log(data);
+    //         setAccountUrl(data.url);
+    //         if (data && !data.status) {
+    //             setAccountEnabled(true);
+    //         } else {
+    //             setAccountEnabled(false);
+    //         }
+    //     } catch (error) {
+    //         console.error(error);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // }, [])
 
     useEffect(async () => {
         setLoading(true);
         try {
-            const { data } = await axios.post(config.apiUrl + '/bank-accounts');
+            const { data } = await axios.get(config.apiUrl + '/bank-accounts');
             console.log(data);
-            setAccountUrl(data.url);
-            if (data && !data.status) {
-                setAccountEnabled(true);
-            } else {
-                setAccountEnabled(false);
-            }
+            setPaypalId(data.paypalId)
         } catch (error) {
             console.error(error);
         } finally {
@@ -34,12 +49,31 @@ function Payment() {
         }
     }, [])
 
+    async function savePaypalId() {
+        try {
+            setLoading(true);
+            await await axios.post(config.apiUrl + '/bank-accounts', { paypalId });
+        } catch (error) {
+            console.error(error)
+        }
+        finally {
+            setLoading(false)
+        }
+    }
+
     async function updateBankAccount() {
-        window.open(accountUrl, '_blank');
+        // window.open(accountUrl, '_blank');
     }
     return (
         <div className="payment-influence">
             {
+                (loading) ? (
+                    <div className="loading-overlay d-flex justify-content-center align-items-center">
+                        <Spinner size="bg" animation="grow" variant="success" />
+                    </div>
+                ) : null
+            }
+            {/* {
                 (loading) ? (
                     <div className="loading-overlay d-flex justify-content-center align-items-center">
                         <Spinner size="bg" animation="grow" variant="success" />
@@ -53,34 +87,33 @@ function Payment() {
                         <FontAwesomeIcon icon={faPaypal} /> Open Dashboard
                     </button>
                 )
-            }
-            {/* <div className="card-body p-5">
-                <Nav variant="pills" defaultActiveKey="#nav-tab-card" className="nav bg-light nav-pills rounded nav-fill mb-3" role="tablist">
-                    <Nav.Item className="nav-item">
+            } */}
+            <div className="card-body p-5">
+                <Nav variant="pills" defaultActiveKey="#nav-tab-paypal" className="nav bg-light nav-pills rounded nav-fill mb-3" role="tablist">
+                    {/* <Nav.Item className="nav-item">
                         <Nav.Link href="#nav-tab-card" data-toggle="pill">
 
                             <FontAwesomeIcon icon={faCreditCard} />
                                   Credit Card
 
                             </Nav.Link>
-                    </Nav.Item>
+                    </Nav.Item> */}
                     <Nav.Item className="nav-item">
                         <Nav.Link data-toggle="pill" href="#nav-tab-paypal" >
                             <FontAwesomeIcon icon={faPaypal} />
                                     Paypal
-
                             </Nav.Link>
                     </Nav.Item>
-                    <Nav.Item className="nav-item">
+                    {/* <Nav.Item className="nav-item">
                         <Nav.Link data-toggle="pill" href="#nav-tab-bank">
                             <FontAwesomeIcon icon={faUniversity} />
                                       Bank Transfer
 
                                 </Nav.Link>
-                    </Nav.Item>
+                    </Nav.Item> */}
                 </Nav>
                 <div className="tab-content">
-                    <div className="tab-pane fade active show" id="nav-tab-card">
+                    {/* <div className="tab-pane fade active show" id="nav-tab-card">
                         <p className="alert alert-success">Some text success or error</p>
 
                         <Form>
@@ -128,21 +161,19 @@ function Payment() {
                             </Row>
                             <Button className="subscribe btn btn-primary btn-block" type="submit" value="submit"> Confirm  </Button>
                         </Form>
+                    </div> */}
+                    <div className="tab-pane fade active show" id="nav-tab-paypal">
+
+                        <Form.Group controlId="cardUserName">
+                            <Form.Label>Your Paypal Id</Form.Label>
+                            <Form.Control value={paypalId} onChange={(ev) => setPaypalId(ev.target.value)} type="text" placeholder="" required="" />
+                        </Form.Group>
+                        <button onClick={() => savePaypalId()} disabled={!paypalId} type="button" className="btn btn-primary">
+                            <FontAwesomeIcon icon={faPaypal} />
+                            <span>Save Paypal Id</span>
+                        </button>
                     </div>
-                    <div className="tab-pane fade" id="nav-tab-paypal">
-                        <p>Paypal is easiest way to pay online</p>
-                        <p>
-                            <button type="button" className="btn btn-primary">
-                                <FontAwesomeIcon icon={faPaypal} />
-
-
-                                        Log in my Paypal
-
-                                         </button>
-                        </p>
-                        <p><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                    </div>
-                    <div className="tab-pane fade" id="nav-tab-bank">
+                    {/* <div className="tab-pane fade" id="nav-tab-bank">
                         <p>Bank accaunt details</p>
                         <dl className="param">
                             <dt>BANK: </dt>
@@ -157,10 +188,10 @@ function Payment() {
                             <dd> 123456789</dd>
                         </dl>
                         <p><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                    </div>
+                    </div> */}
                 </div>
 
-            </div> */}
+            </div>
         </div>
 
     )

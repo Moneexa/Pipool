@@ -9,6 +9,8 @@ import axios from 'axios';
 import config from '../../../config.json';
 import { loadStripe } from '@stripe/stripe-js';
 import './Payment.css'
+import { PayPalButton } from "react-paypal-button-v2";
+
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
 const stripePromise = loadStripe('pk_test_51HUsxfF8ao4ESfFgbwsKhUh3bJ4HUkeZbdrubMhGFCaSZYDFxaavzi11p2XUS48r5knWnhOARRgpK7G36DMtRrIJ008GzBLwN8');
@@ -54,7 +56,22 @@ function Payment() {
             <button disabled={!paymentVerified || loading} onClick={() => addCardInformation()} type="button" className="btn btn-primary">
                 <FontAwesomeIcon icon={faPaypal} />Add Credit Card
             </button>
-            <div className="card-body p-5">
+            <PayPalButton
+        amount="0.01"
+        // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
+        onSuccess={(details, data) => {
+          alert("Transaction completed by " + details.payer.name.given_name);
+ 
+          // OPTIONAL: Call your server to save the transaction
+          return fetch("/paypal-transaction-complete", {
+            method: "post",
+            body: JSON.stringify({
+              orderID: data.orderID
+            })
+          });
+        }}
+      />
+            {/* <div className="card-body p-5">
                 <Nav variant="pills" defaultActiveKey="#nav-tab-card" className="nav bg-light nav-pills rounded nav-fill mb-3" role="tablist">
                     <Nav.Item className="nav-item">
                         <Nav.Link href="#nav-tab-card" data-toggle="pill">
@@ -165,7 +182,7 @@ function Payment() {
                     </div>
                 </div>
 
-            </div>
+            </div> */}
         </div>
     )
 }
