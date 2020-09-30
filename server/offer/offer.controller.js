@@ -73,13 +73,14 @@ async function update(req, res) {
 }
 async function list(req, res) {
 
-    const offer = await offerModel.find({ campaignId: req.params.campaignId, acceptanceStatus: "pending" })
+    const offer = await offerModel.find({ createdBy: res.locals.user.id, acceptanceStatus: "accept" })
     if (!offer) {
         return res.status(500).json({
             message: 'Error when getting offer.',
             error: err
         });
     }
+    console.log(offer)
 
     return res.json(offer);
 
@@ -90,7 +91,7 @@ async function show(req, res) {
         //var channelNames = []
 
         const channel = await channelModel.find({
-            createdBy: "5eede7e4373312d32c44f9a6"
+            createdBy: res.locals.user.id
         })
         if (!channel) {
             res.status(500).send("no channel offer found")

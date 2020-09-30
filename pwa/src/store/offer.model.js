@@ -58,5 +58,15 @@ export const OfferModel = {
         }
 
     }),
+    toBePayedOffer: thunk(async (actions, payload)=>{
+        try{
+            const res= await axios.get(`${config.apiUrl}/offer/to-be-payed`)
+            actions.updateOffersList(res.data)
+            
+        }
+        catch(error){
+             console.log(error)
+        }
+    })
 
 };

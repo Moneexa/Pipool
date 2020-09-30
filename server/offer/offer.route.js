@@ -6,7 +6,7 @@ var auth= require('../auth/auth');
  * POST
  */
 router.post('/create', auth.verify, controller.create);
-router.get('/:campaignId', auth.verify, controller.list);
+router.get('/to-be-payed', auth.verify, controller.list);
 router.get('/', auth.verify, controller.show);
 router.put('/', auth.verify, controller.update);
 
