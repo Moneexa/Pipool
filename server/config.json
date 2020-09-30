@@ -4,6 +4,7 @@
         "clientId": "529379787978-sgjjt3qpl23ivkp2boh1s3q03m3k5a8n.apps.googleusercontent.com",
         "clientSecret": ""
     },
+    "STRIPE_SECRET_KEY" :"sk_test_Ivw1HYQD733qNeI2tdWspm2800rfYWMrcj",
     "mongodb": {
         "url": "mongodb://ds117749.mlab.com:17749/likeus",
         "username": "root",

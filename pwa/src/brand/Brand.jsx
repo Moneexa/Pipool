@@ -16,6 +16,7 @@ import CampaignInvite from './pages/CampaignInfo/CampaignInvite/CampaignInvite'
 import './Brand.css';
 import CampaignInfo from './pages/CampaignInfo/CampaignInfo';
 import { useStoreActions, useStoreState } from 'easy-peasy';
+import SentOffer from './pages/SentOffer/SentOffer'
 
 //import store from "./shared/store/store"
 
@@ -122,6 +123,17 @@ export function Brand({ match }) {
                                 </Nav.Item>
                                 <Nav.Item>
 
+                                    <Nav.Link as={Link} to={`${match.path}/sent-offer`} className={!sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+
+                                        <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
+
+                                        {sidebarExpanded ? <span>&nbsp;</span> : null}
+
+                                        <span>Sent Offer</span>
+                                    </Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+
                                     <Nav.Link as={Link} to={`${match.path}/payment`} className={!sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
                                         <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
                                         {sidebarExpanded ? <span>&nbsp;</span> : null}
@@ -205,6 +217,8 @@ export function Brand({ match }) {
                                     <Route path={`${match.path}/help`} exact component={Help} />
                                     <Route path={`${match.path}/campaigns/:id`} exact={true} component={CampaignInfo} />
                                     <Route path={`${match.path}/campaigns/:id/campaign-invite`} exact={true} component={CampaignInvite} />
+                                    <Route path={`${match.path}/sent-offer`} exact={true} component={SentOffer} />
+
 
                                 </Switch>
                             </div>

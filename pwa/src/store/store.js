@@ -9,6 +9,7 @@ import { brandsProposalModel } from './brands-proposals.model'
 import { videosModel } from './videos.model'
 import { ChatModel } from './chat.model'
 import { CustomerModel } from './customer.model';
+import {OfferModel} from './offer.model'
 export const store = createStore({
     channels: ChannelModel,
     user: UserModel,
@@ -19,6 +20,7 @@ export const store = createStore({
     brandsProposals: brandsProposalModel,
     videos: videosModel,
     chats: ChatModel,
-    customer: CustomerModel
+    customer: CustomerModel,
+    offer: OfferModel,
     //notifications: thunk(notificationsReducer())
 });

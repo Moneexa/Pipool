@@ -56,3 +56,22 @@
 .deadline {
     width: 250px;
 }
+.inputBar{
+    background-color: rgba(0, 0, 0, .04);
+    border-radius: 50px;
+    font-size: 15px;
+    height: 36px;
+    text-align: left;
+
+}
+.messageClass{
+margin: 5px 10px;
+width:50vw;
+min-width:0;
+    padding: 9px 12px 11px;
+    background-color: var(--compose-input-background);
+    border: 1px solid rgba(0,0,0,.04);
+    border-radius: 21px;
+    flex: 1 1 auto;
+
+}

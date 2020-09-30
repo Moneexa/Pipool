@@ -26,6 +26,7 @@ let campaign = {
 export const CampaignModel = {
     loading: false,
     campaignList: [],
+    campainOwnerName:"",
     actv: {
         id: campaign.id,
         serviceName: campaign.serviceName,
@@ -77,12 +78,23 @@ export const CampaignModel = {
     postError: action((state, payload) => {
         state.errors.postErrorMessage = payload;
     }),
+    updateCampaignOwnerName: action((state, payload)=>{
+
+        state.campaignOwnerName=payload
+    }),
     listCampaign: thunk(async (actions, payload) => {
         const res = await axios.get(`${config.apiUrl}/campaigns/`);
         console.log(res.data)
 
         actions.updateCampaignList(res.data);
 
+
+    }),
+    getCampaignOwnerName: thunk(async (actions, payload)=>{
+        const campaignId = payload
+        const res = await axios.get(`${config.apiUrl}/influencers/_campaigns/${campaignId}`)
+        console.log(res.data.fullName);
+        actions.updateCampaignOwnerName(res.data.fullName)
 
     }),
     getCampaign: thunk(async (actions, payload) => {
