@@ -1,5 +1,7 @@
 import React from 'react'
 // import './PendingRequests.css'
+import { useStoreActions, useStoreState } from 'easy-peasy';
+import { useEffect, useState } from 'react';
 import { useStyles } from 'react-styles-hook'
 const style = useStyles({
     accept: {
@@ -31,70 +33,64 @@ const style = useStyles({
 })
 function PendingRequests() {
     const _styles = style
+    const offerList = useStoreState(state => state.offer.offerList)
+    const listOffers = useStoreActions(actions => actions.offer.listOffers);
+    const updateOffer= useStoreActions(actions=>actions.offer.updateOffer);
+    useEffect(
+        () => { listOffers() }, [offerList]
+
+    )
+    function acceptOffer(offerId){
+          updateOffer({offerId:offerId, acceptanceStatus:"accept"})
+
+    }
+    function declineOffer(offerId){
+        updateOffer({offerId:offerId, acceptanceStatus:"decline"})
+
+  }
+
     return (
 
         <div className="pending-requests">
 
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
 
-                <h2  className="m-0 font-weight-bold">Pending Requests</h2>
+                <h2 className="m-0 font-weight-bold">Pending Requests</h2>
 
             </div>
+            {
+                offerList.map( (value, index) => {
+                    return (
+                        <div id="border" className="" key={index}>
 
-            <div id="border" className="">
+                            <div className="card shadow mb-4 rounded-20 border-yellow border-5">
+                                <div className="card-body">
+                                    <div className="pb-2" style={{ padding: "0 !important" }}>
+                                        <div className="d-flex">
+                                            <div className="flex-fill">
+                                                <h3 style={{ color: "#585858" }}>{value.proposal.name}</h3>
+                                                <div className="d-flex justify-content-between influencer-sub-heading">
+                                                    <div><b>Date of Completion:</b> {value.proposal.dateSubmission}</div>
+                                                    {/* <div><b>Platform:</b> {value.Channel}</div> */}
+                                                    {/* <div><b>Category:</b>{value.Category}</div> */}
+                                                </div>
+                                            </div>
 
-                <div className="card shadow mb-4 rounded-20 border-yellow border-5">
-                    <div className="card-body">
-                        <div className="pb-2" style={{ padding: "0 !important" }}>
-                            <p className="text-secondary">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown.</p>
-                            <button style={_styles.accept} id="accept" className="rounded-30 px-5 text-white d-sm-inline-block btn btn-sm btn-primary shadow-sm mr-3">Accept</button>
-                            <button style={_styles.deny} className="rounded-30 px-5 text-white d-sm-inline-block btn btn-sm shadow-sm btn-danger">Deny</button>
 
+                                            <button style={_styles.accept} onClick={()=>{acceptOffer(value._id)}} id="accept" className="rounded-30 px-5 text-white d-sm-inline-block btn btn-sm btn-primary shadow-sm mr-3">Accept</button>
+                                            <button style={_styles.deny} onClick={()=>{declineOffer(value._id)}} className="rounded-30 px-5 text-white d-sm-inline-block btn btn-sm shadow-sm btn-danger">Deny</button>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
                         </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div id="border" className="">
-
-                <div className="card shadow mb-4 rounded-20 border-yellow border-5">
-                    <div className="card-body">
-
-                        <div className="pb-2" style={{ padding: "0 !important" }}>
-
-                            <p className="text-secondary">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown.</p>
-                            <button style={_styles.accept} id="accept" className="rounded-30 px-5 text-white d-sm-inline-block btn btn-sm btn-primary shadow-sm mr-3">Accept</button>
-                            <button style={_styles.deny} className="rounded-30 px-5 text-white d-sm-inline-block btn btn-sm shadow-sm btn-danger">Deny</button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-            <div id="border" className="">
-
-                <div className="card shadow mb-4 rounded-20 border-yellow border-5">
-
-                    <div className="card-body">
-
-                        <div className="pb-2" style={{ padding: "0 !important" }}>
-
-                            <p className="text-secondary">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown.</p>
-                            <button style={_styles.accept} id="accept" className="rounded-30 px-5 text-white d-sm-inline-block btn btn-sm btn-primary shadow-sm mr-3">Accept</button>
-                            <button style={_styles.deny} className="rounded-30 px-5 text-white d-sm-inline-block btn btn-sm shadow-sm btn-danger">Deny</button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
+                    )
+                })
+            }
             <div id="btn-top" className="mt-4 text-center small" style={{ marginBottom: "50px" }}>
 
                 <button style={_styles.seeMore} className="rounded-30 px-5 text-white d-sm-inline-block btn btn-sm btn-primary shadow-sm">See more</button>

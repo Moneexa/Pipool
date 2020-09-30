@@ -122,6 +122,17 @@ export function Brand({ match }) {
                                 </Nav.Item>
                                 <Nav.Item>
 
+                                    <Nav.Link as={Link} to={`${match.path}/calender`} className={!sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+
+                                        <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
+
+                                        {sidebarExpanded ? <span>&nbsp;</span> : null}
+
+                                        <span>Sent Offer</span>
+                                    </Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+
                                     <Nav.Link as={Link} to={`${match.path}/payment`} className={!sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
                                         <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
                                         {sidebarExpanded ? <span>&nbsp;</span> : null}

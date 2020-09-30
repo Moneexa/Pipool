@@ -6,7 +6,6 @@ var auth = require('../auth/auth')
 /*
  * GET
  */
-//router.get('/:id', auth.verify, channelController.list);
 router.get ('/:id/suggested-influencers', auth.verify, channelController.suggestedInfluencers)
 
 /*

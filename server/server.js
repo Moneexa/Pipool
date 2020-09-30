@@ -24,6 +24,8 @@ const chats =  require('./chat/chat.route');
 const bankAccounts = require('./bank-accounts/bank-accounts.route');
 const customers = require('./customers/customers.route');
 const chatsSocket =  require('./chat/chat.socket');
+const offer = require('./offer/offer.route');
+const { off } = require('./auth/user.model');
 
 
 var port = process.env.PORT || 4242;
@@ -73,6 +75,7 @@ app.use('/api/influencers/proposals', influencerProposalRoute);
 app.use('/api/chats', chats);
 app.use('/api/bank-accounts', bankAccounts)
 app.use('/api/customers', customers)
+app.use('/api/offer', offer);
 
 
 
