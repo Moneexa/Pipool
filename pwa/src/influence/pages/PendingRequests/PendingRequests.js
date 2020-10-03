@@ -37,12 +37,10 @@ function PendingRequests() {
     const listOffers = useStoreActions(actions => actions.offer.listOffers);
     const updateOffer= useStoreActions(actions=>actions.offer.updateOffer);
     useEffect(
-        () => { listOffers() }, [offerList]
-
+        () => { listOffers() }, []
     )
     function acceptOffer(offerId){
           updateOffer({offerId:offerId, acceptanceStatus:"accept"})
-
     }
     function declineOffer(offerId){
         updateOffer({offerId:offerId, acceptanceStatus:"decline"})
@@ -68,9 +66,9 @@ function PendingRequests() {
                                     <div className="pb-2" style={{ padding: "0 !important" }}>
                                         <div className="d-flex">
                                             <div className="flex-fill">
-                                                <h3 style={{ color: "#585858" }}>{value.proposal.name}</h3>
+                                                <h3 style={{ color: "#585858" }}>{value.campaignId.serviceName}</h3>
                                                 <div className="d-flex justify-content-between influencer-sub-heading">
-                                                    <div><b>Date of Completion:</b> {value.proposal.dateSubmission}</div>
+                                                    <div><b>Date of Completion:</b> {value.proposal.dateOfSubmission}</div>
                                                     {/* <div><b>Platform:</b> {value.Channel}</div> */}
                                                     {/* <div><b>Category:</b>{value.Category}</div> */}
                                                 </div>

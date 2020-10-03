@@ -24,13 +24,19 @@ var OfferSchema = new Schema({
 
     },
     'proposal': {
-        type: Object,
-
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'Proposal'
     },
+    'price': Number,
     'acceptanceStatus': {
         type: String,
         required: true
     },
+    'paymentVerified': {
+        type: Boolean,
+        default: false
+    }
 
 });
 

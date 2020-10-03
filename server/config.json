@@ -43,5 +43,11 @@
     "stripe": {
         "publicKey": "pk_test_51HUsxfF8ao4ESfFgbwsKhUh3bJ4HUkeZbdrubMhGFCaSZYDFxaavzi11p2XUS48r5knWnhOARRgpK7G36DMtRrIJ008GzBLwN8",
         "privateKey": "sk_test_51HUsxfF8ao4ESfFgORFPrBcf9dk26iuDHFsyEYr0Y0OJ8oxliy1AJNGRw9hzjEsQcy80lGcaa9bpUs5855CJtYOz00BgTjY5is"
+    },
+    "paypal": {
+        "sandbox": {
+            "clientId": "AZWCOnSDVhD5f3TS4kFhPBN6ynsrQrz-R2whFEcJO0KBgGKfX9VgLFCPYLqYgFtokR0KmShrHE9A27Oo",
+            "clientSecret": "EIMM190rkbLhts0FnzIHkHxm9T9EgdJYdsKsFWg_O37oWzHNb9jvLTgwaCEaIJx4Crb3D3M-7B3VDrHz"
+        }
     }
 }

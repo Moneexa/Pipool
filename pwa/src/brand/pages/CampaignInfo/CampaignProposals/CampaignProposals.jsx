@@ -10,24 +10,26 @@ export default function CampaignProposals({ campaignId }) {
     const createChat = useStoreActions(actions => actions.chats.createChat);
     const createOffer = useStoreActions(actions => actions.offer.createOffer);
     const  loading = useStoreState(state => state.offer.loading);
-    const [pckage, setPckage] = useState("")
+    const [pricePackage, setPricePackage] = useState({})
     useEffect(() => {
         getCampaignProposals(campaignId)
 
     }, [getCampaignProposals, campaignId])
 
-    function makeOffer(payload, channelId) {
+    function makeOffer(proposalId, channelId) {
         createOffer({
             acceptanceStatus: "pending",
-            proposal: payload,
+            proposal: proposalId,
             channelId: channelId,
             campaignId: campaignId,
-            brandId: localStorage.getItem("activeBrandId")
-
+            brandId: localStorage.getItem("activeBrandId"),
+            price: pricePackage[proposalId]
         })
     }
-    function handleChange(e) {
-        setPckage(e.target.value)
+    function handleChange(e, id) {
+        const packageCopy = JSON.parse(JSON.stringify(pricePackage))
+        packageCopy[id] = e.target.value
+        setPricePackage(packageCopy);
     }
 
     return (<div className="campaign-invite">
@@ -48,21 +50,21 @@ export default function CampaignProposals({ campaignId }) {
                                 <div className="d-flex align-items-center">
                                     <div className="row">
                                         <div className="col-md-5">
-                                            <select className="form-control" style={{ "borderRadius": "2rem" }} value={pckage}
+                                            <select className="form-control" style={{ "borderRadius": "2rem" }} value={pricePackage}
                                                 onChange={
-                                                    handleChange
+                                                    (e) => handleChange(e, value._id)
                                                 }
                                             >
                                                 <option disabled="" value="">
-                                                    Select package
+                                                    Select pricePackage
                                                 </option>
-                                                <option value={`Basic ${value.channelId.basicPrice}$`}>
+                                                <option value={value.channelId.basicPrice}>
                                                     Basic  - {value.channelId.basicPrice}$
                                                 </option>
-                                                <option value={`Standard ${value.channelId.standardPrice}$`}>
+                                                <option value={value.channelId.standardPrice}>
                                                     Standard - {value.channelId.standardPrice}$
                                                 </option>
-                                                <option value={`Premium ${value.channelId.premiumPrice}$`}>
+                                                <option value={value.channelId.premiumPrice}>
                                                     Premium  - {value.channelId.premiumPrice}$
                                                 </option>
 
@@ -70,12 +72,7 @@ export default function CampaignProposals({ campaignId }) {
                                         </div>
                                         <div className="col-md-2">
                                             <FontAwesomeIcon icon={faArrowAltCircleRight} onClick={()=>{
-                                                makeOffer({
-                                                    dateSubmission: value.dateOfSubmission,
-                                                    name: value.channelId.channelName,
-                                                    package: pckage
-                                                }, value.channelId._id
-                                                )
+                                                makeOffer(value._id, value.channelId._id)
                                             }} />
 
                                         </div>

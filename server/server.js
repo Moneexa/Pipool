@@ -6,7 +6,7 @@ const config = require('./config.json');
 
 const app = express()
 const stripe = require('stripe')(config.STRIPE_SECRET_KEY)
-const uuid = require("uuid/dist/v4")
+// const uuid = require("uuid/dist/v4")
 const server = require('http').createServer(app);
 var cors = require('cors');
 
@@ -25,7 +25,6 @@ const bankAccounts = require('./bank-accounts/bank-accounts.route');
 const customers = require('./customers/customers.route');
 const chatsSocket =  require('./chat/chat.socket');
 const offer = require('./offer/offer.route');
-const { off } = require('./auth/user.model');
 
 
 var port = process.env.PORT || 4242;
@@ -37,31 +36,6 @@ app.use(fileUpload({
 }));
 
 app.get('/', (req, res) => res.send('Hello World with Express'));
-app.post('/api/payment', async (req, res) => {
-    const { project, token } = req.body;
-    const idempotencyKey = uuid();
-    try {
-        const cust = await stripe.customer.create({
-            email: token.email,
-            source: token.id,
-        })
-        if (cust) {
-            const result = await stripe.charges.create({
-                amount: project.price * 100,
-                currency: usd,
-                customer: cust.id,
-                recipient_email: token.email
-            }, { idempotencyKey })
-            res.status(200).send(result)
-        }
-    }
-    catch (error) {
-        console.log(error)
-    }
-
-
-
-})
 app.use(cors());
 
 app.use('/api/auth/login', loginRoute);

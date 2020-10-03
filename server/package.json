@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "\u001b[A\u001b[C\u001b[C\u001b[C\u001bserver.js)" ,
-    "start" : "nodemon server.js"
+    "test": "\u001b[A\u001b[C\u001b[C\u001b[C\u001bserver.js)",
+    "start": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@paypal/checkout-server-sdk": "^1.0.2",
     "axios": "^0.19.2",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",

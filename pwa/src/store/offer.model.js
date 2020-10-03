@@ -48,8 +48,8 @@ export const OfferModel = {
     }),
     updateOffer: thunk(async (actions, payload) => {
         try {
-            
-            const res = await axios.put(`${config.apiUrl}/offer/`,payload);
+
+            const res = await axios.put(`${config.apiUrl}/offer/`, payload);
             console.log(res);
 
         }
@@ -58,14 +58,23 @@ export const OfferModel = {
         }
 
     }),
-    toBePayedOffer: thunk(async (actions, payload)=>{
-        try{
-            const res= await axios.get(`${config.apiUrl}/offer/to-be-payed`)
+    toBePayedOffer: thunk(async (actions, payload) => {
+        try {
+            const res = await axios.get(`${config.apiUrl}/offer/to-be-payed`)
             actions.updateOffersList(res.data)
-            
+
         }
-        catch(error){
-             console.log(error)
+        catch (error) {
+            console.log(error)
+        }
+    }),
+    verifyPayment: thunk(async (actions, payload) => {
+        try {
+            await axios.post(`${config.apiUrl}/offer/verify-payment`, payload);
+            toastr.success("Payment verified");
+            actions.listOffers()
+        } catch (error) {
+            toastr.error("Unable to verify payment")
         }
     })
 
