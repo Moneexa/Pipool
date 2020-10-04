@@ -6,8 +6,8 @@ import { Dropdown } from 'react-bootstrap';
 import styles from './ActiveCampaign.module.css';
 
 function ActiveCampaign() {
-    const activeCampaigns = useStoreState(state => state.campaign.activeCampaigns);
-    const influencersActiveCampaign = useStoreActions(actions => actions.campaign.influencersActiveCampaign);
+    const activeCampaigns = useStoreState(state => state.influencersCampaigns.activeCampaigns);
+    const influencersActiveCampaign = useStoreActions(actions => actions.influencersCampaigns.influencersActiveCampaign);
     useEffect(() => {
         influencersActiveCampaign()
     }, [])

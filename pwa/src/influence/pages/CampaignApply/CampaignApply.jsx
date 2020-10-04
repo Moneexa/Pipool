@@ -10,8 +10,8 @@ import { Redirect } from 'react-router-dom';
 export default function CampaignInfo({ match, history }) {
     const proposalSubmitted = useStoreState(state => state.influencersProposals.proposalSubmitted);
     const campaignId = match.params.id;
-    const actv = useStoreState(state => state.campaign.actv)
-    const getCampaign = useStoreActions(actions => actions.campaign.getCampaign)
+    const actv = useStoreState(state => state.influencersCampaigns.actv)
+    const getCampaign = useStoreActions(actions => actions.influencersCampaigns.getCampaign)
     const checkIfAlreadySubmitted = useStoreActions(actions => actions.influencersProposals.checkIfAlreadySubmitted)
     const postProposals = useStoreActions(actions => actions.influencersProposals.postProposals);
     const [proposalDoc, setProposalDoc] = useState('');

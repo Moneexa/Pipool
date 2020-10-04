@@ -62,12 +62,6 @@ export function Brand({ match }) {
                                     </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-
-                                    {/* <Nav.Link disabled className={!sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
-                                            <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
-                                            {sidebarExpanded ? <span>&nbsp;</span> : null}
-                                            <span>Campaing Manager</span>
-                                        </Nav.Link> */}
                                     <Nav.Link as={Link} to={`${match.path}/campaigns`} className={!sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
                                         <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
                                         {sidebarExpanded ? <span>&nbsp;</span> : null}
@@ -75,6 +69,16 @@ export function Brand({ match }) {
                                     </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
+                                    <Nav.Link as={Link} to={`${match.path}/sent-offer`} className={!sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+                                        {sidebarExpanded ? <div className="no-icon-space"></div> : null}
+                                        {sidebarExpanded ? <span>&nbsp;</span> : null}
+                                        <span>Active Campaigns</span>
+                                    </Nav.Link>
+                                    <Nav.Link as={Link} to={`${match.path}/sent-offer`} className={!sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+                                        {sidebarExpanded ? <div className="no-icon-space"></div> : null}
+                                        {sidebarExpanded ? <span>&nbsp;</span> : null}
+                                        <span>Sent Offer</span>
+                                    </Nav.Link>
                                     <Nav.Link as={Link} to={`${match.path}/new-campaign`} className={!sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
                                         {sidebarExpanded ? <div className="no-icon-space"></div> : null}
                                         {sidebarExpanded ? <span>&nbsp;</span> : null}

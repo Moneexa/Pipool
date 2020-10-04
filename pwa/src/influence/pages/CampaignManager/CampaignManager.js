@@ -3,8 +3,8 @@ import { useStoreActions, useStoreState } from 'easy-peasy';
 import { useEffect } from 'react';
 import {Link} from 'react-router-dom'
 function CampaignManager() {
-    const campaignList = useStoreState(state => state.campaign.campaignList);
-    const influencersCampaign = useStoreActions(actions => actions.campaign.influencersCampaign);
+    const campaignList = useStoreState(state => state.influencersCampaigns.campaignList);
+    const influencersCampaign = useStoreActions(actions => actions.influencersCampaigns.influencersCampaign);
     useEffect(() => {
         influencersCampaign()
     }, [])

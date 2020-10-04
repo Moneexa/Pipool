@@ -23,10 +23,9 @@ let campaign = {
     interests: [],
 
 };
-export const CampaignModel = {
+export const InfluencersCampaignsModel = {
     loading: false,
     campaignList: [],
-    campainOwnerName: "",
     activeCampaigns: [],
     actv: {
         id: campaign.id,
@@ -82,29 +81,20 @@ export const CampaignModel = {
     postError: action((state, payload) => {
         state.errors.postErrorMessage = payload;
     }),
-    updateCampaignOwnerName: action((state, payload) => {
-
-        state.campaignOwnerName = payload
-    }),
-    listCampaign: thunk(async (actions, payload) => {
-        const res = await axios.get(`${config.apiUrl}/campaigns/`);
+    listCampaign: thunk(async (actions, payload, helpers) => {
+        const channelId = helpers.getStoreState().channels.activeChannelId;
+        const res = await axios.get(`${config.apiUrl}/channels/${channelId}/campaigns/`);
         console.log(res.data)
 
         actions.updateCampaignList(res.data);
 
 
     }),
-    getCampaignOwnerName: thunk(async (actions, payload) => {
-        const campaignId = payload
-        const res = await axios.get(`${config.apiUrl}/influencers/_campaigns/${campaignId}`)
-        console.log(res.data.fullName);
-        actions.updateCampaignOwnerName(res.data.fullName)
-
-    }),
-    getCampaign: thunk(async (actions, payload) => {
+    getCampaign: thunk(async (actions, payload, helpers) => {
+        const channelId = helpers.getStoreState().channels.activeChannelId;
 
         const id = payload
-        const res = await axios.get(`${config.apiUrl}/campaigns/${id}`,
+        const res = await axios.get(`${config.apiUrl}/channels/${channelId}/campaigns/${id}`,
 
         );
         console.log(res)
@@ -112,7 +102,7 @@ export const CampaignModel = {
         actions.updateCampaign(data);
 
     }),
-    putCampaign: thunk(async (actions, payload) => {
+    putCampaign: thunk(async (actions, payload, helpers) => {
         const id = payload.id
 
         const obj = {
@@ -134,9 +124,10 @@ export const CampaignModel = {
             interests: payload.interests,
         }
         try {
+            const channelId = helpers.getStoreState().channels.activeChannelId;
             actions.updateLoading(true);
 
-            const res = await axios.put(`${config.apiUrl}/campaigns/${id}`, obj,)
+            const res = await axios.put(`${config.apiUrl}/channels/${channelId}/campaigns/${id}`, obj,)
             actions.updateCampaign(res.data);
 
             toastr.success("Successfully updated data");
@@ -151,50 +142,10 @@ export const CampaignModel = {
         actions.updateLoading(false);
 
     }),
-
-    postCampaign: thunk(async (actions, payload) => {
-        const obj = {
-            serviceName: payload.serviceName,
-            serviceDescription: payload.serviceDescription,
-            category: payload.category,
-            coverImage: payload.coverImage,
-            callForAction: payload.callForAction,
-            briefInfluencers: payload.briefInfluencers,
-            do: payload.dos,
-            dont: payload.donts,
-            caption: payload.caption,
-            productNeed: payload.productNeed,
-            gender: payload.gender,
-            location: payload.location,
-            age: payload.age,
-            minFollowers: payload.minFollowers,
-            postingLanguages: payload.postingLanguages,
-            interests: payload.interests,
-        }
+    influencersCampaign: thunk(async function (actions, payload, helpers) {
         try {
-            actions.updateLoading(true);
-
-            const res = await axios.post(`${config.apiUrl}/campaigns/`, obj)
-
-            actions.updateCampaign(res.data);
-
-            toastr.success("Successfully  data has been sent");
-
-
-
-        } catch (error) {
-
-            actions.postError("Failed to create brand.")
-            toastr.error("There was problem saving you data")
-
-
-        }
-        actions.updateLoading(false);
-
-    }),
-    influencersCampaign: thunk(async function (actions, payload) {
-        try {
-            const res = await axios.get(`${config.apiUrl}/campaigns/`)
+            const channelId = helpers.getStoreState().channels.activeChannelId;
+            const res = await axios.get(`${config.apiUrl}/channels/${channelId}/campaigns/`)
             actions.updateCampaignList(res.data);
         }
         catch (error) {

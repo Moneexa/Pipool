@@ -10,30 +10,37 @@ var brandModel = require('../brand/brandController');
  */
 module.exports = {
 
-    /**
-     * campaignController.list()
-     */
     show: async function (req, res) {
-        id = req.params.campaignId
+        const id = req.params.campaignId
         var campaign = await campaignModel.findOne({ _id: id });
         if (!campaign) {
             return res.status(404).send("nothing found")
         }
 
+        return res.status(200).send(campaign)
+    },
+    suggestedCampaigns: async function (req, res) {
+        try {
+            // var category = await channelModel.find({ createdBy: res.locals.user.id })
+            // if (!category) {
+            //     return res.status(404).send("not found")
+            // }
+            // // console.log(category)
+            // category = category.map(value => {
+            //     return (value.category)
+            // })
+            // console.log(category)
+            const suggestedCampaigns = await campaignModel.find()
+            // const suggestedCampaigns = await campaignModel.find({interests:category.category})
+            if (suggestedCampaigns) { console.log(suggestedCampaigns) }
 
-        console.log(campaign.createdBy)
-        var brandId = campaign.createdBy
+            res.status(200).send(suggestedCampaigns)
 
-        userModel.findOne({ _id: brandId }, function (err, user) {
-            if (err) {
-                return res.status(404).send("no such brand")
-
-            }
-            console.log(user)
-            return res.json(user)
-        })
-
-
+        }
+        catch (error) {
+            console.log(error)
+            res.status(500).send(error)
+        }
     },
     active: async function (req, res) {
         try {

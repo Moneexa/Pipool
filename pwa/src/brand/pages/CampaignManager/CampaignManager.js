@@ -6,8 +6,8 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom'
 export default function CompaignManager() {
-    const listCampaigns = useStoreActions(actions => actions.campaign.listCampaign);
-    const list = useStoreState(state => state.campaign.campaignList);
+    const listCampaigns = useStoreActions(actions => actions.brandsCampaignsModel.listCampaign);
+    const list = useStoreState(state => state.brandsCampaignsModel.campaignList);
 
 
     useEffect(() => {

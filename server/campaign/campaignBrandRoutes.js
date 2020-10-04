@@ -1,14 +1,13 @@
 var express = require('express');
-var router = express.Router();
-var campaignController = require('./campaignController.js');
-const campaignInfluencerController = require('./campaignInfluencerController');
+var router = express.Router({ mergeParams: true });
+var campaignController = require('./campaignBrandController.js');
 var auth = require('../auth/auth');
 //const { verify } = require('jsonwebtoken');
 
 /*
  * GET
  */
-//router.get('/', auth.verify, campaignController.list);
+router.get('/', auth.verify, campaignController.list);
 
 /*
  * GET
@@ -29,6 +28,10 @@ router.put('/:id', auth.verify, campaignController.update);
  * DELETE
  */
 router.delete('/:id', auth.verify, campaignController.remove);
-router.get('/', auth.verify, campaignController.suggestedCampaigns);
-router.get('/:channelId/campaigns/active/', auth.verify, campaignInfluencerController.active)
+
+/*
+ * Active campaigns
+ */
+
+router.get('/active', auth.verify, campaignController.activeCampaigns);
 module.exports = router;

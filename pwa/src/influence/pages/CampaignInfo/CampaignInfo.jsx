@@ -41,8 +41,8 @@ function Donts({ list }) {
 export default function CampaignInfo({ match }) {
 
     const campaignId = match.params.id;
-    const actv = useStoreState(state => state.campaign.actv)
-    const getCampaign = useStoreActions(actions => actions.campaign.getCampaign)
+    const actv = useStoreState(state => state.influencersCampaigns.actv)
+    const getCampaign = useStoreActions(actions => actions.influencersCampaigns.getCampaign)
     const proposalSubmitted = useStoreState(state => state.influencersProposals.proposalSubmitted);
     const checkIfAlreadySubmitted = useStoreActions(actions => actions.influencersProposals.checkIfAlreadySubmitted)
     const [flag, setFlag] = useState(false)
@@ -50,7 +50,7 @@ export default function CampaignInfo({ match }) {
         //setFlag(false)
         console.log(campaignId)
         getCampaign(campaignId)
-        checkIfAlreadySubmitted({campaignId})
+        checkIfAlreadySubmitted({ campaignId })
     }, [getCampaign, campaignId])
     function handleClick() {
         console.log(flag)
@@ -154,14 +154,7 @@ export default function CampaignInfo({ match }) {
                                             <>
                                                 <Link className={`btn btn-primary px-5 text-white mb-2 ${styles.noWrap}`}
                                                     to={`/influencer/campaigns/${campaignId}/apply`}
-                                                >
-
-                                                    Submit Proposal </Link>
-                                                    <Link className={`btn btn-primary px-5 text-white mb-2 ${styles.noWrap}`}
-                                                    to={`/influencer/campaigns/${campaignId}/chat`}
-                                                >
-
-                                                    Chat with the client </Link>
+                                                >Submit Proposal </Link>
 
                                                 <button type="button" className={`btn btn-outline-secondary px-5 ${styles.noWrap}`}>Save Campagin</button>
                                             </>

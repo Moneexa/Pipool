@@ -78,7 +78,7 @@ async function update(req, res) {
 async function list(req, res) {
 
     const offer = await offerModel
-        .find({ createdBy: res.locals.user.id, acceptanceStatus: "accept" })
+        .find({ createdBy: res.locals.user.id, paymentVerified: false })
         .populate('campaignId proposal')
     if (!offer) {
         return res.status(500).json({

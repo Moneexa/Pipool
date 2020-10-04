@@ -17,7 +17,7 @@ const insightsRoute = require('./insights/insightsRouter')
 const brandRoute = require('./brand/brandRoutes')
 const brandProposalRoutes = require('./proposals/brandProposalRoutes')
 const influencerProposalRoute = require('./proposals/influencerProposalRoutes')
-const campaignRoute = require('./campaign/campaignRoutes')
+const campaignBrandRoute = require('./campaign/campaignBrandRoutes')
 const influencerCampaignRoute = require('./campaign/campaignInfluencerRoutes')
 const channels = require('./channel/channelRoutes');
 const videos =  require('./videos/videosRoutes');
@@ -42,7 +42,7 @@ app.use(cors());
 app.use('/api/auth/login', loginRoute);
 app.use('/api/auth/signup', signupRoute);
 app.use('/api/brands', brandRoute);
-app.use('/api/campaigns', campaignRoute);
+app.use('/api/brands/:brandId/campaigns', campaignBrandRoute);
 app.use('/api/influencers/channels', channels);
 app.use('/api/channels/insights', insightsRoute);
 app.use('/api/channels/', influencerCampaignRoute);

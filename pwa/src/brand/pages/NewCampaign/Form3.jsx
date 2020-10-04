@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 export function Form3({ onFinish, onPrevious }) {
     const { register, handleSubmit } = useForm();
     const [interests, setInterests] = useState(interestVals);
-    const loading = useStoreState(state => state.campaign.loading)
+    const loading = useStoreState(state => state.brandsCampaignsModel.loading)
     const [value, setValue] = useState(0);
 
     function toggleInterest(index) {

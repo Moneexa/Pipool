@@ -12,7 +12,7 @@ function NewCampaign() {
     const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
     let [formData, setFormData] = useState({});
-    const post = useStoreActions(actions => actions.campaign.postCampaign);
+    const post = useStoreActions(actions => actions.brandsCampaignsModel.postCampaign);
 
     function saveForm(values) {
         setFormData(Object.assign({}, formData, values))

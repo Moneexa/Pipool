@@ -1,5 +1,5 @@
 var campaignModel = require('./campaignModel.js');
-var channelModel = require('../channel/channelModel.js');
+var offerModel = require('../offer/offer.model')
 
 
 /**
@@ -67,6 +67,7 @@ module.exports = {
             minFollowers: req.body.minFollowers,
             postingLanguages: req.body.postingLanguages,
             interests: req.body.interests,
+            brand: req.params.brandId,
             createdBy: res.locals.user.id
 
 
@@ -146,31 +147,30 @@ module.exports = {
             return res.status(204).json();
         });
     },
-    suggestedCampaigns: async function (req, res) {
+    list: async function (req, res) {
         try {
-            // var category = await channelModel.find({ createdBy: res.locals.user.id })
-            // if (!category) {
-            //     return res.status(404).send("not found")
-            // }
-            // // console.log(category)
-            // category = category.map(value => {
-            //     return (value.category)
-            // })
-            // console.log(category)
-            const suggestedCampaigns = await campaignModel.find()
-            // const suggestedCampaigns = await campaignModel.find({interests:category.category})
-            if (suggestedCampaigns) { console.log(suggestedCampaigns) }
+            const campaigns = await campaignModel.find({ brand: req.params.brandId })
+            if (campaigns) { console.log(campaigns) }
 
-            res.status(200).send(suggestedCampaigns)
+            res.status(200).send(campaigns)
 
         }
         catch (error) {
             console.log(error)
             res.status(500).send(error)
         }
-
-
-
-
-    }
+    },
+    activeCampaigns: async function (req, res) {
+        try {
+            const offers = await offerModel.find({
+                brandId: req.params.brandId,
+                paymentVerified: true,
+                paymentReleased: false
+            })
+            .populate('campaignId')
+            res.status(200).send(offers);
+        } catch (error) {
+            res.status(500).send("Something went wrong")
+        }
+    },
 };

@@ -18,6 +18,11 @@ var campaignSchema = new Schema({
 	'minFollowers': String,
 	'postingLanguages': String,
 	'interests': Array,
+	'brand': {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'brand'
+    },
 	'createdBy': [
 		{ type: Schema.Types.ObjectId, ref: 'User' }
 	]
