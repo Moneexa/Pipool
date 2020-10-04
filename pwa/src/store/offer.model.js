@@ -50,6 +50,7 @@ export const OfferModel = {
         try {
 
             const res = await axios.put(`${config.apiUrl}/offer/`, payload);
+            actions.listOffers(res.data);
             console.log(res);
 
         }

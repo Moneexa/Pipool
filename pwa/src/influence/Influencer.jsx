@@ -85,6 +85,11 @@ export function Influencer({ match }) {
                                         <span>Campaigns</span>
                                     </Nav.Link>
                                     <Nav.Item>
+                                        <Nav.Link as={Link} to={`${match.path}/campaigns/active`} className={!sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+                                            {sidebarExpanded ? <div className="no-icon-space"></div> : null}
+                                            {sidebarExpanded ? <span>&nbsp;</span> : null}
+                                            <span>Active Campaigns</span>
+                                        </Nav.Link>
                                         <Nav.Link as={Link} to={`${match.path}/pending-requests`} className={!sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
                                             {sidebarExpanded ? <div className="no-icon-space"></div> : null}
                                             {sidebarExpanded ? <span>&nbsp;</span> : null}

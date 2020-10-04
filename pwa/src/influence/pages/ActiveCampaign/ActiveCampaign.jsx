@@ -2,12 +2,16 @@ import React, { useState } from 'react'
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom'
-import { Dropdown } from 'react-bootstrap';
+import { Dropdown, Modal, Button } from 'react-bootstrap';
 import styles from './ActiveCampaign.module.css';
 
 function ActiveCampaign() {
     const activeCampaigns = useStoreState(state => state.influencersCampaigns.activeCampaigns);
     const influencersActiveCampaign = useStoreActions(actions => actions.influencersCampaigns.influencersActiveCampaign);
+    const [showDisputeModal, setShowDisputeModal] = useState(false);
+
+    const handleClose = () => setShowDisputeModal(false);
+    const handleShow = () => setShowDisputeModal(true);
     useEffect(() => {
         influencersActiveCampaign()
     }, [])
@@ -41,7 +45,7 @@ function ActiveCampaign() {
                                                 <Dropdown.Toggle className={styles.menuButton} id="dropdown-basic"></Dropdown.Toggle>
 
                                                 <Dropdown.Menu>
-                                                    <Dropdown.Item href="#/action-1">Report for dispute</Dropdown.Item>
+                                                    <Dropdown.Item onClick={handleShow}>Report for dispute</Dropdown.Item>
                                                 </Dropdown.Menu>
                                             </Dropdown>
                                         </div>
@@ -53,7 +57,17 @@ function ActiveCampaign() {
                 }
 
             </div>
-
+            <Modal show={showDisputeModal} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Submit Dispute</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <textarea className="form-control rounded-0" name="" id="" cols="30" rows="10"></textarea>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="danger" onClick={handleClose}>Submit</Button>
+                </Modal.Footer>
+            </Modal>
         </div >
     )
 

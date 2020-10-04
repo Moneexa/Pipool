@@ -12,7 +12,7 @@ const style = useStyles({
         border: "none"
     },
     deny: {
-        background: "#e5e5e5",
+        
         width: "20 %",
         fontSize: "14px",
         borderRadius: "30px",
@@ -35,17 +35,17 @@ function PendingRequests() {
     const _styles = style
     const offerList = useStoreState(state => state.offer.offerList)
     const listOffers = useStoreActions(actions => actions.offer.listOffers);
-    const updateOffer= useStoreActions(actions=>actions.offer.updateOffer);
+    const updateOffer = useStoreActions(actions => actions.offer.updateOffer);
     useEffect(
         () => { listOffers() }, []
     )
-    function acceptOffer(offerId){
-          updateOffer({offerId:offerId, acceptanceStatus:"accept"})
+    function acceptOffer(offerId) {
+        updateOffer({ offerId: offerId, acceptanceStatus: "accept" })
     }
-    function declineOffer(offerId){
-        updateOffer({offerId:offerId, acceptanceStatus:"decline"})
+    function declineOffer(offerId) {
+        updateOffer({ offerId: offerId, acceptanceStatus: "decline" })
 
-  }
+    }
 
     return (
 
@@ -57,14 +57,14 @@ function PendingRequests() {
 
             </div>
             {
-                offerList.map( (value, index) => {
+                offerList.map((value, index) => {
                     return (
                         <div id="border" className="" key={index}>
 
                             <div className="card shadow mb-4 rounded-20 border-yellow border-5">
                                 <div className="card-body">
                                     <div className="pb-2" style={{ padding: "0 !important" }}>
-                                        <div className="d-flex">
+                                        <div className="d-flex align-items-center">
                                             <div className="flex-fill">
                                                 <h3 style={{ color: "#585858" }}>{value.campaignId.serviceName}</h3>
                                                 <div className="d-flex justify-content-between influencer-sub-heading">
@@ -75,8 +75,8 @@ function PendingRequests() {
                                             </div>
 
 
-                                            <button style={_styles.accept} onClick={()=>{acceptOffer(value._id)}} id="accept" className="rounded-30 px-5 text-white d-sm-inline-block btn btn-sm btn-primary shadow-sm mr-3">Accept</button>
-                                            <button style={_styles.deny} onClick={()=>{declineOffer(value._id)}} className="rounded-30 px-5 text-white d-sm-inline-block btn btn-sm shadow-sm btn-danger">Deny</button>
+                                            <div><button style={_styles.accept} onClick={() => { acceptOffer(value._id) }} id="accept" className="rounded-30 px-5 text-white d-sm-inline-block btn btn-sm btn-primary shadow-sm mr-3">Accept</button></div>
+                                            <div><button style={_styles.deny} onClick={() => { declineOffer(value._id) }} className="rounded-30 px-5 text-white d-sm-inline-block btn btn-sm shadow-sm btn-danger">Deny</button></div>
 
                                         </div>
 
@@ -89,11 +89,11 @@ function PendingRequests() {
                     )
                 })
             }
-            <div id="btn-top" className="mt-4 text-center small" style={{ marginBottom: "50px" }}>
+            {/* <div id="btn-top" className="mt-4 text-center small" style={{ marginBottom: "50px" }}>
 
                 <button style={_styles.seeMore} className="rounded-30 px-5 text-white d-sm-inline-block btn btn-sm btn-primary shadow-sm">See more</button>
 
-            </div>
+            </div> */}
         </div>
     )
 

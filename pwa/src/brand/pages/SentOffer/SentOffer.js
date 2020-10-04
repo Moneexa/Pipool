@@ -32,7 +32,7 @@ export default function SentOffer() {
                     // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
                     onSuccess={(details, data) => {
                         alert("Transaction completed by " + details.payer.name.given_name);
-                        verifyPayment({orderId: data.orderID, offerId})
+                        verifyPayment({ orderId: data.orderID, offerId })
                     }}
                     options={{
                         clientId: "AZWCOnSDVhD5f3TS4kFhPBN6ynsrQrz-R2whFEcJO0KBgGKfX9VgLFCPYLqYgFtokR0KmShrHE9A27Oo"
@@ -72,8 +72,11 @@ export default function SentOffer() {
                                             </div>
                                         </div>
 
-
-                                        <button id="accept" onClick={() => handleShow(value.price, value._id)} className="rounded-30 px-5 text-white d-sm-inline-block btn btn-sm btn-primary shadow-sm mr-3">Make Payment</button>
+                                        <div>
+                                            <button disabled={value.acceptanceStatus == "pending"} id="accept" onClick={() => handleShow(value.price, value._id)} className="rounded-30 px-5 text-white d-sm-inline-block btn btn-sm btn-primary shadow-sm mr-3">
+                                                {value.acceptanceStatus == "accept" ? "Make Payment" : value.acceptanceStatus == "Pending" ? "Request Pending" : value.acceptanceStatus == "decline" ? "Request Declined" : ""}
+                                            </button>
+                                        </div>
 
                                     </div>
 
