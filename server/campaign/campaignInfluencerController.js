@@ -1,4 +1,5 @@
 var campaignModel = require('./campaignModel.js');
+var offerModel = require('../offer/offer.model')
 var userModel = require('../auth/user.model');
 var brandModel = require('../brand/brandController');
 
@@ -34,4 +35,19 @@ module.exports = {
 
 
     },
+    active: async function (req, res) {
+        try {
+            const offers = await offerModel.find({
+                channelId: req.params.channelId,
+                paymentVerified: true,
+                paymentReleased: false
+            })
+            .populate('campaignId')
+            res.status(200).send(offers);
+        } catch (error) {
+            res.status(500).send("Something went wrong")
+        }
+
+
+    }
 }

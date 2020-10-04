@@ -9,6 +9,7 @@ import PastCampaignFeedback from './pages/PastCampaignFeedback/PastCampaignFeedb
 import AddChannel from './pages/AddChannel/AddChannel';
 import ChannelManager from './pages/ChannelManager/ChannelManager';
 import CampaignManager from './pages/CampaignManager/CampaignManager';
+import ActiveCampaign from './pages/ActiveCampaign/ActiveCampaign';
 import Overview from './pages/Overview/Overview';
 import PendingRequests from './pages/PendingRequests/PendingRequests';
 import Help from './pages/Help/Help';
@@ -180,6 +181,7 @@ export function Influencer({ match }) {
                                     <Redirect from={`${match.path}/`} exact to={`${match.path}/overview`} />
                                     <Route path={`${match.path}/overview`} component={Overview} />
                                     <Route path={`${match.path}/campaigns`} exact={true} component={CampaignManager} />
+                                    <Route path={`${match.path}/campaigns/active`} exact={true} component={ActiveCampaign} />
                                     <Route path={`${match.path}/pending-requests`} component={PendingRequests} />
                                     <Route path={`${match.path}/channels`} exact={true} component={ChannelManager} />
                                     <Route path={`${match.path}/add-channels`} component={AddChannel} />

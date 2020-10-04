@@ -36,6 +36,14 @@ var OfferSchema = new Schema({
     'paymentVerified': {
         type: Boolean,
         default: false
+    },
+    'disputed': {
+        type: Boolean,
+        default: false
+    },
+    'paymentReleased': {
+        type: Boolean,
+        default: false
     }
 
 });

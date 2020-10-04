@@ -4,5 +4,5 @@ var campaignController = require('./campaignInfluencerController.js');
 var auth = require('../auth/auth');
 
 
-router.get('/:campaignId', auth.verify, campaignController.show);
+router.get('/:channelId/campaigns/active', auth.verify, campaignController.active);
 module.exports = router;

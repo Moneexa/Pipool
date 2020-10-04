@@ -26,7 +26,8 @@ let campaign = {
 export const CampaignModel = {
     loading: false,
     campaignList: [],
-    campainOwnerName:"",
+    campainOwnerName: "",
+    activeCampaigns: [],
     actv: {
         id: campaign.id,
         serviceName: campaign.serviceName,
@@ -51,6 +52,9 @@ export const CampaignModel = {
     },
     updateCampaignList: action((state, payload) => {
         state.campaignList = payload;
+    }),
+    updateActiveCampaigns: action((state, payload) => {
+        state.activeCampaigns = payload;
     }),
     updateLoading: action((state, payload) => {
         state.loading = payload
@@ -78,9 +82,9 @@ export const CampaignModel = {
     postError: action((state, payload) => {
         state.errors.postErrorMessage = payload;
     }),
-    updateCampaignOwnerName: action((state, payload)=>{
+    updateCampaignOwnerName: action((state, payload) => {
 
-        state.campaignOwnerName=payload
+        state.campaignOwnerName = payload
     }),
     listCampaign: thunk(async (actions, payload) => {
         const res = await axios.get(`${config.apiUrl}/campaigns/`);
@@ -90,7 +94,7 @@ export const CampaignModel = {
 
 
     }),
-    getCampaignOwnerName: thunk(async (actions, payload)=>{
+    getCampaignOwnerName: thunk(async (actions, payload) => {
         const campaignId = payload
         const res = await axios.get(`${config.apiUrl}/influencers/_campaigns/${campaignId}`)
         console.log(res.data.fullName);
@@ -192,14 +196,20 @@ export const CampaignModel = {
         try {
             const res = await axios.get(`${config.apiUrl}/campaigns/`)
             actions.updateCampaignList(res.data);
-           
-
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }),
+    influencersActiveCampaign: thunk(async function (actions, payload, helpers) {
+        try {
+            const channelId = helpers.getStoreState().channels.activeChannelId;
+            const res = await axios.get(`${config.apiUrl}/channels/${channelId}/campaigns/active`)
+            actions.updateActiveCampaigns(res.data);
         }
         catch (error) {
             console.log(error)
 
         }
-
-
     }),
 };

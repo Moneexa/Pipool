@@ -1,0 +1,10 @@
+.menu{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+.menuButton {
+    background-color: transparent;
+    border: none;
+}

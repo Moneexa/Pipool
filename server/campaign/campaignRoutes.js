@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var campaignController = require('./campaignController.js');
-var auth= require('../auth/auth');
+const campaignInfluencerController = require('./campaignInfluencerController');
+var auth = require('../auth/auth');
 //const { verify } = require('jsonwebtoken');
 
 /*
@@ -12,7 +13,7 @@ var auth= require('../auth/auth');
 /*
  * GET
  */
-router.get('/:id', auth.verify,  campaignController.show);
+router.get('/:id', auth.verify, campaignController.show);
 
 /*
  * POST
@@ -29,4 +30,5 @@ router.put('/:id', auth.verify, campaignController.update);
  */
 router.delete('/:id', auth.verify, campaignController.remove);
 router.get('/', auth.verify, campaignController.suggestedCampaigns);
+router.get('/:channelId/campaigns/active/', auth.verify, campaignInfluencerController.active)
 module.exports = router;

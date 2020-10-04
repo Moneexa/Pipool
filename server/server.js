@@ -18,7 +18,8 @@ const brandRoute = require('./brand/brandRoutes')
 const brandProposalRoutes = require('./proposals/brandProposalRoutes')
 const influencerProposalRoute = require('./proposals/influencerProposalRoutes')
 const campaignRoute = require('./campaign/campaignRoutes')
-const twitter = require('./channel/channelRoutes');
+const influencerCampaignRoute = require('./campaign/campaignInfluencerRoutes')
+const channels = require('./channel/channelRoutes');
 const videos =  require('./videos/videosRoutes');
 const chats =  require('./chat/chat.route');
 const bankAccounts = require('./bank-accounts/bank-accounts.route');
@@ -42,8 +43,9 @@ app.use('/api/auth/login', loginRoute);
 app.use('/api/auth/signup', signupRoute);
 app.use('/api/brands', brandRoute);
 app.use('/api/campaigns', campaignRoute);
-app.use('/api/influencers/channels', twitter);
+app.use('/api/influencers/channels', channels);
 app.use('/api/channels/insights', insightsRoute);
+app.use('/api/channels/', influencerCampaignRoute);
 app.use('/api/brands/proposals', brandProposalRoutes);
 app.use('/api/influencers/proposals', influencerProposalRoute);
 app.use('/api/chats', chats);
