@@ -161,7 +161,7 @@ async function verifyPayment(req, res) {
 
     // 6. Save the transaction in your database
     try {
-        await offerModel.updateOne({ id: offerId, paymentVerified: true });
+        await offerModel.updateOne({ _id: offerId, paymentVerified: true });
     } catch (error) {
         return res.status(500).send("Something went wrong when tried to save the data");
     }

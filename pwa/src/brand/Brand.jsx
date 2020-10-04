@@ -17,6 +17,7 @@ import './Brand.css';
 import CampaignInfo from './pages/CampaignInfo/CampaignInfo';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import SentOffer from './pages/SentOffer/SentOffer'
+import ActiveCampaigns from './pages/ActiveCampaigns/ActiveCampaigns';
 
 //import store from "./shared/store/store"
 
@@ -69,7 +70,7 @@ export function Brand({ match }) {
                                     </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link as={Link} to={`${match.path}/sent-offer`} className={!sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+                                    <Nav.Link as={Link} to={`${match.path}/campaigns/active`} className={!sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
                                         {sidebarExpanded ? <div className="no-icon-space"></div> : null}
                                         {sidebarExpanded ? <span>&nbsp;</span> : null}
                                         <span>Active Campaigns</span>
@@ -211,6 +212,7 @@ export function Brand({ match }) {
                                     <Redirect from={`${match.path}/`} exact to={`${match.path}/overview`} />
                                     <Route path={`${match.path}/overview`} exact component={Overview} />
                                     <Route path={`${match.path}/campaigns`} exact component={CampaignManager} />
+                                    <Route path={`${match.path}/campaigns/active`} exact component={ActiveCampaigns} />
                                     <Route path={`${match.path}/pending-requests`} exact component={PendingRequests} />
                                     <Route path={`${match.path}/brands`} exact component={BrandManager} />
                                     <Route path={`${match.path}/add/`} exact component={AddBrand} />

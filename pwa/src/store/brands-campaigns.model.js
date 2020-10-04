@@ -90,6 +90,13 @@ export const BrandsCampaignsModel = {
 
 
     }),
+    listActiveCampaigns: thunk(async (actions, payload, helpers) => {
+        const brandId = helpers.getStoreState().brand.activeBrandId;
+        const res = await axios.get(`${config.apiUrl}/brands/${brandId}/campaigns/active`);
+        console.log(res.data)
+
+        actions.updateActiveCampaigns(res.data);
+    }),
     getCampaign: thunk(async (actions, payload, helpers) => {
         const brandId = helpers.getStoreState().brand.activeBrandId;
 

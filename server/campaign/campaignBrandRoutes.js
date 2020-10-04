@@ -10,8 +10,15 @@ var auth = require('../auth/auth');
 router.get('/', auth.verify, campaignController.list);
 
 /*
+ * Active campaigns
+ */
+
+router.get('/active', auth.verify, campaignController.activeCampaigns);
+
+/*
  * GET
  */
+
 router.get('/:id', auth.verify, campaignController.show);
 
 /*
@@ -29,9 +36,4 @@ router.put('/:id', auth.verify, campaignController.update);
  */
 router.delete('/:id', auth.verify, campaignController.remove);
 
-/*
- * Active campaigns
- */
-
-router.get('/active', auth.verify, campaignController.activeCampaigns);
 module.exports = router;
