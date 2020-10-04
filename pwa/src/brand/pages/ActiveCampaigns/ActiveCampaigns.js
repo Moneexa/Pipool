@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom'
 export default function ActiveCampaigns() {
     const listActiveCampaigns = useStoreActions(actions => actions.brandsCampaignsModel.listActiveCampaigns);
+    const releasePayment = useStoreActions(actions => actions.brandsCampaignsModel.releasePayment);
     const list = useStoreState(state => state.brandsCampaignsModel.activeCampaigns);
     console.log(list);
 
@@ -38,7 +39,7 @@ export default function ActiveCampaigns() {
                                 <Link to={`/brand/campaigns/${element._id}`}>{element.campaignId.serviceName}</Link>
                             </td>
                             <td>
-                                <button className="btn btn-primary text-white">Release payment</button>
+                                <button onClick={() => releasePayment(element.campaignId._id)} className="btn btn-primary text-white">Release payment</button>
                             </td>
                         </tr>
                         )

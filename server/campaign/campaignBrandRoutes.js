@@ -25,6 +25,7 @@ router.get('/:id', auth.verify, campaignController.show);
  * POST
  */
 router.post('/', auth.verify, campaignController.create);
+router.post('/:id/release-payment', auth.verify, campaignController.releasePayment);
 
 /*
  * PUT

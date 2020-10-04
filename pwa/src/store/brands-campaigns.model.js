@@ -191,4 +191,14 @@ export const BrandsCampaignsModel = {
         actions.updateLoading(false);
 
     }),
+    releasePayment: thunk(async (actions, campaignId, helpers) => {
+        const brandId = helpers.getStoreState().brand.activeBrandId;
+        try {
+            await axios.post(`${config.apiUrl}/brands/${brandId}/campaigns/${campaignId}/release-payment`, {});
+            toastr.success("Payment released");
+            actions.listActiveCampaigns()
+        } catch (error) {
+            toastr.error("Unable to verify payment")
+        }
+    })
 };

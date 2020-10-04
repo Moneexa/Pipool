@@ -1,6 +1,13 @@
 var campaignModel = require('./campaignModel.js');
-var offerModel = require('../offer/offer.model')
-
+var offerModel = require('../offer/offer.model');
+var bankAccountModel = require('../bank-accounts/bank-accounts.model')
+var paypal = require('paypal-rest-sdk');
+const config = require('../config.json');
+paypal.configure({
+    'mode': 'sandbox', //sandbox or live
+    'client_id': config.paypal.sandbox.clientId,
+    'client_secret': config.paypal.sandbox.clientSecret
+});
 
 /**
  * campaignController.js
@@ -167,10 +174,71 @@ module.exports = {
                 paymentVerified: true,
                 paymentReleased: false
             })
-            .populate('campaignId')
+                .populate('campaignId')
             res.status(200).send(offers);
         } catch (error) {
             res.status(500).send("Something went wrong")
+        }
+    },
+    releasePayment: async function (req, res) {
+        try {
+            const brandId = req.params.brandId;
+            const campaignId = req.params.id;
+
+            let offer = await offerModel.findOne({
+                brandId,
+                campaignId
+            }).populate('channelId');
+
+            if (!offer) return res.status(400).send("No offer found with this campaign");
+
+            const bankAccount = await bankAccountModel.findOne({
+                createdBy: offer.channelId.createdBy
+            });
+
+            if (!bankAccount) return res.status(400).send("Influencer don't have bank account setup");
+
+            var sender_batch_id = Math.random().toString(36).substring(9);
+            var create_payout_json = {
+                "sender_batch_header": {
+                    "sender_batch_id": sender_batch_id,
+                    "email_subject": "You have a payment"
+                },
+                "items": [
+                    {
+                        "recipient_type": 'PAYPAL_ID',
+                        "amount": {
+                            "value": (offer.price * 0.9),
+                            "currency": "USD"
+                        },
+                        "receiver": bankAccount.paypalId,
+                        "note": "POSPYO001",
+                        "sender_item_id": "item_3"
+                    }
+                ]
+            };
+
+            var sync_mode = 'false';
+
+            paypal.payout.create(create_payout_json, sync_mode, async (error, payout) => {
+                if (error) {
+                    console.log(error.response);
+                    res.status(500).send("Something went wrong while processing payment");
+                } else {
+                    console.log("Create Single Payout Response");
+                    console.log(payout);
+                    offer.paymentReleased = true;
+                    try {
+                        await offer.save();
+                        res.status(200).send("Payment released successfully")
+                    } catch (error) {
+                        res.status(500).send("Something went wrong with saving data")
+                    }
+                }
+            });
+
+        } catch (error) {
+            res.status(500).send('Something went wrong while processing payment')
         }
     },
 };
