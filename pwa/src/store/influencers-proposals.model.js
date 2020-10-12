@@ -45,25 +45,19 @@ export const influencersProposalModel = {
     postError: action((state, payload) => {
         state.errors.postErrorMessage = payload;
     }),
-    listProposals: thunk(async (actions, payload) => {
-        const res = await axios.get(`${config.apiUrl}/proposals/`);
-        console.log(res.data)
-
-        actions.updateProposalsList(res.data);
-
-
-    }),
-    getProposals: thunk(async (actions, payload) => {
+    getProposals: thunk(async (actions, payload, helpers) => {
+        const brandId = helpers.getStoreState().brand.activeBrandId;
         const id = payload
-        const res = await axios.get(`${config.apiUrl}/proposals/${id}`);
+        const res = await axios.get(`${config.apiUrl}/brands/${brandId}/campaigns/${id}/proposals`);
         console.log(res)
         const { data } = await res;
         console.log(data)
         actions.updateProposalsList(data);
     }),
-    checkIfAlreadySubmitted: thunk(async (actions, { campaignId }) => {
+    checkIfAlreadySubmitted: thunk(async (actions, { campaignId }, helpers) => {
+        const channelId = helpers.getStoreState().channels.activeChannelId;
         try {
-            const res = await axios.get(`${config.apiUrl}/influencers/proposals/${campaignId}`);
+            const res = await axios.get(`${config.apiUrl}/channels/${channelId}/campaigns/${campaignId}/proposals/`);
             if (res.data) {
                 actions.setProposalSubmitted(true);
             }
@@ -88,7 +82,7 @@ export const influencersProposalModel = {
         try {
             actions.updateLoading(true);
 
-            const res = await axios.post(`${config.apiUrl}/influencers/proposals/`, obj)
+            const res = await axios.post(`${config.apiUrl}/channels/${channelId}/campaigns/${payload.campaignId}/proposals/`, obj)
 
             actions.updateProposals(res.data);
             actions.setProposalSubmitted(true);

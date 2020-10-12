@@ -45,7 +45,7 @@ export function FinishSignup({ location }) {
                                         </div>
                                         {
                                             finishSignupMessage?
-                                            <div class="alert alert-danger" role="alert">
+                                            <div className="alert alert-danger" role="alert">
                                                 {finishSignupMessage}
                                             </div>
                                             :''

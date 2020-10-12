@@ -27,14 +27,14 @@ export const ChannelModel = {
         state.influencers = payload
     }),
     listChannels: thunk(async (actions, payload) => {
-        const { data } = await axios.get(`${config.apiUrl}/influencers/channels`)
+        const { data } = await axios.get(`${config.apiUrl}/channels`)
         console.log(data)
         actions.setChannels(data);
     }),
 
     authenticateTwitter: thunk(async (actions, payload, helpers) => {
         try {
-            const res = await axios.post(`${config.apiUrl}/influencers/channels/twitter/oauth/request_token`);
+            const res = await axios.post(`${config.apiUrl}/channels/twitter/oauth/request_token`);
 
             const oauthWindow = window.open(encodeURI(`https://api.twitter.com/oauth/authenticate?oauth_token=${res.data.oauth_token}`));
             var timer = setInterval(async () => {
@@ -53,7 +53,7 @@ export const ChannelModel = {
                             category: payload.category
                         }
                         actions.toggleLoading(true);
-                        const res = await axios.post(`${config.apiUrl}/influencers/channels/twitter/oauth/`, body);
+                        const res = await axios.post(`${config.apiUrl}/channels/twitter/oauth/`, body);
                         actions.toggleLoading(false);
 
                         actions.add(res.data);
@@ -83,7 +83,7 @@ export const ChannelModel = {
         try {
             actions.toggleLoading(true);
 
-            const res = await axios.post(`${config.apiUrl}/influencers/channels/instagram/oauth`, payload)
+            const res = await axios.post(`${config.apiUrl}/channels/instagram/oauth`, payload)
             actions.toggleLoading(false);
 
             console.log(res)
@@ -102,7 +102,7 @@ export const ChannelModel = {
 
             actions.toggleLoading(true);
 
-            const response = await axios.post(`${config.apiUrl}/influencers/channels/tiktok/oauth`, payload)
+            const response = await axios.post(`${config.apiUrl}/channels/tiktok/oauth`, payload)
             actions.toggleLoading(false);
 
             console.log(response)
@@ -122,7 +122,7 @@ export const ChannelModel = {
         try {
             actions.toggleLoading(true);
 
-            const res = await axios.post(`${config.apiUrl}/influencers/channels/facebook/oauth`, payload)
+            const res = await axios.post(`${config.apiUrl}/channels/facebook/oauth`, payload)
             actions.toggleLoading(false);
 
             console.log(res)
@@ -141,7 +141,7 @@ export const ChannelModel = {
         try {
             actions.toggleLoading(true);
 
-            await axios.post(`${config.apiUrl}/influencers/channels/youtube/oauth/`, payload);
+            await axios.post(`${config.apiUrl}/channels/youtube/oauth/`, payload);
             actions.toggleLoading(false);
 
             toastr.success('Successfully added YouTube Channel')
@@ -151,11 +151,12 @@ export const ChannelModel = {
             toastr.error("Something went wrong when adding the YouTube Channel")
         }
     }),
-    getInfluencers: thunk(async (actions, payload) => {
+    getInfluencers: thunk(async (actions, payload, helpers) => {
         try {
+            const brandId = helpers.getStoreState().brand.activeBrandId;
             const campaignId = payload.campaignId
             console.log(campaignId)
-            const res = await axios.get(`${config.apiUrl}/influencers/channels/${campaignId}/suggested-influencers`);
+            const res = await axios.get(`${config.apiUrl}/brands/${brandId}/campaigns/${campaignId}/suggested-influencers`);
             console.log(res);
 
             var influencers = res.data;

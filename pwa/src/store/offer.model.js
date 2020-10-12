@@ -18,19 +18,19 @@ export const OfferModel = {
         state.errors.postErrorMessage = payload;
     }),
 
-    listOffers: thunk(async (actions, payload) => {
-
-
-        const res = await axios.get(`${config.apiUrl}/offer/`);
+    listOffers: thunk(async (actions, payload, helpers) => {
+        const channelId = helpers.getStoreState().channels.activeChannelId;
+        const res = await axios.get(`${config.apiUrl}/channels/${channelId}/offers/`);
         console.log(res.data)
 
         actions.updateOffersList(res.data);
     }),
-    createOffer: thunk(async (actions, payload) => {
+    createOffer: thunk(async (actions, payload, helpers) => {
         try {
+            const brandId = helpers.getStoreState().brand.activeBrandId;
             actions.updateLoading(true);
 
-            const offer = await axios.post(`${config.apiUrl}/offer/create`, payload)
+            const offer = await axios.post(`${config.apiUrl}/brands/${brandId}/offers`, payload)
             console.log(offer)
             actions.updateLoading(false);
             toastr.success("Successfully Sent Offer")
@@ -46,10 +46,10 @@ export const OfferModel = {
 
         }
     }),
-    updateOffer: thunk(async (actions, payload) => {
+    updateOffer: thunk(async (actions, payload, helpers) => {
         try {
-
-            const res = await axios.put(`${config.apiUrl}/offer/`, payload);
+            const channelId = helpers.getStoreState().channels.activeChannelId;
+            const res = await axios.put(`${config.apiUrl}/channels/${channelId}/offers/${payload.offerId}`, payload);
             actions.listOffers(res.data);
             console.log(res);
 
@@ -59,9 +59,10 @@ export const OfferModel = {
         }
 
     }),
-    toBePayedOffer: thunk(async (actions, payload) => {
+    toBePayedOffer: thunk(async (actions, payload, helpers) => {
         try {
-            const res = await axios.get(`${config.apiUrl}/offer/to-be-payed`)
+            const brandId = helpers.getStoreState().brand.activeBrandId;
+            const res = await axios.get(`${config.apiUrl}/brands/${brandId}/offers/unpaid`)
             actions.updateOffersList(res.data)
 
         }
@@ -69,9 +70,10 @@ export const OfferModel = {
             console.log(error)
         }
     }),
-    verifyPayment: thunk(async (actions, payload) => {
+    verifyPayment: thunk(async (actions, payload, helpers) => {
         try {
-            await axios.post(`${config.apiUrl}/offer/verify-payment`, payload);
+            const brandId = helpers.getStoreState().brand.activeBrandId;
+            await axios.post(`${config.apiUrl}/brands/${brandId}/offers/${payload.offerId}/verify-payment`, payload);
             toastr.success("Payment verified");
             actions.listOffers()
         } catch (error) {
