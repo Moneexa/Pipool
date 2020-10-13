@@ -13,19 +13,13 @@ var cors = require('cors');
 
 const loginRoute = require('./auth/login.router'); // Imports routes for the products
 const signupRoute = require('./auth/signup.router'); // Imports routes for the products
-const insightsRoute = require('./insights/insightsRouter')
-const brandRoute = require('./brand/brandRoutes')
-const brandProposalRoutes = require('./proposals/brandProposalRoutes')
-const influencerProposalRoute = require('./proposals/influencerProposalRoutes')
-const campaignBrandRoute = require('./campaign/campaignBrandRoutes')
-const influencerCampaignRoute = require('./campaign/campaignInfluencerRoutes')
-const channels = require('./channel/channelRoutes');
-const videos =  require('./videos/videosRoutes');
-const chats =  require('./chat/chat.route');
-const bankAccounts = require('./bank-accounts/bank-accounts.route');
-const customers = require('./customers/customers.route');
-const chatsSocket =  require('./chat/chat.socket');
-const offer = require('./offer/offer.route');
+const brandRoute = require('./api/brands/brandRoutes')
+const channelRoutes = require('./api/channels/channelsRoutes')
+// const videos =  require('./videos/videosRoutes');
+const chats =  require('./api/common/chat/chat.route');
+const bankAccounts = require('./api/common/bank-accounts/bank-accounts.route');
+const customers = require('./api/common/customers/customers.route');
+const chatsSocket =  require('./api/common/chat/chat.socket');
 
 
 var port = process.env.PORT || 4242;
@@ -42,16 +36,10 @@ app.use(cors());
 app.use('/api/auth/login', loginRoute);
 app.use('/api/auth/signup', signupRoute);
 app.use('/api/brands', brandRoute);
-app.use('/api/brands/:brandId/campaigns', campaignBrandRoute);
-app.use('/api/influencers/channels', channels);
-app.use('/api/channels/insights', insightsRoute);
-app.use('/api/channels/', influencerCampaignRoute);
-app.use('/api/brands/proposals', brandProposalRoutes);
-app.use('/api/influencers/proposals', influencerProposalRoute);
+app.use('/api/channels/', channelRoutes);
 app.use('/api/chats', chats);
 app.use('/api/bank-accounts', bankAccounts)
 app.use('/api/customers', customers)
-app.use('/api/offer', offer);
 
 
 

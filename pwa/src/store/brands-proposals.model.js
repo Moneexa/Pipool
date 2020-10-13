@@ -33,17 +33,19 @@ export const brandsProposalModel = {
         state.campaignId = campaignId;
         state.campaignProposals = proposals;
     }),
-    listProposals: thunk(async (actions, payload) => {
-        const res = await axios.get(`${config.apiUrl}/proposals/`);
+    listProposals: thunk(async (actions, payload, helpers) => {
+        const brandId = helpers.getStoreState().brand.activeBrandId;
+        const res = await axios.get(`${config.apiUrl}/brands/${brandId}/proposals/`);
         console.log(res.data)
 
         actions.updateProposalsList(res.data);
     }),
-    getCampaignProposals: thunk(async (actions, payload) => {
+    getCampaignProposals: thunk(async (actions, payload, helpers) => {
+        const brandId = helpers.getStoreState().brand.activeBrandId;
         const id = payload
         actions.updateLoading(true);
         actions.setCampaignProposals({ campaignId: id, proposals: [] })
-        const res = await axios.get(`${config.apiUrl}/brands/proposals/${id}`);
+        const res = await axios.get(`${config.apiUrl}/brands/${brandId}/campaigns/${id}/proposals/`);
         const { data } = await res;
         console.log(data)
         actions.setCampaignProposals({ campaignId: id, proposals: data })
