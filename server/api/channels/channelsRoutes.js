@@ -6,7 +6,7 @@ const insightsRoutes = require('./insights/insightsRouter');
 const offersRoutes = require('./offer/offer.route');
 const proposalsRoutes = require('./proposals/influencerProposalRoutes');
 const auth = require('../../auth/auth')
-
+const reports = require('./reports/reportsChannelRoutes');
 
 /*
  * GET
@@ -39,6 +39,7 @@ router.use('/:channelId/campaigns', campaignsRoutes)
 router.use('/:channelId/insights', insightsRoutes)
 router.use('/:channelId/offers', offersRoutes)
 router.use('/:channelId/proposals', proposalsRoutes)
+router.use('/:channelId/:campaignId', reports);
 
 
 

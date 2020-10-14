@@ -20,6 +20,8 @@ const chats =  require('./api/common/chat/chat.route');
 const bankAccounts = require('./api/common/bank-accounts/bank-accounts.route');
 const customers = require('./api/common/customers/customers.route');
 const chatsSocket =  require('./api/common/chat/chat.socket');
+const adminCampaignInsights  =  require('./api/admin/campaigns/campaignAdminRoutes');
+const reportsAdminRoutes = require('./api/admin/reports/reportsAdminRoutes');
 
 
 var port = process.env.PORT || 4242;
@@ -40,6 +42,8 @@ app.use('/api/channels/', channelRoutes);
 app.use('/api/chats', chats);
 app.use('/api/bank-accounts', bankAccounts)
 app.use('/api/customers', customers)
+app.use('/api/admin/campaigns', adminCampaignInsights);
+app.use('/api/admin/reports', reportsAdminRoutes);
 
 
 

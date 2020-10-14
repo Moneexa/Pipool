@@ -45,6 +45,7 @@ export default function CampaignInfo({ match }) {
     const getCampaign = useStoreActions(actions => actions.influencersCampaigns.getCampaign)
     const proposalSubmitted = useStoreState(state => state.influencersProposals.proposalSubmitted);
     const checkIfAlreadySubmitted = useStoreActions(actions => actions.influencersProposals.checkIfAlreadySubmitted)
+    const report = useStoreActions(actions=>actions.influencersCampaigns.report);
     const [flag, setFlag] = useState(false)
     useEffect(() => {
         //setFlag(false)
@@ -55,6 +56,13 @@ export default function CampaignInfo({ match }) {
     function handleClick() {
         console.log(flag)
         setFlag(true);
+    }
+    function reportClick(){
+        report({
+            campaign:campaignId,
+            message:"this campaign has been reported",
+            author: localStorage.getItem('activeChannelId') ,
+        })
     }
     console.log(proposalSubmitted)
     return (
@@ -157,6 +165,8 @@ export default function CampaignInfo({ match }) {
                                                 >Submit Proposal </Link>
 
                                                 <button type="button" className={`btn btn-outline-secondary px-5 ${styles.noWrap}`}>Save Campagin</button>
+                                                <button type="button" className={`btn btn-danger px-5 my-2 noWrap`} onClick={reportClick}>Report Campagin</button>
+
                                             </>
                                         )
                                 }

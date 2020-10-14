@@ -25,6 +25,11 @@ var campaignSchema = new Schema({
     },
 	'createdBy': [
 		{ type: Schema.Types.ObjectId, ref: 'User' }
+	],
+	'reportedBy' : [
+		{
+			type: Schema.Types.ObjectId, ref: 'Channel'
+		}
 	]
 });
 

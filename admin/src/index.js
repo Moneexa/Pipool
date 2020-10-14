@@ -25,26 +25,31 @@ import "assets/css/demo.css";
 
 import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
+import { StoreProvider } from 'easy-peasy';
+import { store } from "./store/store";
 
 const hist = createBrowserHistory();
 
 ReactDOM.render(
-  <Router history={hist}>
-    <Switch>
-      <Route
-        path="/admin"
-        render={(props) => {
-          return <AdminLayout {...props} />;
-        }}
-      />
-      <Route
-        path="/auth"
-        render={(props) => {
-          return <AuthLayout {...props} />;
-        }}
-      />
-      <Redirect to="/admin/dashboard" />
-    </Switch>
-  </Router>,
+  <StoreProvider store={store}>
+
+    <Router history={hist}>
+      <Switch>
+        <Route
+          path="/admin"
+          render={(props) => {
+            return <AdminLayout {...props} />;
+          }}
+        />
+        <Route
+          path="/auth"
+          render={(props) => {
+            return <AuthLayout {...props} />;
+          }}
+        />
+        <Redirect to="/admin/dashboard" />
+      </Switch>
+    </Router>
+  </StoreProvider>,
   document.getElementById("root")
 );
