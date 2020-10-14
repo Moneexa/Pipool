@@ -152,9 +152,10 @@ export const InfluencersCampaignsModel = {
             console.log(error)
         }
     }),
-    report: thunk(async (actions, payload) => {
+    report: thunk(async (actions , payload, helpers) => {
         try {
-            const reports = await axios.post(`${config.apiUrl}/channels/${payload.author}/${payload.campaign}/reports`, payload);
+            const channelId = helpers.getStoreState().channels.activeChannelId;
+            const reports = await axios.post(`${config.apiUrl}/channels/${channelId}/${payload.campaign}/reports`, payload);
             toastr.success('this campaign has been reported as per your request')
         }
         catch (error) {

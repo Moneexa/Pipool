@@ -7,6 +7,7 @@ import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { useForm } from "react-hook-form";
 import styles from './CampaignInfo.module.css'
 import { Link } from 'react-router-dom'
+import { Modal, Form } from 'react-bootstrap'
 import CampaignApply from '../CampaignApply/CampaignApply'
 function Dos({ list }) {
     return (
@@ -45,8 +46,10 @@ export default function CampaignInfo({ match }) {
     const getCampaign = useStoreActions(actions => actions.influencersCampaigns.getCampaign)
     const proposalSubmitted = useStoreState(state => state.influencersProposals.proposalSubmitted);
     const checkIfAlreadySubmitted = useStoreActions(actions => actions.influencersProposals.checkIfAlreadySubmitted)
-    const report = useStoreActions(actions=>actions.influencersCampaigns.report);
+    const report = useStoreActions(actions => actions.influencersCampaigns.report);
     const [flag, setFlag] = useState(false)
+    const [pop, setPop] = useState(false);
+    const [message, setMessage] = useState("")
     useEffect(() => {
         //setFlag(false)
         console.log(campaignId)
@@ -57,16 +60,39 @@ export default function CampaignInfo({ match }) {
         console.log(flag)
         setFlag(true);
     }
-    function reportClick(){
-        report({
-            campaign:campaignId,
-            message:"this campaign has been reported",
-            author: localStorage.getItem('activeChannelId') ,
-        })
+    function reportClick() {
+        hidePop()
+        console.log(message)
+        if (message) {
+            report({
+                campaign: campaignId,
+                message: message,
+            })
+        }
+    }
+    function handleMessageChange(e) {
+        setMessage(e.target.value)
+    }
+    function hidePop() {
+        setPop(false)
+    }
+    function showPop() {
+        setPop(true)
     }
     console.log(proposalSubmitted)
     return (
         <>
+            <Modal show={pop} onHide={hidePop}>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group>
+                            <Form.Label>Enter message</Form.Label>
+                            <Form.Control type="text" value={message} onChange={handleMessageChange}></Form.Control>
+                        </Form.Group>
+                        <button type="button" onClick={reportClick}>Submit</button>
+                    </Form>
+                </Modal.Body>
+            </Modal>
             <div className={styles.container}>
                 <div className={styles.infoContainer}>
                     <h4 className={`mt-2 mx-4 mb-4 ${styles.title}`}>Campagin Description</h4>
@@ -165,7 +191,7 @@ export default function CampaignInfo({ match }) {
                                                 >Submit Proposal </Link>
 
                                                 <button type="button" className={`btn btn-outline-secondary px-5 ${styles.noWrap}`}>Save Campagin</button>
-                                                <button type="button" className={`btn btn-danger px-5 my-2 noWrap`} onClick={reportClick}>Report Campagin</button>
+                                                <button type="button" className={`btn btn-danger px-5 my-2 noWrap`} onClick={showPop}>Report Campagin</button>
 
                                             </>
                                         )
