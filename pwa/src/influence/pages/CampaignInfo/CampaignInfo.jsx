@@ -86,7 +86,8 @@ export default function CampaignInfo({ match }) {
                 <Modal.Body>
                     <Form>
                         <Form.Group>
-                            <textarea type="text" value={message} style={{width:"100%", height:"50%"}} onChange={handleMessageChange}></textarea>
+                            <textarea type="text" rows="10"
+                                value={message} placeholder="Enter your message" style={{ width: "100%", height: "50%", borderRadius:"0.25rem" }} onChange={handleMessageChange}></textarea>
                         </Form.Group>
                         <button type="button" className="btn btn-primary px-5 text-white mb-2" onClick={reportClick}>Submit</button>
                     </Form>
