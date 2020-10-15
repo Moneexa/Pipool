@@ -14,8 +14,9 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, { useEffect } from "react";
-import { useStoreActions, useStoreState } from 'easy-peasy'
+import React from "react";
+import { campaignList$, listCampaign } from 'store/campaigns-insights';
+import { useObservable } from 'store';
 // reactstrap components
 import {
   Table,
@@ -35,15 +36,9 @@ import {
 
 // core components
 import PanelHeader from "components/PanelHeader/PanelHeader.js";
-import { actions } from "react-table";
 
 function Insights() {
-  const campaignList = useStoreState(state => state.campaignInsights.campaignList);
-  const listCampaign = useStoreActions(actions => actions.campaignInsights.listCampaign)
-  useEffect(() => {
-    listCampaign();
-
-  }, [])
+  const campaignList = useObservable(campaignList$);
   return (
     <>
       <PanelHeader size="sm" />
@@ -69,7 +64,7 @@ function Insights() {
                     </tr>
                   </thead>
                   <tbody>
-                    {campaignList.map((value, index) => {
+                    {campaignList?.map((value, index) => {
                       return (<tr key={index}>
                         <td className="text-center">{index}</td>
                         <td>{value.serviceName}</td>
