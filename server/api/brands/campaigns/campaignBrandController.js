@@ -312,5 +312,24 @@ module.exports = {
         } catch (error) {
             res.status(500).send("Something went wrong");
         }
+    },
+    reportDispute: async function (req, res) {
+        try {
+            const brandId = req.params.brandId;
+            const campaignId = req.params.id;
+            const offerId = req.body.offerId;
+            let offer = await offerModel.findOne({
+                _id: offerId,
+                brandId,
+                campaignId,
+                createdBy: res.locals.user.id
+            })
+            if (!offer) return res.status(404).send("No offer found");
+            offer.disputed = true;
+            await offer.save();
+            res.status(200).send("Reported");
+        } catch (error) {
+            res.status(500).send("Something went wrong");
+        }
     }
 };

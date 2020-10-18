@@ -32,6 +32,7 @@ router.get('/:id', auth.verify, campaignController.show);
 router.post('/', auth.verify, campaignController.create);
 router.post('/:id/release-payment', auth.verify, campaignController.releasePayment);
 router.post('/:id/request-ads', auth.verify, campaignController.requestAds);
+router.post('/:id/report-dispute', auth.verify, campaignController.reportDispute);
 
 /*
  * PUT

@@ -207,7 +207,16 @@ export const BrandsCampaignsModel = {
             await axios.post(`${config.apiUrl}/brands/${brandId}/campaigns/${campaignId}/request-ads`, {});
             toastr.success("Request sent");
         } catch (error) {
-            toastr.error("Unable to verify payment")
+            toastr.error("Unable to request")
         }
-    })
+    }),
+    reportForDispute: thunk(async (actions, { campaignId, offerId }, helpers) => {
+        const brandId = helpers.getStoreState().brand.activeBrandId;
+        try {
+            await axios.post(`${config.apiUrl}/brands/${brandId}/campaigns/${campaignId}/report-dispute`, { offerId });
+            toastr.success("Reported for dispute");
+        } catch (error) {
+            toastr.error("Unable to report")
+        }
+    }),
 };

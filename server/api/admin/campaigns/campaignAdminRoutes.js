@@ -18,7 +18,7 @@ router.get('/',   campaignController.list);
  */
 
 router.get('/active',   campaignController.activeCampaigns);
-
+router.get('/disputed',   campaignController.disputedCampaigns);
 /*
  * GET
  */
