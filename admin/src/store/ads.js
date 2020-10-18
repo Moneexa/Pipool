@@ -4,25 +4,25 @@ import * as toastr from 'toastr';
 import { BehaviorSubject, ReplaySubject } from 'rxjs';
 
 const loading = new BehaviorSubject(false);
-const campaignList = new ReplaySubject(1);
+const adsRequests = new ReplaySubject(1);
 
 export const loading$ = loading.asObservable();
-export const campaignList$ = campaignList.asObservable();
+export const adsRequests$ = adsRequests.asObservable();
 
-export async function listCampaign() {
+export async function listAdsRequests() {
 
     try {
-        console.log('listing campaigns')
+        console.log('listing ads')
         loading.next(true);
 
-        const res = await axios.get(`${config.apiUrl}/admin/campaigns/`);
+        const res = await axios.get(`${config.apiUrl}/admin/ads-requests/`);
         console.log(res.data)
         loading.next(false);
-        campaignList.next(res.data);
+        adsRequests.next(res.data);
 
     } catch (error) {
-        toastr.error("Something went wrong while fetching campaigns")
+        toastr.error("Something went wrong while fetching ads")
     }
 }
 
-listCampaign();
+listAdsRequests();

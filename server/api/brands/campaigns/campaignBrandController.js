@@ -1,9 +1,10 @@
-var campaignModel = require('../../common/campaigns/campaignsModel');
-var offerModel = require('../../common/offers/offer.model');
-var bankAccountModel = require('../../common/bank-accounts/bank-accounts.model')
-var channelModel = require('../../channels/channelsModel')
-var proposalModel = require('../../common/proposals/proposalsModel')
-var paypal = require('paypal-rest-sdk');
+const campaignModel = require('../../common/campaigns/campaignsModel');
+const offerModel = require('../../common/offers/offer.model');
+const bankAccountModel = require('../../common/bank-accounts/bank-accounts.model')
+const channelModel = require('../../channels/channelsModel')
+const proposalModel = require('../../common/proposals/proposalsModel')
+const adsRequestModel = require('../../common/ads-request/adsRequestModel')
+const paypal = require('paypal-rest-sdk');
 const config = require('../../../config.json');
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
@@ -290,4 +291,26 @@ module.exports = {
             res.status(500).send('Something went wrong while processing payment')
         }
     },
+    requestAds: async function (req, res) {
+        try {
+            const brandId = req.params.brandId;
+            const campaignId = req.params.id;
+            let adsRequest = await adsRequestModel.findOne({
+                brand: brandId,
+                campaign: campaignId,
+                createdBy: res.locals.user.id
+            })
+            if (!adsRequest) {
+                adsRequest = new adsRequestModel({
+                    brand: brandId,
+                    campaign: campaignId,
+                    createdBy: res.locals.user.id
+                });
+                await adsRequest.save();
+            }
+            res.status(200).send(adsRequest);
+        } catch (error) {
+            res.status(500).send("Something went wrong");
+        }
+    }
 };
