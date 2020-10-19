@@ -33,7 +33,7 @@ var ps;
 
 class Admin extends React.Component {
   state = {
-    sidebarMini: true,
+    sidebarMini: false,
     backgroundColor: "blue",
   };
   notificationAlert = React.createRef();

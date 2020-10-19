@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom'
 export default function ActiveCampaigns() {
     const listActiveCampaigns = useStoreActions(actions => actions.brandsCampaignsModel.listActiveCampaigns);
     const releasePayment = useStoreActions(actions => actions.brandsCampaignsModel.releasePayment);
+    const requestForAds = useStoreActions(actions => actions.brandsCampaignsModel.requestForAds);
     const list = useStoreState(state => state.brandsCampaignsModel.activeCampaigns);
     console.log(list);
 
@@ -40,6 +41,7 @@ export default function ActiveCampaigns() {
                             </td>
                             <td>
                                 <button onClick={() => releasePayment(element.campaignId._id)} className="btn btn-primary text-white">Release payment</button>
+                                <button onClick={() => requestForAds(element.campaignId._id)} className="ml-3 btn btn-primary text-white">Request For Ads</button>
                             </td>
                         </tr>
                         )

@@ -200,5 +200,14 @@ export const BrandsCampaignsModel = {
         } catch (error) {
             toastr.error("Unable to verify payment")
         }
+    }),
+    requestForAds: thunk(async (actions, campaignId, helpers) => {
+        const brandId = helpers.getStoreState().brand.activeBrandId;
+        try {
+            await axios.post(`${config.apiUrl}/brands/${brandId}/campaigns/${campaignId}/request-ads`, {});
+            toastr.success("Request sent");
+        } catch (error) {
+            toastr.error("Unable to verify payment")
+        }
     })
 };

@@ -68,7 +68,7 @@ function PendingRequests() {
                                             <div className="flex-fill">
                                                 <h3 style={{ color: "#585858" }}>{value.campaignId.serviceName}</h3>
                                                 <div className="d-flex justify-content-between influencer-sub-heading">
-                                                    <div><b>Date of Completion:</b> {value.proposal.dateOfSubmission}</div>
+                                                    <div><b>Date of Completion:</b> {value.proposal?.dateOfSubmission}</div>
                                                     {/* <div><b>Platform:</b> {value.Channel}</div> */}
                                                     {/* <div><b>Category:</b>{value.Category}</div> */}
                                                 </div>

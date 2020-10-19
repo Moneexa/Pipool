@@ -24,8 +24,9 @@ import Switch from "react-bootstrap-switch";
 class FixedPlugin extends Component {
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
-      classes: "dropdown show",
+      classes: "dropdown",
       bg_checked: true,
       switched: false,
       mini_checked: this.props.mini,
@@ -115,7 +116,7 @@ class FixedPlugin extends Component {
               <li className="header-title">Sidebar Mini</li>
             )}
             {window.location.href.indexOf("/auth/") > -1 ? null : (
-              <li className="adjustments-line">
+              <li className="adjustments-line mb-3">
                 <div className="togglebutton switch-sidebar-mini">
                   <span className="label-switch">OFF</span>
                   <Switch
@@ -129,22 +130,6 @@ class FixedPlugin extends Component {
               </li>
             )}
 
-            <li className="button-container">
-              <a
-                href="https://www.creative-tim.com/product/now-ui-dashboard-pro-react?ref=nudr-fixed-plugin"
-                target="_blank"
-                className="btn btn-primary btn-block btn-round"
-              >
-                Buy now
-              </a>
-              <a
-                href="https://demos.creative-tim.com/now-ui-dashboard-pro-react/#/documentation/tutorial?ref=nudr-fixed-plugin"
-                className="btn btn-block btn-round btn-info"
-                target="_blank"
-              >
-                Documentation
-              </a>
-            </li>
           </ul>
         </div>
       </div>
