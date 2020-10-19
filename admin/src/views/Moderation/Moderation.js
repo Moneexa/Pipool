@@ -15,7 +15,9 @@
 
 */
 import React, { useEffect } from "react";
-import { useStoreActions, useStoreState } from 'easy-peasy'
+import { reportsList$ } from 'store/reports-admin';
+import { useObservable } from 'store';
+
 // reactstrap components
 import {
   Table,
@@ -37,12 +39,9 @@ import {
 import PanelHeader from "components/PanelHeader/PanelHeader.js";
 
 function Moderation() {
-  const reportsList = useStoreState(state => state.reportsAdmin.reportsList);
-  const listReports = useStoreActions(actions => actions.reportsAdmin.listReports);
-  useEffect(() => {
-    listReports()
-  }, [])
+  const reportsList = useObservable(reportsList$);
 
+  
   return (
     <>
       <PanelHeader size="sm" />
@@ -66,7 +65,7 @@ function Moderation() {
                   </thead>
                   <tbody>
                     {
-                      reportsList.map((value, index) => {
+                      reportsList?.map((value, index) => {
                         return (
                           <tr key={index}>
                             <td className="text-center">{index}</td>
