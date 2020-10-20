@@ -15,25 +15,25 @@ export const rooms$ = rooms.asObservable();
 export const messages$ = messages.asObservable();
 export const activeRoom$ = activeRoom.asObservable();
 
-export async function listRooms(channelId) {
+export async function listRooms(brandId) {
 
     try {
         console.log('listing rooms')
         loading.next(true);
 
-        const res = await axios.get(`${config.apiUrl}/channels/${channelId}/chat`);
+        const res = await axios.get(`${config.apiUrl}/brands/${brandId}/chat`);
         console.log(res.data)
         loading.next(false);
         rooms.next(res.data);
         if(res.data?.length > 0)
-            changeActiveRoom(channelId, res.data[0])
+            changeActiveRoom(brandId, res.data[0])
 
     } catch (error) {
         toastr.error("Something went wrong while fetching rooms")
     }
 }
 
-export async function changeActiveRoom(channelId, room) {
+export async function changeActiveRoom(brandId, room) {
 
     try {
         console.log('listing chat')
@@ -41,7 +41,7 @@ export async function changeActiveRoom(channelId, room) {
         messages.next([]);
         activeRoom.next(room);
 
-        const res = await axios.get(`${config.apiUrl}/channels/${channelId}/chat/${room._id}`);
+        const res = await axios.get(`${config.apiUrl}/brands/${brandId}/chat/${room._id}`);
         console.log(res.data)
         loading.next(false);
         messages.next(res.data || []);
@@ -51,22 +51,21 @@ export async function changeActiveRoom(channelId, room) {
     }
 }
 
-export function send(channelId, brandId, roomId, value) {
+export function send(brandId, channelId, roomId, value) {
     messages.next([...messages.value, {
         date: new Date(),
         fromBrand: false,
         value
     }])
+    
     socket.emit('send', {
-        from: channelId,
-        to: brandId,
-        fromBrand: false,
+        from: brandId,
+        to: channelId,
+        fromBrand: true,
         roomId,
         value
     })
 }
-
-
 
 socket.on('receive', (data) => {
     messages.next([...messages.value, data])

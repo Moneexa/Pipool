@@ -11,7 +11,7 @@ module.exports = {
 async function listRooms(req, res) {
     try {
         const rooms = await ChatModel
-            .find({ channel: req.params.channelId })
+            .find({ brand: req.params.brandId })
             .populate('campaign')
             .populate('channel', 'channelName')
             .populate('brand', 'name')

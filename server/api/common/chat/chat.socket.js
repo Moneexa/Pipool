@@ -33,10 +33,13 @@ async function assignUser(socket, { token, id }) {
                         const brand = await BrandModel.findOne({ _id: id, createdBy: decoded.id });
                         if (!brand) throw "Invalid Brand Id provided";
                         socket.join(id)
+                        break;
                     case 'admin':
                         socket.join(id)
+                        break;
                     case 'default':
                         socket.disconnect();
+                        break;
                 }
             }
         });

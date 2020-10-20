@@ -55,6 +55,11 @@
 .sidebar-content .navbar {
   background-color: white;
 }
+
+.dashboard .routes-container {
+  min-height: 100%;
+}
+
 .navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top.shadow a {
   padding: 20px;
   font-weight: bold;
