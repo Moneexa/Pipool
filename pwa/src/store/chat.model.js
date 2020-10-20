@@ -7,7 +7,7 @@ import { action, thunk } from "easy-peasy";
 const socket = io(config.socketHost);
 
 
-const { role } = JSON.parse(localStorage.getItem('userInfo')) || { role: '' };
+const { role, token } = JSON.parse(localStorage.getItem('userInfo')) || { role: '', token: { value: '' } };
 
 export const ChatModel = {
     activeRoom: {
@@ -50,37 +50,24 @@ export const ChatModel = {
     }),
 }
 
-socket.on('connect', () => {
-    console.log("Connection joined");
-    if (role === 'influencer') {
-        const channelId = localStorage.getItem('activeChannelId');
-        if (channelId)
-            socket.emit('joinChannelRooms', { channelId, channelId });
-        else
-            console.error("No channel id found")
-    } else if (role === 'brand') {
-        const brandId = localStorage.getItem('activeBrandId');
-        if (brandId)
-            socket.emit('joinBrandRooms', { brandId, brandId });
-        else
-            console.error("No brand id found")
-    }
-})
+// socket.on('connect', () => {
+//     console.log("Connection joined");
+//     if (role === 'influencer') {
+//         const channelId = localStorage.getItem('activeChannelId');
+//         if (channelId)
+//             socket.emit('assignUser', { id: channelId, token: token?.value });
+//         else
+//             console.error("No channel id found")
+//     } else if (role === 'brand') {
+//         const brandId = localStorage.getItem('activeBrandId');
+//         if (brandId)
+//             socket.emit('assignUser', { id: brandId, token: token?.value });
+//         else
+//             console.error("No brand id found")
+//     }
+// })
 
-socket.on('refreshRooms', (data) => {
-    store.dispatch({ type: '@action.chats.setRooms', payload: data });
-    if (data && data.length > 0 && data[0].id) {
-        store.dispatch({
-            type: '@action.chats.setActiveRoom', payload: {
-                id: data[0].id, 
-                title: data[0].title,
-                channel: data[0].channel,
-                brand: data[0].brand
-            }
-        })
-    }
-});
-socket.on('receive', (data) => {
-    store.dispatch({ type: '@action.chats.pushMessage', payload: data });
-});
+// socket.on('receive', (data) => {
+//     store.dispatch({ type: '@action.chats.pushMessage', payload: data });
+// });
 

@@ -37,6 +37,9 @@
   overflow-y: auto;
   background-color: #fff;
 }
+.dashboard-influence #wrapper .sidebar-content .routes-container{
+  min-height: 100%;
+}
 .dashboard-influence #wrapper .sidebar-content nav .navbar-nav{
   flex-direction: row;
 }

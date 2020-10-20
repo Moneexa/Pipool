@@ -37,8 +37,8 @@ function signToken(id, name, role, picture, callback) {
 		id
 	};
 	if (name) { payload.name = name }
-	if (role) { payload.name = role }
-	if (picture) { payload.name = picture }
+	if (role) { payload.role = role }
+	if (picture) { payload.picture = picture }
 	jwt.sign(
 		payload,
 		config.privateKey,
