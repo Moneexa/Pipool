@@ -4,6 +4,7 @@ const brandController = require('./brandController.js');
 const campaignsRoutes = require('./campaigns/campaignBrandRoutes')
 const offersRoutes = require('./offer/offer.route');
 const proposalsRoutes = require('./proposals/brandProposalRoutes');
+const chatRoutes = require('./chat/chat.route');
 const auth = require('../../auth/auth')
 
 /*
@@ -35,6 +36,7 @@ router.delete('/:id', brandController.remove);
 router.use('/:brandId/campaigns', campaignsRoutes)
 router.use('/:brandId/offers', offersRoutes)
 router.use('/:brandId/proposals', proposalsRoutes)
+router.use('/:brandId/chat', chatRoutes)
 
 
 module.exports = router;

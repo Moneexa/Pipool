@@ -26,7 +26,7 @@ import PerfectScrollbar from "perfect-scrollbar";
 import { Nav, Collapse, Button } from "reactstrap";
 
 // core components
-import avatar from "assets/img/ryan.jpg";
+import avatar from "assets/img/default-avatar.png";
 import logo from "logo-white.svg";
 
 var ps;
@@ -158,36 +158,7 @@ class Sidebar extends React.Component {
     return (
       <>
         <div className="sidebar" data-color={this.props.backgroundColor}>
-          <div className="logo">
-            <a
-              href="https://www.creative-tim.com?ref=nudr-sidebar"
-              className="simple-text logo-mini"
-              target="_blank"
-            >
-              <div className="logo-img">
-                <img src={logo} alt="react-logo" />
-              </div>
-            </a>
-            <a
-              href="https://www.creative-tim.com?ref=nudr-sidebar"
-              className="simple-text logo-normal"
-              target="_blank"
-            >
-              Creative Tim
-            </a>
-            <div className="navbar-minimize">
-              <Button
-                outline
-                className="btn-round btn-icon"
-                color="neutral"
-                id="minimizeSidebar"
-                onClick={() => this.props.minimizeSidebar()}
-              >
-                <i className="now-ui-icons text_align-center visible-on-sidebar-regular" />
-                <i className="now-ui-icons design_bullet-list-67 visible-on-sidebar-mini" />
-              </Button>
-            </div>
-          </div>
+          
 
           <div className="sidebar-wrapper" ref={this.sidebar}>
             <div className="user">
@@ -204,7 +175,7 @@ class Sidebar extends React.Component {
                   }
                 >
                   <span>
-                    Ryan Gosling
+                    Admin
                     <b className="caret" />
                   </span>
                 </a>

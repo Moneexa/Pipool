@@ -1,5 +1,8 @@
-var ChatModel = require('./chat.model.js');
-
+const jwt = require('jsonwebtoken');
+const ChatModel = require('./chat.model.js');
+const ChannelModel = require('../../channels/channelsModel');
+const BrandModel = require('../../brands/brandModel');
+const config = require('../../../config.json');
 module.exports = {
     init: init
 }
@@ -7,69 +10,39 @@ module.exports = {
 
 function init(socket) {
     console.log("Initializing Socket");
-    socket.on('joinChannelRooms', (data) => joinChannelRooms(socket, data));
-    socket.on('joinBrandRooms', (data) => joinBrandRooms(socket, data));
+    socket.on('assignUser', (data) => assignUser(socket, data));
     socket.on('send', data => send(socket, data));
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });
 }
 
-async function joinChannelRooms(socket, { channelId }) {
+async function assignUser(socket, { token, id }) {
     try {
-        const rooms = await ChatModel
-            .find({ channel: channelId })
-            .populate('campaign')
-            .populate('channel', 'channelName')
-            .populate('brand', 'name');
-        const parsedRooms = [];
-        for (let room of rooms) {
-            socket.join(room.id)
-            parsedRooms.push({
-                id: room.id,
-                title: room.campaign.serviceName,
-                channel: room.channel,
-                brand: room.brand
-            });
-        }
-        if (parsedRooms.length > 0) {
-            socket.emit('refreshRooms', parsedRooms);
-        }
-        setTimeout(() => {
-            console.log("Current rooms: ");
-            console.log(Object.keys(socket.rooms));
-        }, 1000);
-    } catch (error) {
-        console.error("Unable to join rooms");
-        console.error(error);
-    }
-}
-
-async function joinBrandRooms(socket, { brandId }) {
-    try {
-        const rooms = await ChatModel
-            .find({ brand: brandId })
-            .populate('campaign')
-            .populate('channel', 'channelName')
-            .populate('brand', 'name')
-        // .execPopulate();
-        const parsedRooms = [];
-        for (let room of rooms) {
-            socket.join(room.id)
-            parsedRooms.push({
-                id: room.id,
-                title: room.campaign.serviceName,
-                channel: room.channel,
-                brand: room.brand
-            });
-        }
-        if (parsedRooms.length > 0) {
-            socket.emit('refreshRooms', parsedRooms);
-        }
-        setTimeout(() => {
-            console.log("Current rooms: ");
-            console.log(Object.keys(socket.rooms));
-        }, 1000);
+        jwt.verify(token, config.privateKey, async function (err, decoded) {
+            if (err) {
+                // socket.emit("error", "Invalid Jwt");
+            } else {
+                switch (decoded.role) {
+                    case 'influencer':
+                        const channel = await ChannelModel.findOne({ _id: id, createdBy: decoded.id });
+                        if (!channel) throw "Invalid Channel Id provided";
+                        socket.join(id)
+                        break;
+                    case 'brand':
+                        const brand = await BrandModel.findOne({ _id: id, createdBy: decoded.id });
+                        if (!brand) throw "Invalid Brand Id provided";
+                        socket.join(id)
+                        break;
+                    case 'admin':
+                        socket.join(id)
+                        break;
+                    case 'default':
+                        socket.disconnect();
+                        break;
+                }
+            }
+        });
     } catch (error) {
         console.error("Unable to join rooms");
         console.error(error);
@@ -79,17 +52,29 @@ async function joinBrandRooms(socket, { brandId }) {
 
 async function send(socket, data) {
     try {
-        const { id, value, fromBrand } = data;
+        const { from, to, fromBrand, roomId, value } = data;
         const text = {
             date: new Date(),
             fromBrand,
             value,
         }
         await ChatModel.update(
-            { _id: id },
+            { 
+                '_id': roomId,
+                '$or': [
+                    {
+                        'brand': from,
+                        'channel': to
+                    },
+                    {
+                        'brand': to,
+                        'channel': from
+                    }
+                ]
+            },
             { $push: { 'texts': text } }
         );
-        socket.to(id).emit('receive', data);
+        socket.to(to).emit('receive', data);
         // res.status(200).send("Sent");
     } catch (error) {
         console.error('Error: ', error)

@@ -27,29 +27,45 @@ import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
 import { StoreProvider } from 'easy-peasy';
 import { store } from "./store/store";
+import { useObservable } from "store";
+import { isLoggedIn$ } from "store/user";
 
 const hist = createBrowserHistory();
 
-ReactDOM.render(
-  <StoreProvider store={store}>
+function Index() {
+  const isLoggedIn = useObservable(isLoggedIn$)
+  return (
+    <StoreProvider store={store}>
+      <Router history={hist}>
+        <Switch>
+          <Redirect from="/" exact to="/auth" />
+          <ProtectedRoute path="/admin" redirectTo="/auth" isAuthenticated={isLoggedIn} component={AdminLayout} />
+          <ProtectedRoute path="/auth" redirectTo="/admin" isAuthenticated={!isLoggedIn} component={AuthLayout} />
+          {/* <Route
+            path="/admin"
+            render={(props) => {
+              return <AdminLayout {...props} />;
+            }}
+          />
+          <Route
+            path="/auth"
+            render={(props) => {
+              return <AuthLayout {...props} />;
+            }}
+          />
+          <Redirect to="/admin/dashboard" /> */}
+        </Switch>
+      </Router>
+    </StoreProvider>
+  );
+}
 
-    <Router history={hist}>
-      <Switch>
-        <Route
-          path="/admin"
-          render={(props) => {
-            return <AdminLayout {...props} />;
-          }}
-        />
-        <Route
-          path="/auth"
-          render={(props) => {
-            return <AuthLayout {...props} />;
-          }}
-        />
-        <Redirect to="/admin/dashboard" />
-      </Switch>
-    </Router>
-  </StoreProvider>,
-  document.getElementById("root")
-);
+ReactDOM.render(<Index />, document.getElementById('root'));
+
+export function ProtectedRoute({ path, redirectTo, isAuthenticated, component }) {
+  if (isAuthenticated) {
+    return <Route path={path} component={component} />
+  } else {
+    return <Redirect to={redirectTo} />
+  }
+}

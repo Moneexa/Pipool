@@ -209,11 +209,23 @@ module.exports = {
     activeCampaigns: async function (req, res) {
         try {
             const offers = await offerModel.find({
-                brandId: req.params.brandId,
                 paymentVerified: true,
                 paymentReleased: false
             })
                 .populate('campaignId')
+            res.status(200).send(offers);
+        } catch (error) {
+            res.status(500).send("Something went wrong")
+        }
+    },
+    disputedCampaigns: async function (req, res) {
+        try {
+            const offers = await offerModel.find({
+                paymentVerified: true,
+                paymentReleased: false,
+                disputed: true
+            })
+                .populate('campaignId brandId channelId')
             res.status(200).send(offers);
         } catch (error) {
             res.status(500).send("Something went wrong")

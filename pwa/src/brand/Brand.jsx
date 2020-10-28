@@ -18,6 +18,7 @@ import CampaignInfo from './pages/CampaignInfo/CampaignInfo';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import SentOffer from './pages/SentOffer/SentOffer'
 import ActiveCampaigns from './pages/ActiveCampaigns/ActiveCampaigns';
+import { Chat } from './pages/Chat/Chat';
 
 //import store from "./shared/store/store"
 
@@ -127,6 +128,16 @@ export function Brand({ match }) {
                                     </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
+                                    <Nav.Link as={Link} to={`${match.path}/chat`} className={!sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+
+                                        <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
+
+                                        {sidebarExpanded ? <span>&nbsp;</span> : null}
+
+                                        <span>Chat</span>
+                                    </Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
 
                                     <Nav.Link as={Link} to={`${match.path}/sent-offer`} className={!sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
 
@@ -178,7 +189,7 @@ export function Brand({ match }) {
                                 </div> */}
 
                         </div>
-                        <div className="sidebar-content">
+                        <div className="sidebar-content d-flex flex-column">
                             <nav className="navbar navbar-expand navbar-light shadow-sm py-3 mb-4">
                                 <FontAwesomeIcon className="d-lg-none" icon={faBars} onClick={() => toggleSidebar()} />
                                 <div className="my-2 my-0 mr-auto">
@@ -207,7 +218,7 @@ export function Brand({ match }) {
                                     </ul>
                                 </div>
                             </nav>
-                            <div className="container-fluid">
+                            <div className="container-fluid routes-container">
                                 <Switch>
                                     <Redirect from={`${match.path}/`} exact to={`${match.path}/overview`} />
                                     <Route path={`${match.path}/overview`} exact component={Overview} />
@@ -224,6 +235,7 @@ export function Brand({ match }) {
                                     <Route path={`${match.path}/campaigns/:id`} exact={true} component={CampaignInfo} />
                                     <Route path={`${match.path}/campaigns/:id/campaign-invite`} exact={true} component={CampaignInvite} />
                                     <Route path={`${match.path}/sent-offer`} exact={true} component={SentOffer} />
+                                    <Route path={`${match.path}/chat`} exact={true} component={Chat} />
 
 
                                 </Switch>

@@ -2,6 +2,7 @@ const express = require('express');
 const channelController = require('./channelsController.js');
 const router = express.Router({ mergeParams: true });
 const campaignsRoutes = require('./campaigns/campaignInfluencerRoutes');
+const chatRoutes = require('./chat/chat.route');
 const insightsRoutes = require('./insights/insightsRouter');
 const offersRoutes = require('./offer/offer.route');
 const proposalsRoutes = require('./proposals/influencerProposalRoutes');
@@ -40,6 +41,7 @@ router.use('/:channelId/insights', insightsRoutes)
 router.use('/:channelId/offers', offersRoutes)
 router.use('/:channelId/proposals', proposalsRoutes)
 router.use('/:channelId/:campaignId', reports);
+router.use('/:channelId/chat', chatRoutes)
 
 
 

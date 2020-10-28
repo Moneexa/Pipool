@@ -49,6 +49,7 @@
     "reapop": "^2.1.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "rxjs": "^6.6.3",
     "smtp": "^0.1.4",
     "socket.io-client": "^2.3.0",
     "tiktok-api": "^0.4.1",

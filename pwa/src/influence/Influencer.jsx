@@ -18,6 +18,7 @@ import ChannelInsights from './pages/ChannelInsights/ChannelInsights'
 import CampaignInfo from './pages/CampaignInfo/CampaignInfo'
 import CampaignApply from './pages/CampaignApply/CampaignApply'
 import { useStoreActions, useStoreState } from 'easy-peasy';
+import { Chat } from './pages/Chat/Chat';
 //import store from "./shared/store/store"
 
 export function Influencer({ match }) {
@@ -119,6 +120,16 @@ export function Influencer({ match }) {
                                     </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
+                                    <Nav.Link as={Link} to={`${match.path}/chat`} className={!sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+
+                                        <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
+
+                                        {sidebarExpanded ? <span>&nbsp;</span> : null}
+
+                                        <span>Chat</span>
+                                    </Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
 
                                     <Nav.Link as={Link} to={`${match.path}/payment`} className={!sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
                                         <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
@@ -152,7 +163,7 @@ export function Influencer({ match }) {
                             </div>
 
                         </div>
-                        <div className="sidebar-content">
+                        <div className="sidebar-content d-flex flex-column">
                             <nav className="navbar navbar-expand-lg navbar-light shadow-sm py-3 mb-4">
                                 <FontAwesomeIcon className="d-lg-none" icon={faBars} onClick={() => toggleSidebar()} />
                                 <div className="my-2 my-0 mr-auto">
@@ -181,7 +192,7 @@ export function Influencer({ match }) {
                                     </ul>
                                 </div>
                             </nav>
-                            <div className="container-fluid">
+                            <div className="container-fluid routes-container">
                                 <Switch>
                                     <Redirect from={`${match.path}/`} exact to={`${match.path}/overview`} />
                                     <Route path={`${match.path}/overview`} component={Overview} />
@@ -197,6 +208,7 @@ export function Influencer({ match }) {
                                     <Route path={`${match.path}/channels/:id/insights`} exact={true} component={ChannelInsights} />
                                     <Route path={`${match.path}/campaigns/:id`} exact={true} component={CampaignInfo} />
                                     <Route path={`${match.path}/campaigns/:id/apply`} exact={true} component={CampaignApply} />
+                                    <Route path={`${match.path}/chat/`} exact={true} component={Chat} />
 
                                 </Switch>
 

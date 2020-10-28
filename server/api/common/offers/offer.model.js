@@ -10,7 +10,7 @@ var OfferSchema = new Schema({
     'brandId': {
         type: Schema.Types.ObjectId,
         required: true,
-        ref: 'Brand'
+        ref: 'brand'
     },
     'campaignId': {
         type: Schema.Types.ObjectId,
