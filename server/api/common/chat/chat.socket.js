@@ -21,7 +21,7 @@ async function assignUser(socket, { token, id }) {
     try {
         jwt.verify(token, config.privateKey, async function (err, decoded) {
             if (err) {
-                socket.emit("error", "Invalid Jwt");
+                // socket.emit("error", "Invalid Jwt");
             } else {
                 switch (decoded.role) {
                     case 'influencer':

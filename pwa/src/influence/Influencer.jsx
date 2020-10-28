@@ -120,6 +120,16 @@ export function Influencer({ match }) {
                                     </Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
+                                    <Nav.Link as={Link} to={`${match.path}/chat`} className={!sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
+
+                                        <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />
+
+                                        {sidebarExpanded ? <span>&nbsp;</span> : null}
+
+                                        <span>Chat</span>
+                                    </Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
 
                                     <Nav.Link as={Link} to={`${match.path}/payment`} className={!sidebarExpanded ? 'd-flex flex-column align-items-center' : ''}>
                                         <FontAwesomeIcon icon={faTachometerAlt} style={{ color: "white" }} />

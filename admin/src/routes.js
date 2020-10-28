@@ -46,6 +46,7 @@ import PricingPage from "views/Pages/PricingPage.js";
 import LoginPage from "views/Pages/LoginPage.js";
 import RegisterPage from "views/Pages/RegisterPage.js";
 import LockScreenPage from "views/Pages/LockScreenPage.js";
+import { Chat } from "views/Chat/Chat";
 
 let routes = [
   {
@@ -74,6 +75,13 @@ let routes = [
     name: "Disputes",
     icon: "now-ui-icons design_app",
     component: Disputes,
+    layout: "/admin",
+  },
+  {
+    path: "/chat",
+    name: "Chat",
+    icon: "now-ui-icons design_app",
+    component: Chat,
     layout: "/admin",
   },
   {

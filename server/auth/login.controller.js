@@ -1,4 +1,5 @@
 const UsertModel = require('./user.model.js');
+const AdminModel = require('./admin.model');
 const config = require('../config.json');
 //const bcrypt = require('bcrypt');
 const crypto = require('crypto')
@@ -13,7 +14,7 @@ module.exports = {
 	loginFacebook,
 	loginGoogle,
 	loginLinkedin,
-
+	loginAdmin,
 	verify
 };
 
@@ -303,6 +304,37 @@ async function loginGoogle(req, res) {
 
 }
 
+async function loginAdmin(req, res) {
+	const token = req.body.token;
+	try {
+		const admin = await AdminModel.findOne({
+			token
+		})
+		if (!admin) return res.status(403).send('No user found');
+		signToken(admin._id, 'admin', 'admin', null, function (err, token) {
+			if (err) {
+				console.log(err);
+				return res.sendStatus(500);
+			}
+			const expiry = new Date();
+			expiry.setDate(expiry.getDate() + 10);
+			res.status(200).send(
+				{
+					id: admin.id,
+					role: 'admin',
+					token: {
+						value: token,
+						expiry: expiry
+					}
+				}
+			)
+		});
+
+	} catch (error) {
+		res.status(500).send("Something went wrong with server. Please try again later.")
+	}
+
+}
 
 function verify(req, res, next) {
 	const authorization = req.headers['authorization'];

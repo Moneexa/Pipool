@@ -37,6 +37,7 @@ import {
 import PanelHeader from "components/PanelHeader/PanelHeader.js";
 import { useObservable } from "store";
 import { disputes$ } from "store/disputed";
+import { createChat } from "store/chat" 
 
 function Disputes() {
   const disputes = useObservable(disputes$);
@@ -66,8 +67,8 @@ function Disputes() {
                         <tr key={index}>
                           <td>{value?.campaignId?.serviceName}</td>
                           <td className="text-right">$ {value?.price}</td>
-                          <td className="text-center">{value?.brandId?.name}</td>
-                          <td>{value?.channelId?.channelName}</td>
+                          <td className="text-center" onClick={() => createChat({receiverType: 'brand', brandId: value?.brandId?._id})}>{value?.brandId?.name}</td>
+                          <td onClick={() => createChat({receiverType: 'channel', channelId: value?.channelId._id})}>{value?.channelId?.channelName}</td>
                         </tr>
                       ))
                     }
