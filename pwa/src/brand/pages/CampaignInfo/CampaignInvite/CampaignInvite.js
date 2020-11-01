@@ -1,5 +1,5 @@
 import React from 'react';
-import { useStoreActions, useStoreState, debug } from 'easy-peasy';
+import { useStoreActions, useStoreState} from 'easy-peasy';
 import { useEffect } from 'react';
 import "./CampaignInvite.css";
 

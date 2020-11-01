@@ -1,7 +1,7 @@
 import React from 'react'
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { useEffect, useState } from 'react';
-import { Modal, ModalBody, ModalFooter, ModalTitle, Button } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 import { PayPalButton } from "react-paypal-button-v2";
 
 export default function SentOffer() {
@@ -14,7 +14,7 @@ export default function SentOffer() {
     useEffect(() => {
         toBePayedOffer()
         //setPop(false)
-    }, [])
+    })
     const handleClose = () => setPop(false);
     const handleShow = (price, id) => {
         setOfferId(id)
@@ -73,8 +73,8 @@ export default function SentOffer() {
                                         </div>
 
                                         <div>
-                                            <button disabled={value.acceptanceStatus == "pending"} id="accept" onClick={() => handleShow(value.price, value._id)} className="rounded-30 px-5 text-white d-sm-inline-block btn btn-sm btn-primary shadow-sm mr-3">
-                                                {value.acceptanceStatus == "accept" ? "Make Payment" : value.acceptanceStatus == "Pending" ? "Request Pending" : value.acceptanceStatus == "decline" ? "Request Declined" : ""}
+                                            <button disabled={value.acceptanceStatus === "pending"} id="accept" onClick={() => handleShow(value.price, value._id)} className="rounded-30 px-5 text-white d-sm-inline-block btn btn-sm btn-primary shadow-sm mr-3">
+                                                {value.acceptanceStatus === "accept" ? "Make Payment" : value.acceptanceStatus === "Pending" ? "Request Pending" : value.acceptanceStatus === "decline" ? "Request Declined" : ""}
                                             </button>
                                         </div>
 

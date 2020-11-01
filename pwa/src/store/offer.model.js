@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from '../config.json';
 import * as toastr from 'toastr';
 
-const { action, thunk, debug } = require("easy-peasy");
+const { action, thunk } = require("easy-peasy");
 
 export const OfferModel = {
     loading: false,

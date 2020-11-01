@@ -1,8 +1,6 @@
 import axios from 'axios';
 import config from '../config.json';
-import * as toastr from 'toastr';
 import io from 'socket.io-client';
-import { store } from '../store/store'
 import { action, thunk } from "easy-peasy";
 const socket = io(config.socketHost);
 
@@ -31,12 +29,13 @@ export const ChatModel = {
     setMessages: action((state, payload) => {
         state.messages = payload;
     }),
-    createChat: thunk(async (actions, payload) => {
+    createChat: thunk(async (payload) => {
         axios.post(`${config.apiUrl}/chats`, payload)
     }),
     changeActiveRoom: thunk(async (actions, payload) => {
         try {
             const { data } = await axios.get(`${config.apiUrl}/chats/${payload.id}`);
+            console.log(token)
             // actions.setActiveRoom()
             actions.setMessages(data);
         } catch (error) {

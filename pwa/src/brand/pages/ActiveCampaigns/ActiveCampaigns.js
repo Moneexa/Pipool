@@ -3,10 +3,8 @@ import React, { useEffect, useState } from 'react'
 import './ActiveCampaigns.css';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { Table } from 'react-bootstrap'
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom'
-import { Modal, ModalBody, ModalFooter, ModalTitle, Button } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 export default function ActiveCampaigns() {
     const listActiveCampaigns = useStoreActions(actions => actions.brandsCampaignsModel.listActiveCampaigns);
     const releasePayment = useStoreActions(actions => actions.brandsCampaignsModel.releasePayment);

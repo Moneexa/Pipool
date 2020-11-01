@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 
 import './Overview.css'
@@ -9,7 +9,7 @@ function Overview() {
     useEffect(() => {
         getProposals("5f41460e22061315c7374c1f")
         console.log(proposals)
-    }, [])
+    }, [getProposals,proposals])
     return (
         <div className="home">
             <div className="d-sm-flex align-items-center justify-content-between mb-4">

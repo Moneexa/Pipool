@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
 import './AddChannel.css'
-import TwitterVerify from '../../shared/components/TwitterVerify'
 import { FacebookVerify } from '../../shared/components/FacebookVerify';
 import { YoutubeVerify } from '../../shared/components/YoutubeVerify';
 import { InstagramVerify } from '../../shared/components/InstagramVerify'
-import { TiktokVerify } from '../../shared/components/TiktokVerify'
 import { Spinner } from 'react-bootstrap';
 import { useStoreState } from 'easy-peasy';
 import ReactQuill from 'react-quill';
@@ -20,7 +18,7 @@ function AddChannel() {
     const [premiumDescription, setPremiumDescription] = useState("");
     const loading = useStoreState(state => state.channels.loading)
 
-    const [editorConfig, _] = useState({
+    const [editorConfig] = useState({
         toolbar: {
             container: [
                 [{ size: [] }],

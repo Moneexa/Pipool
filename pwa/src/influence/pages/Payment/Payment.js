@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCreditCard, faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
-import { faUniversity } from '@fortawesome/free-solid-svg-icons';
-import { faPaypal, faCcVisa, faCcMastercard, faCcAmex } from '@fortawesome/free-brands-svg-icons'
-import { Nav, InputGroup, FormControl, Button, Form, Row } from 'react-bootstrap';
+import { faPaypal } from '@fortawesome/free-brands-svg-icons'
+import { Nav, Form } from 'react-bootstrap';
 import { Spinner } from 'react-bootstrap';
 import axios from 'axios';
 import config from '../../../config.json';
@@ -36,17 +34,20 @@ function Payment() {
     //     }
     // }, [])
 
-    useEffect(async () => {
+    useEffect(() => {
         setLoading(true);
-        try {
-            const { data } = await axios.get(config.apiUrl + '/bank-accounts');
-            console.log(data);
-            setPaypalId(data.paypalId)
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setLoading(false);
+        async function func(){
+            try {
+                const { data } = await axios.get(config.apiUrl + '/bank-accounts');
+                console.log(data);
+                setPaypalId(data.paypalId)
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setLoading(false);
+            }
         }
+        func()
     }, [])
 
     async function savePaypalId() {
@@ -61,9 +62,7 @@ function Payment() {
         }
     }
 
-    async function updateBankAccount() {
-        // window.open(accountUrl, '_blank');
-    }
+
     return (
         <div className="payment-influence">
             {

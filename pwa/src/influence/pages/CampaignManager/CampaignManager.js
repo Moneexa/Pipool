@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { useEffect } from 'react';
 import {Link} from 'react-router-dom'
@@ -7,7 +7,7 @@ function CampaignManager() {
     const influencersCampaign = useStoreActions(actions => actions.influencersCampaigns.influencersCampaign);
     useEffect(() => {
         influencersCampaign()
-    }, [])
+    })
     return (
         <div className="campaigns-influence">
             <div className="d-sm-flex align-items-center justify-content-between mb-4">

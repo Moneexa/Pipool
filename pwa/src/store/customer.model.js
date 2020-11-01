@@ -1,6 +1,5 @@
 import axios from 'axios';
 import config from '../config.json';
-import * as toastr from 'toastr';
 
 const { action, thunk } = require("easy-peasy");
 

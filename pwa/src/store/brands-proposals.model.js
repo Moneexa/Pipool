@@ -1,16 +1,7 @@
 import axios from 'axios';
 import config from '../config.json';
-import * as toastr from 'toastr';
 
-const { action, thunk, debug } = require("easy-peasy");
-let proposals = {
-    id: "",
-    proposal: "",
-    cost: "",
-    dateOfSubmission: "",
-    campaignId: ""
-
-};
+const { action, thunk } = require("easy-peasy");
 export const brandsProposalModel = {
     loading: false,
     proposalsList: [],
@@ -33,7 +24,7 @@ export const brandsProposalModel = {
         state.campaignId = campaignId;
         state.campaignProposals = proposals;
     }),
-    listProposals: thunk(async (actions, payload, helpers) => {
+    listProposals: thunk(async (actions, helpers) => {
         const brandId = helpers.getStoreState().brand.activeBrandId;
         const res = await axios.get(`${config.apiUrl}/brands/${brandId}/proposals/`);
         console.log(res.data)

@@ -1,10 +1,7 @@
 import React, { useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCreditCard, faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import { faUniversity } from '@fortawesome/free-solid-svg-icons';
-import { faPaypal, faCcVisa, faCcMastercard, faCcAmex } from '@fortawesome/free-brands-svg-icons'
-import { Nav, InputGroup, FormControl, Button, Form, Row } from 'react-bootstrap';
+import { faPaypal} from '@fortawesome/free-brands-svg-icons'
 import axios from 'axios';
 import config from '../../../config.json';
 import { loadStripe } from '@stripe/stripe-js';
@@ -22,17 +19,9 @@ function Payment() {
 
     useEffect(() => {
         verifyPayment();
-    }, [])
+    })
 
-    async function addBankAccount() {
-        // createAccount();
-        const { data } = await axios.post(config.apiUrl + '/bank-accounts');
-        console.log(data);
-        if (data && !data.status) {
-            window.open(data.url, '_blank');
-        }
-    }
-
+    
     // addCardInformation() {
     //     const { data } = axios.post(config.apiUrl + '/customers/session');
     //     console.log(data);
@@ -42,10 +31,10 @@ function Payment() {
         // Call your backend to create the Checkout session.
         const { data } = await axios.post(config.apiUrl + '/customers/session');
         // When the customer clicks on the button, redirect them to Checkout.
+        console.log(data)
         const stripe = await stripePromise;
-        const { error } = await stripe.redirectToCheckout({
-            sessionId: data.sessionId,
-        });
+        console.log(stripe)
+        
         // If `redirectToCheckout` fails due to a browser or network
         // error, display the localized error message to your customer
         // using `error.message`.

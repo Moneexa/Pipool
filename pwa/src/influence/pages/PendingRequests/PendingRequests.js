@@ -1,7 +1,7 @@
 import React from 'react'
 // import './PendingRequests.css'
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import { useEffect, useState } from 'react';
+import { useEffect} from 'react';
 import { useStyles } from 'react-styles-hook'
 const style = useStyles({
     accept: {
@@ -37,7 +37,7 @@ function PendingRequests() {
     const listOffers = useStoreActions(actions => actions.offer.listOffers);
     const updateOffer = useStoreActions(actions => actions.offer.updateOffer);
     useEffect(
-        () => { listOffers() }, []
+        () => { listOffers() }, [listOffers]
     )
     function acceptOffer(offerId) {
         updateOffer({ offerId: offerId, acceptanceStatus: "accept" })

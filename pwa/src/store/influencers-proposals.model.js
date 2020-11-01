@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from '../config.json';
 import * as toastr from 'toastr';
 
-const { action, thunk, debug } = require("easy-peasy");
+const { action, thunk} = require("easy-peasy");
 let proposals = {
     id: "",
     proposal: "",
@@ -22,7 +22,7 @@ export const influencersProposalModel = {
         dateOfSubmission: proposals.dateOfSubmission,
         campaignId: proposals.campaignId
     },
-    setProposalSubmitted: action((state, payload) => {
+    setProposalSubmitted: action((payload) => {
         return { proposalSubmitted: payload }
     }),
     errors: {
@@ -69,7 +69,7 @@ export const influencersProposalModel = {
     postProposals: thunk(async (actions, payload, helpers) => {
         const channelId = helpers.getStoreState().channels.activeChannelId;
         if (!channelId) {
-            throw "No channel selected";
+            toastr.error("No channel selected");
         }
         const obj = {
             proposal: payload.proposal,
