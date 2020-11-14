@@ -5,35 +5,11 @@ import { Nav, Form } from 'react-bootstrap';
 import { Spinner } from 'react-bootstrap';
 import axios from 'axios';
 import config from '../../../config.json';
-
-
 import './Payment.css'
 function Payment() {
 
     const [loading, setLoading] = useState(false);
     const [paypalId, setPaypalId] = useState("");
-    // const [accountEnabled, setAccountEnabled] = useState(false);
-    // const [accountUrl, setAccountUrl] = useState(null);
-
-    // this code is for future implementation
-    // useEffect(async () => {
-    //     setLoading(true);
-    //     try {
-    //         const { data } = await axios.post(config.apiUrl + '/bank-accounts');
-    //         console.log(data);
-    //         setAccountUrl(data.url);
-    //         if (data && !data.status) {
-    //             setAccountEnabled(true);
-    //         } else {
-    //             setAccountEnabled(false);
-    //         }
-    //     } catch (error) {
-    //         console.error(error);
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // }, [])
-
     useEffect(() => {
         setLoading(true);
         async function func(){
