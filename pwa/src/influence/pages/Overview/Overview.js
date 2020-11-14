@@ -26,7 +26,6 @@ function Overview() {
                     <div className="card border-yellow border-5 rounded-20 no-shadow h-100">
 
                         <div className="card-body">
-
                             <div className="chart-area">
                                 <h2 className="m-0 font-weight-bold">Earning (monthly)</h2>
 
