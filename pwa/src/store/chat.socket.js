@@ -1,8 +1,6 @@
 import config from '../config.json';
 import io from 'socket.io-client';
 export const socket = io(config.socketHost);
-
-
 const { role, token } = JSON.parse(localStorage.getItem('userInfo')) || { role: '', token: { value: '' } };
 
 
