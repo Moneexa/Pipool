@@ -29,7 +29,6 @@ export const OfferModel = {
         try {
             const brandId = helpers.getStoreState().brand.activeBrandId;
             actions.updateLoading(true);
-
             const offer = await axios.post(`${config.apiUrl}/brands/${brandId}/offers`, payload)
             console.log(offer)
             actions.updateLoading(false);
