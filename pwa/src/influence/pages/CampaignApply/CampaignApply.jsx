@@ -40,14 +40,10 @@ export default function CampaignInfo({ match, history }) {
         },
     })
     let reactQuillRef = useRef(null);
-
-
     useEffect(() => {
         console.log(campaignId)
         getCampaign(campaignId)
         checkIfAlreadySubmitted({campaignId});
-        // if(proposalSubmitted)
-        //     history.goBack()
 
     }, [campaignId, getCampaign, checkIfAlreadySubmitted])
     if (proposalSubmitted) {
