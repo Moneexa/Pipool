@@ -7,8 +7,6 @@ import config from '../../../config.json';
 import { Modal, Button } from 'react-bootstrap'
 
 import { useState } from 'react';
-
-
 export function FacebookVerify({
     category,
     basicPrice,
