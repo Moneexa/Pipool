@@ -5,7 +5,6 @@ import { InstagramInsights } from './InstagramInsights';
 import { FacebookInsights } from './FacebookInsights';
 import { YoutubeInsights } from './YoutubeInsights';
 
-
 function ChannelInsights({ match, location }) {
     const id = match.params.id;
     const insightsType = new URLSearchParams(location.search).get('ctype');
