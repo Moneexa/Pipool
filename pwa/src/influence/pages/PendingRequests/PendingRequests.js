@@ -29,7 +29,6 @@ const style = useStyles({
 
         boxShadow: "0 .125rem .25rem 0 rgba(58,59,69,.2)!important"
     }
-
 })
 function PendingRequests() {
     const _styles = style
