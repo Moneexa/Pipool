@@ -1,7 +1,6 @@
 import axios from 'axios';
 import config from '../config.json';
 import * as toastr from 'toastr';
-
 const {  thunk } = require("easy-peasy");
 
 export const videosModel = {
