@@ -32,8 +32,6 @@ export function FacebookInsights({ channelId }) {
                 instaInsights({ token: code, channelId: channelId })
             }
         }, 1000);
-
-
     }
     useEffect(() => { instaInsights({ channelId: channelId }) }, [instaInsights, channelId])
 
