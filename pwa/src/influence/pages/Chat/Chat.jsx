@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { useObservable } from '../../../store';
 import { listRooms, messages$, rooms$, changeActiveRoom, activeRoom$, send } from '../../../store/influencer-chat';
 import styles from './Chat.module.css';
-
 export function Chat() {
     const [message, setMessage] = useState('');
     const activeChannelId = useStoreState(state => state.channels.activeChannelId);
