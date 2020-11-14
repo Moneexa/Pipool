@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import { Dropdown, Modal, Button } from 'react-bootstrap';
 import styles from './ActiveCampaign.module.css';
-
 function ActiveCampaign() {
     const activeCampaigns = useStoreState(state => state.influencersCampaigns.activeCampaigns);
     const influencersActiveCampaign = useStoreActions(actions => actions.influencersCampaigns.influencersActiveCampaign);
