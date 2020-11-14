@@ -27,7 +27,6 @@ export function YoutubeVerify({
     const [user, setUser] = useState(undefined);
 
     const formValid = (category && basicPrice && basicDescription && standardPrice && standardDescription && premiumPrice && premiumDescription);
-
     const initClient = useCallback(() => {
         gapi.client.init({
             'apiKey': config.google.apiKey,
