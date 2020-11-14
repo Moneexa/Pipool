@@ -32,7 +32,6 @@ export function Influencer({ match }) {
     function toggleSidebar() {
         setSidebarOpened(!sidebarOpened);
     }
-
     useEffect(() => {
         listChannels();
     }, []);
